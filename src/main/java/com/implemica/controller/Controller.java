@@ -113,7 +113,6 @@ public class Controller {
         actionsForNumberButtons();
         actionsForOperationButtons();
         actionsForCleanOperations();
-
     }
 
     private void actionsForOperationButtons() {
@@ -159,10 +158,15 @@ public class Controller {
     }
 
     private void actionForBuildOperand(Number number) {
-        // TODO do for result.
-        container.getOperation().buildOperand(numeral.translate(number));
-        container.setMadeOperand(true);
-        showOperand();
+        if(!isShownResult || container.isMadeOperand()) {
+            container.getOperation().buildOperand(numeral.translate(number));
+            container.setMadeOperand(true);
+            showOperand();
+        } else if(!container.isMadeOperand()) {
+            BigDecimal result = new BigDecimal(container.getResult().toString() + numeral.translate(number));
+            container.setResult(result);
+            showResult();
+        }
 
     }
 
