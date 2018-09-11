@@ -106,10 +106,11 @@ public class Controller {
 
     private Numeral numeral = new Arabic();
 
-    private boolean isShownResult;
-
     @FXML
     void initialize() {
+        // TODO this must be at another method.
+        container.setMadeOperand(true);
+
         actionsForNumberButtons();
         actionsForOperationButtons();
         actionsForCleanOperations();
@@ -133,6 +134,8 @@ public class Controller {
             updateHistory();
             container.setOperation(equals);
             container.getHistory().add(equals);
+
+            container.setMadeOperand(false);
         });
     }
 
@@ -142,6 +145,7 @@ public class Controller {
         showResult();
         updateHistory();
         container.setOperation(operation);
+        container.setMadeOperand(true);
     }
 
     private void actionsForNumberButtons() {
@@ -158,27 +162,17 @@ public class Controller {
     }
 
     private void actionForBuildOperand(Number number) {
-        if(!isShownResult || container.isMadeOperand()) {
+        if (container.isMadeOperand() || container.getOperation() instanceof Equals) {
             container.getOperation().buildOperand(numeral.translate(number));
-            container.setMadeOperand(true);
             showOperand();
-        } else if(!container.isMadeOperand()) {
-            BigDecimal result = new BigDecimal(container.getResult().toString() + numeral.translate(number));
-            container.setResult(result);
-            showResult();
         }
-
     }
 
     private void actionsForCleanOperations() {
 //        CE, C, Backspace
 
         backSpace.setOnAction(event -> {
-            if (isShownResult) {
-                String result = container.getResult().toString();
-                container.setResult(new BigDecimal(result.substring(0, result.length() - 1)));
-                showResult();
-            } else {
+            if (container.isMadeOperand()){
                 container.getOperation().removeLast();
                 showOperand();
             }
@@ -195,12 +189,10 @@ public class Controller {
 
     private void showResult() {
         resultLabel.setText(container.showComfortableNumber(container.getResult()));
-        isShownResult = true;
     }
 
     private void showOperand() {
         resultLabel.setText(container.showComfortableNumber(container.getOperation().getOperand()));
-        isShownResult = false;
     }
 
     private void updateHistory() {

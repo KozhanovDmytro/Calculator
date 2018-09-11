@@ -8,12 +8,14 @@ public class Equals extends Operation {
 
     public Equals(Operation lastOperation){
         this.lastOperation = lastOperation;
-        operand = lastOperation.operand;
     }
 
     @Override
     public BigDecimal calculate(BigDecimal result) {
-        return lastOperation.calculate(result);
+        if(operand.equals(BigDecimal.ZERO))
+            return lastOperation.calculate(result);
+        else
+            return lastOperation.calculate(operand);
     }
 
     @Override
