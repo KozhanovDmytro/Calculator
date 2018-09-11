@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -48,36 +49,6 @@ public class Launcher extends Application {
         this.primaryStage.show();
     }
 
-    private void setActionForResultLabel() {
-        // TODO think about that.
-        Label resultLabel = (Label) root.lookup("#resultLabel");
-        HBox resultLabelBox = (HBox) root.lookup("#resultLabelBox");
-
-        resultLabel.textProperty().addListener((observable, oldValue, newValue) -> {
-            double distance = Math.abs(resultLabel.getWidth() - resultLabelBox.getWidth());
-            double size = resultLabel.getFont().getSize();
-            if(distance < 25){
-                resultLabel.setFont(new Font("Segoe UI Semibold", size - 4));
-            }
-        });
-
-        resultLabelBox.widthProperty().addListener((observable, oldValue, newValue) -> {
-            double distance = Math.abs(resultLabel.getWidth() - resultLabelBox.getWidth());
-            double size = resultLabel.getFont().getSize();
-            if(newValue.intValue() >= oldValue.intValue()){
-                if(distance > 25 && distance < 35){
-                    if(size + 4 <= 48) {
-                        resultLabel.setFont(new Font("Segoe UI Semibold", size + 4));
-                    }
-                }
-            } else {
-                if(distance < 25){
-                    resultLabel.setFont(new Font("Segoe UI Semibold", size - 4));
-                }
-            }
-        });
-    }
-
     private void setSettingsForStage(Stage stage)throws Exception{
         this.primaryStage = stage;
         root = FXMLLoader.load(getClass().getResource("/root.fxml"));
@@ -95,6 +66,30 @@ public class Launcher extends Application {
         this.primaryStage.setMaxHeight(Screen.getPrimary().getBounds().getMaxY());
 
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
+    }
+
+    private void setActionForResultLabel() {
+        Label resultLabel = (Label) root.lookup("#resultLabel");
+        HBox resultLabelBox = (HBox) root.lookup("#resultLabelBox");
+
+        resultLabel.widthProperty()
+                .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
+        resultLabelBox.widthProperty()
+                .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
+        resultLabel.textProperty()
+                .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
+    }
+
+    private void calculateSizeForResultLabel(Label resultLabel, HBox resultLabelBox){
+        double fontSize = resultLabel.getFont().getSize();
+        Text text = new Text(resultLabel.getText());
+        text.setFont(resultLabel.getFont());
+        double width = text.getBoundsInLocal().getWidth();
+        if(width + 5 > resultLabelBox.getWidth() || resultLabel.getText().length() >= 13){
+            fontSize = fontSize * resultLabelBox.getWidth() / (width + 5);
+        }
+        if(fontSize <= 48)
+            resultLabel.setFont(new Font(resultLabel.getFont().getName(), fontSize));
     }
 
     private void setMoveActionForWindow() {
