@@ -55,4 +55,8 @@ public class Container {
     public String showNumberForSystem(String number){
         return number.replaceAll("\\s", "").replaceAll(",", ".");
     }
+
+    public void negateResult(){
+        result = result.negate();
+    }
 }

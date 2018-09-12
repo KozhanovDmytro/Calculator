@@ -255,7 +255,7 @@
                   <Insets />
                </GridPane.margin>
             </Button>
-            <Button fx:id="divideLabelBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="," GridPane.columnIndex="2" GridPane.rowIndex="8">
+            <Button fx:id="separateBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="," GridPane.columnIndex="2" GridPane.rowIndex="8">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />

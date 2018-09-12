@@ -12,6 +12,8 @@ public abstract class Operation {
 
     BigDecimal operand;
 
+    private boolean separated;
+
     public Operation(){
         operand = new BigDecimal(BigInteger.ZERO);
     }
@@ -25,8 +27,16 @@ public abstract class Operation {
     abstract public StringBuilder buildHistory(StringBuilder history);
 
     public void buildOperand(char number) {
-        if(operand.toString().length() < 16)
-            operand = new BigDecimal(operand.toString() + number);
+        if(operand.toString().length() < 16) {
+            String separator;
+            if(this.isSeparated())
+                separator = ".";
+            else
+                separator = "";
+            operand = new BigDecimal(operand.toString() + separator + number);
+
+            this.setSeparated(false);
+        }
     }
 
     public void removeLast(){
@@ -34,6 +44,10 @@ public abstract class Operation {
             operand = new BigDecimal(operand.toString().substring(0, operand.toString().length() - 1));
         else
             operand = new BigDecimal(BigInteger.ZERO);
+    }
+
+    public void negateOperand(){
+        this.operand = operand.negate();
     }
 
     @Override

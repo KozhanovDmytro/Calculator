@@ -2,6 +2,7 @@ package com.implemica.controller;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.*;
 
 import com.implemica.model.Container;
@@ -10,7 +11,6 @@ import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.*;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -23,84 +23,25 @@ public class Controller {
     private URL location;
 
     @FXML
-    private Button c;
-
-    @FXML
-    private Button ce;
-
-    @FXML
-    private Button backSpace;
-
-    @FXML
-    private Button percentOperation;
-
-    @FXML
-    private Button sqrtOperation;
+    private Button c, ce, backSpace;
 
     @FXML
     private Button equalsOperation;
 
     @FXML
-    private Button square;
+    private Button plusOperation, minusOperation, multiplyOperation, divideOperation;
 
     @FXML
-    private Button divideByX;
+    private Button percentOperation, sqrtOperation, square, divideByX;
 
     @FXML
-    private Button divideOperation;
-
-    @FXML
-    private Button multiplyOperation;
-
-    @FXML
-    private Button minusOperation;
-
-    @FXML
-    private Button plusOperation;
-
-    @FXML
-    private Button negate;
-
-    @FXML
-    private Button divideLabelBtn;
+    private Button negate, separateBtn, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
     @FXML
     private Label resultLabel;
 
     @FXML
     private Label historyLabel;
-
-    @FXML
-    private Button btn0;
-
-    @FXML
-    private Button btn1;
-
-    @FXML
-    private Button btn2;
-
-    @FXML
-    private Button btn3;
-
-    @FXML
-    private Button btn4;
-
-    @FXML
-    private Button btn5;
-
-    @FXML
-    private Button btn6;
-
-    @FXML
-    private Button btn7;
-
-    @FXML
-    private Button btn8;
-
-    @FXML
-    private Button btn9;
-
-    private static HashSet<Node> newNodes = new HashSet<>();
 
     private Container container = new Container();
 
@@ -111,7 +52,7 @@ public class Controller {
         // TODO this must be at another method.
         container.setMadeOperand(true);
 
-        actionsForNumberButtons();
+        actionsForBuildOperand();
         actionsForOperationButtons();
         actionsForCleanOperations();
     }
@@ -154,7 +95,7 @@ public class Controller {
         container.setMadeOperand(true);
     }
 
-    private void actionsForNumberButtons() {
+    private void actionsForBuildOperand() {
         btn0.setOnAction(event -> actionForBuildOperand(Number.ZERO));
         btn1.setOnAction(event -> actionForBuildOperand(Number.ONE));
         btn2.setOnAction(event -> actionForBuildOperand(Number.TWO));
@@ -165,6 +106,24 @@ public class Controller {
         btn7.setOnAction(event -> actionForBuildOperand(Number.SEVEN));
         btn8.setOnAction(event -> actionForBuildOperand(Number.EIGHT));
         btn9.setOnAction(event -> actionForBuildOperand(Number.NINE));
+
+        negate.setOnAction(event -> {
+            if(container.isMadeOperand()){
+                container.getOperation().negateOperand();
+                showOperand();
+            } else {
+                container.negateResult();
+                showResult();
+                updateHistory();
+            }
+        });
+
+        separateBtn.setOnAction(event -> {
+            container.getOperation().setSeparated(true);
+
+            showOperand();
+        });
+
     }
 
     private void actionForBuildOperand(Number number) {
@@ -175,7 +134,6 @@ public class Controller {
     }
 
     private void actionsForCleanOperations() {
-
         backSpace.setOnAction(event -> {
             if (container.isMadeOperand()){
                 container.getOperation().removeLast();
@@ -201,25 +159,19 @@ public class Controller {
     }
 
     private void showOperand() {
-        resultLabel.setText(container.showComfortableNumber(container.getOperation().getOperand()));
+        if(container.getOperation().isSeparated()){
+            DecimalFormat df = new DecimalFormat("#.");
+            // TODO strange is there.
+            resultLabel.setText(container.showComfortableNumber(new BigDecimal(df.format(container.getOperation().getOperand()).replaceAll(",", "."))));
+        } else {
+            resultLabel.setText(container.showComfortableNumber(container.getOperation().getOperand()));
+        }
     }
 
     private void updateHistory() {
         historyLabel.setText(container.getHistory().toString());
     }
 
-    public static void addNode(Node node) {
-        newNodes.add(node);
-    }
-
-
-    public static void setActions() {
-        for (Node node : newNodes) {
-            if (node.getId().equals("tripleX")) {
-                ((Button) node).setOnAction(event -> System.out.println("Boom!"));
-            }
-        }
-    }
 
 }
 
