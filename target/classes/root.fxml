@@ -353,7 +353,7 @@
                </Button>
             </HBox>
             <HBox fx:id="resultLabelBox" alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" GridPane.columnSpan="4" GridPane.rowIndex="1">
-               <Label fx:id="resultLabel" text="0">
+               <Label fx:id="resultLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" text="0" textAlignment="RIGHT">
                   <font>
                      <Font name="Segoe UI Semibold" size="48.0" />
                   </font>
