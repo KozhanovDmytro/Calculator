@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 
 @Getter
 @Setter
@@ -36,6 +37,11 @@ public class Container {
         StringBuilder stringNumber = new StringBuilder(number.toString());
         String result;
 
+        if(this.getOperation().isSeparated()){
+            DecimalFormat df = new DecimalFormat("#.");
+            return df.format(this.getOperation().getOperand());
+        }
+
         if(!stringNumber.toString().contains(".")) {
             StringBuilder reverse = stringNumber.reverse();
             for (int i = 0; i < reverse.length(); i++) {
@@ -46,7 +52,7 @@ public class Container {
             result = reverse.reverse().delete(reverse.length() - 1, reverse.length()).toString();
         } else {
             // TODO format for E and set rounding mode
-            result = stringNumber.toString();
+            result = stringNumber.toString().replaceAll("\\.", ",");
         }
 
         return result;

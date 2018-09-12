@@ -16,161 +16,155 @@ import javafx.scene.control.Label;
 
 public class Controller {
 
-    @FXML
-    private ResourceBundle resources;
+   @FXML
+   private ResourceBundle resources;
 
-    @FXML
-    private URL location;
+   @FXML
+   private URL location;
 
-    @FXML
-    private Button c, ce, backSpace;
+   @FXML
+   private Button c, ce, backSpace;
 
-    @FXML
-    private Button equalsOperation;
+   @FXML
+   private Button equalsOperation;
 
-    @FXML
-    private Button plusOperation, minusOperation, multiplyOperation, divideOperation;
+   @FXML
+   private Button plusOperation, minusOperation, multiplyOperation, divideOperation;
 
-    @FXML
-    private Button percentOperation, sqrtOperation, square, divideByX;
+   @FXML
+   private Button percentOperation, sqrtOperation, square, divideByX;
 
-    @FXML
-    private Button negate, separateBtn, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
+   @FXML
+   private Button negate, separateBtn, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
-    @FXML
-    private Label resultLabel;
+   @FXML
+   private Label resultLabel;
 
-    @FXML
-    private Label historyLabel;
+   @FXML
+   private Label historyLabel;
 
-    private Container container = new Container();
+   private Container container = new Container();
 
-    private Numeral numeral = new Arabic();
+   private Numeral numeral = new Arabic();
 
-    @FXML
-    void initialize() {
-        // TODO this must be at another method.
-        container.setMadeOperand(true);
+   @FXML
+   void initialize() {
+      // TODO this must be at another method.
+      container.setMadeOperand(true);
 
-        actionsForBuildOperand();
-        actionsForOperationButtons();
-        actionsForCleanOperations();
-    }
+      actionsForBuildOperand();
+      actionsForOperationButtons();
+      actionsForCleanOperations();
+   }
 
-    private void actionsForOperationButtons() {
+   private void actionsForOperationButtons() {
 
-        plusOperation.setOnAction(event -> actionForOperations(new Plus()));
-        minusOperation.setOnAction(event -> actionForOperations(new Minus()));
-        multiplyOperation.setOnAction(event -> actionForOperations(new Multiply()));
-        divideOperation.setOnAction(event -> actionForOperations(new Divide()));
+      plusOperation.setOnAction(event -> actionForOperations(new Plus()));
+      minusOperation.setOnAction(event -> actionForOperations(new Minus()));
+      multiplyOperation.setOnAction(event -> actionForOperations(new Multiply()));
+      divideOperation.setOnAction(event -> actionForOperations(new Divide()));
 
-        equalsOperation.setOnAction(event -> {
-            if (container.isMadeOperand()) {
-                container.getOperation().setOperand(new BigDecimal(container.showNumberForSystem(resultLabel.getText())));
-            } else {
-                if (container.getOperation() instanceof Equals) {
-                    Equals eq = (Equals) container.getOperation();
-                    container.setResult(new BigDecimal(container.showNumberForSystem(resultLabel.getText())));
-                    eq.getLastOperation().setOperand(eq.getLastOperation().getOperand());
-                }
+      equalsOperation.setOnAction(event -> {
+         if (container.isMadeOperand()) {
+            container.getOperation().setOperand(new BigDecimal(container.showNumberForSystem(resultLabel.getText())));
+         } else {
+            if (container.getOperation() instanceof Equals) {
+               Equals eq = (Equals) container.getOperation();
+               container.setResult(new BigDecimal(container.showNumberForSystem(resultLabel.getText())));
+               eq.getLastOperation().setOperand(eq.getLastOperation().getOperand());
             }
-            container.calculate();
+         }
+         container.calculate();
+         showResult();
+         Operation equals = new Equals(container.getOperation());
+         container.getHistory().clear();
+         updateHistory();
+         container.setOperation(equals);
+         container.getHistory().add(equals);
+
+         container.setMadeOperand(false);
+      });
+   }
+
+   private void actionForOperations(Operation operation) {
+      if (!(container.getOperation() instanceof Equals))
+         container.calculate();
+      showResult();
+      updateHistory();
+      container.setOperation(operation);
+      container.setMadeOperand(true);
+   }
+
+   private void actionsForBuildOperand() {
+      btn0.setOnAction(event -> actionForBuildOperand(Number.ZERO));
+      btn1.setOnAction(event -> actionForBuildOperand(Number.ONE));
+      btn2.setOnAction(event -> actionForBuildOperand(Number.TWO));
+      btn3.setOnAction(event -> actionForBuildOperand(Number.THREE));
+      btn4.setOnAction(event -> actionForBuildOperand(Number.FOUR));
+      btn5.setOnAction(event -> actionForBuildOperand(Number.FIVE));
+      btn6.setOnAction(event -> actionForBuildOperand(Number.SIX));
+      btn7.setOnAction(event -> actionForBuildOperand(Number.SEVEN));
+      btn8.setOnAction(event -> actionForBuildOperand(Number.EIGHT));
+      btn9.setOnAction(event -> actionForBuildOperand(Number.NINE));
+
+      negate.setOnAction(event -> {
+         if (container.isMadeOperand()) {
+            container.getOperation().negateOperand();
+            showOperand();
+         } else {
+            container.negateResult();
             showResult();
-            Operation equals = new Equals(container.getOperation());
-            container.getHistory().clear();
             updateHistory();
-            container.setOperation(equals);
-            container.getHistory().add(equals);
+         }
+      });
 
-            container.setMadeOperand(false);
-        });
-    }
+      separateBtn.setOnAction(event -> {
+         container.getOperation().setSeparated(true);
 
-    private void actionForOperations(Operation operation) {
-        if (!(container.getOperation() instanceof Equals))
-            container.calculate();
-        showResult();
-        updateHistory();
-        container.setOperation(operation);
-        container.setMadeOperand(true);
-    }
+         showOperand();
+      });
 
-    private void actionsForBuildOperand() {
-        btn0.setOnAction(event -> actionForBuildOperand(Number.ZERO));
-        btn1.setOnAction(event -> actionForBuildOperand(Number.ONE));
-        btn2.setOnAction(event -> actionForBuildOperand(Number.TWO));
-        btn3.setOnAction(event -> actionForBuildOperand(Number.THREE));
-        btn4.setOnAction(event -> actionForBuildOperand(Number.FOUR));
-        btn5.setOnAction(event -> actionForBuildOperand(Number.FIVE));
-        btn6.setOnAction(event -> actionForBuildOperand(Number.SIX));
-        btn7.setOnAction(event -> actionForBuildOperand(Number.SEVEN));
-        btn8.setOnAction(event -> actionForBuildOperand(Number.EIGHT));
-        btn9.setOnAction(event -> actionForBuildOperand(Number.NINE));
+   }
 
-        negate.setOnAction(event -> {
-            if(container.isMadeOperand()){
-                container.getOperation().negateOperand();
-                showOperand();
-            } else {
-                container.negateResult();
-                showResult();
-                updateHistory();
-            }
-        });
+   private void actionForBuildOperand(Number number) {
+      if (container.isMadeOperand() || container.getOperation() instanceof Equals) {
+         container.getOperation().buildOperand(numeral.translate(number));
+         showOperand();
+      }
+   }
 
-        separateBtn.setOnAction(event -> {
-            container.getOperation().setSeparated(true);
-
+   private void actionsForCleanOperations() {
+      backSpace.setOnAction(event -> {
+         if (container.isMadeOperand()) {
+            container.getOperation().removeLast();
             showOperand();
-        });
+         }
+      });
 
-    }
+      c.setOnAction(event -> {
+         container.getHistory().clear();
+         container.setResult(BigDecimal.ZERO);
+         container.setOperation(new Default());
+         showOperand();
+      });
 
-    private void actionForBuildOperand(Number number) {
-        if (container.isMadeOperand() || container.getOperation() instanceof Equals) {
-            container.getOperation().buildOperand(numeral.translate(number));
-            showOperand();
-        }
-    }
+      ce.setOnAction(event -> {
+         container.getOperation().setOperand(BigDecimal.ZERO);
+         showOperand();
+      });
+   }
 
-    private void actionsForCleanOperations() {
-        backSpace.setOnAction(event -> {
-            if (container.isMadeOperand()){
-                container.getOperation().removeLast();
-                showOperand();
-            }
-        });
+   private void showResult() {
+      resultLabel.setText(container.showComfortableNumber(container.getResult()));
+   }
 
-        c.setOnAction(event -> {
-            container.getHistory().clear();
-            container.setResult(BigDecimal.ZERO);
-            container.setOperation(new Default());
-            showOperand();
-        });
+   private void showOperand() {
+      resultLabel.setText(container.showComfortableNumber(container.getOperation().getOperand()));
+   }
 
-        ce.setOnAction(event -> {
-            container.getOperation().setOperand(BigDecimal.ZERO);
-            showOperand();
-        });
-    }
-
-    private void showResult() {
-        resultLabel.setText(container.showComfortableNumber(container.getResult()));
-    }
-
-    private void showOperand() {
-        if(container.getOperation().isSeparated()){
-            DecimalFormat df = new DecimalFormat("#.");
-            // TODO strange is there.
-            resultLabel.setText(container.showComfortableNumber(new BigDecimal(df.format(container.getOperation().getOperand()).replaceAll(",", "."))));
-        } else {
-            resultLabel.setText(container.showComfortableNumber(container.getOperation().getOperand()));
-        }
-    }
-
-    private void updateHistory() {
-        historyLabel.setText(container.getHistory().toString());
-    }
+   private void updateHistory() {
+      historyLabel.setText(container.getHistory().toString());
+   }
 
 
 }
