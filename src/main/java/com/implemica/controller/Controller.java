@@ -126,6 +126,12 @@ public class Controller {
         equalsOperation.setOnAction(event -> {
             if (container.isMadeOperand()) {
                 container.getOperation().setOperand(new BigDecimal(container.showNumberForSystem(resultLabel.getText())));
+            } else {
+                if (container.getOperation() instanceof Equals) {
+                    Equals eq = (Equals) container.getOperation();
+                    container.setResult(new BigDecimal(container.showNumberForSystem(resultLabel.getText())));
+                    eq.getLastOperation().setOperand(eq.getLastOperation().getOperand());
+                }
             }
             container.calculate();
             showResult();
@@ -169,7 +175,6 @@ public class Controller {
     }
 
     private void actionsForCleanOperations() {
-//        CE, C, Backspace
 
         backSpace.setOnAction(event -> {
             if (container.isMadeOperand()){
@@ -185,6 +190,10 @@ public class Controller {
             showOperand();
         });
 
+        ce.setOnAction(event -> {
+            container.getOperation().setOperand(BigDecimal.ZERO);
+            showOperand();
+        });
     }
 
     private void showResult() {
