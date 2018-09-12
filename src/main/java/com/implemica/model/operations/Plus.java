@@ -4,14 +4,6 @@ import java.math.BigDecimal;
 
 public class Plus extends Operation {
 
-    public Plus(double number){
-        super(number);
-    }
-
-    public Plus() {
-        super();
-    }
-
     @Override
     public BigDecimal calculate(BigDecimal result) {
         return operand.add(result);

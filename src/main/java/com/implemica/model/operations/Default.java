@@ -4,12 +4,8 @@ import java.math.BigDecimal;
 
 public class Default extends Operation {
 
-    public Default(){
+    public Default() {
         super();
-    }
-
-    public Default(double number) {
-        super(number);
     }
 
     @Override
