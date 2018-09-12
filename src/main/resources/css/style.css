@@ -27,7 +27,7 @@
     -fx-border-color: #aaaaaa;
 }
 .HistoryBtn{
-    -fx-background-image: url('../resources/history.png');
+    -fx-background-image: url('../icons/history.png');
     -fx-background-position: 12 11;
 }
 .MenuBtn{

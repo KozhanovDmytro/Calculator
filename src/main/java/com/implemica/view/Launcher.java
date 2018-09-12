@@ -51,8 +51,8 @@ public class Launcher extends Application {
 
     private void setSettingsForStage(Stage stage)throws Exception{
         this.primaryStage = stage;
-        root = FXMLLoader.load(getClass().getResource("/root.fxml"));
-        root.getStylesheets().add("css/style.css");
+        root = FXMLLoader.load(getClass().getResource("/fxml/root.fxml"));
+        root.getStylesheets().add("/css/style.css");
 
         Scene scene = new Scene(root, 321, 500);
 
