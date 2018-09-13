@@ -10,7 +10,7 @@ import java.math.BigInteger;
 @Setter
 public abstract class Operation {
 
-    BigDecimal operand;
+    protected BigDecimal operand;
 
     private boolean separated;
 
@@ -46,12 +46,10 @@ public abstract class Operation {
             operand = new BigDecimal(BigInteger.ZERO);
     }
 
-    public void negateOperand(){
-        this.operand = operand.negate();
-    }
-
     @Override
     public String toString(){
         return this.getClass().getName();
     }
+
+    // TODO method for edited operand. This function intended for making history.
 }

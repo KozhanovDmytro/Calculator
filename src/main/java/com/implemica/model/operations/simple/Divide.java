@@ -1,4 +1,6 @@
-package com.implemica.model.operations;
+package com.implemica.model.operations.simple;
+
+import com.implemica.model.operations.Operation;
 
 import java.math.BigDecimal;
 
