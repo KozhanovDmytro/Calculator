@@ -2,7 +2,6 @@ package com.implemica.controller;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.*;
 
 import com.implemica.model.Container;
@@ -10,6 +9,15 @@ import com.implemica.model.interfaces.Numeral;
 import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.*;
+import com.implemica.model.operations.simple.Divide;
+import com.implemica.model.operations.simple.Minus;
+import com.implemica.model.operations.simple.Multiply;
+import com.implemica.model.operations.simple.Plus;
+import com.implemica.model.operations.special.DivideBy;
+import com.implemica.model.operations.special.Percent;
+import com.implemica.model.operations.special.Square;
+import com.implemica.model.operations.special.SquareRoot;
+import com.implemica.model.validation.Validator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,32 +53,66 @@ public class Controller {
 
    private Container container = new Container();
 
+   private Validator validator = new Validator();
+
    private Numeral numeral = new Arabic();
 
    @FXML
    void initialize() {
-      // TODO this must be at another method.
-      container.setMadeOperand(true);
-
       actionsForBuildOperand();
       actionsForOperationButtons();
       actionsForCleanOperations();
    }
 
    private void actionsForOperationButtons() {
-
       plusOperation.setOnAction(event -> actionForOperations(new Plus()));
       minusOperation.setOnAction(event -> actionForOperations(new Minus()));
       multiplyOperation.setOnAction(event -> actionForOperations(new Multiply()));
       divideOperation.setOnAction(event -> actionForOperations(new Divide()));
 
+      percentOperation.setOnAction(event -> {
+         container.getOperation().setOperand(new Percent().calculate(container.getResult(), container.getOperation().getOperand()));
+
+         showOperand();
+      });
+
+      sqrtOperation.setOnAction(event -> {
+         if(container.isMadeOperand()){
+            container.getOperation().setOperand(new SquareRoot().calculate(container.getOperation().getOperand()));
+         } else {
+            container.setResult(new SquareRoot().calculate(container.getResult()));
+         }
+
+         showResult();
+      });
+
+      square.setOnAction(event -> {
+         if(container.isMadeOperand()){
+            container.getOperation().setOperand(new Square().calculate(container.getOperation().getOperand()));
+            showOperand();
+         } else {
+            container.setResult(new Square().calculate(container.getResult()));
+            showResult();
+         }
+      });
+
+      divideByX.setOnAction(event -> {
+         if(container.isMadeOperand()){
+            container.getOperation().setOperand(new DivideBy().calculate(container.getOperation().getOperand()));
+            showOperand();
+         } else {
+            container.setResult(new DivideBy().calculate(container.getResult()));
+            showResult();
+         }
+      });
+
       equalsOperation.setOnAction(event -> {
          if (container.isMadeOperand()) {
-            container.getOperation().setOperand(new BigDecimal(container.showNumberForSystem(resultLabel.getText())));
+            container.getOperation().setOperand(new BigDecimal(validator.showNumberForSystem(resultLabel.getText())));
          } else {
             if (container.getOperation() instanceof Equals) {
                Equals eq = (Equals) container.getOperation();
-               container.setResult(new BigDecimal(container.showNumberForSystem(resultLabel.getText())));
+               container.setResult(new BigDecimal(validator.showNumberForSystem(resultLabel.getText())));
                eq.getLastOperation().setOperand(eq.getLastOperation().getOperand());
             }
          }
@@ -96,6 +138,8 @@ public class Controller {
    }
 
    private void actionsForBuildOperand() {
+      container.setMadeOperand(true);
+
       btn0.setOnAction(event -> actionForBuildOperand(Number.ZERO));
       btn1.setOnAction(event -> actionForBuildOperand(Number.ONE));
       btn2.setOnAction(event -> actionForBuildOperand(Number.TWO));
@@ -108,14 +152,15 @@ public class Controller {
       btn9.setOnAction(event -> actionForBuildOperand(Number.NINE));
 
       negate.setOnAction(event -> {
-         if (container.isMadeOperand()) {
+         // TODO this.
+         /*if (container.isMadeOperand()) {
             container.getOperation().negateOperand();
             showOperand();
          } else {
             container.negateResult();
             showResult();
             updateHistory();
-         }
+         }*/
       });
 
       separateBtn.setOnAction(event -> {
@@ -123,7 +168,6 @@ public class Controller {
 
          showOperand();
       });
-
    }
 
    private void actionForBuildOperand(Number number) {
@@ -140,14 +184,14 @@ public class Controller {
             showOperand();
          }
       });
-
       c.setOnAction(event -> {
          container.getHistory().clear();
          container.setResult(BigDecimal.ZERO);
          container.setOperation(new Default());
+         container.setMadeOperand(true);
+
          showOperand();
       });
-
       ce.setOnAction(event -> {
          container.getOperation().setOperand(BigDecimal.ZERO);
          showOperand();
@@ -155,11 +199,11 @@ public class Controller {
    }
 
    private void showResult() {
-      resultLabel.setText(container.showComfortableNumber(container.getResult()));
+//      resultLabel.setText(validator.showComfortableNumber(container.getResult()));
    }
 
    private void showOperand() {
-      resultLabel.setText(container.showComfortableNumber(container.getOperation().getOperand()));
+      resultLabel.setText(validator.showComfortableNumber(container.getOperation().getOperand(), container.getOperation().isSeparated()));
    }
 
    private void updateHistory() {
