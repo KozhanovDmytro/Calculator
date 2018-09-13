@@ -173,7 +173,6 @@ public class Launcher extends Application {
                 .forEach(pane -> pane.setOnMouseDragged(event -> {
                     double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
 
-                    // TODO fix a trembling.
                     if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
                         primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
                         primaryStage.setWidth(width);
@@ -338,7 +337,7 @@ public class Launcher extends Application {
             Button plusOperation = (Button) grid.lookup("#plusOperation");
             Button negate = (Button) grid.lookup("#negate");
             Button btn0 = (Button) grid.lookup("#btn0");
-            Button divideLabelBtn = (Button) grid.lookup("#divideLabelBtn");
+            Button separateBtn = (Button) grid.lookup("#separateBtn");
             Button equalsOperation = (Button) grid.lookup("#equalsOperation");
 
             grid.getChildren().clear();
@@ -387,7 +386,7 @@ public class Launcher extends Application {
             grid.add(divideByX, 0, 7);
             grid.add(negate, 1, 7);
             grid.add(btn0, 2, 7);
-            grid.add(divideLabelBtn, 3, 7);
+            grid.add(separateBtn, 3, 7);
             grid.add(equalsOperation, 4, 7);
 
             isHalfFullScreen = true;
@@ -417,7 +416,7 @@ public class Launcher extends Application {
             Button plusOperation = (Button) grid.lookup("#plusOperation");
             Button negate = (Button) grid.lookup("#negate");
             Button btn0 = (Button) grid.lookup("#btn0");
-            Button divideLabelBtn = (Button) grid.lookup("#divideLabelBtn");
+            Button separateBtn = (Button) grid.lookup("#separateBtn");
             Button equalsOperation = (Button) grid.lookup("#equalsOperation");
 
             grid.getChildren().clear();
@@ -455,7 +454,7 @@ public class Launcher extends Application {
 
             grid.add(negate, 0, 8);
             grid.add(btn0, 1, 8);
-            grid.add(divideLabelBtn, 2, 8);
+            grid.add(separateBtn, 2, 8);
             grid.add(equalsOperation, 3, 8);
 
             isHalfFullScreen = false;
