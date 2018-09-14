@@ -199,11 +199,11 @@ public class Controller {
    }
 
    private void showResult() {
-//      resultLabel.setText(validator.showComfortableNumber(container.getResult()));
+      resultLabel.setText(validator.showNumber(container.getResult()));
    }
 
    private void showOperand() {
-      resultLabel.setText(validator.showComfortableNumber(container.getOperation().getOperand(), container.getOperation().isSeparated()));
+      resultLabel.setText(validator.showNumber(container.getOperation().getOperand(), container.getOperation().isSeparated()));
    }
 
    private void updateHistory() {

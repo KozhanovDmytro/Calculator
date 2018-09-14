@@ -1,8 +1,10 @@
 package com.implemica.model.validation;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class Validator {
 
@@ -10,56 +12,43 @@ public class Validator {
 
    private final String PATTERN_FOR_EXPONENT = "#.E0";
 
-   private DecimalFormat df;
+   private final String INTEGER_EXPONENT_SEPARATOR = "e+";
+
+   private final String DECIMAL_EXPONENT_SEPARATOR = "e";
 
    public String showNumber(BigDecimal number){
       return showNumber(number, false);
    }
 
    public String showNumber(BigDecimal number, boolean separator){
-      // TODO this.
-      if(separator){
-         df = new DecimalFormat("#.");
-         return df.format(number);
+      DecimalFormatSymbols dfs = new DecimalFormatSymbols(new Locale("ru", "Ru"));
+      dfs.setGroupingSeparator(' ');
+      dfs.setDecimalSeparator(',');
+
+      DecimalFormat df = new DecimalFormat();
+      df.setGroupingSize(3);
+      df.setParseBigDecimal(true);
+
+      df.setMinimumIntegerDigits(0);
+      df.setMaximumIntegerDigits(16);
+      df.setMinimumFractionDigits(0);
+      df.setMaximumFractionDigits(16);
+
+
+      if(number.compareTo(new BigDecimal("1e16")) >= 0){
+         dfs.setExponentSeparator(INTEGER_EXPONENT_SEPARATOR);
+         df.applyPattern(PATTERN_FOR_EXPONENT);
+      } else if(number.scale() >= 16) {
+         dfs.setExponentSeparator(DECIMAL_EXPONENT_SEPARATOR);
+         df.applyPattern(PATTERN_FOR_EXPONENT);
+      } else if(number.scale() > 0){
+         df.applyPattern(PATTERN_FOR_NUMBER);
       }
-
-      if(number.abs().compareTo(new BigDecimal(10000000000000000L)) < 0)
-         df = new DecimalFormat(PATTERN_FOR_NUMBER);
-      else
-         df = new DecimalFormat(PATTERN_FOR_EXPONENT);
-
-      DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-
-      dfs.setExponentSeparator("e");
-
 
       df.setDecimalFormatSymbols(dfs);
-      return df.format(number).replace((char) 160, (char) 32);
-   }
+      df.setDecimalSeparatorAlwaysShown(separator);
 
-   public String showComfortableNumber(BigDecimal number, boolean isSeparated) {
-      StringBuilder stringNumber = new StringBuilder(number.toString());
-      String result;
-
-      if(isSeparated){
-         DecimalFormat df = new DecimalFormat("#.");
-         return df.format(number);
-      }
-
-      if(!stringNumber.toString().contains(".")) {
-         StringBuilder reverse = stringNumber.reverse();
-         for (int i = 0; i < reverse.length(); i++) {
-            if (i % 4 == 0) {
-               reverse.insert(i, " ");
-            }
-         }
-         result = reverse.reverse().delete(reverse.length() - 1, reverse.length()).toString();
-      } else {
-         // TODO format for E and set rounding mode
-         result = stringNumber.toString().replaceAll("\\.", ",");
-      }
-
-      return result;
+      return df.format(number);
    }
 
    public String showNumberForSystem(String number){
