@@ -27,13 +27,14 @@ public abstract class Operation {
     abstract public StringBuilder buildHistory(StringBuilder history);
 
     public void buildOperand(char number) {
-        if(operand.toString().length() < 16) {
+         // TODO it's not a precision
+        if(operand.precision() + operand.scale() < 17) {
             String separator;
             if(this.isSeparated())
                 separator = ".";
             else
                 separator = "";
-            operand = new BigDecimal(operand.toString() + separator + number);
+            operand = new BigDecimal(operand.toPlainString() + separator + number);
 
             this.setSeparated(false);
         }
@@ -41,7 +42,7 @@ public abstract class Operation {
 
     public void removeLast(){
         if(operand.toString().length() > 1)
-            operand = new BigDecimal(operand.toString().substring(0, operand.toString().length() - 1));
+            operand = new BigDecimal(operand.toPlainString().substring(0, operand.toPlainString().length() - 1));
         else
             operand = new BigDecimal(BigInteger.ZERO);
     }
