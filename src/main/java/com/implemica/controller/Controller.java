@@ -6,6 +6,7 @@ import java.util.*;
 
 import com.implemica.model.Container;
 import com.implemica.model.interfaces.Numeral;
+import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.*;
@@ -13,10 +14,7 @@ import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
-import com.implemica.model.operations.special.DivideBy;
-import com.implemica.model.operations.special.Percent;
-import com.implemica.model.operations.special.Square;
-import com.implemica.model.operations.special.SquareRoot;
+import com.implemica.model.operations.special.*;
 import com.implemica.model.validation.Validator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -73,38 +71,49 @@ public class Controller {
       divideOperation.setOnAction(event -> actionForOperations(new Divide()));
 
       percentOperation.setOnAction(event -> {
-         container.getOperation().setOperand(new Percent().calculate(container.getResult(), container.getOperation().getOperand()));
+         SpecialOperation operation = new Percent(container.getResult());
+         container.change(operation, isShownResult);
 
-         showOperand();
+         if(isShownResult){
+            showResult();
+         } else {
+            showOperand();
+         }
       });
 
       sqrtOperation.setOnAction(event -> {
-         if (container.isMadeOperand()) {
-            container.getOperation().setOperand(new SquareRoot().calculate(container.getOperation().getOperand()));
-         } else {
-            container.setResult(new SquareRoot().calculate(container.getResult()));
-         }
+//         if (container.isMadeOperand()) {
+//            container.getOperation().setOperand(new SquareRoot().calculate(container.getOperation().getOperand()));
+//         } else {
+//            container.setResult(new SquareRoot().calculate(container.getResult()));
+//         }
 
-         showResult();
+         container.change(new SquareRoot(), isShownResult);
+
+         if(isShownResult){
+            showResult();
+         } else {
+            showOperand();
+         }
       });
 
       square.setOnAction(event -> {
-         if (container.isMadeOperand()) {
-            container.getOperation().setOperand(new Square().calculate(container.getOperation().getOperand()));
-            showOperand();
-         } else {
-            container.setResult(new Square().calculate(container.getResult()));
+         container.change(new Square(), isShownResult);
+
+         if(isShownResult){
             showResult();
+         } else {
+            showOperand();
          }
       });
 
       divideByX.setOnAction(event -> {
-         if (container.isMadeOperand()) {
-            container.getOperation().setOperand(new DivideBy().calculate(container.getOperation().getOperand()));
-            showOperand();
-         } else {
-            container.setResult(new DivideBy().calculate(container.getResult()));
+         container.change(new DivideBy(), isShownResult);
+
+         if(isShownResult){
             showResult();
+         } else {
+            showOperand();
          }
       });
 
@@ -159,15 +168,13 @@ public class Controller {
       btn9.setOnAction(event -> actionForBuildOperand(Number.NINE));
 
       negate.setOnAction(event -> {
-         // TODO this.
-         /*if (container.isMadeOperand()) {
-            container.getOperation().negateOperand();
-            showOperand();
-         } else {
-            container.negateResult();
+         container.change(new Negate(), isShownResult);
+
+         if (isShownResult) {
             showResult();
-            updateHistory();
-         }*/
+         } else {
+            showOperand();
+         }
       });
 
       separateBtn.setOnAction(event -> {
@@ -218,7 +225,5 @@ public class Controller {
    private void updateHistory() {
       historyLabel.setText(container.getHistory().toString());
    }
-
-
 }
 

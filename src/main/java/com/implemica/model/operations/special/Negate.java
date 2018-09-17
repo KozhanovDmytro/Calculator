@@ -1,14 +1,15 @@
 package com.implemica.model.operations.special;
 
+import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.operations.Operation;
 
 import java.math.BigDecimal;
 
-public class Negate extends Operation {
+public class Negate implements SpecialOperation {
 
    @Override
-   public BigDecimal calculate(BigDecimal result) {
-      return result.negate();
+   public BigDecimal calculate(BigDecimal operand) {
+      return operand.negate();
    }
 
    @Override

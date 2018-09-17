@@ -2,6 +2,7 @@ package com.implemica.model;
 
 import com.implemica.model.history.HistoryImpl;
 import com.implemica.model.interfaces.History;
+import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Operation;
 import lombok.Getter;
@@ -26,5 +27,14 @@ public class Container {
         result = this.operation.calculate(result);
         if(!operation.getOperand().equals(BigDecimal.ZERO))
             history.add(this.operation);
+    }
+
+    public void change(SpecialOperation operation, boolean isResult) {
+        if(isResult){
+            setResult(operation.calculate(getResult()));
+            // TODO write into a local (operand) history
+        } else {
+            getOperation().setOperand(operation.calculate(getOperation().getOperand()));
+        }
     }
 }
