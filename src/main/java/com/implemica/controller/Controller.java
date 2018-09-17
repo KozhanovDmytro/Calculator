@@ -57,6 +57,8 @@ public class Controller {
 
    private Numeral numeral = new Arabic();
 
+   private boolean isShownResult;
+
    @FXML
    void initialize() {
       actionsForBuildOperand();
@@ -77,7 +79,7 @@ public class Controller {
       });
 
       sqrtOperation.setOnAction(event -> {
-         if(container.isMadeOperand()){
+         if (container.isMadeOperand()) {
             container.getOperation().setOperand(new SquareRoot().calculate(container.getOperation().getOperand()));
          } else {
             container.setResult(new SquareRoot().calculate(container.getResult()));
@@ -87,7 +89,7 @@ public class Controller {
       });
 
       square.setOnAction(event -> {
-         if(container.isMadeOperand()){
+         if (container.isMadeOperand()) {
             container.getOperation().setOperand(new Square().calculate(container.getOperation().getOperand()));
             showOperand();
          } else {
@@ -97,7 +99,7 @@ public class Controller {
       });
 
       divideByX.setOnAction(event -> {
-         if(container.isMadeOperand()){
+         if (container.isMadeOperand()) {
             container.getOperation().setOperand(new DivideBy().calculate(container.getOperation().getOperand()));
             showOperand();
          } else {
@@ -108,14 +110,19 @@ public class Controller {
 
       equalsOperation.setOnAction(event -> {
          if (container.isMadeOperand()) {
-            container.getOperation().setOperand(new BigDecimal(validator.showNumberForSystem(resultLabel.getText())));
+            if(isShownResult){
+               container.getOperation().setOperand(container.getResult());
+            }
          } else {
             if (container.getOperation() instanceof Equals) {
                Equals eq = (Equals) container.getOperation();
-               container.setResult(new BigDecimal(validator.showNumberForSystem(resultLabel.getText())));
+               if (!isShownResult) {
+                  container.setResult(container.getOperation().getOperand());
+               }
                eq.getLastOperation().setOperand(eq.getLastOperation().getOperand());
             }
          }
+
          container.calculate();
          showResult();
          Operation equals = new Equals(container.getOperation());
@@ -200,10 +207,12 @@ public class Controller {
 
    private void showResult() {
       resultLabel.setText(validator.showNumber(container.getResult()));
+      isShownResult = true;
    }
 
    private void showOperand() {
       resultLabel.setText(validator.showNumber(container.getOperation().getOperand(), container.getOperation().isSeparated()));
+      isShownResult = false;
    }
 
    private void updateHistory() {
