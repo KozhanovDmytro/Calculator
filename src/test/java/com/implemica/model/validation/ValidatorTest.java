@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +25,6 @@ class ValidatorTest {
       checkCN("0000000", "0");
       checkCN("0000000000000000", "0");
       checkCN("00000000000000000", "0");
-
 
       checkCN("1", "1");
       checkCN("10", "10");
@@ -90,26 +90,26 @@ class ValidatorTest {
       checkCN("0.00000000000000000000001", "1,e-23");
       checkCN("0.000000000000000000000001", "1,e-24");
 
-      checkCN("1.00000000", "1,00000000");
-      checkCN("10.00000000", "10,00000000");
-      checkCN("100.00000000", "100,00000000");
-      checkCN("1000.00000000", "1 000,00000000");
-      checkCN("10000.00000000", "10 000,00000000");
-      checkCN("100000.00000000", "100 000,00000000");
-      checkCN("1000000.00000000", "1 000 000,00000000");
+      checkCN("1.000000000000000", "1,000000000000000");
+      checkCN("10.00000000000000", "10,00000000000000");
+      checkCN("100.0000000000000", "100,0000000000000");
+      checkCN("1000.000000000000", "1 000,000000000000");
+      checkCN("10000.00000000000", "10 000,00000000000");
+      checkCN("100000.0000000000", "100 000,0000000000");
+      checkCN("1000000.000000000", "1 000 000,000000000");
       checkCN("10000000.00000000", "10 000 000,00000000");
-      checkCN("100000000.00000000", "100 000 000,00000000");
-      checkCN("1000000000.00000000", "1 000 000 000,00000000");
-      checkCN("10000000000.00000000", "10 000 000 000,00000000");
-      checkCN("100000000000.00000000", "100 000 000 000,00000000");
-      checkCN("1000000000000.00000000", "1 000 000 000 000,00000000");
-      checkCN("10000000000000.00000000", "10 000 000 000 000,00000000");
-      checkCN("100000000000000.00000000", "100 000 000 000 000,00000000");
-      checkCN("1000000000000000.00000000", "1 000 000 000 000 000,00000000");
+      checkCN("100000000.0000000", "100 000 000,0000000");
+      checkCN("1000000000.000000", "1 000 000 000,000000");
+      checkCN("10000000000.00000", "10 000 000 000,00000");
+      checkCN("100000000000.0000", "100 000 000 000,0000");
+      checkCN("1000000000000.000", "1 000 000 000 000,000");
+      checkCN("10000000000000.00", "10 000 000 000 000,00");
+      checkCN("100000000000000.0", "100 000 000 000 000,0");
+      checkCN("1000000000000000.", "1 000 000 000 000 000");
 
 
       checkCN("10000000000.1", "10 000 000 000,1");
-      checkCN("10000000000.1456897654", "10 000 000 000,1456897654");
+      checkCN("10000000000.14568", "10 000 000 000,14568");
    }
 
    @Test
@@ -125,10 +125,10 @@ class ValidatorTest {
    }
 
    private void checkCN(String number, String expected){
-      assertEquals(expected, validator.showNumber(new BigDecimal(number)));
+      assertEquals(expected, validator.showNumber(new BigDecimal(number, MathContext.DECIMAL64), false));
    }
 
    private void checkCNS(String number, String expected){
-      assertEquals(expected, validator.showNumber(new BigDecimal(number), true));
+      assertEquals(expected, validator.showNumber(new BigDecimal(number, MathContext.DECIMAL64), true));
    }
 }

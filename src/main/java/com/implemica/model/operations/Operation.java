@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ public abstract class Operation {
     private boolean separated;
 
     public Operation(){
-        operand = new BigDecimal(BigInteger.ZERO);
+        operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
     }
 
     public Operation(double number){
@@ -27,8 +28,7 @@ public abstract class Operation {
     abstract public StringBuilder buildHistory(StringBuilder history);
 
     public void buildOperand(char number) {
-         // TODO it's not a precision
-        if(operand.precision() + operand.scale() < 17) {
+        if(operand.toBigInteger().toString().length() + operand.scale() < 16) {
             String separator;
             if(this.isSeparated())
                 separator = ".";

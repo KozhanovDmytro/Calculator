@@ -11,7 +11,7 @@ public class Validator {
 
    private final String PATTERN_FOR_NUMBER = ",###.#################";
 
-   private final String PATTERN_FOR_EXPONENT = "#.E0";
+   private final String PATTERN_FOR_EXPONENT = "#.###############E0";
 
    private final String INTEGER_EXPONENT_SEPARATOR = "e+";
 
@@ -30,7 +30,6 @@ public class Validator {
 
       DecimalFormat df = new DecimalFormat();
       df.setGroupingSize(3);
-      df.setParseBigDecimal(true);
 
       df.setMinimumIntegerDigits(0);
       df.setMaximumIntegerDigits(16);
@@ -51,6 +50,7 @@ public class Validator {
 
       df.setDecimalFormatSymbols(dfs);
 
+      // for 0.000000000001
       if(number.scale() > 0 && number.scale() <= 16){
          BigDecimal temp = new BigDecimal(number.toPlainString() + "1");
          result = df.format(temp);
@@ -60,10 +60,5 @@ public class Validator {
       }
 
       return result;
-   }
-
-   @Deprecated
-   public String showNumberForSystem(String number){
-      return number.replaceAll("\\s", "").replaceAll(",", ".");
    }
 }
