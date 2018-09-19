@@ -82,12 +82,6 @@ public class Controller {
       });
 
       sqrtOperation.setOnAction(event -> {
-//         if (container.isMadeOperand()) {
-//            container.getOperation().setOperand(new SquareRoot().calculate(container.getOperation().getOperand()));
-//         } else {
-//            container.setResult(new SquareRoot().calculate(container.getResult()));
-//         }
-
          container.change(new SquareRoot(), isShownResult);
 
          if(isShownResult){
@@ -131,12 +125,12 @@ public class Controller {
                eq.getLastOperation().setOperand(eq.getLastOperation().getOperand());
             }
          }
-
          container.calculate();
          showResult();
-         Operation equals = new Equals(container.getOperation());
+         Equals equals = new Equals(container.getOperation());
          container.getHistory().clear();
          updateHistory();
+         container.getHistory().add(new Default(container.getResult()));
          container.setOperation(equals);
          container.getHistory().add(equals);
 
@@ -147,6 +141,13 @@ public class Controller {
    private void actionForOperations(Operation operation) {
       if (!(container.getOperation() instanceof Equals))
          container.calculate();
+
+      if(container.getOperation().isShowOperand()){
+         container.getHistory().add(operation);
+      } else {
+         container.getHistory().changeLast(operation);
+      }
+
       showResult();
       updateHistory();
       container.setOperation(operation);
@@ -188,6 +189,7 @@ public class Controller {
       if (container.isMadeOperand() || container.getOperation() instanceof Equals) {
          container.getOperation().buildOperand(numeral.translate(number));
          showOperand();
+         container.getOperation().setShowOperand(true);
       }
    }
 
@@ -205,6 +207,7 @@ public class Controller {
          container.setMadeOperand(true);
 
          showOperand();
+         updateHistory();
       });
       ce.setOnAction(event -> {
          container.getOperation().setOperand(BigDecimal.ZERO);
@@ -223,7 +226,7 @@ public class Controller {
    }
 
    private void updateHistory() {
-      historyLabel.setText(container.getHistory().toString());
+      historyLabel.setText(container.getHistory().buildHistory());
    }
 }
 

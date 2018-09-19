@@ -6,13 +6,13 @@ import java.math.BigDecimal;
 
 public class Plus extends Operation {
 
-    @Override
-    public BigDecimal calculate(BigDecimal result) {
-        return operand.add(result);
+    public Plus(){
+        super();
+        character = "+";
     }
 
     @Override
-    public StringBuilder buildHistory(StringBuilder history) {
-        return history.append(" + ").append(operand.toString());
+    public BigDecimal calculate(BigDecimal result) {
+        return operand.add(result);
     }
 }

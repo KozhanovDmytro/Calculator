@@ -10,12 +10,13 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 
 @Getter
 @Setter
 public class Container {
 
-    private BigDecimal result = new BigDecimal(BigInteger.ZERO);
+    private BigDecimal result = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
 
     private Operation operation = new Default();
 
@@ -25,10 +26,16 @@ public class Container {
 
     public void calculate() {
         result = this.operation.calculate(result);
-        if(!operation.getOperand().equals(BigDecimal.ZERO))
-            history.add(this.operation);
+        if(operation instanceof Default){
+            history.add(operation);
+        }
     }
 
+    /**
+     * Function wich calculate for {@link SpecialOperation}.
+     * @param operation
+     * @param isResult
+     */
     public void change(SpecialOperation operation, boolean isResult) {
         if(isResult){
             setResult(operation.calculate(getResult()));

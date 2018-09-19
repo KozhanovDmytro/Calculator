@@ -6,13 +6,12 @@ import java.math.BigDecimal;
 
 public class Minus extends Operation {
 
-    @Override
-    public BigDecimal calculate(BigDecimal result) {
-        return result.subtract(operand);
+    public Minus(){
+        character = "-";
     }
 
     @Override
-    public StringBuilder buildHistory(StringBuilder history) {
-        return history.append(" - ").append(operand.toString());
+    public BigDecimal calculate(BigDecimal result) {
+        return result.subtract(operand);
     }
 }

@@ -7,6 +7,9 @@ public class Default extends Operation {
     public Default() {
         super();
     }
+    public Default(BigDecimal operand){
+        this.operand = operand;
+    }
 
     @Override
     public BigDecimal calculate(BigDecimal result) {
@@ -14,7 +17,7 @@ public class Default extends Operation {
     }
 
     @Override
-    public StringBuilder buildHistory(StringBuilder history) {
-        return history.append(operand.toString());
+    public String buildHistory() {
+        return operand.toString();
     }
 }

@@ -9,4 +9,8 @@ public interface History {
     void clear();
 
     Operation getLast();
+
+    void changeLast(Operation operation);
+
+    String buildHistory();
 }

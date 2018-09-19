@@ -25,14 +25,19 @@ public class HistoryImpl implements History {
 
     @Override
     public Operation getLast() {
-        return operations.getLast();
+        return operations.size() != 0 ? operations.getLast() : null;
     }
 
     @Override
-    public String toString() {
+    public void changeLast(Operation operation) {
+        operations.removeLast();
+        add(operation);
+    }
+
+    public String buildHistory() {
         StringBuilder result = new StringBuilder();
         for (Operation a : operations) {
-            a.buildHistory(result);
+            result.append(a.buildHistory());
         }
         return result.toString();
     }

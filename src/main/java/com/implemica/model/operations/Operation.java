@@ -13,19 +13,27 @@ public abstract class Operation {
 
     protected BigDecimal operand;
 
+    protected String character;
+
     private boolean separated;
+
+    private boolean showOperand;
 
     public Operation(){
         operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
+        showOperand = false;
     }
 
     public Operation(double number){
         this.operand = new BigDecimal(number);
+        showOperand = false;
     }
 
     abstract public BigDecimal calculate(BigDecimal result);
 
-    abstract public StringBuilder buildHistory(StringBuilder history);
+    public String buildHistory() {
+        return " " + character + (isShowOperand() ? " " + operand.toString() : "");
+    }
 
     public void buildOperand(char number) {
         if(operand.toBigInteger().toString().length() + operand.scale() < 16) {

@@ -11,6 +11,9 @@ public class Equals extends Operation {
     @Setter
     private Operation lastOperation;
 
+    @Setter
+    private String result;
+
     public Equals(Operation lastOperation) {
         this.lastOperation = lastOperation;
     }
@@ -21,7 +24,7 @@ public class Equals extends Operation {
     }
 
     @Override
-    public StringBuilder buildHistory(StringBuilder history) {
-        return new StringBuilder();
+    public String buildHistory() {
+        return result;
     }
 }
