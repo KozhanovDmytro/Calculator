@@ -421,7 +421,10 @@ public class Launcher extends Application {
 
             grid.getChildren().clear();
             grid.getColumnConstraints().remove(4);
-            grid.getRowConstraints().add(new RowConstraints(40, 40, Double.MAX_VALUE));
+
+            RowConstraints newRow = new RowConstraints(40, 40, Double.MAX_VALUE);
+            newRow.setVgrow(Priority.SOMETIMES);
+            grid.getRowConstraints().add(newRow);
 
             grid.add(historyLabel, 0, 0, 5, 1);
             grid.add(resultLabelBox, 0, 1, 5, 1);
