@@ -28,7 +28,7 @@ public class Percent implements SpecialOperation {
    }
 
    @Override
-   public StringBuilder buildHistory(StringBuilder history) {
-      return new StringBuilder(history);
+   public String buildHistory(String history) {
+      return history;
    }
 }

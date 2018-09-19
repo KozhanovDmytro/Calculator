@@ -15,7 +15,7 @@ public class SquareRoot implements SpecialOperation {
    }
 
    @Override
-   public StringBuilder buildHistory(StringBuilder history) {
-      return new StringBuilder().append("√(").append(history).append(")");
+   public String buildHistory(String history) {
+      return "√(" + history + ")";
    }
 }

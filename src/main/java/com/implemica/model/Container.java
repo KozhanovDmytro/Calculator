@@ -39,9 +39,9 @@ public class Container {
     public void change(SpecialOperation operation, boolean isResult) {
         if(isResult){
             setResult(operation.calculate(getResult()));
-            // TODO write into a local (operand) history
         } else {
             getOperation().setOperand(operation.calculate(getOperation().getOperand()));
+            getOperation().getLocalHistory().add(operation);
         }
     }
 }

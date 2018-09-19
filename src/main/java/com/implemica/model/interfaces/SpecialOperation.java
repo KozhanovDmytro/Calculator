@@ -6,5 +6,5 @@ public interface SpecialOperation {
 
    BigDecimal calculate(BigDecimal operand);
 
-   StringBuilder buildHistory(StringBuilder history);
+   String buildHistory(String history);
 }

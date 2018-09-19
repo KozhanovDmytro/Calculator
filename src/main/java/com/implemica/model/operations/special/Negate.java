@@ -13,7 +13,7 @@ public class Negate implements SpecialOperation {
    }
 
    @Override
-   public StringBuilder buildHistory(StringBuilder history) {
-      return new StringBuilder().append("negate(").append(history).append(")");
+   public String buildHistory(String history) {
+      return "negate(" + history + ")";
    }
 }

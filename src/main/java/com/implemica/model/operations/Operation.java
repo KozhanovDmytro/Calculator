@@ -1,5 +1,7 @@
 package com.implemica.model.operations;
 
+import com.implemica.model.history.OperandHistoryImpl;
+import com.implemica.model.interfaces.OperandHistory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,24 +17,28 @@ public abstract class Operation {
 
     protected String character;
 
+    protected OperandHistory localHistory;
+
     private boolean separated;
 
     private boolean showOperand;
 
     public Operation(){
         operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
+        localHistory = new OperandHistoryImpl();
         showOperand = false;
     }
 
     public Operation(double number){
         this.operand = new BigDecimal(number);
+        localHistory = new OperandHistoryImpl();
         showOperand = false;
     }
 
     abstract public BigDecimal calculate(BigDecimal result);
 
     public String buildHistory() {
-        return " " + character + (isShowOperand() ? " " + operand.toString() : "");
+        return " " + character + (isShowOperand() ? " " + buildLocalHistory() : "");
     }
 
     public void buildOperand(char number) {
@@ -60,5 +66,7 @@ public abstract class Operation {
         return this.getClass().getName();
     }
 
-    // TODO method for edited operand. This function intended for making history.
+    private String buildLocalHistory(){
+        return localHistory.buildHistory(this.getOperand());
+    }
 }
