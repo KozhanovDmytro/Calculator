@@ -41,9 +41,11 @@ public class Validator {
       if(number.compareTo(new BigDecimal("1e16")) >= 0){
          dfs.setExponentSeparator(INTEGER_EXPONENT_SEPARATOR);
          df.applyPattern(PATTERN_FOR_EXPONENT);
+         df.setDecimalSeparatorAlwaysShown(true);
       } else if(number.scale() > 16) {
          dfs.setExponentSeparator(DECIMAL_EXPONENT_SEPARATOR);
          df.applyPattern(PATTERN_FOR_EXPONENT);
+         df.setDecimalSeparatorAlwaysShown(true);
       } else if(number.scale() > 0){
          df.applyPattern(PATTERN_FOR_NUMBER);
       }
