@@ -1,10 +1,10 @@
 package com.implemica.model.operations.simple;
 
-import com.implemica.model.operations.Operation;
+import com.implemica.model.operations.SimpleOperation;
 
 import java.math.BigDecimal;
 
-public class Plus extends Operation {
+public class Plus extends SimpleOperation {
 
     public Plus(){
         super();

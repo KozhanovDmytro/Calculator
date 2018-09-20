@@ -78,6 +78,7 @@ public class Controller {
             showResult();
          } else {
             showOperand();
+            updateHistory();
          }
       });
 
@@ -88,6 +89,7 @@ public class Controller {
             showResult();
          } else {
             showOperand();
+            updateHistory();
          }
       });
 
@@ -98,6 +100,7 @@ public class Controller {
             showResult();
          } else {
             showOperand();
+            updateHistory();
          }
       });
 
@@ -108,6 +111,7 @@ public class Controller {
             showResult();
          } else {
             showOperand();
+            updateHistory();
          }
       });
 
@@ -130,22 +134,25 @@ public class Controller {
          Equals equals = new Equals(container.getOperation());
          container.getHistory().clear();
          updateHistory();
-         container.getHistory().add(new Default(container.getResult()));
          container.setOperation(equals);
-         container.getHistory().add(equals);
 
          container.setMadeOperand(false);
       });
    }
 
-   private void actionForOperations(Operation operation) {
+   private void actionForOperations(SimpleOperation operation) {
       if (!(container.getOperation() instanceof Equals))
          container.calculate();
 
       if(container.getOperation().isShowOperand()){
          container.getHistory().add(operation);
       } else {
-         container.getHistory().changeLast(operation);
+         if(container.getHistory().size() == 0){
+            container.getHistory().add(new Default(container.getResult()));
+            container.getHistory().add(operation);
+         } else {
+            container.getHistory().changeLast(operation);
+         }
       }
 
       showResult();

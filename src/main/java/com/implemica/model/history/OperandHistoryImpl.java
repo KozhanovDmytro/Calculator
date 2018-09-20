@@ -1,12 +1,11 @@
 package com.implemica.model.history;
 
-import com.implemica.model.interfaces.OperandHistory;
+import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
 
-import java.math.BigDecimal;
 import java.util.ArrayDeque;
 
-public class OperandHistoryImpl implements OperandHistory {
+public class OperandHistoryImpl implements History<SpecialOperation> {
 
    private ArrayDeque<SpecialOperation> operations;
 
@@ -25,8 +24,40 @@ public class OperandHistoryImpl implements OperandHistory {
    }
 
    @Override
-   public String buildHistory(BigDecimal operand) {
-      String result = operand.toString();
+   public SpecialOperation getLast() {
+      return operations.getLast();
+   }
+
+   @Override
+   public int size() {
+      return operations.size();
+   }
+
+   @Override
+   public boolean contains(Class operation) {
+      boolean result = false;
+      for (SpecialOperation so : operations) {
+         if(operation.equals(so.getClass())) {
+            result = true;
+         }
+      }
+      return result;
+   }
+
+   @Override
+   public void changeLast(SpecialOperation operation) {
+      operations.removeLast();
+      add(operation);
+   }
+
+   @Override
+   @Deprecated
+   public String buildHistory() {
+      return buildHistory("");
+   }
+
+   public String buildHistory(String operand) {
+      String result = operand;
 
       for (SpecialOperation sc : operations) {
          result = sc.buildHistory(result);

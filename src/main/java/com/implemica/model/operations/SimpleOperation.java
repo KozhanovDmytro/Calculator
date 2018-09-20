@@ -1,7 +1,8 @@
 package com.implemica.model.operations;
 
 import com.implemica.model.history.OperandHistoryImpl;
-import com.implemica.model.interfaces.OperandHistory;
+import com.implemica.model.interfaces.History;
+import com.implemica.model.interfaces.Operation;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,31 +12,26 @@ import java.math.MathContext;
 
 @Getter
 @Setter
-public abstract class Operation {
+public abstract class SimpleOperation implements Operation {
 
     protected BigDecimal operand;
 
+    protected String stringOperand;
+
     protected String character;
 
-    protected OperandHistory localHistory;
+    protected History localHistory;
 
     private boolean separated;
 
     private boolean showOperand;
 
-    public Operation(){
+    public SimpleOperation(){
         operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
+        stringOperand = operand.toPlainString();
         localHistory = new OperandHistoryImpl();
         showOperand = false;
     }
-
-    public Operation(double number){
-        this.operand = new BigDecimal(number);
-        localHistory = new OperandHistoryImpl();
-        showOperand = false;
-    }
-
-    abstract public BigDecimal calculate(BigDecimal result);
 
     public String buildHistory() {
         return " " + character + (isShowOperand() ? " " + buildLocalHistory() : "");
@@ -49,6 +45,7 @@ public abstract class Operation {
             else
                 separator = "";
             operand = new BigDecimal(operand.toPlainString() + separator + number);
+            stringOperand = operand.toPlainString();
 
             this.setSeparated(false);
         }
@@ -67,6 +64,6 @@ public abstract class Operation {
     }
 
     private String buildLocalHistory(){
-        return localHistory.buildHistory(this.getOperand());
+        return ((OperandHistoryImpl)localHistory).buildHistory(this.getStringOperand());
     }
 }

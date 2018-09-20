@@ -4,7 +4,7 @@ import com.implemica.model.history.HistoryImpl;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.operations.Default;
-import com.implemica.model.operations.Operation;
+import com.implemica.model.operations.SimpleOperation;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,21 +18,21 @@ public class Container {
 
     private BigDecimal result = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
 
-    private Operation operation = new Default();
+    private SimpleOperation operation = new Default();
 
-    private History history = new HistoryImpl();
+    private History<SimpleOperation> history = new HistoryImpl();
 
     private boolean madeOperand;
 
     public void calculate() {
         result = this.operation.calculate(result);
-        if(operation instanceof Default){
+        if(operation instanceof Default && !history.contains(Default.class)){
             history.add(operation);
         }
     }
 
     /**
-     * Function wich calculate for {@link SpecialOperation}.
+     * Function which calculate for {@link SpecialOperation}.
      * @param operation
      * @param isResult
      */
@@ -42,6 +42,10 @@ public class Container {
         } else {
             getOperation().setOperand(operation.calculate(getOperation().getOperand()));
             getOperation().getLocalHistory().add(operation);
+
+            if(this.operation instanceof Default && getHistory().size() == 0){
+                getHistory().add(this.operation);
+            }
         }
     }
 }

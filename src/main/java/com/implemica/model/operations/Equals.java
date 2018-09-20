@@ -5,16 +5,16 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-public class Equals extends Operation {
+public class Equals extends SimpleOperation {
 
     @Getter
     @Setter
-    private Operation lastOperation;
+    private SimpleOperation lastOperation;
 
     @Setter
     private String result;
 
-    public Equals(Operation lastOperation) {
+    public Equals(SimpleOperation lastOperation) {
         this.lastOperation = lastOperation;
     }
 

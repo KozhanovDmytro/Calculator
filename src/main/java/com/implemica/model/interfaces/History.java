@@ -1,16 +1,18 @@
 package com.implemica.model.interfaces;
 
-import com.implemica.model.operations.Operation;
+public interface History<T extends Operation> {
 
-public interface History {
-
-    void add(Operation operation);
+    void add(T operation);
 
     void clear();
 
-    Operation getLast();
+    T getLast();
 
-    void changeLast(Operation operation);
+    int size();
+
+    boolean contains(Class operation);
+
+    void changeLast(T operation);
 
     String buildHistory();
 }

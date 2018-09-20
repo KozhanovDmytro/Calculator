@@ -2,9 +2,8 @@ package com.implemica.model.interfaces;
 
 import java.math.BigDecimal;
 
-public interface SpecialOperation {
-
-   BigDecimal calculate(BigDecimal operand);
+public interface SpecialOperation extends Operation {
 
    String buildHistory(String history);
+
 }

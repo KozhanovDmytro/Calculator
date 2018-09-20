@@ -1,10 +1,10 @@
 package com.implemica.model.operations.simple;
 
-import com.implemica.model.operations.Operation;
+import com.implemica.model.operations.SimpleOperation;
 
 import java.math.BigDecimal;
 
-public class Multiply extends Operation {
+public class Multiply extends SimpleOperation {
 
     public Multiply(){
         super();
@@ -13,7 +13,7 @@ public class Multiply extends Operation {
 
     @Override
     public BigDecimal calculate(BigDecimal result) {
-        if(this.isShowOperand())
+        if(this.isShowOperand() || !operand.equals(BigDecimal.ZERO))
             return result.multiply(operand);
         else return result;
     }

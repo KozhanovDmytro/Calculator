@@ -1,11 +1,11 @@
 package com.implemica.model.operations.simple;
 
-import com.implemica.model.operations.Operation;
+import com.implemica.model.operations.SimpleOperation;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-public class Divide extends Operation {
+public class Divide extends SimpleOperation {
 
     public Divide(){
         super();
@@ -14,7 +14,7 @@ public class Divide extends Operation {
 
     @Override
     public BigDecimal calculate(BigDecimal result) {
-        if(this.isShowOperand())
+        if(this.isShowOperand() || !operand.equals(BigDecimal.ZERO))
             return result.divide(operand, MathContext.DECIMAL64);
         else return result;
     }
