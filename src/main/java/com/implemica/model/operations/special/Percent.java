@@ -1,17 +1,20 @@
 package com.implemica.model.operations.special;
 
 import com.implemica.model.interfaces.SpecialOperation;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 public class Percent implements SpecialOperation {
-//   public BigDecimal calculate(BigDecimal result, BigDecimal operand){
-//      return result.multiply(operand).divide(new BigDecimal(100));
-//   }
 
+   @Setter
    private BigDecimal result;
 
    private String history;
+
+   public Percent(){
+      result = BigDecimal.ZERO;
+   }
 
    public Percent(BigDecimal result){
       this.result = result;

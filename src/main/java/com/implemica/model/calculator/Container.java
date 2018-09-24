@@ -1,6 +1,6 @@
-package com.implemica.model;
+package com.implemica.model.calculator;
 
-import com.implemica.model.history.HistoryImpl;
+import com.implemica.model.history.MainHistory;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.operations.Default;
@@ -20,7 +20,7 @@ public class Container {
 
     private SimpleOperation operation = new Default();
 
-    private History<SimpleOperation> history = new HistoryImpl();
+    private History<SimpleOperation> history = new MainHistory();
 
     private boolean madeOperand;
 
@@ -41,7 +41,7 @@ public class Container {
             setResult(operation.calculate(getResult()));
         } else {
             getOperation().setOperand(operation.calculate(getOperation().getOperand()));
-            getOperation().getLocalHistory().add(operation);
+            getOperation().getOperandHistory().add(operation);
 
             if(this.operation instanceof Default && getHistory().size() == 0){
                 getHistory().add(this.operation);
