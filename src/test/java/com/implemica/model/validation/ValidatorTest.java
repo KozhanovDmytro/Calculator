@@ -113,11 +113,6 @@ class ValidatorTest {
    }
 
    @Test
-   void showNumberForSystem() {
-
-   }
-
-   @Test
    void showComfortableNumberSeparated(){
       checkCNS("1", "1,");
       checkCNS("1000", "1 000,");
