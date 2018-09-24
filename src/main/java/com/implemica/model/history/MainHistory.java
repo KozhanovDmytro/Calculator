@@ -6,11 +6,11 @@ import com.implemica.model.operations.SimpleOperation;
 
 import java.util.ArrayDeque;
 
-public class HistoryImpl implements History<SimpleOperation> {
+public class MainHistory implements History<SimpleOperation> {
 
     private ArrayDeque<SimpleOperation> operations;
 
-    public HistoryImpl(){
+    public MainHistory(){
         operations = new ArrayDeque<>();
     }
 

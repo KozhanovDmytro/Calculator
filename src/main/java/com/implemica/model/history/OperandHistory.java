@@ -5,11 +5,11 @@ import com.implemica.model.interfaces.SpecialOperation;
 
 import java.util.ArrayDeque;
 
-public class OperandHistoryImpl implements History<SpecialOperation> {
+public class OperandHistory implements History<SpecialOperation> {
 
    private ArrayDeque<SpecialOperation> operations;
 
-   public OperandHistoryImpl() {
+   public OperandHistory() {
       operations = new ArrayDeque<>();
    }
 

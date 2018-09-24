@@ -1,6 +1,6 @@
 package com.implemica.model.operations;
 
-import com.implemica.model.history.OperandHistoryImpl;
+import com.implemica.model.history.OperandHistory;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.Operation;
 import lombok.Getter;
@@ -10,31 +10,38 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 
-@Getter
-@Setter
 public abstract class SimpleOperation implements Operation {
 
+    @Getter
+    @Setter
     protected BigDecimal operand;
 
+    @Getter
+    @Setter
     protected String stringOperand;
 
     protected String character;
 
-    protected History localHistory;
+    @Getter
+    protected History operandHistory;
 
+    @Getter
+    @Setter
     private boolean separated;
 
-    private boolean showOperand;
+    @Getter
+    @Setter
+    private boolean showOperand;  //TODO Rename it.
 
     public SimpleOperation(){
         operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
         stringOperand = operand.toPlainString();
-        localHistory = new OperandHistoryImpl();
+        operandHistory = new OperandHistory();
         showOperand = false;
     }
 
     public String buildHistory() {
-        return " " + character + (isShowOperand() ? " " + buildLocalHistory() : "");
+        return getCharacter() + (isShowOperand() ? buildLocalHistory() + " " : "");
     }
 
     public void buildOperand(char number) {
@@ -64,6 +71,10 @@ public abstract class SimpleOperation implements Operation {
     }
 
     private String buildLocalHistory(){
-        return ((OperandHistoryImpl)localHistory).buildHistory(this.getStringOperand());
+        return ((OperandHistory) operandHistory).buildHistory(this.getStringOperand());
+    }
+
+    private String getCharacter(){
+        return character.equals("") ? "" : character + " ";
     }
 }
