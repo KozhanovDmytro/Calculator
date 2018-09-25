@@ -33,6 +33,39 @@ class ContainerTest {
       checkResult("0");
    }
 
+   @Test
+   public void plusOperations() {
+      calculate(new Default(), "10");
+
+      calculate(new Plus(), "1");
+      calculate(new Plus(), "2");
+      calculate(new Plus(), "3");
+      calculate(new Plus(), "4");
+
+      checkResult("20");
+   }
+
+   @Test
+   public void multiplyOperations() {
+      calculate(new Default(), "2");
+
+      calculate(new Multiply(), "3");
+      calculate(new Multiply(), "4");
+      calculate(new Multiply(), "5");
+
+      checkResult("120");
+   }
+
+   @Test
+   public void divideOperations() {
+      calculate(new Default(), "90");
+
+      calculate(new Divide(), "3");
+      calculate(new Divide(), "10");
+
+      checkResult("3");
+   }
+
    private void calculate(SimpleOperation operation, String number){
       operation.setShowOperand(true);
       for (char c : number.toCharArray()) {
@@ -46,7 +79,4 @@ class ContainerTest {
       assertEquals(new BigDecimal(number), container.getResult());
    }
 
-   private void checkHistory(String history){
-      assertEquals(history, container.getHistory().buildHistory());
-   }
 }
