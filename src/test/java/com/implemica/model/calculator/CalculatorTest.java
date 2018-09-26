@@ -1,14 +1,18 @@
 package com.implemica.model.calculator;
 
 import com.implemica.model.interfaces.History;
+import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
-import com.implemica.model.operations.Default;
 import com.implemica.model.operations.SimpleOperation;
 import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
+import com.implemica.model.operations.special.DivideBy;
+import com.implemica.model.operations.special.Percent;
+import com.implemica.model.operations.special.Square;
+import com.implemica.model.operations.special.SquareRoot;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
    private Calculator calculator;
+
+   private final String SQRT = "√";
 
    @BeforeEach
    public void init() {
@@ -34,11 +40,11 @@ class CalculatorTest {
    public void manyPlusOperations(){
       buildOperand(Number.THREE);
 
-      executeSimpleOperation(new Plus(), "3");
-      executeSimpleOperation(new Plus(), "3");
-      executeSimpleOperation(new Plus(), "3");
-      executeSimpleOperation(new Plus(), "3");
-      executeSimpleOperation(new Plus(), "3");
+      executeSimpleOperation(new Plus());
+      executeSimpleOperation(new Plus());
+      executeSimpleOperation(new Plus());
+      executeSimpleOperation(new Plus());
+      executeSimpleOperation(new Plus());
 
       checkHistory("3 + ", 2);
       checkResult("3");
@@ -48,11 +54,11 @@ class CalculatorTest {
    public void manyMinusOperations() {
       buildOperand(Number.FIVE);
 
-      executeSimpleOperation(new Minus(), "5");
-      executeSimpleOperation(new Minus(), "5");
-      executeSimpleOperation(new Minus(), "5");
-      executeSimpleOperation(new Minus(), "5");
-      executeSimpleOperation(new Minus(), "5");
+      executeSimpleOperation(new Minus());
+      executeSimpleOperation(new Minus());
+      executeSimpleOperation(new Minus());
+      executeSimpleOperation(new Minus());
+      executeSimpleOperation(new Minus());
 
       checkHistory("5 - ", 2);
       checkResult("5");
@@ -62,11 +68,11 @@ class CalculatorTest {
    public void manyMultiplyOperations() {
       buildOperand(Number.EIGHT);
 
-      executeSimpleOperation(new Multiply(), "8");
-      executeSimpleOperation(new Multiply(), "8");
-      executeSimpleOperation(new Multiply(), "8");
-      executeSimpleOperation(new Multiply(), "8");
-      executeSimpleOperation(new Multiply(), "8");
+      executeSimpleOperation(new Multiply());
+      executeSimpleOperation(new Multiply());
+      executeSimpleOperation(new Multiply());
+      executeSimpleOperation(new Multiply());
+      executeSimpleOperation(new Multiply());
 
       checkHistory("8 * ", 2);
       checkResult("8");
@@ -77,10 +83,10 @@ class CalculatorTest {
       buildOperand(Number.ONE);
       buildOperand(Number.TWO);
 
-      executeSimpleOperation(new Divide(), "12");
-      executeSimpleOperation(new Divide(), "12");
-      executeSimpleOperation(new Divide(), "12");
-      executeSimpleOperation(new Divide(), "12");
+      executeSimpleOperation(new Divide());
+      executeSimpleOperation(new Divide());
+      executeSimpleOperation(new Divide());
+      executeSimpleOperation(new Divide());
 
       checkHistory("12 / ", 2);
       checkResult("12");
@@ -96,11 +102,11 @@ class CalculatorTest {
    public void plusOperationsEquals(){
       buildOperand(Number.TWO);
 
-      executeSimpleOperation(new Plus(), "2");
-      executeSimpleOperation(new Plus(), "2");
-      executeSimpleOperation(new Plus(), "2");
-      executeSimpleOperation(new Plus(), "2");
-      executeSimpleOperation(new Plus(), "2");
+      executeSimpleOperation(new Plus());
+      executeSimpleOperation(new Plus());
+      executeSimpleOperation(new Plus());
+      executeSimpleOperation(new Plus());
+      executeSimpleOperation(new Plus());
 
       equals();
 
@@ -112,11 +118,11 @@ class CalculatorTest {
    public void minusOperationsEquals() {
       buildOperand(Number.FOUR);
 
-      executeSimpleOperation(new Minus(), "4");
-      executeSimpleOperation(new Minus(), "4");
-      executeSimpleOperation(new Minus(), "4");
-      executeSimpleOperation(new Minus(), "4");
-      executeSimpleOperation(new Minus(), "4");
+      executeSimpleOperation(new Minus());
+      executeSimpleOperation(new Minus());
+      executeSimpleOperation(new Minus());
+      executeSimpleOperation(new Minus());
+      executeSimpleOperation(new Minus());
 
       equals();
 
@@ -129,10 +135,10 @@ class CalculatorTest {
       buildOperand(Number.FOUR);
       buildOperand(Number.FIVE);
 
-      executeSimpleOperation(new Multiply(), "45");
-      executeSimpleOperation(new Multiply(), "45");
-      executeSimpleOperation(new Multiply(), "45");
-      executeSimpleOperation(new Multiply(), "45");
+      executeSimpleOperation(new Multiply());
+      executeSimpleOperation(new Multiply());
+      executeSimpleOperation(new Multiply());
+      executeSimpleOperation(new Multiply());
 
       equals();
 
@@ -145,11 +151,11 @@ class CalculatorTest {
       buildOperand(Number.ONE);
       buildOperand(Number.TWO);
 
-      executeSimpleOperation(new Divide(), "12");
-      executeSimpleOperation(new Divide(), "12");
-      executeSimpleOperation(new Divide(), "12");
-      executeSimpleOperation(new Divide(), "12");
-      executeSimpleOperation(new Divide(), "12");
+      executeSimpleOperation(new Divide());
+      executeSimpleOperation(new Divide());
+      executeSimpleOperation(new Divide());
+      executeSimpleOperation(new Divide());
+      executeSimpleOperation(new Divide());
 
       equals();
 
@@ -167,7 +173,7 @@ class CalculatorTest {
    public void plusOperationMultiEquals(){
       buildOperand(Number.ONE);
 
-      executeSimpleOperation(new Plus(), "1");
+      executeSimpleOperation(new Plus());
 
       buildOperand(Number.THREE);
 
@@ -185,7 +191,7 @@ class CalculatorTest {
       buildOperand(Number.EIGHT);
       buildOperand(Number.NINE);
 
-      executeSimpleOperation(new Minus(), "289");
+      executeSimpleOperation(new Minus());
 
       buildOperand(Number.ONE);
       buildOperand(Number.ZERO);
@@ -203,7 +209,7 @@ class CalculatorTest {
    public void multiplyOperationMultiEquals() {
       buildOperand(Number.TWO);
 
-      executeSimpleOperation(new Multiply(), "2");
+      executeSimpleOperation(new Multiply());
 
       buildOperand(Number.THREE);
 
@@ -221,7 +227,7 @@ class CalculatorTest {
       buildOperand(Number.EIGHT);
       buildOperand(Number.EIGHT);
 
-      executeSimpleOperation(new Divide(), "188");
+      executeSimpleOperation(new Divide());
 
       buildOperand(Number.TWO);
 
@@ -243,13 +249,15 @@ class CalculatorTest {
    public void operationIsTheLast(){
       buildOperand(Number.TWO);
 
-      executeSimpleOperation(new Plus(), "2");
+      executeSimpleOperation(new Plus());
 
       buildOperand(Number.THREE);
 
       equals();
 
-      executeSimpleOperation(new Plus(), "5");
+      checkResult("5");
+
+      executeSimpleOperation(new Plus());
 
       checkHistory("5 + ", 2);
       checkResult("5");
@@ -268,16 +276,18 @@ class CalculatorTest {
       buildOperand(Number.THREE);
       buildOperand(Number.NINE);
 
-      executeSimpleOperation(new Multiply(), "239");
+      executeSimpleOperation(new Multiply());
 
       buildOperand(Number.FOUR);
 
       equals();
 
-      executeSimpleOperation(new Plus(), "956");
-      executeSimpleOperation(new Minus(), "956");
-      executeSimpleOperation(new Multiply(), "956");
-      executeSimpleOperation(new Divide(), "956");
+      checkResult("956");
+
+      executeSimpleOperation(new Plus());
+      executeSimpleOperation(new Minus());
+      executeSimpleOperation(new Multiply());
+      executeSimpleOperation(new Divide());
 
       checkHistory("956 / ", 2);
       checkResult("956");
@@ -292,13 +302,17 @@ class CalculatorTest {
       buildOperand(Number.ONE);
       buildOperand(Number.ZERO);
 
-      executeSimpleOperation(new Plus(), "10");
+      executeSimpleOperation(new Plus());
       equals();
 
-      executeSimpleOperation(new Plus(), "20");
+      checkResult("20");
+
+      executeSimpleOperation(new Plus());
       equals();
 
-      executeSimpleOperation(new Plus(), "40");
+      checkResult("40");
+
+      executeSimpleOperation(new Plus());
       equals();
 
       checkHistory("", 0);
@@ -315,7 +329,7 @@ class CalculatorTest {
       buildOperand(Number.SEVEN);
       buildOperand(Number.ZERO);
 
-      executeSimpleOperation(new Divide(), "70");
+      executeSimpleOperation(new Divide());
 
       buildOperand(Number.SEVEN);
 
@@ -336,22 +350,228 @@ class CalculatorTest {
    public void someNumberAfterEquals() {
       buildOperand(Number.SEVEN);
 
-      executeSimpleOperation(new Plus(), "7");
+      executeSimpleOperation(new Plus());
 
       buildOperand(Number.THREE);
 
       equals();
 
+      checkResult("10");
+
       buildOperand(Number.ONE);
 
-      executeSimpleOperation(new Plus(), "10");
+      executeSimpleOperation(new Plus());
 
-      checkResult("10");
+      checkResult("1");
    }
 
-   private void executeSimpleOperation(SimpleOperation operation, String comfortableResult) {
+   /**
+    * Pattern:
+    *    <code>N + N eq N (eq*n)</code>
+    */
+   @Test
+   public void someNumberAndOperationAndEqualsAfterEquals() {
+      buildOperand(Number.TWO);
+
+      executeSimpleOperation(new Plus());
+
+      buildOperand(Number.THREE);
+
+      equals();
+
+      buildOperand(Number.FOUR);
+
+      equals();
+      equals();
+      equals();
+
+      checkHistory("", 0);
+      checkResult("13");
+   }
+
+   /**
+    * Pattern:
+    *    <code>N + N% eq %</code>
+    */
+   @Test
+   public void percentTest() {
+      buildOperand(Number.TWO);
+      buildOperand(Number.ZERO);
+      buildOperand(Number.ZERO);
+
+      executeSimpleOperation(new Plus());
+
+      checkHistory("200 + ", 2);
+
+      buildOperand(Number.TWO);
+
+      executeSpecialOperation(new Percent());
+
+      checkHistory("200 + 4 ", 2);
+
+      equals();
+
+      checkResult("204");
+
+      executeSpecialOperation(new Percent());
+
+      checkResult("416.16");
+   }
+
+
+   /**
+    * Pattern:
+    *    <code>N + N eq N +</code>
+    */
+   @Test
+   public void afterEqualsNumberAndOperation() {
+      buildOperand(Number.ONE);
+
+      executeSimpleOperation(new Plus());
+
+      buildOperand(Number.TWO);
+
+      equals();
+
+      checkResult("3");
+
+      buildOperand(Number.FOUR);
+
+      executeSimpleOperation(new Plus());
+
+      checkHistory("4 + ", 2);
+      checkResult("4");
+
+      equals();
+      equals();
+      equals();
+
+      checkResult("16");
+   }
+
+   /**
+    * Pattern
+    *    <code>N%</code>
+    */
+   @Test
+   public void percentWithoutResult() {
+      buildOperand(Number.TWO);
+
+      executeSpecialOperation(new Percent());
+
+      checkHistory("0 ", 1);
+      checkResult("0");
+   }
+
+   /**
+    * Pattern
+    *    <code>sqrt(4)</code>
+    */
+   @Test
+   public void sqrtWithNumber() {
+      buildOperand(Number.FOUR);
+
+      executeSpecialOperation(new SquareRoot());
+
+      checkHistory(SQRT + "(4) ", 1);
+
+      equals();
+
+      checkResult("2");
+   }
+
+   @Test
+   public void sqrWithNumber() {
+      buildOperand(Number.EIGHT);
+
+      executeSpecialOperation(new Square());
+
+      checkHistory("sqr(8) ", 1);
+
+      equals();
+
+      checkHistory("", 0);
+      checkResult("64");
+   }
+
+   @Test
+   public void divideByWithNumber() {
+      buildOperand(Number.TWO);
+
+      executeSpecialOperation(new DivideBy());
+
+      checkHistory("1/(2) ", 1);
+
+      equals();
+
+      checkResult("0.5");
+   }
+
+   /**
+    * Group tests of that pattern:
+    *    <code> + N</code>
+    */
+   @Test
+   public void plusAndNumber() {
+      executeSimpleOperation(new Plus());
+
+      buildOperand(Number.SEVEN);
+
+      checkHistory("0 + 7 ", 2);
+
+      equals();
+
+      checkResult("7");
+   }
+
+   @Test
+   public void minusAndNumber() {
+      executeSimpleOperation(new Minus());
+
+      buildOperand(Number.SEVEN);
+
+      checkHistory("0 - 7 ", 2);
+
+      equals();
+
+      checkResult("-7");
+   }
+
+   @Test
+   public void multiplyAndNumber() {
+      executeSimpleOperation(new Multiply());
+
+      buildOperand(Number.FOUR);
+
+      checkHistory("0 * 4 ", 2);
+
+      equals();
+
+      checkResult("0");
+   }
+
+   @Test
+   public void divideAndNumber() {
+      executeSimpleOperation(new Divide());
+
+      buildOperand(Number.EIGHT);
+
+      checkHistory("0 / 8 ", 2);
+
+      equals();
+
+      checkResult("0");
+   }
+
+
+
+   private void executeSimpleOperation(SimpleOperation operation) {
       calculator.executeSimpleOperation(operation);
-      assertEquals(comfortableResult, calculator.showResult());
+      calculator.showResult();
+   }
+
+   private void executeSpecialOperation(SpecialOperation operation){
+      calculator.executeSpecialOperation(operation);
    }
 
    private void executeBackSpace(){
