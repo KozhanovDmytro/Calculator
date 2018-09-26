@@ -32,6 +32,6 @@ public class Percent implements SpecialOperation {
 
    @Override
    public String buildHistory(String history) {
-      return history;
+      return this.history;
    }
 }

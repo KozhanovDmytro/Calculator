@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 
 public class Calculator {
 
+   @Getter
    private Container container;
 
    private Numeral numeral;
@@ -30,8 +31,12 @@ public class Calculator {
    }
 
    public void executeSimpleOperation(SimpleOperation operation) {
-      if (!(container.getOperation() instanceof Equals))
+      if (!(container.getOperation() instanceof Equals)) {
          container.calculate();
+      } else if(container.getOperation().isShowOperand()) {
+         container.setOperation(new Default(container.getOperation().getOperand()));
+         container.calculate();
+      }
 
       if(container.getOperation().isShowOperand()){
          container.getHistory().add(operation);
