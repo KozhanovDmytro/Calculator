@@ -5,6 +5,7 @@ import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.SimpleOperation;
+import com.implemica.model.operations.special.Percent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,13 +29,12 @@ public class Container {
         result = this.operation.calculate(result);
         if(operation instanceof Default && !history.contains(Default.class)){
             history.add(operation);
+            operation.setShowOperand(true);
         }
     }
 
     /**
      * Function which calculate for {@link SpecialOperation}.
-     * @param operation
-     * @param isResult
      */
     public void change(SpecialOperation operation, boolean isResult) {
         if(isResult){

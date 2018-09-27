@@ -64,12 +64,8 @@ public class Controller {
       percentOperation.setOnAction(event -> {
          calculator.executeSpecialOperation(new Percent());
 
-         if(calculator.isShownResult()){
-            showResult();
-         } else {
-            showOperand();
-            updateHistory();
-         }
+         showResult();
+         updateHistory();
       });
 
       sqrtOperation.setOnAction(event -> {
@@ -79,8 +75,8 @@ public class Controller {
             showResult();
          } else {
             showOperand();
-            updateHistory();
          }
+         updateHistory();
       });
 
       square.setOnAction(event -> {
@@ -90,8 +86,8 @@ public class Controller {
             showResult();
          } else {
             showOperand();
-            updateHistory();
          }
+         updateHistory();
       });
 
       divideByX.setOnAction(event -> {
@@ -101,8 +97,8 @@ public class Controller {
             showResult();
          } else {
             showOperand();
-            updateHistory();
          }
+         updateHistory();
       });
 
       equalsOperation.setOnAction(event -> {
@@ -140,6 +136,7 @@ public class Controller {
          } else {
             showOperand();
          }
+         updateHistory();
       });
 
       separateBtn.setOnAction(event -> {
