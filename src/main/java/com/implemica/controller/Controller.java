@@ -64,40 +64,28 @@ public class Controller {
       percentOperation.setOnAction(event -> {
          calculator.executeSpecialOperation(new Percent());
 
-         showResult();
+         showOperand();
          updateHistory();
       });
 
       sqrtOperation.setOnAction(event -> {
          calculator.executeSpecialOperation(new SquareRoot());
 
-         if(calculator.isShownResult()){
-            showResult();
-         } else {
-            showOperand();
-         }
+         showOperand();
          updateHistory();
       });
 
       square.setOnAction(event -> {
          calculator.executeSpecialOperation(new Square());
 
-         if(calculator.isShownResult()){
-            showResult();
-         } else {
-            showOperand();
-         }
+         showOperand();
          updateHistory();
       });
 
       divideByX.setOnAction(event -> {
          calculator.executeSpecialOperation(new DivideBy());
 
-         if(calculator.isShownResult()){
-            showResult();
-         } else {
-            showOperand();
-         }
+         showOperand();
          updateHistory();
       });
 
@@ -131,11 +119,7 @@ public class Controller {
       negate.setOnAction(event -> {
          calculator.executeSpecialOperation(new Negate());
 
-         if (calculator.isShownResult()) {
-            showResult();
-         } else {
-            showOperand();
-         }
+         showOperand();
          updateHistory();
       });
 
@@ -147,7 +131,7 @@ public class Controller {
 
    private void actionForBuildOperand(Number number) {
       calculator.buildOperand(number);
-         showOperand();
+      showOperand();
    }
 
    private void actionsForCleanOperations() {

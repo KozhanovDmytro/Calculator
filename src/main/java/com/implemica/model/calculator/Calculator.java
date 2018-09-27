@@ -57,6 +57,9 @@ public class Calculator {
       if(operation instanceof Percent) {
          ((Percent) operation).setResult(container.getResult());
       }
+      if(container.getHistory().size() == 0 && !(container.getOperation() instanceof Default)){
+         container.setOperation(new Default(container.getResult()));
+      }
       container.change(operation, isShownResult);
    }
 
