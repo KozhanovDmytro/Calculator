@@ -413,7 +413,7 @@ class CalculatorTest {
 
       executeSpecialOperation(new Percent());
 
-      checkResult("416.16");
+      checkOperand("416.16");
    }
 
    /**
@@ -431,20 +431,19 @@ class CalculatorTest {
       buildOperand(Number.ONE);
 
       equals();
-
-      checkResult("200");
-
-      executeSpecialOperation(new Percent());
-
-      checkResult("400");
+      checkOperand("0");
 
       executeSpecialOperation(new Percent());
 
-      checkResult("800");
+      checkOperand("400");
 
       executeSpecialOperation(new Percent());
 
-      checkResult("1600");
+      checkOperand("800");
+
+      executeSpecialOperation(new Percent());
+
+      checkOperand("1600");
    }
 
    /**
@@ -645,6 +644,40 @@ class CalculatorTest {
       checkResult("0");
    }
 
+   /**
+    * Pattern
+    *    <code>N + (special * n)</code>
+    */
+   @Test
+   public void specialOperationAfterSimpleOperation() {
+      buildOperand(Number.FIVE);
+
+      executeSimpleOperation(new Plus());
+
+      executeSpecialOperation(new Square());
+      executeSpecialOperation(new Square());
+
+      checkHistory("5 + sqr(sqr(5)) ", 2);
+
+      equals();
+
+      checkResult("630");
+   }
+
+   @Test
+   public void specialOperationAfterEquals(){
+      buildOperand(Number.TWO);
+
+      executeSimpleOperation(new Plus());
+
+      buildOperand(Number.THREE);
+
+      equals();
+
+      executeSpecialOperation(new Square());
+
+      checkHistory("sqr(5) ", 1);
+   }
    // TODO N + (negate) = N + -N
    // TODO clear
    // TODO do test for build operand
@@ -657,7 +690,6 @@ class CalculatorTest {
    private void executeSpecialOperation(SpecialOperation operation){
       calculator.executeSpecialOperation(operation);
       calculator.showOperand();
-
    }
 
    private void executeBackSpace(){
@@ -671,6 +703,10 @@ class CalculatorTest {
 
    private void checkResult(String expected){
       assertEquals(expected, calculator.getContainer().getResult().toString());
+   }
+
+   private void checkOperand(String expected) {
+      assertEquals(expected, calculator.getContainer().getOperation().getOperand().toString());
    }
 
    private void buildOperand(Number number){
