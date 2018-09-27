@@ -9,10 +9,8 @@ import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
-import com.implemica.model.operations.special.DivideBy;
-import com.implemica.model.operations.special.Percent;
-import com.implemica.model.operations.special.Square;
-import com.implemica.model.operations.special.SquareRoot;
+import com.implemica.model.operations.special.*;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -418,6 +416,36 @@ class CalculatorTest {
       checkResult("416.16");
    }
 
+   /**
+    * Pattern:
+    *    <code>N + N eq %%%</code>
+    */
+   @Test
+   public void manyPercentAfterEquals() {
+      buildOperand(Number.ONE);
+      buildOperand(Number.NINE);
+      buildOperand(Number.NINE);
+
+      executeSimpleOperation(new Plus());
+
+      buildOperand(Number.ONE);
+
+      equals();
+
+      checkResult("200");
+
+      executeSpecialOperation(new Percent());
+
+      checkResult("400");
+
+      executeSpecialOperation(new Percent());
+
+      checkResult("800");
+
+      executeSpecialOperation(new Percent());
+
+      checkResult("1600");
+   }
 
    /**
     * Pattern:
@@ -563,7 +591,63 @@ class CalculatorTest {
       checkResult("0");
    }
 
+   @Test
+   public void manySpecialOperations() {
+      buildOperand(Number.TWO);
+      buildOperand(Number.ZERO);
+      buildOperand(Number.ZERO);
 
+      executeSimpleOperation(new Plus());
+
+      buildOperand(Number.FOUR);
+
+      executeSpecialOperation(new Percent());
+
+      checkResult("200");
+
+      executeSpecialOperation(new DivideBy());
+      executeSpecialOperation(new DivideBy());
+      executeSpecialOperation(new Square());
+      executeSpecialOperation(new SquareRoot());
+
+      checkHistory("200 + " + SQRT + "(sqr(1/(1/(8)))) ", 2);
+   }
+
+   /**
+    * Group of tests where second operand is hidden.
+    * Pattern
+    *    <code>N + eq = N + N</code>
+    */
+   @Test
+   public void hiddenSecondOperand() {
+      buildOperand(Number.TWO);
+
+      executeSimpleOperation(new Plus());
+
+      equals();
+
+      checkHistory("", 0);
+      checkResult("4");
+   }
+
+   @Test
+   public void hiddenSecondOperandWithNegate() {
+      buildOperand(Number.FOUR);
+
+      executeSimpleOperation(new Plus());
+      executeSpecialOperation(new Negate());
+
+      checkHistory("4 + negate(4) ", 2);
+
+      equals();
+
+      checkHistory("", 0);
+      checkResult("0");
+   }
+
+   // TODO N + (negate) = N + -N
+   // TODO clear
+   // TODO do test for build operand
 
    private void executeSimpleOperation(SimpleOperation operation) {
       calculator.executeSimpleOperation(operation);
@@ -572,6 +656,8 @@ class CalculatorTest {
 
    private void executeSpecialOperation(SpecialOperation operation){
       calculator.executeSpecialOperation(operation);
+      calculator.showOperand();
+
    }
 
    private void executeBackSpace(){
