@@ -63,4 +63,8 @@ public class Validator {
 
       return result;
    }
+
+   public String validateResult(BigDecimal number){
+      return "";
+   }
 }
