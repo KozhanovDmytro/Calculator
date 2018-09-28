@@ -10,10 +10,7 @@ import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
-import com.implemica.model.operations.special.DivideBy;
-import com.implemica.model.operations.special.Percent;
-import com.implemica.model.operations.special.Square;
-import com.implemica.model.operations.special.SquareRoot;
+import com.implemica.model.operations.special.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -93,6 +90,9 @@ public class TestBuilder {
                break;
             case '<':
                executeBackSpace();
+               break;
+            case 'n':
+               executeSpecialOperation(new Negate());
                break;
          }
       }

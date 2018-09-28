@@ -8,6 +8,8 @@ class CalculatorTest {
 
    private TestBuilder builder;
 
+   private final String SQRT = "√";
+
    @BeforeEach
    void init(){
       builder = new TestBuilder();
@@ -29,6 +31,15 @@ class CalculatorTest {
       builder.doTest("4----=", "", 0, "0", null);
       builder.doTest("8****=", "", 0, "64", null);
       builder.doTest("100/////=", "", 0, "1", null);
+
+      builder.doTest("+7", "0 + 7 ", 2, "0", "7");
+      builder.doTest("+7=", "", 0, "7", "0");
+      builder.doTest("-7", "0 - 7 ", 2, "0", "7");
+      builder.doTest("-7=", "", 0, "-7", "0");
+      builder.doTest("*4", "0 * 4 ", 2, "0", "4");
+      builder.doTest("*4=", "", 0, "0", "0");
+      builder.doTest("/8", "0 / 8 ", 2, "0", "8");
+      builder.doTest("/8=", "", 0, "0", "0");
    }
 
    @Test
@@ -53,13 +64,39 @@ class CalculatorTest {
       builder.doTest("70/7=<<<", "", 0, "10", null);
       builder.doTest("7+3=1+", "1 + ", 2, "1", null);
       builder.doTest("2+3=4===", "", 0, "13", null);
+      builder.doTest("4q", SQRT + "(4) ", 1, "0", "2");
+      builder.doTest("4q=", "", 0, "2", "0");
+      builder.doTest("8s", "sqr(8) ", 1, "0", "64");
+      builder.doTest("8s=", "", 0, "64", "0");
+      builder.doTest("2f", "1/(2) ", 1, "0", "0.5");
+      builder.doTest("2f=", "", 0, "0.5", "0");
    }
 
    @Test
    void percentTest() {
+      builder.doTest("2p", "0 ", 1, "0", "0");
       builder.doTest("200+2p", "200 + 4 ", 2, "200", null);
       builder.doTest("200+2p=", "", 0, "204", null);
       builder.doTest("200+2p=p", "416.16 ", 1,  null, "416.16");
-      builder.doTest("199+1=", "", 0, "200", null);
+      builder.doTest("199+1=", "", 0, "200", "0");
+      builder.doTest("199+1=p", "400 ", 1, "200", "400");
+      builder.doTest("199+1=pp", "800 ", 1, "200", "800");
+      builder.doTest("199+1=ppp", "1600 ", 1, "200", "1600");
+      builder.doTest("5+p", "5 + 0.25", 2, "5", "0.25");
+   }
+
+   @Test
+   void specialOperations() {
+      builder.doTest("200+4pffsq", "200 + " + SQRT + "(sqr(1/(1/(8)))) ", 2, "200", "8");
+      builder.doTest("5+ss", "5 + sqr(sqr(5)) ", 2, "5", "625");
+      builder.doTest("5+ss=", "", 0, "630", "0");
+      builder.doTest("2+3=s", "sqr(5) ", 1, "5", "25");
+   }
+
+   @Test
+   void hiddenOperand() {
+      builder.doTest("2+=", "", 0, "4", "0");
+      builder.doTest("4+n", "4 + negate(4) ", 2, "4", "-4");
+      builder.doTest("4+n=", "", 0, "0", null);
    }
 }
