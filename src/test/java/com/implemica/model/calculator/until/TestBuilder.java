@@ -131,7 +131,7 @@ public class TestBuilder {
    }
 
    private void checkResult(String expected) {
-      assertEquals(expected, calculator.getContainer().getResult().toString());
+      assertEquals(expected, calculator.showResult());
    }
 
    private void checkOperand(String expected) {

@@ -11,6 +11,7 @@ import com.implemica.model.validation.Validator;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Calculator {
 
@@ -117,7 +118,20 @@ public class Calculator {
 
    public String showResult(){
       isShownResult = true;
-      return validator.showNumber(container.getResult());
+
+      BigDecimal number = container.getResult();
+      number = number.setScale(number.scale() + 1, RoundingMode.HALF_UP);
+
+      while(number.scale() > 0) {
+         if(number.toString().charAt(number.toString().length() - 1) != '0'){
+            break;
+         }
+
+         number = number.setScale(number.scale() - 1, RoundingMode.CEILING);
+      }
+
+      return validator.showNumber(number);
+//      return validator.showNumber(container.getResult().setScale(container.getResult().scale(), RoundingMode.CEILING));
    }
 
    public String showOperand(){
