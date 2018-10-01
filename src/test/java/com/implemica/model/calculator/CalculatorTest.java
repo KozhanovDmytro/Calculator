@@ -82,7 +82,7 @@ class CalculatorTest {
       builder.doTest("199+1=p", "400 ", 1, "200", "400");
       builder.doTest("199+1=pp", "800 ", 1, "200", "800");
       builder.doTest("199+1=ppp", "1600 ", 1, "200", "1600");
-      builder.doTest("5+p", "5 + 0.25", 2, "5", "0.25");
+      builder.doTest("5+p", "5 + 0.25 ", 2, "5", "0.25");
    }
 
    @Test

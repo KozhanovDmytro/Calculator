@@ -3,6 +3,9 @@ package com.implemica;
 import com.implemica.view.Launcher;
 import javafx.application.Application;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 public class Main {
     /*
     * Do it firstly.
@@ -13,6 +16,11 @@ public class Main {
     * TODO rename variable showOperand in Operand.
     */
     public static void main(String[] args) {
-        Application.launch(Launcher.class);
+        BigDecimal number = new BigDecimal("1");
+        for (int i = 0; i < 7; i++) {
+            number = number.divide(new BigDecimal(3), MathContext.DECIMAL64);
+            System.out.println(number);
+        }
+//        Application.launch(Launcher.class);
     }
 }
