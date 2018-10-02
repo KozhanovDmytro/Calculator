@@ -1,5 +1,6 @@
 package com.implemica.model.calculator;
 
+import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.history.MainHistory;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
@@ -25,8 +26,11 @@ public class Container {
 
     private boolean madeOperand;
 
-    public void calculate() {
+    public void calculate() throws OverflowException {
         result = this.operation.calculate(result);
+        if(result.abs().compareTo(new BigDecimal("1e10000")) >= 0) {
+            throw new OverflowException(result);
+        }
         if(operation instanceof Default && !history.contains(Default.class)){
             history.add(operation);
             operation.setShowOperand(true);

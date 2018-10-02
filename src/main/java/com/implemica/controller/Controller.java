@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.*;
 
 import com.implemica.model.calculator.Calculator;
+import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.*;
@@ -45,6 +46,12 @@ public class Controller {
    private Label resultLabel;
 
    @FXML
+   private Label title;
+
+   @FXML
+   private Label mode;
+
+   @FXML
    private Label historyLabel;
 
    private Properties texts = new Properties();
@@ -69,7 +76,9 @@ public class Controller {
          InputStream stream = new FileInputStream(file);
 
          texts.load(stream);
-         // TODO load into labels
+
+         title.setText(texts.getProperty("title"));
+         mode.setText(texts.getProperty("mode"));
       } catch (IOException e) {
          e.printStackTrace();
       } catch (URISyntaxException e) {
@@ -113,18 +122,31 @@ public class Controller {
       });
 
       equalsOperation.setOnAction(event -> {
-         calculator.equalsOperation();
+         try {
+            calculator.equalsOperation();
 
-         showResult();
-         updateHistory();
+            showResult();
+            updateHistory();
+         } catch (OverflowException e) {
+            resultLabel.setText(texts.getProperty("overflow"));
+         }
+
+
+
       });
    }
 
    private void actionForOperations(SimpleOperation operation) {
-      calculator.executeSimpleOperation(operation);
+      try {
+         calculator.executeSimpleOperation(operation);
 
-      showResult();
-      updateHistory();
+         showResult();
+         updateHistory();
+      } catch (OverflowException e) {
+         resultLabel.setText(texts.getProperty("overflow"));
+      }
+
+
    }
 
    private void actionsForBuildOperand() {
@@ -160,7 +182,7 @@ public class Controller {
    private void actionsForCleanOperations() {
       backSpace.setOnAction(event -> {
          if(calculator.backspace()){
-            showOperand();
+            showBuiltOperand();
          }
       });
       c.setOnAction(event -> {

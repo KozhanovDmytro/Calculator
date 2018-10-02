@@ -1,5 +1,6 @@
 package com.implemica.model.calculator;
 
+import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.interfaces.Numeral;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.numbers.Number;
@@ -34,7 +35,7 @@ public class Calculator {
       container.setMadeOperand(true);
    }
 
-   public void executeSimpleOperation(SimpleOperation operation) {
+   public void executeSimpleOperation(SimpleOperation operation) throws OverflowException {
       if (!(container.getOperation() instanceof Equals)) {
          container.calculate();
       } else if(container.getOperation().isShowOperand()) {
@@ -74,7 +75,7 @@ public class Calculator {
       }
    }
 
-   public void equalsOperation() {
+   public void equalsOperation() throws OverflowException {
       if (container.isMadeOperand()) {
          if(isShownResult){
             container.getOperation().setOperand(container.getResult());
@@ -138,7 +139,7 @@ public class Calculator {
    public String showBuiltOperand() {
       isShownResult = false;
 
-      return validator.showNumber(container.getOperation().getOperand(), container.getOperation().isSeparated());
+      return validator.builtOperand(container.getOperation().getOperand(), container.getOperation().isSeparated());
    }
 
    public String showHistory(){

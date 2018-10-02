@@ -65,7 +65,35 @@ public class Validator {
       return result;
    }
 
-   public String validateResult(BigDecimal number){
-      return "";
+   public String builtOperand(BigDecimal number, boolean separator){
+      String result;
+
+      DecimalFormatSymbols dfs = new DecimalFormatSymbols(new Locale("ru", "Ru"));
+      dfs.setGroupingSeparator(' ');
+      dfs.setDecimalSeparator(',');
+
+      DecimalFormat df = new DecimalFormat();
+      df.setGroupingSize(3);
+
+      df.setMinimumIntegerDigits(0);
+      df.setMaximumIntegerDigits(16);
+      df.setMinimumFractionDigits(0);
+      df.setMaximumFractionDigits(16);
+
+      df.setDecimalSeparatorAlwaysShown(separator);
+      df.applyPattern(PATTERN_FOR_NUMBER);
+
+      df.setDecimalFormatSymbols(dfs);
+
+      // for 0.000000000001
+      if(number.scale() > 0 && number.scale() <= 16){
+         BigDecimal temp = new BigDecimal(number.toPlainString() + "1");
+         result = df.format(temp);
+         result = result.substring(0, result.length() - 1);
+      } else {
+         result = df.format(number);
+      }
+
+      return result;
    }
 }
