@@ -144,7 +144,7 @@ public class TestBuilder {
    }
 
    private void checkOperand(String expected) {
-      assertEquals(expected, calculator.getContainer().getOperation().getOperand().toString());
+      assertEquals(expected, calculator.showOperand());
    }
 
    private void buildOperand(Number number) {

@@ -28,7 +28,7 @@
                      <String fx:value="RegularBorderBtn" />
                   </styleClass>
                </Button>
-               <Label maxHeight="1.7976931348623157E308" text="Обычный">
+               <Label fx:id="mode" maxHeight="1.7976931348623157E308" text="Обычный">
                   <font>
                      <Font name="Segoe UI" size="20.0" />
                   </font>
@@ -401,7 +401,7 @@
    <top>
       <AnchorPane fx:id="mainPane" maxHeight="31.0" maxWidth="1.7976931348623157E308" prefHeight="31.0" BorderPane.alignment="CENTER">
          <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <Label maxHeight="1.7976931348623157E308" text="    Бульбулятор" />
+            <Label fx:id="title" maxHeight="1.7976931348623157E308" text="    Бульбулятор" />
          </HBox>
          <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <Button fx:id="hide" maxHeight="1.7976931348623157E308" maxWidth="46.0" mnemonicParsing="false" prefWidth="46.0" text="">

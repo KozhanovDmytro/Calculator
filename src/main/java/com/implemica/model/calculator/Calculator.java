@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Locale;
 
 public class Calculator {
 
@@ -121,23 +122,37 @@ public class Calculator {
    public String showResult(){
       isShownResult = true;
 
-      BigDecimal result = new BigDecimal(container.getResult().toPlainString(), MathContext.DECIMAL64);
-      result = result.setScale(16, RoundingMode.HALF_UP);
-
-      // delete excess zeros.
-      while(result.scale() > 0 && result.toPlainString().charAt(result.toPlainString().length() - 1) == '0') {
-         result = result.setScale(result.scale() - 1, RoundingMode.HALF_UP);
-      }
+      BigDecimal result = removeExcessZeros(container.getResult());
 
       return validator.showNumber(result);
    }
 
    public String showOperand(){
       isShownResult = false;
+
+      BigDecimal operand = removeExcessZeros(container.getOperation().getOperand());
+
+      return validator.showNumber(operand, container.getOperation().isSeparated());
+   }
+
+   public String showBuiltOperand() {
+      isShownResult = false;
+
       return validator.showNumber(container.getOperation().getOperand(), container.getOperation().isSeparated());
    }
 
    public String showHistory(){
       return container.getHistory().buildHistory();
+   }
+
+   private BigDecimal removeExcessZeros(BigDecimal number) {
+      BigDecimal result = new BigDecimal(number.toPlainString(), MathContext.DECIMAL64);
+      result = result.setScale(16, RoundingMode.HALF_UP);
+
+      // delete excess zeros.
+      while(result.scale() > 0 && result.toPlainString().charAt(result.toPlainString().length() - 1) == '0') {
+         result = result.setScale(result.scale() - 1, RoundingMode.HALF_UP);
+      }
+      return result;
    }
 }

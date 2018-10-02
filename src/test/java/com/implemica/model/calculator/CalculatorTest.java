@@ -68,7 +68,7 @@ class CalculatorTest {
       builder.doTest("4q=", "", 0, "2", "0");
       builder.doTest("8s", "sqr(8) ", 1, "0", "64");
       builder.doTest("8s=", "", 0, "64", "0");
-      builder.doTest("2f", "1/(2) ", 1, "0", "0.5");
+      builder.doTest("2f", "1/(2) ", 1, "0", "0,5");
       builder.doTest("2f=", "", 0, "0,5", "0");
    }
 
@@ -77,12 +77,12 @@ class CalculatorTest {
       builder.doTest("2p", "0 ", 1, "0", "0");
       builder.doTest("200+2p", "200 + 4 ", 2, "200", null);
       builder.doTest("200+2p=", "", 0, "204", null);
-      builder.doTest("200+2p=p", "416.16 ", 1,  null, "416.16");
+      builder.doTest("200+2p=p", "416.16 ", 1,  null, "416,16");
       builder.doTest("199+1=", "", 0, "200", "0");
       builder.doTest("199+1=p", "400 ", 1, "200", "400");
       builder.doTest("199+1=pp", "800 ", 1, "200", "800");
-      builder.doTest("199+1=ppp", "1600 ", 1, "200", "1600");
-      builder.doTest("5+p", "5 + 0.25 ", 2, "5", "0.25");
+      builder.doTest("199+1=ppp", "1600 ", 1, "200", "1 600");
+      builder.doTest("5+p", "5 + 0.25 ", 2, "5", "0,25");
    }
 
    @Test
@@ -91,6 +91,10 @@ class CalculatorTest {
       builder.doTest("5+ss", "5 + sqr(sqr(5)) ", 2, "5", "625");
       builder.doTest("5+ss=", "", 0, "630", "0");
       builder.doTest("2+3=s", "sqr(5) ", 1, "5", "25");
+
+      builder.doTest("2qsqsqs", null, 0, null, "2");
+      builder.doTest("3ffffff", null, 0, null, "3");
+      builder.doTest("1/3=f", null, 0, null, "3");
    }
 
    @Test
@@ -106,7 +110,10 @@ class CalculatorTest {
       builder.doTest("1/3*3=", "", 0, "1", null);
       builder.doTest("1/3*3-1", "1 / 3 * 3 - 1 ", 4, "1", null);
       builder.doTest("1/3*3-1=", "", 0, "0", null);
+   }
 
+   @Test
+   void buildOperandTest(){
 
    }
 }
