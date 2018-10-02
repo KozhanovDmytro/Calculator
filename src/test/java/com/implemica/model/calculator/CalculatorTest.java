@@ -47,7 +47,7 @@ class CalculatorTest {
       builder.doTest("1+3===", "", 0, "10", null);
       builder.doTest("289-102===", "", 0, "-17", null);
       builder.doTest("2*3===", "", 0, "54", null);
-      builder.doTest("188/2===", "", 0, "23.5", null);
+      builder.doTest("188/2===", "", 0, "23,5", null);
    }
 
    @Test
@@ -69,7 +69,7 @@ class CalculatorTest {
       builder.doTest("8s", "sqr(8) ", 1, "0", "64");
       builder.doTest("8s=", "", 0, "64", "0");
       builder.doTest("2f", "1/(2) ", 1, "0", "0.5");
-      builder.doTest("2f=", "", 0, "0.5", "0");
+      builder.doTest("2f=", "", 0, "0,5", "0");
    }
 
    @Test
@@ -98,5 +98,15 @@ class CalculatorTest {
       builder.doTest("2+=", "", 0, "4", "0");
       builder.doTest("4+n", "4 + negate(4) ", 2, "4", "-4");
       builder.doTest("4+n=", "", 0, "0", null);
+   }
+
+   @Test
+   void testRoundingMode() {
+      builder.doTest("0.0000000000000001+1=", "", 0, "1", null);
+      builder.doTest("1/3*3=", "", 0, "1", null);
+      builder.doTest("1/3*3-1", "1 / 3 * 3 - 1 ", 4, "1", null);
+      builder.doTest("1/3*3-1=", "", 0, "0", null);
+
+
    }
 }

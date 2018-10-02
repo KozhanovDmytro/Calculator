@@ -11,6 +11,9 @@ import com.implemica.model.validation.Validator;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class Calculator {
 
@@ -117,7 +120,16 @@ public class Calculator {
 
    public String showResult(){
       isShownResult = true;
-      return validator.showNumber(container.getResult());
+
+      BigDecimal result = new BigDecimal(container.getResult().toPlainString(), MathContext.DECIMAL64);
+      result = result.setScale(16, RoundingMode.HALF_UP);
+
+      // delete excess zeros.
+      while(result.scale() > 0 && result.toPlainString().charAt(result.toPlainString().length() - 1) == '0') {
+         result = result.setScale(result.scale() - 1, RoundingMode.HALF_UP);
+      }
+
+      return validator.showNumber(result);
    }
 
    public String showOperand(){

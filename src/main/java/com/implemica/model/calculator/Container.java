@@ -17,7 +17,7 @@ import java.math.MathContext;
 @Setter
 public class Container {
 
-    private BigDecimal result = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
+    private BigDecimal result = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL128);
 
     private SimpleOperation operation = new Default();
 
