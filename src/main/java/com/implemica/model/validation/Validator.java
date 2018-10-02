@@ -3,6 +3,7 @@ package com.implemica.model.validation;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -42,7 +43,7 @@ public class Validator {
          dfs.setExponentSeparator(INTEGER_EXPONENT_SEPARATOR);
          df.applyPattern(PATTERN_FOR_EXPONENT);
          df.setDecimalSeparatorAlwaysShown(true);
-      } else if(number.scale() > 16) {
+      } else if(number.scale() > 18) {
          dfs.setExponentSeparator(DECIMAL_EXPONENT_SEPARATOR);
          df.applyPattern(PATTERN_FOR_EXPONENT);
          df.setDecimalSeparatorAlwaysShown(true);

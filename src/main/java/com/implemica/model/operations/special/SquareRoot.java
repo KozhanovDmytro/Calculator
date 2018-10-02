@@ -9,8 +9,7 @@ public class SquareRoot implements SpecialOperation {
 
    @Override
    public BigDecimal calculate(BigDecimal result) {
-      MathContext mc = MathContext.DECIMAL64;
-      return result.sqrt(mc);
+      return result.sqrt(MathContext.DECIMAL128);
    }
 
    @Override

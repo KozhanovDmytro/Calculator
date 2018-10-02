@@ -1,5 +1,7 @@
 package com.implemica.controller;
 
+import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 
@@ -45,6 +47,8 @@ public class Controller {
    @FXML
    private Label historyLabel;
 
+   private Properties texts = new Properties();
+
    private Calculator calculator = new Calculator(new Arabic());
 
    @FXML
@@ -52,6 +56,25 @@ public class Controller {
       actionsForBuildOperand();
       actionsForOperationButtons();
       actionsForCleanOperations();
+
+      executeProperties();
+   }
+
+   private void executeProperties(){
+      File f = new File("/properties/text_En.properties");
+      System.out.println(f.getAbsolutePath());
+      try {
+         File file = new File(getClass().getResource("/properties/text_En.properties").toURI());
+
+         InputStream stream = new FileInputStream(file);
+
+         texts.load(stream);
+         // TODO load into labels
+      } catch (IOException e) {
+         e.printStackTrace();
+      } catch (URISyntaxException e) {
+         e.printStackTrace();
+      }
    }
 
    private void actionsForOperationButtons() {
@@ -131,7 +154,7 @@ public class Controller {
 
    private void actionForBuildOperand(Number number) {
       calculator.buildOperand(number);
-      showOperand();
+      showBuiltOperand();
    }
 
    private void actionsForCleanOperations() {
@@ -158,6 +181,10 @@ public class Controller {
 
    private void showOperand() {
       resultLabel.setText(calculator.showOperand());
+   }
+
+   private void showBuiltOperand() {
+      resultLabel.setText(calculator.showBuiltOperand());
    }
 
    private void updateHistory() {

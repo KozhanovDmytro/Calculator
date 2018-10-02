@@ -61,6 +61,9 @@ public class TestBuilder {
             case '9':
                buildOperand(Number.NINE);
                break;
+            case '.':
+               executeSeparate();
+               break;
             case '+':
                executeSimpleOperation(new Plus());
                break;
@@ -123,6 +126,12 @@ public class TestBuilder {
 
    private void executeBackSpace() {
       calculator.backspace();
+      calculator.showOperand();
+   }
+
+   private void executeSeparate() {
+      calculator.separateOperand();
+      calculator.showOperand();
    }
 
    private void equals() {
@@ -135,7 +144,7 @@ public class TestBuilder {
    }
 
    private void checkOperand(String expected) {
-      assertEquals(expected, calculator.getContainer().getOperation().getOperand().toString());
+      assertEquals(expected, calculator.showOperand());
    }
 
    private void buildOperand(Number number) {

@@ -10,7 +10,7 @@ public class DivideBy implements SpecialOperation {
 
    @Override
    public BigDecimal calculate(BigDecimal result) {
-      return new BigDecimal(BigInteger.ONE).divide(result, MathContext.DECIMAL64);
+      return new BigDecimal(BigInteger.ONE).divide(result, MathContext.DECIMAL128);
    }
 
    @Override

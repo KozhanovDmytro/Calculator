@@ -15,7 +15,7 @@ public class Divide extends SimpleOperation {
     @Override
     public BigDecimal calculate(BigDecimal result) {
         if(this.isShowOperand() || !operand.equals(BigDecimal.ZERO))
-            return result.divide(operand, MathContext.DECIMAL64);
+            return result.divide(operand, MathContext.DECIMAL128);
         else return result;
     }
 }

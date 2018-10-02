@@ -4,6 +4,7 @@ import com.implemica.model.interfaces.SpecialOperation;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 public class Percent implements SpecialOperation {
 
@@ -25,7 +26,7 @@ public class Percent implements SpecialOperation {
       if(operand.equals(BigDecimal.ZERO)){
          operand = new BigDecimal(result.toPlainString());
       }
-      BigDecimal result = this.result.multiply(operand).divide(new BigDecimal(100));
+      BigDecimal result = this.result.multiply(operand).divide(new BigDecimal(100), MathContext.DECIMAL128);
       history = result.toPlainString();
       return result;
    }
