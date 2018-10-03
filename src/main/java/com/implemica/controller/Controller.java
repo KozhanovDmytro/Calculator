@@ -16,13 +16,11 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -82,7 +80,6 @@ public class Controller {
    }
 
    private void executeProperties(){
-      File f = new File("/properties/text_En.properties");
       try {
          File file = new File(getClass().getResource("/properties/text_En.properties").toURI());
 
@@ -150,29 +147,32 @@ public class Controller {
 
       equalsOperation.setOnAction(event -> {
          if(isThrownException) {
-            isThrownException = false;
-            blockButtons(false);
-            showResult();
-            updateHistory();
-            return;
+            checkBlockedButtons();
          }
          try {
             calculator.equalsOperation();
 
             showResult();
-            updateHistory();
          } catch (OverflowException e) {
+            calculator.clear();
             resultLabel.setText(texts.getProperty("overflow"));
             isThrownException = true;
             blockButtons(true);
          } catch (UndefinedResultException e) {
+            calculator.clear();
             isThrownException = true;
             blockButtons(true);
             resultLabel.setText(texts.getProperty("undefinedResult"));
          }
-
-
+         updateHistory();
       });
+   }
+
+   private void checkBlockedButtons() {
+      isThrownException = false;
+      blockButtons(false);
+      showResult();
+      updateHistory();
    }
    
    private void blockButtons(boolean isThrownException) {

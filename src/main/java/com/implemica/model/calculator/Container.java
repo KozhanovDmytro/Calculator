@@ -32,9 +32,6 @@ public class Container {
         if(result.abs().compareTo(new BigDecimal("1e10000")) >= 0 ||
                 (result.abs().compareTo(BigDecimal.ZERO)) > 0 &&
                         result.abs().compareTo(new BigDecimal("1e-10000")) <= 0) {
-            result = BigDecimal.ZERO;
-            operation = new Default();
-            history.clear();
             throw new OverflowException(result);
         }
         if(operation instanceof Default && !history.contains(Default.class)){

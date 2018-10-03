@@ -10,11 +10,8 @@ import java.math.RoundingMode;
 public class Main {
     /*
     * Do it firstly.
-    * TODO -0.0 in show result.
-    * TODO 0.0000111111111111 when you write into label scale isn't 16 characters.
-    * TODO 0.0000111111111111 * 0.1 must be with E.
-    * TODO make History interface
-    * TODO rename variable showOperand in Operand.
+    * TODO use pattern DTO for make a response to controller
+    * TODO delete try-catch in controller
     */
     public static void main(String[] args) {
         Application.launch(Launcher.class);

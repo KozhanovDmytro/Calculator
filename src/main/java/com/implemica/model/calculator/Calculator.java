@@ -124,17 +124,15 @@ public class Calculator {
    public String showResult(){
       isShownResult = true;
 
-      BigDecimal result = removeExcessZeros(container.getResult());
-
-      return validator.showNumber(result);
+      return validator.showNumber(container.getResult().stripTrailingZeros());
    }
 
    public String showOperand(){
       isShownResult = false;
 
-      BigDecimal operand = removeExcessZeros(container.getOperation().getOperand());
+      BigDecimal operand = container.getOperation().getOperand();
 
-      return validator.showNumber(operand, container.getOperation().isSeparated());
+      return validator.showNumber(operand.stripTrailingZeros(), container.getOperation().isSeparated());
    }
 
    public String showBuiltOperand() {
@@ -145,15 +143,5 @@ public class Calculator {
 
    public String showHistory(){
       return container.getHistory().buildHistory();
-   }
-
-   private BigDecimal removeExcessZeros(BigDecimal number) {
-      BigDecimal result = new BigDecimal(number.toPlainString(), MathContext.DECIMAL64);
-
-      // delete excess zeros.
-      while(result.scale() > 0 && result.toPlainString().charAt(result.toPlainString().length() - 1) == '0') {
-         result = result.setScale(result.scale() - 1, RoundingMode.HALF_UP);
-      }
-      return result;
    }
 }
