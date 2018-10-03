@@ -2,6 +2,7 @@ package com.implemica.model.calculator.until;
 
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.exceptions.OverflowException;
+import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.Arabic;
@@ -25,7 +26,7 @@ public class TestBuilder {
       calculator = new Calculator(new Arabic());
    }
 
-   public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException {
+   public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException, UndefinedResultException {
       /**
        *
        */
@@ -115,12 +116,12 @@ public class TestBuilder {
 
    }
 
-   private void executeSimpleOperation(SimpleOperation operation) throws OverflowException {
+   private void executeSimpleOperation(SimpleOperation operation) throws OverflowException, UndefinedResultException {
       calculator.executeSimpleOperation(operation);
       calculator.showResult();
    }
 
-   private void executeSpecialOperation(SpecialOperation operation) {
+   private void executeSpecialOperation(SpecialOperation operation) throws UndefinedResultException {
       calculator.executeSpecialOperation(operation);
       calculator.showOperand();
    }
@@ -135,7 +136,7 @@ public class TestBuilder {
       calculator.showOperand();
    }
 
-   private void equals() throws OverflowException {
+   private void equals() throws OverflowException, UndefinedResultException {
       calculator.equalsOperation();
       calculator.showResult();
    }

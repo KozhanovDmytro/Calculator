@@ -2,6 +2,7 @@ package com.implemica.model.calculator;
 
 import com.implemica.model.calculator.until.TestBuilder;
 import com.implemica.model.exceptions.OverflowException;
+import com.implemica.model.exceptions.UndefinedResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class CalculatorTest {
    }
 
    @Test
-   void manySimpleOperations() throws OverflowException {
+   void manySimpleOperations() throws OverflowException, UndefinedResultException {
       builder.doTest("2+", "2 + ", 2, "2", null);
 
       builder.doTest("3+++++", "3 + ", 2, "3", null);
@@ -27,7 +28,7 @@ class CalculatorTest {
    }
 
    @Test
-   void simpleOperationBeforeEquals() throws OverflowException {
+   void simpleOperationBeforeEquals() throws OverflowException, UndefinedResultException {
       builder.doTest("2++++=", "", 0, "4", null);
       builder.doTest("4----=", "", 0, "0", null);
       builder.doTest("8****=", "", 0, "64", null);
@@ -44,7 +45,7 @@ class CalculatorTest {
    }
 
    @Test
-   void manyEquals() throws OverflowException {
+   void manyEquals() throws OverflowException, UndefinedResultException {
       builder.doTest("1+3===", "", 0, "10", null);
       builder.doTest("289-102===", "", 0, "-17", null);
       builder.doTest("2*3===", "", 0, "54", null);
@@ -52,7 +53,7 @@ class CalculatorTest {
    }
 
    @Test
-   void EqualsTests() throws OverflowException {
+   void EqualsTests() throws OverflowException, UndefinedResultException {
       builder.doTest("2+3=+++", "5 + ", 2, "5", null);
       builder.doTest("239*4=+-*/", "956 / ", 2, "956", null);
       builder.doTest("10+=", "", 0, "20", null);
@@ -61,7 +62,7 @@ class CalculatorTest {
    }
 
    @Test
-   void otherTests() throws OverflowException {
+   void otherTests() throws OverflowException, UndefinedResultException {
       builder.doTest("70/7=<<<", "", 0, "10", null);
       builder.doTest("7+3=1+", "1 + ", 2, "1", null);
       builder.doTest("2+3=4===", "", 0, "13", null);
@@ -74,7 +75,7 @@ class CalculatorTest {
    }
 
    @Test
-   void percentTest() throws OverflowException {
+   void percentTest() throws OverflowException, UndefinedResultException {
       builder.doTest("2p", "0 ", 1, "0", "0");
       builder.doTest("200+2p", "200 + 4 ", 2, "200", null);
       builder.doTest("200+2p=", "", 0, "204", null);
@@ -87,7 +88,7 @@ class CalculatorTest {
    }
 
    @Test
-   void specialOperations() throws OverflowException {
+   void specialOperations() throws OverflowException, UndefinedResultException {
       builder.doTest("200+4pffsq", "200 + " + SQRT + "(sqr(1/(1/(8)))) ", 2, "200", "8");
       builder.doTest("5+ss", "5 + sqr(sqr(5)) ", 2, "5", "625");
       builder.doTest("5+ss=", "", 0, "630", "0");
@@ -99,14 +100,14 @@ class CalculatorTest {
    }
 
    @Test
-   void hiddenOperand() throws OverflowException {
+   void hiddenOperand() throws OverflowException, UndefinedResultException {
       builder.doTest("2+=", "", 0, "4", "0");
       builder.doTest("4+n", "4 + negate(4) ", 2, "4", "-4");
       builder.doTest("4+n=", "", 0, "0", null);
    }
 
    @Test
-   void testRoundingMode() throws OverflowException {
+   void testRoundingMode() throws OverflowException, UndefinedResultException {
       builder.doTest("0.0000000000000001+1=", "", 0, "1", null);
       builder.doTest("1/3*3=", "", 0, "1", null);
       builder.doTest("1/3*3-1", "1 / 3 * 3 - 1 ", 4, "1", null);
@@ -114,6 +115,8 @@ class CalculatorTest {
       builder.doTest("1/3*3-1=", "", 0, "0", null);
       builder.doTest("2.0000000000000001+1========", "", 0, "10", null);
       builder.doTest("0.1*================", "", 0, "1,e-17", null);
+      builder.doTest("0.9*=================================================================", "", 0, "9,550049507968252e-4", null);
+
    }
 
    @Test

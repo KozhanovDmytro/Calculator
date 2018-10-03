@@ -1,5 +1,6 @@
 package com.implemica.view;
 
+import com.implemica.controller.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
@@ -15,12 +16,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import lombok.Getter;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Launcher extends Application {
-
     private Stage primaryStage;
 
     private Point2D startDrag;
@@ -46,24 +47,30 @@ public class Launcher extends Application {
 
         setActionForResultLabel();
 
-        this.primaryStage.show();
+        primaryStage.show();
     }
 
     private void setSettingsForStage(Stage stage)throws Exception{
-        this.primaryStage = stage;
-        root = FXMLLoader.load(getClass().getResource("/fxml/root.fxml"));
-        root.getStylesheets().add("/css/style.css");
+        primaryStage = stage;
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/root.fxml"));
+
+        root = loader.load();
+        root.getStylesheets().add("/css/style.css");
         Scene scene = new Scene(root, 321, 500);
 
-        this.primaryStage.initStyle(StageStyle.UNDECORATED);
-        this.primaryStage.setScene(scene);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.setScene(scene);
 
-        this.primaryStage.setMinHeight(500);
-        this.primaryStage.setMinWidth(320);
+        Controller controller = loader.getController();
+        controller.setScene(scene);
+        controller.actionsForKeyboard();
 
-        this.primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX());
-        this.primaryStage.setMaxHeight(Screen.getPrimary().getBounds().getMaxY());
+        primaryStage.setMinHeight(500);
+        primaryStage.setMinWidth(320);
+
+        primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX());
+        primaryStage.setMaxHeight(Screen.getPrimary().getBounds().getMaxY());
 
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
     }

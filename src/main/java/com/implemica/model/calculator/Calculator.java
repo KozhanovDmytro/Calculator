@@ -1,6 +1,7 @@
 package com.implemica.model.calculator;
 
 import com.implemica.model.exceptions.OverflowException;
+import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.interfaces.Numeral;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.numbers.Number;
@@ -35,7 +36,7 @@ public class Calculator {
       container.setMadeOperand(true);
    }
 
-   public void executeSimpleOperation(SimpleOperation operation) throws OverflowException {
+   public void executeSimpleOperation(SimpleOperation operation) throws OverflowException, UndefinedResultException {
       if (!(container.getOperation() instanceof Equals)) {
          container.calculate();
       } else if(container.getOperation().isShowOperand()) {
@@ -58,7 +59,7 @@ public class Calculator {
       container.setMadeOperand(true);
    }
 
-   public void executeSpecialOperation(SpecialOperation operation) {
+   public void executeSpecialOperation(SpecialOperation operation) throws UndefinedResultException {
       if(operation instanceof Percent) {
          ((Percent) operation).setResult(container.getResult());
       }
@@ -75,7 +76,7 @@ public class Calculator {
       }
    }
 
-   public void equalsOperation() throws OverflowException {
+   public void equalsOperation() throws OverflowException, UndefinedResultException {
       if (container.isMadeOperand()) {
          if(isShownResult){
             container.getOperation().setOperand(container.getResult());

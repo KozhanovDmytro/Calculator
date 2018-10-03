@@ -1,6 +1,7 @@
 package com.implemica.model.calculator;
 
 import com.implemica.model.exceptions.OverflowException;
+import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.history.MainHistory;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
@@ -26,9 +27,14 @@ public class Container {
 
     private boolean madeOperand;
 
-    public void calculate() throws OverflowException {
+    public void calculate() throws OverflowException, UndefinedResultException {
         result = this.operation.calculate(result);
-        if(result.abs().compareTo(new BigDecimal("1e10000")) >= 0) {
+        if(result.abs().compareTo(new BigDecimal("1e10000")) >= 0 ||
+                (result.abs().compareTo(BigDecimal.ZERO)) > 0 &&
+                        result.abs().compareTo(new BigDecimal("1e-10000")) <= 0) {
+            result = BigDecimal.ZERO;
+            operation = new Default();
+            history.clear();
             throw new OverflowException(result);
         }
         if(operation instanceof Default && !history.contains(Default.class)){
@@ -40,7 +46,7 @@ public class Container {
     /**
      * Function which calculate for {@link SpecialOperation}.
      */
-    public void change(SpecialOperation operation, boolean isResult) {
+    public void change(SpecialOperation operation, boolean isResult) throws UndefinedResultException {
         if(isResult && !this.operation.isShowOperand()){
 
             // TODO it's not possible here. Just a shit.

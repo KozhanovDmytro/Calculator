@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.exceptions.OverflowException;
+import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.*;
@@ -15,9 +16,15 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Controller {
 
@@ -54,9 +61,16 @@ public class Controller {
    @FXML
    private Label historyLabel;
 
+   @FXML
+   @Getter
+   @Setter
+   private Scene scene;
+
    private Properties texts = new Properties();
 
    private Calculator calculator = new Calculator(new Arabic());
+
+   private boolean isThrownException = false;
 
    @FXML
    void initialize() {
@@ -78,9 +92,7 @@ public class Controller {
 
          title.setText(texts.getProperty("title"));
          mode.setText(texts.getProperty("mode"));
-      } catch (IOException e) {
-         e.printStackTrace();
-      } catch (URISyntaxException e) {
+      } catch (IOException | URISyntaxException e) {
          e.printStackTrace();
       }
    }
@@ -93,34 +105,57 @@ public class Controller {
 
 
       percentOperation.setOnAction(event -> {
-         calculator.executeSpecialOperation(new Percent());
+         try {
+            calculator.executeSpecialOperation(new Percent());
+         } catch (UndefinedResultException e) {
+            System.err.println(e);
+         }
 
          showOperand();
          updateHistory();
       });
 
       sqrtOperation.setOnAction(event -> {
-         calculator.executeSpecialOperation(new SquareRoot());
+         try {
+            calculator.executeSpecialOperation(new SquareRoot());
+         } catch (UndefinedResultException e) {
+            System.err.println(e);
+         }
 
          showOperand();
          updateHistory();
       });
 
       square.setOnAction(event -> {
-         calculator.executeSpecialOperation(new Square());
+         try {
+            calculator.executeSpecialOperation(new Square());
+         } catch (UndefinedResultException e) {
+            System.err.println(e);
+         }
 
          showOperand();
          updateHistory();
       });
 
       divideByX.setOnAction(event -> {
-         calculator.executeSpecialOperation(new DivideBy());
+         try {
+            calculator.executeSpecialOperation(new DivideBy());
+         } catch (UndefinedResultException e) {
+            System.err.println(e);
+         }
 
          showOperand();
          updateHistory();
       });
 
       equalsOperation.setOnAction(event -> {
+         if(isThrownException) {
+            isThrownException = false;
+            blockButtons(false);
+            showResult();
+            updateHistory();
+            return;
+         }
          try {
             calculator.equalsOperation();
 
@@ -128,11 +163,29 @@ public class Controller {
             updateHistory();
          } catch (OverflowException e) {
             resultLabel.setText(texts.getProperty("overflow"));
+            isThrownException = true;
+            blockButtons(true);
+         } catch (UndefinedResultException e) {
+            isThrownException = true;
+            blockButtons(true);
+            resultLabel.setText(texts.getProperty("undefinedResult"));
          }
 
 
-
       });
+   }
+   
+   private void blockButtons(boolean isThrownException) {
+      percentOperation.setDisable(isThrownException);
+      sqrtOperation.setDisable(isThrownException);
+      square.setDisable(isThrownException);
+      divideByX.setDisable(isThrownException);
+      divideOperation.setDisable(isThrownException);
+      multiplyOperation.setDisable(isThrownException);
+      minusOperation.setDisable(isThrownException);
+      plusOperation.setDisable(isThrownException);
+      separateBtn.setDisable(isThrownException);
+      negate.setDisable(isThrownException);
    }
 
    private void actionForOperations(SimpleOperation operation) {
@@ -142,7 +195,13 @@ public class Controller {
          showResult();
          updateHistory();
       } catch (OverflowException e) {
+         isThrownException = true;
+         blockButtons(true);
          resultLabel.setText(texts.getProperty("overflow"));
+      } catch (UndefinedResultException e) {
+         isThrownException = true;
+         blockButtons(true);
+         resultLabel.setText(texts.getProperty("undefinedResult"));
       }
 
 
@@ -161,7 +220,11 @@ public class Controller {
       btn9.setOnAction(event -> actionForBuildOperand(Number.NINE));
 
       negate.setOnAction(event -> {
-         calculator.executeSpecialOperation(new Negate());
+         try {
+            calculator.executeSpecialOperation(new Negate());
+         } catch (UndefinedResultException e) {
+            System.err.println(e);
+         }
 
          showOperand();
          updateHistory();
@@ -193,6 +256,89 @@ public class Controller {
       ce.setOnAction(event -> {
          calculator.clearEntry();
          showOperand();
+      });
+   }
+
+   public void actionsForKeyboard() {
+      scene.setOnKeyPressed(key -> {
+         if (key.getCode() == KeyCode.DIGIT5 && key.isShiftDown()) {
+            percentOperation.fire();
+            return;
+         }
+         if (key.getCode() == KeyCode.DIGIT2 && key.isShiftDown()) {
+            sqrtOperation.fire();
+            return;
+         }
+
+         if(key.getCode() == KeyCode.Q && !key.isShiftDown()){
+            square.fire();
+         }
+         if(key.getCode() == KeyCode.R && !key.isShiftDown()){
+            divideByX.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT0 && !key.isShiftDown()){
+            btn0.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT1 && !key.isShiftDown()){
+            btn1.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT2 && !key.isShiftDown()){
+            btn2.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT3 && !key.isShiftDown()){
+            btn3.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT4 && !key.isShiftDown()){
+            btn4.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT5 && !key.isShiftDown()){
+            btn5.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT6 && !key.isShiftDown()){
+            btn6.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT7 && !key.isShiftDown()){
+            btn7.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT8 && !key.isShiftDown()){
+            btn8.fire();
+         }
+         if(key.getCode() == KeyCode.DIGIT9 && !key.isShiftDown()){
+            btn9.fire();
+         }
+         if(key.getCode() == KeyCode.BACK_SPACE && !key.isShiftDown()){
+            backSpace.fire();
+         }
+         if(key.getCode() == KeyCode.COMMA){
+            separateBtn.fire();
+         }
+         if(key.getCode() == KeyCode.F9 && !key.isShiftDown()){
+            negate.fire();
+         }
+         if(key.getCode() == KeyCode.EQUALS && !key.isShiftDown()){
+            equalsOperation.fire();
+         }
+         if(key.getCode() == KeyCode.PLUS || (key.getCode() == KeyCode.EQUALS && key.isShiftDown())){
+            plusOperation.fire();
+         }
+         if(key.getCode() == KeyCode.MINUS){
+            minusOperation.fire();
+         }
+         if(key.getCode() == KeyCode.DIVIDE){
+            divideOperation.fire();
+         }
+         if(key.getCode() == KeyCode.ENTER){
+            equalsOperation.fire();
+         }
+         if(key.getCode() == KeyCode.MULTIPLY || (key.getCode() == KeyCode.DIGIT8 && key.isShiftDown())){
+            multiplyOperation.fire();
+         }
+         if(key.getCode() == KeyCode.ESCAPE && !key.isShiftDown()){
+            c.fire();
+         }
+         if(key.getCode() == KeyCode.DELETE && !key.isShiftDown()) {
+            ce.fire();
+         }
       });
    }
 

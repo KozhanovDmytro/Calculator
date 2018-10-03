@@ -1,6 +1,7 @@
 package com.implemica.model.calculator;
 
 import com.implemica.model.exceptions.OverflowException;
+import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.SimpleOperation;
 import com.implemica.model.operations.simple.Divide;
@@ -24,7 +25,7 @@ class ContainerTest {
    }
 
    @Test
-   public void minusOperations() throws OverflowException {
+   public void minusOperations() throws OverflowException, UndefinedResultException {
       calculate(new Default(), "10");
       calculate(new Minus(), "1");
       calculate(new Minus(), "2");
@@ -35,7 +36,7 @@ class ContainerTest {
    }
 
    @Test
-   public void plusOperations() throws OverflowException {
+   public void plusOperations() throws OverflowException, UndefinedResultException {
       calculate(new Default(), "10");
 
       calculate(new Plus(), "1");
@@ -47,7 +48,7 @@ class ContainerTest {
    }
 
    @Test
-   public void multiplyOperations() throws OverflowException {
+   public void multiplyOperations() throws OverflowException, UndefinedResultException {
       calculate(new Default(), "2");
 
       calculate(new Multiply(), "3");
@@ -58,7 +59,7 @@ class ContainerTest {
    }
 
    @Test
-   public void divideOperations() throws OverflowException {
+   public void divideOperations() throws OverflowException, UndefinedResultException {
       calculate(new Default(), "90");
 
       calculate(new Divide(), "3");
@@ -67,7 +68,7 @@ class ContainerTest {
       checkResult("3");
    }
 
-   private void calculate(SimpleOperation operation, String number) throws OverflowException {
+   private void calculate(SimpleOperation operation, String number) throws OverflowException, UndefinedResultException {
       operation.setShowOperand(true);
       for (char c : number.toCharArray()) {
          operation.buildOperand(c);
