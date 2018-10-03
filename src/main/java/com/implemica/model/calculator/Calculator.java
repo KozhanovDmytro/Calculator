@@ -148,7 +148,6 @@ public class Calculator {
 
    private BigDecimal removeExcessZeros(BigDecimal number) {
       BigDecimal result = new BigDecimal(number.toPlainString(), MathContext.DECIMAL64);
-      result = result.setScale(16, RoundingMode.HALF_UP);
 
       // delete excess zeros.
       while(result.scale() > 0 && result.toPlainString().charAt(result.toPlainString().length() - 1) == '0') {

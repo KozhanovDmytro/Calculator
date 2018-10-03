@@ -43,10 +43,6 @@ class ValidatorTest {
       checkCN("100000000000000", "100 000 000 000 000");
       checkCN("1000000000000000", "1 000 000 000 000 000");
 
-      checkCN("10000000000000000", "1,e+16");
-      checkCN("100000000000000000", "1,e+17");
-      checkCN("1000000000000000000", "1,e+18");
-
       checkCN("0.0", "0,0");
       checkCN("0.00", "0,00");
       checkCN("0.000", "0,000");
@@ -81,16 +77,6 @@ class ValidatorTest {
       checkCN("0.000000000000001", "0,000000000000001");
       checkCN("0.0000000000000001", "0,0000000000000001");
 
-//      TODO do not forget about this.
-//      checkCN("0.00000000000000001", "1,e-17");
-//      checkCN("0.000000000000000001", "1,e-18");
-//      checkCN("0.0000000000000000001", "1,e-19");
-//      checkCN("0.00000000000000000001", "1,e-20");
-//      checkCN("0.000000000000000000001", "1,e-21");
-//      checkCN("0.0000000000000000000001", "1,e-22");
-//      checkCN("0.00000000000000000000001", "1,e-23");
-//      checkCN("0.000000000000000000000001", "1,e-24");
-
       checkCN("1.000000000000000", "1,000000000000000");
       checkCN("10.00000000000000", "10,00000000000000");
       checkCN("100.0000000000000", "100,0000000000000");
@@ -121,7 +107,7 @@ class ValidatorTest {
    }
 
    private void checkCN(String number, String expected){
-      assertEquals(expected, validator.showNumber(new BigDecimal(number, MathContext.DECIMAL64), false));
+      assertEquals(expected, validator.builtOperand(new BigDecimal(number, MathContext.DECIMAL64), false));
    }
 
    private void checkCNS(String number, String expected){

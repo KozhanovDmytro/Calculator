@@ -43,7 +43,7 @@ public class Validator {
          dfs.setExponentSeparator(INTEGER_EXPONENT_SEPARATOR);
          df.applyPattern(PATTERN_FOR_EXPONENT);
          df.setDecimalSeparatorAlwaysShown(true);
-      } else if(number.scale() > 18) {
+      } else if(number.scale() > 16 && number.toPlainString().matches("\\d+\\.000\\d+")) {
          dfs.setExponentSeparator(DECIMAL_EXPONENT_SEPARATOR);
          df.applyPattern(PATTERN_FOR_EXPONENT);
          df.setDecimalSeparatorAlwaysShown(true);
@@ -53,13 +53,9 @@ public class Validator {
 
       df.setDecimalFormatSymbols(dfs);
 
-      // for 0.000000000001
-      if(number.scale() > 0 && number.scale() <= 16){
-         BigDecimal temp = new BigDecimal(number.toPlainString() + "1");
-         result = df.format(temp);
-         result = result.substring(0, result.length() - 1);
-      } else {
-         result = df.format(number);
+      result = df.format(number);
+      if(result.matches("^-0$")){
+         result = "0";
       }
 
       return result;

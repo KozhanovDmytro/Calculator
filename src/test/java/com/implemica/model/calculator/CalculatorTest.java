@@ -110,7 +110,10 @@ class CalculatorTest {
       builder.doTest("0.0000000000000001+1=", "", 0, "1", null);
       builder.doTest("1/3*3=", "", 0, "1", null);
       builder.doTest("1/3*3-1", "1 / 3 * 3 - 1 ", 4, "1", null);
+      builder.doTest("0.0111111111111111*0.1==", "", 0, "1,1111111111111e-4", null);
       builder.doTest("1/3*3-1=", "", 0, "0", null);
+      builder.doTest("2.0000000000000001+1========", "", 0, "10", null);
+      builder.doTest("0.1*================", "", 0, "1,e-17", null);
    }
 
    @Test

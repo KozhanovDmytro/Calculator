@@ -69,7 +69,6 @@ public class Controller {
 
    private void executeProperties(){
       File f = new File("/properties/text_En.properties");
-      System.out.println(f.getAbsolutePath());
       try {
          File file = new File(getClass().getResource("/properties/text_En.properties").toURI());
 
