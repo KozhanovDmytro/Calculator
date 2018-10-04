@@ -65,4 +65,8 @@ public class OperandHistory implements History<SpecialOperation> {
 
       return result;
    }
+
+   @Override
+   @Deprecated
+   public void hideLast() {}
 }

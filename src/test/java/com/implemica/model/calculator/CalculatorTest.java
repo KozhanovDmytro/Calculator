@@ -18,7 +18,7 @@ class CalculatorTest {
    }
 
    @Test
-   void manySimpleOperations() throws OverflowException, UndefinedResultException {
+   void manySimpleOperations() {
       builder.doTest("2+", "2 + ", 2, "2", null);
 
       builder.doTest("3+++++", "3 + ", 2, "3", null);
@@ -45,7 +45,7 @@ class CalculatorTest {
    }
 
    @Test
-   void manyEquals() throws OverflowException, UndefinedResultException {
+   void manyEquals() {
       builder.doTest("1+3===", "", 0, "10", null);
       builder.doTest("289-102===", "", 0, "-17", null);
       builder.doTest("2*3===", "", 0, "54", null);
@@ -53,7 +53,7 @@ class CalculatorTest {
    }
 
    @Test
-   void equalsTests() throws OverflowException, UndefinedResultException {
+   void equalsTests() {
       builder.doTest("2+3=+++", "5 + ", 2, "5", null);
       builder.doTest("239*4=+-*/", "956 / ", 2, "956", null);
       builder.doTest("10+=", "", 0, "20", null);
@@ -62,8 +62,7 @@ class CalculatorTest {
    }
 
    @Test
-   void otherTests() throws OverflowException, UndefinedResultException {
-      builder.doTest("70/7=<<<", "", 0, "10", null);
+   void otherTests() {
       builder.doTest("7+3=1+", "1 + ", 2, "1", null);
       builder.doTest("2+3=4===", "", 0, "13", null);
       builder.doTest("4q", SQRT + "(4) ", 1, null, "2");
@@ -75,7 +74,7 @@ class CalculatorTest {
    }
 
    @Test
-   void percentTest() throws OverflowException, UndefinedResultException {
+   void percentTest() {
       builder.doTest("2p", "0 ", 1, "0", "0");
       builder.doTest("200+2p", "200 + 4 ", 2, "200", null);
       builder.doTest("200+2p=", "", 0, "204", null);
@@ -86,11 +85,30 @@ class CalculatorTest {
       builder.doTest("199+1=ppp", "1600 ", 1, "200", "1 600");
       builder.doTest("5+p", "5 + 0.25 ", 2, "5", "0,25");
       builder.doTest("2sss", "sqr(sqr(sqr(2))) ", 1, "0", "256");
-      builder.doTest("2sss<<<<<<<<", "sqr(sqr(sqr(2))) ", 1, "0", "256");
    }
 
    @Test
-   void specialOperations() throws OverflowException, UndefinedResultException {
+   void backspaceTest() {
+      builder.doTest("2sss<<<<<<<<=", "", 0, "256", null);
+      builder.doTest("70/7=<<<", "", 0, "10", null);
+      builder.doTest("1234567890<<<<<<<<<<<<<<<<<<<<<=", "", 0, "0", null);
+      builder.doTest("<<<<2qs=", "", 0, "2", null);
+      builder.doTest("2+3=<<<<", "", 0, "5", null);
+   }
+
+   @Test
+   void clear() {
+      builder.doTest("2+2*2-6*3-10c", "", 0, "0", "0");
+      builder.doTest("2+5/2ccccccccc", "", 0, "0", "0");
+      builder.doTest("5ssssssqqsssssqssscc", "", 0, "0", "0");
+
+      builder.doTest("85e", "", 0, "0", "0");
+      builder.doTest("8+2e", "8 + ", 2, "8", "0");
+      builder.doTest("6-e", "6 - ", 2, "6", "0");
+   }
+
+   @Test
+   void specialOperations() {
       builder.doTest("200+4pffsq", "200 + " + SQRT + "(sqr(1/(1/(8)))) ", 2, "200", "8");
       builder.doTest("5+ss", "5 + sqr(sqr(5)) ", 2, "5", "625");
       builder.doTest("5+ss=", "", 0, "630", "625");
@@ -102,22 +120,28 @@ class CalculatorTest {
    }
 
    @Test
-   void hiddenOperand() throws OverflowException, UndefinedResultException {
+   void hiddenOperand() {
       builder.doTest("2+=", "", 0, "4", null);
       builder.doTest("4+n", "4 + negate(4) ", 2, "4", "-4");
       builder.doTest("4+n=", "", 0, "0", null);
    }
 
    @Test
-   void testRoundingMode() throws OverflowException, UndefinedResultException {
+   void testRoundingMode() {
       builder.doTest("0.0000000000000001+1=", "", 0, "1", null);
       builder.doTest("1/3*3=", "", 0, "1", null);
       builder.doTest("1/3*3-1", "1 / 3 * 3 - 1 ", 4, "1", null);
-      builder.doTest("0.0111111111111111*0.1==", "", 0, "1,1111111111111e-4", null);
+      builder.doTest("0.0111111111111111*0.1==", "", 0, "1,11111111111111e-4", null);
+      builder.doTest("0.0011111111111111*0.1=", "", 0, "1,1111111111111e-4", null);
+      builder.doTest("0.0011111111111111*0.1==", "", 0, "1,1111111111111e-5", null);
       builder.doTest("1/3*3-1=", "", 0, "0", null);
       builder.doTest("2.0000000000000001+1========", "", 0, "10", null);
       builder.doTest("0.1*================", "", 0, "1,e-17", null);
       builder.doTest("0.9*=================================================================", "", 0, "9,550049507968252e-4", null);
+
+      // Kolya's tests
+      builder.doTest("0.0000000000000001+=", "", 0, "0,0000000000000002", null);
+      builder.doTest("0.0000000000000001-=", "", 0, "0", null);
 
    }
 

@@ -167,6 +167,7 @@ public class Controller {
       ce.setOnAction(event -> {
          ResponseDto response = calculator.clearEntry();
          showResult(response.getOperand());
+         updateHistory(response.getHistory());
       });
    }
 

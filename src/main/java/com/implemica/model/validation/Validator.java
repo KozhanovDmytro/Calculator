@@ -25,6 +25,8 @@ public class Validator {
    public String showNumber(BigDecimal number, boolean separator){
       String result;
 
+      number = checkScale(number);
+
       DecimalFormatSymbols dfs = new DecimalFormatSymbols(new Locale("ru", "Ru"));
       dfs.setGroupingSeparator(' ');
       dfs.setDecimalSeparator(',');
@@ -91,5 +93,17 @@ public class Validator {
       }
 
       return result;
+   }
+
+   private BigDecimal checkScale(BigDecimal number){
+      if(number.toBigInteger().compareTo(BigInteger.ZERO) == 0){
+         return number;
+      }
+
+      int length = number.toBigInteger().toString().length();
+      while(length + number.scale() > 16) {
+         number = number.setScale(number.scale() - 1, RoundingMode.HALF_UP);
+      }
+      return number;
    }
 }

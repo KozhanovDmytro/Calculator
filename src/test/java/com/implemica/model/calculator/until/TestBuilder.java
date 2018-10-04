@@ -1,6 +1,7 @@
 package com.implemica.model.calculator.until;
 
 import com.implemica.model.calculator.Calculator;
+import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.interfaces.History;
@@ -30,7 +31,7 @@ public class TestBuilder {
       calculator = new Calculator(new Arabic());
    }
 
-   public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException, UndefinedResultException {
+   public void doTest(String pattern, String history, int historySize, String result, String operand) {
       calculator = new Calculator(new Arabic());
       this.result = "0";
       this.operand = "0";
@@ -102,6 +103,12 @@ public class TestBuilder {
             case 'n':
                executeSpecialOperation(new Negate());
                break;
+            case 'c':
+               clear();
+               break;
+            case 'e':
+               clearEntry();
+               break;
          }
       }
 
@@ -125,6 +132,18 @@ public class TestBuilder {
 
    private void executeSpecialOperation(SpecialOperation operation) {
       operand = calculator.executeSpecialOperation(operation).getOperand();
+   }
+
+   private void clear(){
+      ResponseDto response = calculator.clear();
+      result = response.getResult();
+      operand = response.getOperand();
+   }
+
+   private void clearEntry(){
+      ResponseDto response = calculator.clearEntry();
+      result = response.getResult();
+      operand = response.getOperand();
    }
 
    private void executeBackSpace() {

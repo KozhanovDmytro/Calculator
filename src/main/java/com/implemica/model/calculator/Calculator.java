@@ -15,6 +15,7 @@ import com.implemica.model.validation.Validator;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Calculator {
 
@@ -156,6 +157,7 @@ public class Calculator {
    }
 
    public ResponseDto clearEntry(){
+      container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
 
       return new ResponseDto(showResult(), showOperand(), showHistory(), null, ExceptionType.NOTHING);

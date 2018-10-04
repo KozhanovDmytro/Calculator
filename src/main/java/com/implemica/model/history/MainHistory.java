@@ -58,4 +58,10 @@ public class MainHistory implements History<SimpleOperation> {
         }
         return result.toString();
     }
+
+    @Override
+    public void hideLast() {
+        if(operations.size() > 0)
+            operations.getLast().setShowOperand(false);
+    }
 }

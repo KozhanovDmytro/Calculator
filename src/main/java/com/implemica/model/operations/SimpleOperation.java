@@ -45,7 +45,7 @@ public abstract class SimpleOperation implements Operation {
     }
 
     public void buildOperand(char number) {
-        if(operand.toBigInteger().toString().length() + operand.scale() < 16) {
+        if((operand.toBigInteger().compareTo(BigInteger.ZERO) == 0 ? 0 : operand.toBigInteger().toString().length()) + operand.scale() < 16) {
             String separator;
             if(this.isSeparated())
                 separator = ".";

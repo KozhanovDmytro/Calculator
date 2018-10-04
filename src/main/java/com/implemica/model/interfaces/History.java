@@ -15,4 +15,6 @@ public interface History<T extends Operation> {
     void changeLast(T operation);
 
     String buildHistory();
+
+    void hideLast();
 }
