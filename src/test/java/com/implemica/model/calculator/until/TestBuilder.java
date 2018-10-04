@@ -22,6 +22,10 @@ public class TestBuilder {
 
    private Calculator calculator;
 
+   private String result;
+
+   private String operand;
+
    public TestBuilder() {
       calculator = new Calculator(new Arabic());
    }
@@ -31,6 +35,8 @@ public class TestBuilder {
        *
        */
       calculator = new Calculator(new Arabic());
+      this.result = "0";
+      this.operand = "0";
       for (char action : pattern.toCharArray()) {
          switch (action) {
             case '0':
@@ -116,42 +122,36 @@ public class TestBuilder {
 
    }
 
-   private void executeSimpleOperation(SimpleOperation operation) throws OverflowException, UndefinedResultException {
-      calculator.executeSimpleOperation(operation);
-      calculator.showResult();
+   private void executeSimpleOperation(SimpleOperation operation) {
+      result = calculator.executeSimpleOperation(operation).getResult();
    }
 
-   private void executeSpecialOperation(SpecialOperation operation) throws UndefinedResultException {
-      calculator.executeSpecialOperation(operation);
-      calculator.showOperand();
+   private void executeSpecialOperation(SpecialOperation operation) {
+      operand = calculator.executeSpecialOperation(operation).getOperand();
    }
 
    private void executeBackSpace() {
-      calculator.backspace();
-      calculator.showOperand();
+      operand = calculator.backspace().getOperand();
    }
 
    private void executeSeparate() {
-      calculator.separateOperand();
-      calculator.showOperand();
+      operand = calculator.separateOperand().getOperand();
    }
 
-   private void equals() throws OverflowException, UndefinedResultException {
-      calculator.equalsOperation();
-      calculator.showResult();
+   private void equals() {
+      result = calculator.equalsOperation().getResult();
    }
 
    private void checkResult(String expected) {
-      assertEquals(expected, calculator.showResult());
+      assertEquals(expected, result);
    }
 
    private void checkOperand(String expected) {
-      assertEquals(expected, calculator.showOperand());
+      assertEquals(expected, operand);
    }
 
    private void buildOperand(Number number) {
-      calculator.buildOperand(number);
-      calculator.showOperand();
+      operand = calculator.buildOperand(number).getOperand();
    }
 
    private void checkHistory(String expectedHistory, int size) {

@@ -29,11 +29,8 @@ public class Container {
 
     public void calculate() throws OverflowException, UndefinedResultException {
         result = this.operation.calculate(result);
-        if(result.abs().compareTo(new BigDecimal("1e10000")) >= 0 ||
-                (result.abs().compareTo(BigDecimal.ZERO)) > 0 &&
-                        result.abs().compareTo(new BigDecimal("1e-10000")) <= 0) {
-            throw new OverflowException(result);
-        }
+        checkOverflow(result);
+
         if(operation instanceof Default && !history.contains(Default.class)){
             history.add(operation);
             operation.setShowOperand(true);
@@ -43,7 +40,7 @@ public class Container {
     /**
      * Function which calculate for {@link SpecialOperation}.
      */
-    public void change(SpecialOperation operation, boolean isResult) throws UndefinedResultException {
+    public void change(SpecialOperation operation, boolean isResult) throws UndefinedResultException, OverflowException {
         if(isResult && !this.operation.isShowOperand()){
 
             // TODO it's not possible here. Just a shit.
@@ -57,6 +54,9 @@ public class Container {
             } else {
                 operand = operation.calculate(result);
             }
+
+            checkOverflow(operand);
+
             this.operation.setOperand(operand);
             this.operation.setShowOperand(true);
         } else {
@@ -66,6 +66,14 @@ public class Container {
             if(this.operation instanceof Default && getHistory().size() == 0){
                 getHistory().add(this.operation);
             }
+        }
+    }
+
+    private void checkOverflow(BigDecimal number) throws OverflowException {
+        if(result.abs().compareTo(new BigDecimal("1e10000")) >= 0 ||
+                (result.abs().compareTo(BigDecimal.ZERO)) > 0 &&
+                        result.abs().compareTo(new BigDecimal("1e-10000")) <= 0) {
+            throw new OverflowException(result);
         }
     }
 }

@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -46,6 +47,7 @@ public class Launcher extends Application {
         setActionsForInfoBtns();
 
         setActionForResultLabel();
+        setActionsForKeyboard();
 
         primaryStage.show();
     }
@@ -61,10 +63,6 @@ public class Launcher extends Application {
 
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(scene);
-
-        Controller controller = loader.getController();
-        controller.setScene(scene);
-        controller.actionsForKeyboard();
 
         primaryStage.setMinHeight(500);
         primaryStage.setMinWidth(320);
@@ -546,6 +544,87 @@ public class Launcher extends Application {
             memorySelect.getStyleClass().clear();
             logSelect.getStyleClass().add("ExtraInfoBtnSelected");
             extraInfoLabel.setText("Журнала еще нет");
+        });
+    }
+
+    public void setActionsForKeyboard() {
+        GridPane grid = (GridPane) root.lookup("#grid");
+        primaryStage.getScene().setOnKeyPressed(key -> {
+            if (key.getCode() == KeyCode.DIGIT5 && key.isShiftDown()) {
+                ((Button) grid.lookup("#percentOperation")).fire();
+                return;
+            }
+            if (key.getCode() == KeyCode.DIGIT2 && key.isShiftDown()) {
+                ((Button) grid.lookup("#sqrtOperation")).fire();
+                return;
+            }
+
+            if(key.getCode() == KeyCode.Q && !key.isShiftDown()){
+                ((Button) grid.lookup("#square")).fire();
+            }
+            if(key.getCode() == KeyCode.R && !key.isShiftDown()){
+                ((Button) grid.lookup("#divideByX")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT0 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn0")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT1 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn1")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT2 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn2")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT3 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn3")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT4 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn4")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT5 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn5")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT6 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn6")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT7 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn7")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT8 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn8")).fire();
+            }
+            if(key.getCode() == KeyCode.DIGIT9 && !key.isShiftDown()){
+                ((Button) grid.lookup("#btn9")).fire();
+            }
+            if(key.getCode() == KeyCode.BACK_SPACE && !key.isShiftDown()){
+                ((Button) grid.lookup("#backSpace")).fire();
+            }
+            if(key.getCode() == KeyCode.COMMA){
+                ((Button) grid.lookup("#separateBtn")).fire();
+            }
+            if(key.getCode() == KeyCode.F9 && !key.isShiftDown()){
+                ((Button) grid.lookup("#negate")).fire();
+            }
+            if(key.getCode() == KeyCode.EQUALS && !key.isShiftDown()){
+                ((Button) grid.lookup("#equalsOperation")).fire();
+            }
+            if(key.getCode() == KeyCode.PLUS || (key.getCode() == KeyCode.EQUALS && key.isShiftDown())){
+                ((Button) grid.lookup("#plusOperation")).fire();
+            }
+            if(key.getCode() == KeyCode.MINUS){
+                ((Button) grid.lookup("#minusOperation")).fire();
+            }
+            if(key.getCode() == KeyCode.DIVIDE){
+                ((Button) grid.lookup("#divideOperation")).fire();
+            }
+            if(key.getCode() == KeyCode.MULTIPLY || (key.getCode() == KeyCode.DIGIT8 && key.isShiftDown())){
+                ((Button) grid.lookup("#plusOperation")).fire();
+            }
+            if(key.getCode() == KeyCode.ESCAPE && !key.isShiftDown()){
+                ((Button) grid.lookup("#c")).fire();
+            }
+            if(key.getCode() == KeyCode.DELETE && !key.isShiftDown()) {
+                ((Button) grid.lookup("#ce")).fire();
+            }
         });
     }
 }
