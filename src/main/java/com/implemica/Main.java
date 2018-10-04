@@ -10,8 +10,8 @@ import java.math.RoundingMode;
 public class Main {
     /*
     * Do it firstly.
-    * TODO use pattern DTO for make a response to controller
-    * TODO delete try-catch in controller
+    * TODO fix bug with backspace - fixed
+    * TODO fix pattern N (special) N
     */
     public static void main(String[] args) {
         Application.launch(Launcher.class);

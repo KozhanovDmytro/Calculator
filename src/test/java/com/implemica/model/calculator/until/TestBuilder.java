@@ -31,9 +31,6 @@ public class TestBuilder {
    }
 
    public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException, UndefinedResultException {
-      /**
-       *
-       */
       calculator = new Calculator(new Arabic());
       this.result = "0";
       this.operand = "0";

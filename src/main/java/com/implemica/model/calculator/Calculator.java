@@ -85,6 +85,7 @@ public class Calculator {
          clear();
          exceptionType = ExceptionType.OVERFLOW;
       }
+      container.setMadeOperand(false);
       return new ResponseDto(null, showOperand(), showHistory(), null, exceptionType);
    }
 
@@ -133,10 +134,16 @@ public class Calculator {
    }
 
    public ResponseDto backspace(){
+      String result = "";
       if (container.isMadeOperand()) {
          container.getOperation().removeLast();
+         result = showBuiltOperand();
+      } else if(isShownResult) {
+         result = showResult();
+      } else {
+         result = showOperand();
       }
-      return new ResponseDto(null, null, null, showBuiltOperand(), ExceptionType.NOTHING);
+      return new ResponseDto(null, null, null, result, ExceptionType.NOTHING);
    }
 
    public ResponseDto clear(){

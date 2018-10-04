@@ -85,6 +85,8 @@ class CalculatorTest {
       builder.doTest("199+1=pp", "800 ", 1, "200", "800");
       builder.doTest("199+1=ppp", "1600 ", 1, "200", "1 600");
       builder.doTest("5+p", "5 + 0.25 ", 2, "5", "0,25");
+      builder.doTest("2sss", "sqr(sqr(sqr(2))) ", 1, "0", "256");
+      builder.doTest("2sss<<<<<<<<", "sqr(sqr(sqr(2))) ", 1, "0", "256");
    }
 
    @Test
