@@ -83,16 +83,16 @@ public class TestBuilder {
             case '=':
                equals();
                break;
-            case 'p':
+            case '%':
                executeSpecialOperation(new Percent());
                break;
-            case 'q':
+            case '√':
                executeSpecialOperation(new SquareRoot());
                break;
-            case 's':
+            case 'q':
                executeSpecialOperation(new Square());
                break;
-            case 'f':
+            case 'r':
                executeSpecialOperation(new DivideBy());
                break;
             case '<':
