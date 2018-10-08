@@ -73,8 +73,8 @@ public class Calculator {
       if(operation instanceof Percent) {
          ((Percent) operation).setResult(container.getResult());
       }
-      if(container.getHistory().size() == 0 && !(container.getOperation() instanceof Default)){
-         container.setOperation(new Default(container.getResult()));
+      if(container.getHistory().size() == 0 && container.getOperation() instanceof Equals){
+         container.setOperation(new Default((Equals) container.getOperation(), container.getResult()));
       }
       ExceptionType exceptionType = ExceptionType.NOTHING;
       try {
@@ -108,8 +108,14 @@ public class Calculator {
             Equals eq = (Equals) container.getOperation();
             if (!isShownResult) {
                container.setResult(container.getOperation().getOperand());
+            } else if(eq.getLastOperation() instanceof Default) {
+               eq.getLastOperation().setOperand(container.getResult());
+            } else if(eq.getLastOperation() instanceof Equals) {
+               if(((Equals) eq.getLastOperation()).getLastOperation() instanceof Default) {
+                  eq.setLastOperation(((Equals) eq.getLastOperation()).getLastOperation());
+                  eq.getLastOperation().setOperand(container.getResult());
+               }
             }
-            eq.getLastOperation().setOperand(eq.getLastOperation().getOperand());
          }
       }
       try {

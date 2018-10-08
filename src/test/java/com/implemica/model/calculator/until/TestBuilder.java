@@ -2,8 +2,6 @@ package com.implemica.model.calculator.until;
 
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
-import com.implemica.model.exceptions.OverflowException;
-import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.Arabic;
@@ -14,8 +12,6 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

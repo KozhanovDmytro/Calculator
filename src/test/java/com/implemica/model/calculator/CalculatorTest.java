@@ -59,6 +59,13 @@ class CalculatorTest {
       builder.doTest("10+=", "", 0, "20", null);
       builder.doTest("10+=+=", "", 0, "40", null);
       builder.doTest("10+=+=+=", "", 0, "80", null);
+      builder.doTest("1+2=4=", "", 0, "6", null);
+
+      builder.doTest("5+3=", "", 0, "8", "3");
+      builder.doTest("5+3=f", "1/(8) ", 1, "8", "0,125");
+      builder.doTest("5+3=f=", "", 0, "3,125", "0,125");
+      builder.doTest("5+3=f==", "", 0, "6,125", null);
+      builder.doTest("5+3=f===", "", 0, "9,125", null);
    }
 
    @Test
@@ -139,10 +146,11 @@ class CalculatorTest {
       builder.doTest("0.1*================", "", 0, "1,e-17", null);
       builder.doTest("0.9*=================================================================", "", 0, "9,550049507968252e-4", null);
 
-      // Kolya's tests
       builder.doTest("0.0000000000000001+=", "", 0, "0,0000000000000002", null);
       builder.doTest("0.0000000000000001-=", "", 0, "0", null);
-
+      builder.doTest("1/7*7-1=", "", 0, "0", null);
+      builder.doTest("1/7*1000000000000000*7-1000000000000000=", "", 0, "0", null);
+      builder.doTest("1/3/7/11/13/17*1000000000000000*3*7*11*13*17-1000000000000000=", "", 0, "0", null);
    }
 
    @Test
