@@ -23,6 +23,8 @@ public class TestBuilder {
 
    private String operand;
 
+   private String memory;
+
    public TestBuilder() {
       calculator = new Calculator(new Arabic());
    }
@@ -171,5 +173,9 @@ public class TestBuilder {
 
       assertEquals(size, history.size());
       assertEquals(expectedHistory, history.buildHistory());
+   }
+
+   private void addMemory() {
+      calculator.addMemory();
    }
 }

@@ -10,8 +10,6 @@ import java.math.RoundingMode;
 public class Main {
     /*
     * Do it firstly.
-    * TODO fix pattern N (special) N
-    * TODO fix pattern N + N special N. This mean that last operation must be definitely clean.
     * TODO fix history.
     */
     public static void main(String[] args) {

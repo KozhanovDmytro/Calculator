@@ -3,6 +3,7 @@ package com.implemica.model.operations;
 import com.implemica.model.history.OperandHistory;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.Operation;
+import com.implemica.model.validation.Validator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +33,8 @@ public abstract class SimpleOperation implements Operation {
     @Getter
     @Setter
     private boolean showOperand;  //TODO Rename it.
+
+    private Validator validator = new Validator();
 
     public SimpleOperation(){
         operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
@@ -71,7 +74,7 @@ public abstract class SimpleOperation implements Operation {
     }
 
     private String buildLocalHistory(){
-        return ((OperandHistory) operandHistory).buildHistory(this.getStringOperand());
+        return ((OperandHistory) operandHistory).buildHistory(validator.showNumber(this.stringOperand));
     }
 
     private String getCharacter(){

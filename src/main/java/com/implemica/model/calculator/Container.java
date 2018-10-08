@@ -4,17 +4,19 @@ import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.history.MainHistory;
 import com.implemica.model.interfaces.History;
+import com.implemica.model.interfaces.Memory;
 import com.implemica.model.interfaces.SpecialOperation;
+import com.implemica.model.memory.MemoryImpl;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.SimpleOperation;
 import com.implemica.model.operations.special.Percent;
+import com.implemica.model.validation.Validator;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
-import java.math.RoundingMode;
 
 @Getter
 @Setter
@@ -25,6 +27,8 @@ public class Container {
     private SimpleOperation operation = new Default();
 
     private History<SimpleOperation> history = new MainHistory();
+
+    private Memory memory = new MemoryImpl();
 
     private boolean madeOperand;
 
@@ -43,9 +47,7 @@ public class Container {
      */
     public void change(SpecialOperation operation, boolean isResult) throws UndefinedResultException, OverflowException {
         if(isResult && !this.operation.isShowOperand()){
-
-            // TODO it's not possible here. Just a shit.
-            this.operation.setStringOperand(result.toString());
+            this.operation.setStringOperand(new Validator().showNumber(result));
             this.operation.getOperandHistory().add(operation);
 
             BigDecimal operand;

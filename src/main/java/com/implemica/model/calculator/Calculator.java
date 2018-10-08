@@ -169,6 +169,39 @@ public class Calculator {
       return new ResponseDto(showResult(), showOperand(), showHistory(), null, ExceptionType.NOTHING);
    }
 
+   public String addMemory(){
+      if(container.getOperation().isShowOperand()) {
+         container.getMemory().add(container.getOperation().getOperand());
+      } else {
+         container.getMemory().add(container.getResult());
+      }
+
+      return validator.showNumber(container.getMemory().recall());
+   }
+
+   public String subtractMemory() {
+      if(container.getOperation().isShowOperand()) {
+         container.getMemory().subtract(container.getOperation().getOperand());
+      } else {
+         container.getMemory().subtract(container.getResult());
+      }
+
+      return validator.showNumber(container.getMemory().recall());
+   }
+
+   public ResponseDto getMemory() {
+      BigDecimal value = container.getMemory().recall();
+      String operand = "";
+      if(value != null) {
+         container.getOperation().setOperand(value);
+         operand = validator.showNumber(value);
+         container.getOperation().setShowOperand(true);
+      }
+      this.isShownResult = false;
+
+      return new ResponseDto(null, operand, null, null, ExceptionType.NOTHING);
+   }
+
    private String showResult(){
       isShownResult = true;
 

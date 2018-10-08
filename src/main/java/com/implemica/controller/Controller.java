@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
@@ -47,6 +49,9 @@ public class Controller {
    private Button negate, separateBtn, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
    @FXML
+   private Button clearMemory, recallMemory, addMemory, subtractMemory;
+
+   @FXML
    private Label resultLabel;
 
    @FXML
@@ -74,6 +79,7 @@ public class Controller {
       actionsForBuildOperand();
       actionsForOperationButtons();
       actionsForCleanOperations();
+      actionsForMemory();
 
       executeProperties();
    }
@@ -169,6 +175,28 @@ public class Controller {
          showResult(response.getOperand());
          updateHistory(response.getHistory());
       });
+   }
+
+   private void actionsForMemory() {
+      addMemory.setOnAction((event)->{
+         String result = calculator.addMemory();
+         clearMemory.setDisable(false);
+         recallMemory.setDisable(false);
+      });
+
+      subtractMemory.setOnAction((event)->{
+         String result = calculator.subtractMemory();
+         clearMemory.setDisable(false);
+         recallMemory.setDisable(false);
+      });
+
+      recallMemory.setOnAction((event -> showResult(calculator.getMemory().getOperand())));
+
+      clearMemory.setOnAction((event -> {
+         calculator.getContainer().getMemory().clear();
+         clearMemory.setDisable(true);
+         recallMemory.setDisable(true);
+      }));
    }
 
    private void showResult(String result) {

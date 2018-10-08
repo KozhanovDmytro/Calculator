@@ -267,7 +267,7 @@
                <padding>
                   <Insets bottom="1.0" />
                </padding>
-               <Button disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="MC">
+               <Button fx:id="clearMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="MC">
                   <styleClass>
                      <String fx:value="MainBtn" />
                      <String fx:value="RegularBtn" />
@@ -281,7 +281,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="MR">
+               <Button fx:id="recallMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="MR">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -295,7 +295,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="M+">
+               <Button fx:id="addMemory" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="M+">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -309,7 +309,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="M-">
+               <Button fx:id="subtractMemory" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="M-">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>

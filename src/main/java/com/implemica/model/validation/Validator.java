@@ -95,6 +95,10 @@ public class Validator {
       return result;
    }
 
+   public String showNumber(String stringOperand) {
+      return showNumber(new BigDecimal(stringOperand));
+   }
+
    private BigDecimal checkScale(BigDecimal number){
       if(number.toBigInteger().compareTo(BigInteger.ZERO) == 0){
          return number;

@@ -157,4 +157,23 @@ class CalculatorTest {
    void buildOperandTest(){
 
    }
+
+   @Test
+   void historyTest() {
+      builder.doTest("0.0000000000000001+", "0,0000000000000001 + ", 2, null, null);
+      builder.doTest("0.0000000000000001+1", "0,0000000000000001 + 1 ", 2, null, null);
+      builder.doTest("0.0000000000000001+1=", "", 0, null, null);
+      builder.doTest("0.0000000000000001+1=+", "1 + ", 2, null, null);
+      builder.doTest("0.0000000000000001+1=+=+", "2 + ", 2, null, null);
+      builder.doTest("0.0000000000000001+1=+=+=+", "4 + ", 2, null, null);
+      builder.doTest("0.0000000000000001+1=+=+=+=+", "8,000000000000001 + ", 2, null, null);
+
+      builder.doTest("2+5s", "2 + sqr(5) ", 2, null, null);
+      builder.doTest("1.00001qqq", "√(√(√(1,00001))) ", 1, null, null);
+   }
+
+   @Test
+   void memryTest() {
+
+   }
 }
