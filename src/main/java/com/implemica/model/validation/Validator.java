@@ -56,7 +56,7 @@ public class Validator {
       df.setDecimalFormatSymbols(dfs);
 
       result = df.format(number);
-      if(result.matches("^-0$")){
+      if(result.matches("^-0$") || result.matches("^0,e0$")){
          result = "0";
       }
 

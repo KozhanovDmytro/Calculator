@@ -1,8 +1,6 @@
 package com.implemica.model.calculator;
 
 import com.implemica.model.calculator.until.TestBuilder;
-import com.implemica.model.exceptions.OverflowException;
-import com.implemica.model.exceptions.UndefinedResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -66,6 +64,8 @@ class CalculatorTest {
       builder.doTest("5+3=r=", "", 0, "3,125", "0,125");
       builder.doTest("5+3=r==", "", 0, "6,125", null);
       builder.doTest("5+3=r===", "", 0, "9,125", null);
+
+      builder.doTest("5+3=r===5=", "", 0, "9,125", null);
    }
 
    @Test
@@ -105,13 +105,13 @@ class CalculatorTest {
 
    @Test
    void clear() {
-      builder.doTest("2+2*2-6*3-10c", "", 0, "0", "0");
-      builder.doTest("2+5/2ccccccccc", "", 0, "0", "0");
-      builder.doTest("5qqqqqq√√qqqqq√qqqcc", "", 0, "0", "0");
+      builder.doTest("2+2*2-6*3-10 C", "", 0, "0", "0");
+      builder.doTest("2+5/2 C C C C C C C C C", "", 0, "0", "0");
+      builder.doTest("5qqqqqq√√qqqqq√qqq C C", "", 0, "0", "0");
 
-      builder.doTest("85e", "", 0, "0", "0");
-      builder.doTest("8+2e", "8 + ", 2, "8", "0");
-      builder.doTest("6-e", "6 - ", 2, "6", "0");
+      builder.doTest("85 CE", "", 0, "0", "0");
+      builder.doTest("8+2 CE", "8 + ", 2, "8", "0");
+      builder.doTest("6- CE", "6 - ", 2, "6", "0");
    }
 
    @Test
@@ -124,6 +124,7 @@ class CalculatorTest {
       builder.doTest("2√q√q√q", null, 0, null, "2");
       builder.doTest("3rrrrrr", null, 0, null, "3");
       builder.doTest("1/3=r", null, 0, null, "3");
+      builder.doTest("1000000000000000-r", null, 0, null, "0,000000000000001");
    }
 
    @Test
@@ -151,6 +152,7 @@ class CalculatorTest {
       builder.doTest("1/7*7-1=", "", 0, "0", null);
       builder.doTest("1/7*1000000000000000*7-1000000000000000=", "", 0, "0", null);
       builder.doTest("1/3/7/11/13/17*1000000000000000*3*7*11*13*17-1000000000000000=", "", 0, "0", null);
+      builder.doTest("5√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null, 0, "0", "1,000000000000001");
    }
 
    @Test
@@ -174,6 +176,24 @@ class CalculatorTest {
 
    @Test
    void memoryTest() {
+      // takes from operand
+      builder.doTest("1 M+ M+ M+ M+ * MR =", "", 0, "4", null);
+      builder.doTest("1 M- M- * MR =", "", 0, "-2", null);
+      builder.doTest("1 M- M+ M- M+ MR =", "", 0, "0", null);
+      builder.doTest("M+ M+ M+ 1 + MR =", "", 0, "1", null);
+
+      // takes from result
+      builder.doTest("1+2+3+4+5+ M+ MR =", "", 0, "30", null);
+      builder.doTest("2+2= M+ M+ M+ M+ MR + 0=", "", 0, "16", null);
+      builder.doTest("0 + 20 M- M- M- M- M- =- MR =", "", 0, "120", null);
+
+
+      builder.doTest("0,0000000000000001qqqqqq M+ √√√√ qqqq M- MR ", null, 0, "0", "0");
+      builder.doTest("0,0000000000000001qqqqqq M+ √√√√ qqqq M- MR =", null, 0, "0", "0");
+   }
+
+   @Test
+   void boundaryTest() {
 
    }
 }

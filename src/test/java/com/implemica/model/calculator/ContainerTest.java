@@ -20,12 +20,12 @@ class ContainerTest {
    private Container container;
 
    @BeforeEach
-   public void init(){
+   void init(){
       container = new Container();
    }
 
    @Test
-   public void minusOperations() throws OverflowException, UndefinedResultException {
+   void minusOperations() throws OverflowException, UndefinedResultException {
       calculate(new Default(), "10");
       calculate(new Minus(), "1");
       calculate(new Minus(), "2");
@@ -36,7 +36,7 @@ class ContainerTest {
    }
 
    @Test
-   public void plusOperations() throws OverflowException, UndefinedResultException {
+   void plusOperations() throws OverflowException, UndefinedResultException {
       calculate(new Default(), "10");
 
       calculate(new Plus(), "1");
@@ -48,7 +48,7 @@ class ContainerTest {
    }
 
    @Test
-   public void multiplyOperations() throws OverflowException, UndefinedResultException {
+   void multiplyOperations() throws OverflowException, UndefinedResultException {
       calculate(new Default(), "2");
 
       calculate(new Multiply(), "3");
@@ -59,13 +59,19 @@ class ContainerTest {
    }
 
    @Test
-   public void divideOperations() throws OverflowException, UndefinedResultException {
+   void divideOperations() throws OverflowException, UndefinedResultException {
       calculate(new Default(), "90");
 
       calculate(new Divide(), "3");
       calculate(new Divide(), "10");
 
       checkResult("3");
+   }
+
+   @Test
+   void boundaryTest() throws OverflowException, UndefinedResultException {
+      calculate(new Default(), "1000000000000000");
+//      calculate();
    }
 
    private void calculate(SimpleOperation operation, String number) throws OverflowException, UndefinedResultException {

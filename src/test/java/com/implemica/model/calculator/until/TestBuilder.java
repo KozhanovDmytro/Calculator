@@ -2,6 +2,8 @@ package com.implemica.model.calculator.until;
 
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
+import com.implemica.model.exceptions.ExceptionType;
+import com.implemica.model.exceptions.TestException;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.Arabic;
@@ -12,6 +14,7 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,6 +28,8 @@ public class TestBuilder {
 
    private String memory;
 
+   private ExceptionType exceptionType;
+
    public TestBuilder() {
       calculator = new Calculator(new Arabic());
    }
@@ -33,6 +38,47 @@ public class TestBuilder {
       calculator = new Calculator(new Arabic());
       this.result = "0";
       this.operand = "0";
+      String[] actions = pattern.split(" ");
+      for (String action : actions) {
+         switch (action) {
+            case "C":
+               clear();
+               break;
+            case "CE":
+               clearEntry();
+               break;
+            case "MC":
+               memoryClear();
+               break;
+            case "MR":
+               memoryRecall();
+               break;
+            case "M+":
+               addMemory();
+               break;
+            case "M-":
+               subtractMemory();
+               break;
+            default:
+               checkBySymbols(action);
+         }
+      }
+
+      if (history != null) {
+         checkHistory(history, historySize);
+      }
+
+      if (operand != null) {
+         checkOperand(operand);
+      }
+
+      if (result != null) {
+         checkResult(result);
+      }
+
+   }
+
+   private void checkBySymbols(String pattern) {
       for (char action : pattern.toCharArray()) {
          switch (action) {
             case '0':
@@ -101,41 +147,50 @@ public class TestBuilder {
             case 'n':
                executeSpecialOperation(new Negate());
                break;
-            case 'c':
-               clear();
-               break;
-            case 'e':
-               clearEntry();
-               break;
          }
       }
-
-      if (history != null) {
-         checkHistory(history, historySize);
-      }
-
-      if (operand != null) {
-         checkOperand(operand);
-      }
-
-      if (result != null) {
-         checkResult(result);
-      }
-
    }
 
    private void executeSimpleOperation(SimpleOperation operation) {
-      result = calculator.executeSimpleOperation(operation).getResult();
+      ResponseDto response = calculator.executeSimpleOperation(operation);
+      result = response.getResult();
+      exceptionType = response.getExceptionType();
+
+      if(exceptionType != ExceptionType.NOTHING){
+         throw new TestException(exceptionType);
+      }
    }
 
    private void executeSpecialOperation(SpecialOperation operation) {
-      operand = calculator.executeSpecialOperation(operation).getOperand();
+      ResponseDto response = calculator.executeSpecialOperation(operation);
+      operand = response.getOperand();
+      exceptionType = response.getExceptionType();
+
+      if(exceptionType != ExceptionType.NOTHING){
+         throw new TestException(exceptionType);
+      }
    }
 
    private void clear(){
       ResponseDto response = calculator.clear();
       result = response.getResult();
       operand = response.getOperand();
+   }
+
+   private void memoryClear() {
+      calculator.getContainer().getMemory().clear();
+   }
+
+   private void memoryRecall() {
+      operand = calculator.getMemory().getOperand();
+   }
+
+   private void addMemory() {
+      memory = calculator.addMemory();
+   }
+
+   private void subtractMemory() {
+      memory = calculator.subtractMemory();
    }
 
    private void clearEntry(){
@@ -173,9 +228,5 @@ public class TestBuilder {
 
       assertEquals(size, history.size());
       assertEquals(expectedHistory, history.buildHistory());
-   }
-
-   private void addMemory() {
-      calculator.addMemory();
    }
 }
