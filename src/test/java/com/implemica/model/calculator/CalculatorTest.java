@@ -204,25 +204,44 @@ class CalculatorTest {
 
    @Test
    void boundaryTest() throws OverflowException, UndefinedResultException {
-      // Right boundary value(RBV)  is 1e10000
-      // Left boundary value(LBV)   is -1e10000
-      // The lowest value (MIN)     is 1/(RBV)
 
-
-      // Formula: RBV - MIN
-      String maxMinusMin = "1000000000000000*===================*================================*1000000000000000======" +
-              "*10========= M+ -1*10+9=";
+      // this pattern generate the MAX value - 1e10000
+      // which must throw an exception!
       String max = "1000000000000000*===================*================================*1000000000000000======" +
               "*10==========";
 
+      // this pattern create number by this short formula (MAX - 1).
+      // number must be 99999999...
+      // digit 9 must be 9999 times.
+      String maxMinusOne = "1000000000000000*===================*================================*1000000000000000======" +
+              "*10========= -1*10+9=";
+
+      // this pattern provide to storage in memory this number : 0.9999999999999999999...
+      // note! digit 9 must be 9999 times.
+      String oneSubtractTheSmallestNumber = "1000000000000000*===================*================================*1000000000000000======" +
+              "*10=========-1=r= M- C ";
+
+      // this pattern generate the MAX value: -1e10000
+      // which must throw an exception!
+      String negateMax = "1000000000000000*===================*================================*1000000000000000======" +
+              "*1n=*10==========";
+
+      // this pattern create number by this short formula (-MAX - MIN).
+      // number must be -99999999...
+      // digit 9 must be 9999 times.
+      String negateMaxSubtractMin = "1000000000000000*===================*================================*1000000000000000======" +
+              "*10========= M+ -1*10+9=n=";
+
+
       // right side
-      builder.doTest(maxMinusMin, null, 0, null, null);
+      builder.doTest(oneSubtractTheSmallestNumber + maxMinusOne, null, 0, null, null);
       builder.doExceptionsTest(max, ExceptionType.OVERFLOW);
 
+
       // left side
-      // TODO left side
+      builder.doTest(negateMaxSubtractMin, null, 0, null, null);
+      builder.doExceptionsTest(negateMax, ExceptionType.OVERFLOW);
 
       System.out.println(builder.getCalculator().getContainer().getResult().toPlainString());
-
    }
 }

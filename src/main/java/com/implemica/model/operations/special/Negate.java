@@ -9,7 +9,7 @@ public class Negate implements SpecialOperation {
 
    @Override
    public BigDecimal calculate(BigDecimal operand) {
-      return operand.negate(MathContext.DECIMAL128);
+      return operand.negate(MathContext.UNLIMITED);
    }
 
    @Override
