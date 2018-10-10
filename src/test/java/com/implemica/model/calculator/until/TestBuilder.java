@@ -4,7 +4,6 @@ import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.exceptions.OverflowException;
-import com.implemica.model.exceptions.TestException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
@@ -99,7 +98,7 @@ public class TestBuilder {
 
    }
 
-   private void checkBySymbols(String pattern) throws OverflowException, UndefinedResultException {
+   private void checkBySymbols(String pattern) {
       for (char action : pattern.toCharArray()) {
          switch (action) {
             case '0':
