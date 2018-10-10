@@ -14,13 +14,13 @@ public class MemoryImpl implements Memory {
 
    @Override
    public void add(BigDecimal operand) {
-      value = value.add(operand, MathContext.DECIMAL128);
+      value = value.add(operand, MathContext.UNLIMITED);
       show = true;
    }
 
    @Override
    public void subtract(BigDecimal operand) {
-      value = value.subtract(operand, MathContext.DECIMAL128);
+      value = value.subtract(operand, MathContext.UNLIMITED);
       show = true;
    }
 

@@ -58,8 +58,6 @@ public class Container {
                 operand = operation.calculate(result);
             }
 
-            checkOverflow(operand);
-
             this.operation.setOperand(operand);
             this.operation.setShowOperand(true);
         } else {
@@ -70,13 +68,14 @@ public class Container {
                 getHistory().add(this.operation);
             }
         }
+        checkOverflow(this.operation.getOperand());
     }
 
     private void checkOverflow(BigDecimal number) throws OverflowException {
-        if(result.abs().compareTo(new BigDecimal("1e10000")) >= 0 ||
-                (result.abs().compareTo(BigDecimal.ZERO)) > 0 &&
-                        result.abs().compareTo(new BigDecimal("1e-10000")) <= 0) {
-            throw new OverflowException(result);
+        if(number.abs().compareTo(new BigDecimal("1e10000")) >= 0 ||
+                (number.abs().compareTo(BigDecimal.ZERO)) > 0 &&
+                        number.abs().compareTo(new BigDecimal("1e-10000")) <= 0) {
+            throw new OverflowException(number);
         }
     }
 }

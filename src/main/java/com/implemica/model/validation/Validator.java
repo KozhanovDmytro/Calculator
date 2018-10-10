@@ -96,7 +96,11 @@ public class Validator {
    }
 
    public String showNumber(String stringOperand) {
-      return showNumber(new BigDecimal(stringOperand));
+      stringOperand = stringOperand.replace(" ", "")
+                                    .replace(",", "")
+                                    .replace("\\+", "");
+
+      return showNumber(new BigDecimal(stringOperand)).replace(" ", "");
    }
 
    private BigDecimal checkScale(BigDecimal number){

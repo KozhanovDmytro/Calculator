@@ -3,7 +3,9 @@ package com.implemica.model.calculator.until;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
+import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.TestException;
+import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.Arabic;
@@ -14,12 +16,15 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
+import lombok.Getter;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestBuilder {
 
+   @Getter
    private Calculator calculator;
 
    private String result;
@@ -34,7 +39,21 @@ public class TestBuilder {
       calculator = new Calculator(new Arabic());
    }
 
-   public void doTest(String pattern, String history, int historySize, String result, String operand) {
+   public void doExceptionsTest(String pattern, ExceptionType exceptionType) {
+      Exception expected = new Exception();
+      switch (exceptionType){
+         case OVERFLOW:
+            expected = new OverflowException();
+            break;
+         case UNDEFINED_RESULT:
+            expected = new UndefinedResultException();
+            break;
+      }
+
+      assertThrows(expected.getClass(), () -> doTest(pattern, null, 0, null, null));
+   }
+
+   public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException, UndefinedResultException {
       calculator = new Calculator(new Arabic());
       this.result = "0";
       this.operand = "0";
@@ -76,9 +95,11 @@ public class TestBuilder {
          checkResult(result);
       }
 
+      checkException();
+
    }
 
-   private void checkBySymbols(String pattern) {
+   private void checkBySymbols(String pattern) throws OverflowException, UndefinedResultException {
       for (char action : pattern.toCharArray()) {
          switch (action) {
             case '0':
@@ -155,20 +176,12 @@ public class TestBuilder {
       ResponseDto response = calculator.executeSimpleOperation(operation);
       result = response.getResult();
       exceptionType = response.getExceptionType();
-
-      if(exceptionType != ExceptionType.NOTHING){
-         throw new TestException(exceptionType);
-      }
    }
 
    private void executeSpecialOperation(SpecialOperation operation) {
       ResponseDto response = calculator.executeSpecialOperation(operation);
       operand = response.getOperand();
       exceptionType = response.getExceptionType();
-
-      if(exceptionType != ExceptionType.NOTHING){
-         throw new TestException(exceptionType);
-      }
    }
 
    private void clear(){
@@ -208,7 +221,11 @@ public class TestBuilder {
    }
 
    private void equals() {
-      result = calculator.equalsOperation().getResult();
+      ResponseDto response = calculator.equalsOperation();
+
+      result = response.getResult();
+      exceptionType = response.getExceptionType();
+
    }
 
    private void checkResult(String expected) {
@@ -228,5 +245,14 @@ public class TestBuilder {
 
       assertEquals(size, history.size());
       assertEquals(expectedHistory, history.buildHistory());
+   }
+
+   private void checkException() throws OverflowException, UndefinedResultException {
+      switch (exceptionType){
+         case OVERFLOW:
+            throw new OverflowException();
+         case UNDEFINED_RESULT:
+            throw new UndefinedResultException();
+      }
    }
 }

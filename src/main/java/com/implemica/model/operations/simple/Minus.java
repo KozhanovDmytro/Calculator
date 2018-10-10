@@ -14,6 +14,6 @@ public class Minus extends SimpleOperation {
 
     @Override
     public BigDecimal calculate(BigDecimal result) {
-        return result.subtract(operand, MathContext.DECIMAL128);
+        return result.subtract(operand, MathContext.UNLIMITED);
     }
 }

@@ -14,6 +14,6 @@ public class Plus extends SimpleOperation {
 
     @Override
     public BigDecimal calculate(BigDecimal result) {
-        return operand.add(result, MathContext.DECIMAL128);
+        return operand.add(result, MathContext.UNLIMITED);
     }
 }
