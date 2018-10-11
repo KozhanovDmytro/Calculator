@@ -1,6 +1,9 @@
 package com.implemica.view;
 
 import com.implemica.controller.Controller;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
@@ -17,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import lombok.Getter;
 
 import java.util.stream.Collectors;
@@ -35,6 +39,8 @@ public class Launcher extends Application {
 
     private boolean isDragging;
 
+    private boolean isMenuShown;
+
     private Parent root;
 
     @Override
@@ -48,6 +54,8 @@ public class Launcher extends Application {
 
         setActionForResultLabel();
         setActionsForKeyboard();
+
+        setActionForDropDownMenu();
 
         primaryStage.show();
     }
@@ -547,7 +555,7 @@ public class Launcher extends Application {
         });
     }
 
-    public void setActionsForKeyboard() {
+    private void setActionsForKeyboard() {
         GridPane grid = (GridPane) root.lookup("#grid");
         primaryStage.getScene().setOnKeyPressed(key -> {
             if (key.getCode() == KeyCode.DIGIT5 && key.isShiftDown()) {
@@ -626,5 +634,38 @@ public class Launcher extends Application {
                 ((Button) grid.lookup("#ce")).fire();
             }
         });
+    }
+
+    private void setActionForDropDownMenu() {
+        Button menuBtn = (Button) root.lookup("#menuBtn");
+        AnchorPane menu = (AnchorPane) root.lookup("#menu");
+        AnchorPane mainPane = (AnchorPane) root.lookup("#mainPane");
+        AnchorPane mainField = (AnchorPane) root.lookup("#mainField");
+
+        mainPane.setOnMouseClicked(event -> menuSize(menu, 0.0d));
+
+        mainField.setOnMouseClicked(event -> menuSize(menu, 0.0d));
+
+        menuBtn.setOnMouseClicked(event -> {
+            if(isMenuShown){
+                menuSize(menu, 0.0d);
+            } else {
+                menuSize(menu, 260.0d);
+            }
+        });
+    }
+
+    private void menuSize(AnchorPane menu, double size) {
+        ScaleTransition animation = new ScaleTransition(Duration.millis(800), menu);
+
+        animation.setToX(2.0d);
+
+        animation.play();
+
+        if(size == 0.0d) {
+            isMenuShown = false;
+        } else {
+            isMenuShown = true;
+        }
     }
 }

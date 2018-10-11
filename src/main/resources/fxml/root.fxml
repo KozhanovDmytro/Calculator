@@ -17,17 +17,9 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="321.0" styleClass="Canvas" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.implemica.controller.Controller">
    <center>
-      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
-         <AnchorPane maxHeight="42.0" maxWidth="1.7976931348623157E308" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="mainField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+         <AnchorPane maxHeight="42.0" maxWidth="1.7976931348623157E308" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0">
-               <Button fx:id="menu" maxHeight="1.7976931348623157E308" mnemonicParsing="false" prefWidth="46.0" text="">
-                  <styleClass>
-                     <String fx:value="MainBtn" />
-                     <String fx:value="MenuBtn" />
-                     <String fx:value="RegularBtn" />
-                     <String fx:value="RegularBorderBtn" />
-                  </styleClass>
-               </Button>
                <Label fx:id="mode" maxHeight="1.7976931348623157E308" text="Обычный">
                   <font>
                      <Font name="Segoe UI" size="20.0" />
@@ -396,6 +388,15 @@
                <Cursor fx:constant="NW_RESIZE" />
             </cursor>
          </Pane>
+         <AnchorPane fx:id="menu" maxWidth="260.0" minWidth="0.0" prefWidth="260.0" style="-fx-background-color: #ebebeb;" translateX="-260.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         <Button fx:id="menuBtn" maxHeight="42.0" maxWidth="46.0" minHeight="42.0" minWidth="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="46.0" text="" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <styleClass>
+               <String fx:value="MainBtn" />
+               <String fx:value="MenuBtn" />
+               <String fx:value="RegularBtn" />
+               <String fx:value="RegularBorderBtn" />
+            </styleClass>
+         </Button>
       </AnchorPane>
    </center>
    <top>
