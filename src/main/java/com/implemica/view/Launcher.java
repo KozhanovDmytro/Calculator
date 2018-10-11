@@ -638,34 +638,35 @@ public class Launcher extends Application {
 
     private void setActionForDropDownMenu() {
         Button menuBtn = (Button) root.lookup("#menuBtn");
-        AnchorPane menu = (AnchorPane) root.lookup("#menu");
         AnchorPane mainPane = (AnchorPane) root.lookup("#mainPane");
         AnchorPane mainField = (AnchorPane) root.lookup("#mainField");
+        Pane hideMenu = (Pane) root.lookup("#hideMenu");
 
-        mainPane.setOnMouseClicked(event -> menuSize(menu, 0.0d));
+        hideMenu.setVisible(false);
 
-        mainField.setOnMouseClicked(event -> menuSize(menu, 0.0d));
+        mainPane.setOnMouseClicked(event -> menuSize(false));
+        mainField.setOnMouseClicked(event -> menuSize(false));
+        hideMenu.setOnMouseClicked(event -> menuSize(false));
 
         menuBtn.setOnMouseClicked(event -> {
-            if(isMenuShown){
-                menuSize(menu, 0.0d);
-            } else {
-                menuSize(menu, 260.0d);
-            }
+            menuSize(!isMenuShown);
         });
     }
 
-    private void menuSize(AnchorPane menu, double size) {
-        ScaleTransition animation = new ScaleTransition(Duration.millis(800), menu);
+    private void menuSize(boolean show) {
+        AnchorPane menu = (AnchorPane) root.lookup("#menu");
+        TranslateTransition animation = new TranslateTransition(Duration.millis(50), menu);
+        Pane hideMenu = (Pane) root.lookup("#hideMenu");
 
-        animation.setToX(2.0d);
-
-        animation.play();
-
-        if(size == 0.0d) {
-            isMenuShown = false;
-        } else {
+        if(show) {
+            animation.setToX(0.0d);
             isMenuShown = true;
+        } else {
+            animation.setToX(-260.0d);
+            isMenuShown = false;
         }
+
+        hideMenu.setVisible(isMenuShown);
+        animation.play();
     }
 }
