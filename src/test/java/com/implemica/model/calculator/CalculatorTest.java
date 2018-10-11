@@ -14,7 +14,7 @@ class CalculatorTest {
    private final String SQRT = "√";
 
    @BeforeEach
-   void init(){
+   void init() {
       builder = new TestBuilder();
    }
 
@@ -88,7 +88,7 @@ class CalculatorTest {
       builder.doTest("2%", "0 ", 1, "0", "0");
       builder.doTest("200+2%", "200 + 4 ", 2, "200", null);
       builder.doTest("200+2%=", "", 0, "204", null);
-      builder.doTest("200+2%=%", "416.16 ", 1,  null, "416,16");
+      builder.doTest("200+2%=%", "416.16 ", 1, null, "416,16");
       builder.doTest("199+1=", "", 0, "200", "1");
       builder.doTest("199+1=%", "400 ", 1, "200", "400");
       builder.doTest("199+1=%%", "800 ", 1, "200", "800");
@@ -161,7 +161,7 @@ class CalculatorTest {
    }
 
    @Test
-   void buildOperandTest(){
+   void buildOperandTest() {
 
    }
 
@@ -195,10 +195,12 @@ class CalculatorTest {
 
       builder.doTest("0,0000000000000001qqqqqq M+ √√√√ qqqq M- MR ", null, 0, "0", "0");
       builder.doTest("0,0000000000000001qqqqqq M+ √√√√ qqqq M- MR =", null, 0, "0", "0");
+
+      builder.doTest("1000000000000000*1000000000000000*1000000000000000= M- C 1/7*1000000000000000*1000000000000000*1000000000000000*7= M+ C MR=", null, 0, "0", null);
    }
 
    @Test
-   void checkExceptions(){
+   void checkExceptions() {
       builder.doExceptionsTest("1000000000000000qqqqqqqqqq", ExceptionType.OVERFLOW);
    }
 
@@ -230,18 +232,34 @@ class CalculatorTest {
       // number must be -99999999...
       // digit 9 must be 9999 times.
       String negateMaxSubtractMin = "1000000000000000*===================*================================*1000000000000000======" +
-              "*10========= M+ -1*10+9=n=";
+              "*10========= -1*10n-9= ";
 
+      // 0.000000000000000...00001
+      String theSmallestNumber = "1000000000000000*===================*================================*1000000000000000======" +
+              "*10=========r*0.1= ";
+
+      // 0.000000000000000...00002
+      String doubleSmallestNumber = "1000000000000000*===================*================================*1000000000000000======" +
+              "*10=========r*0.2= ";
 
       // right side
-      builder.doTest(oneSubtractTheSmallestNumber + maxMinusOne, null, 0, null, null);
-      builder.doExceptionsTest(max, ExceptionType.OVERFLOW);
+      // 999999999999999999999999(9).999999999...99
+      builder.doTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR =", null, 0, null, null);
 
+      // 1e10000
+      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + theSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
+
+      // 1000000000000000000(0).0000000000000000000...01
+      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + doubleSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
 
       // left side
-      builder.doTest(negateMaxSubtractMin, null, 0, null, null);
-      builder.doExceptionsTest(negateMax, ExceptionType.OVERFLOW);
+      // -999999999999999999999999(9).999999999...99
+      builder.doTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =", null, 0, null, null);
 
-      System.out.println(builder.getCalculator().getContainer().getResult().toPlainString());
+      // -1e10000
+      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + theSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
+
+      // -1000000000000(0).000000000...01
+      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + doubleSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
    }
 }
