@@ -1,8 +1,5 @@
 package com.implemica.view;
 
-import com.implemica.controller.Controller;
-import javafx.animation.FadeTransition;
-import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
@@ -22,7 +18,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import lombok.Getter;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -156,7 +151,7 @@ public class Launcher extends Application {
     private void setResizeActionForStage() {
         AnchorPane extraInfoFull = (AnchorPane) root.lookup("#extraInfoFull");
         HBox extraInfoBtns = (HBox) root.lookup("#extraInfoBtns");
-        Label extraInfoLabel = (Label) root.lookup("#extraInfoLabel");
+        Label extraMemoryLabel = (Label) root.lookup("#extraMemoryLabel");
 
         Pane left = (Pane) root.lookup("#leftResize");
         Pane extraLeft = (Pane) root.lookup("#extraLeftResize");
@@ -304,13 +299,13 @@ public class Launcher extends Application {
 
         extraInfoFull.widthProperty().addListener((observable, oldValue, newValue) -> {
            Button showMemory = (Button) root.lookup("#showMemory");
-            if (newValue.intValue() >= 240 && newValue.intValue() <= 260 && extraInfoLabel.getText().length() > 19) {
-                StringBuilder result = new StringBuilder(extraInfoLabel.getText());
-                result.setCharAt(18, '\n');
-                extraInfoLabel.setText(result.toString());
-            } else {
-                extraInfoLabel.setText(extraInfoLabel.getText().replace('\n', ' '));
-            }
+//            if (newValue.intValue() >= 240 && newValue.intValue() <= 260 && extraMemoryLabel.getText().length() > 19) {
+//                StringBuilder result = new StringBuilder(extraMemoryLabel.getText());
+//                result.setCharAt(18, '\n');
+//                extraMemoryLabel.setText(result.toString());
+//            } else {
+//                extraMemoryLabel.setText(extraMemoryLabel.getText().replace('\n', ' '));
+//            }
 
             Stream.of(right, rightBottom)
                     .collect(Collectors.toList())
@@ -561,18 +556,23 @@ public class Launcher extends Application {
         Button memoryBtn = (Button) root.lookup("#memoryBtn");
         Pane memorySelect = (Pane) root.lookup("#memorySelect");
 
-        Label extraInfoLabel = (Label) root.lookup("#extraInfoLabel");
+        Label extraLogLabel = (Label) root.lookup("#extraLogLabel");
+        Label extraMemoryLabel = (Label) root.lookup("#extraMemoryLabel");
+        extraMemoryLabel.setVisible(false);
+        extraLogLabel.setVisible(true);
 
         memoryBtn.setOnMouseClicked(event -> {
             logSelect.getStyleClass().clear();
             memorySelect.getStyleClass().add("ExtraInfoBtnSelected");
-            extraInfoLabel.setText("В памяти ничего не сохранено");
+            extraMemoryLabel.setVisible(true);
+            extraLogLabel.setVisible(false);
         });
 
         logBtn.setOnMouseClicked(event -> {
             memorySelect.getStyleClass().clear();
             logSelect.getStyleClass().add("ExtraInfoBtnSelected");
-            extraInfoLabel.setText("Журнала еще нет");
+            extraMemoryLabel.setVisible(false);
+            extraLogLabel.setVisible(true);
         });
     }
 

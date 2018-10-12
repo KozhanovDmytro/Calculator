@@ -3,6 +3,7 @@ package com.implemica.controller;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import com.implemica.model.calculator.Calculator;
@@ -44,7 +45,7 @@ public class Controller {
    private Button negate, separateBtn, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
    @FXML
-   private Button clearMemory, recallMemory, addMemory, subtractMemory, showMemory;
+   private Button clearMemory, recallMemory, addMemory, subtractMemory, showMemory, memoryBtn, logBtn;
 
    @FXML
    private Button currency, volume, length, weight, temperature, energy,
@@ -56,6 +57,9 @@ public class Controller {
 
    @FXML
    private Label resultLabel, memoryLabel, historyLabel;
+
+   @FXML
+   private Label extraLogLabel, extraMemoryLabel;
 
    @FXML
    private Label title;
@@ -85,6 +89,7 @@ public class Controller {
          InputStream stream = new FileInputStream(file);
 
          texts.load(stream);
+         stream.close();
       } catch (IOException | URISyntaxException e) {
          e.printStackTrace();
       }
@@ -116,6 +121,11 @@ public class Controller {
 
       menuConverter.setText(texts.getProperty("menuConverter"));
       menuCalculator.setText(texts.getProperty("menuCalculator"));
+
+      extraMemoryLabel.setText(texts.getProperty("noMemory"));
+      extraLogLabel.setText(texts.getProperty("noLog"));
+      memoryBtn.setText(texts.getProperty("memory"));
+      logBtn.setText(texts.getProperty("history"));
    }
 
    private void actionsForOperationButtons() {
@@ -200,6 +210,7 @@ public class Controller {
       addMemory.setOnAction((event)->{
          String result = calculator.addMemory();
          memoryLabel.setText(result);
+         extraMemoryLabel.setText(result);
          clearMemory.setDisable(false);
          recallMemory.setDisable(false);
          showMemory.setDisable(false);
@@ -208,6 +219,7 @@ public class Controller {
       subtractMemory.setOnAction((event)->{
          String result = calculator.subtractMemory();
          memoryLabel.setText(result);
+         extraMemoryLabel.setText(result);
          clearMemory.setDisable(false);
          recallMemory.setDisable(false);
          showMemory.setDisable(false);
@@ -218,6 +230,7 @@ public class Controller {
       clearMemory.setOnAction((event -> {
          calculator.getContainer().getMemory().clear();
          memoryLabel.setText("0");
+         extraMemoryLabel.setText(texts.getProperty("noMemory"));
          clearMemory.setDisable(true);
          recallMemory.setDisable(true);
          showMemory.setDisable(true);

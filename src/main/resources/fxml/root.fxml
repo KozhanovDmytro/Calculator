@@ -459,7 +459,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -479,7 +479,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -530,7 +530,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -550,7 +550,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -570,7 +570,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -610,7 +610,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -630,7 +630,8 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <!--ECAD-->
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -650,7 +651,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -670,7 +671,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -690,7 +691,8 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <!--ED5A-->
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -710,7 +712,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -750,7 +752,7 @@
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label text="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -793,7 +795,7 @@
                      <String fx:value="RegularBtn" />
                   </styleClass>
                   <graphic>
-                     <Label text="">
+                     <Label text="">
                         <font>
                            <Font name="Segoe MDL2 Assets" size="16.0" />
                         </font>
@@ -908,7 +910,8 @@
                   </VBox>
                </children>
             </HBox>
-            <Label fx:id="extraInfoLabel" lineSpacing="1.0" styleClass="ExtraInfoLabel" text="Журнала еще нет" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
+            <Label fx:id="extraLogLabel" lineSpacing="1.0" styleClass="ExtraInfoLabel" text="Журнала еще нет" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
+            <Label fx:id="extraMemoryLabel" layoutX="20.0" layoutY="90.0" lineSpacing="1.0" styleClass="ExtraInfoLabel" text="Nothing to show" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
             <Pane fx:id="rightResizeFull" maxHeight="5.0" maxWidth="-Infinity" minWidth="5.0" prefWidth="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <cursor>
                   <Cursor fx:constant="E_RESIZE" />
