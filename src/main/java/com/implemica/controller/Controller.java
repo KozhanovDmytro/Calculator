@@ -44,7 +44,7 @@ public class Controller {
    private Button negate, separateBtn, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
    @FXML
-   private Button clearMemory, recallMemory, addMemory, subtractMemory;
+   private Button clearMemory, recallMemory, addMemory, subtractMemory, showMemory;
 
    @FXML
    private Button currency, volume, length, weight, temperature, energy,
@@ -54,18 +54,14 @@ public class Controller {
    @FXML
    private Label menuConverter, menuCalculator;
 
-
    @FXML
-   private Label resultLabel;
+   private Label resultLabel, memoryLabel, historyLabel;
 
    @FXML
    private Label title;
 
    @FXML
    private Label mode;
-
-   @FXML
-   private Label historyLabel;
 
    private Properties texts = new Properties();
 
@@ -203,22 +199,28 @@ public class Controller {
    private void actionsForMemory() {
       addMemory.setOnAction((event)->{
          String result = calculator.addMemory();
+         memoryLabel.setText(result);
          clearMemory.setDisable(false);
          recallMemory.setDisable(false);
+         showMemory.setDisable(false);
       });
 
       subtractMemory.setOnAction((event)->{
          String result = calculator.subtractMemory();
+         memoryLabel.setText(result);
          clearMemory.setDisable(false);
          recallMemory.setDisable(false);
+         showMemory.setDisable(false);
       });
 
       recallMemory.setOnAction((event -> showResult(calculator.getMemory().getOperand())));
 
       clearMemory.setOnAction((event -> {
          calculator.getContainer().getMemory().clear();
+         memoryLabel.setText("0");
          clearMemory.setDisable(true);
          recallMemory.setDisable(true);
+         showMemory.setDisable(true);
       }));
    }
 

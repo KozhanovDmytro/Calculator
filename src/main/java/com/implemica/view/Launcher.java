@@ -42,6 +42,8 @@ public class Launcher extends Application {
 
     private boolean isMenuShown;
 
+    private boolean isMemoryShown;
+
     private Parent root;
 
     @Override
@@ -128,14 +130,17 @@ public class Launcher extends Application {
 
         close.setOnMouseClicked(event -> {
             menuSize(false);
+           memorySize(false);
             primaryStage.close();
         });
         hide.setOnMouseClicked(event -> {
             menuSize(false);
+           memorySize(false);
             primaryStage.setIconified(!primaryStage.isIconified());
         });
         full.setOnMouseClicked(event -> {
             menuSize(false);
+           memorySize(false);
             setFullScreen();
         });
 
@@ -298,6 +303,7 @@ public class Launcher extends Application {
 
 
         extraInfoFull.widthProperty().addListener((observable, oldValue, newValue) -> {
+           Button showMemory = (Button) root.lookup("#showMemory");
             if (newValue.intValue() >= 240 && newValue.intValue() <= 260 && extraInfoLabel.getText().length() > 19) {
                 StringBuilder result = new StringBuilder(extraInfoLabel.getText());
                 result.setCharAt(18, '\n');
@@ -324,6 +330,11 @@ public class Launcher extends Application {
                         }
                     });
 
+            if(extraInfoFull.getPrefWidth() == 0.0d) {
+               showMemory.setVisible(true);
+            } else {
+               showMemory.setVisible(false);
+            }
 
             extraInfoFull.setVisible(true);
             extraInfoFull.setDisable(false);
@@ -650,14 +661,26 @@ public class Launcher extends Application {
         Button menuBtn = (Button) root.lookup("#menuBtn");
         AnchorPane mainPane = (AnchorPane) root.lookup("#mainPane");
         Pane hideMenu = (Pane) root.lookup("#hideMenu");
+       Pane hideMemoryField = (Pane) root.lookup("#hideMemoryField");
+
+        Button showMemory = (Button) root.lookup("#showMemory");
 
         hideMenu.setVisible(false);
+       hideMemoryField.setVisible(false);
 
-        mainPane.setOnMouseClicked(event -> menuSize(false));
+        mainPane.setOnMouseClicked(event -> {
+           memorySize(false);
+           menuSize(false);
+        });
         hideMenu.setOnMouseClicked(event -> menuSize(false));
+       hideMemoryField.setOnMouseClicked(event -> memorySize(false));
 
         menuBtn.setOnMouseClicked(event -> {
             menuSize(!isMenuShown);
+        });
+
+        showMemory.setOnMouseClicked(event -> {
+           memorySize(!isMemoryShown);
         });
     }
 
@@ -677,4 +700,21 @@ public class Launcher extends Application {
         hideMenu.setVisible(isMenuShown);
         animation.play();
     }
+
+    private void memorySize(boolean show) {
+       AnchorPane memoryField = (AnchorPane) root.lookup("#memoryField");
+      TranslateTransition transition = new TranslateTransition(Duration.millis(50), memoryField);
+       Pane hideMemoryField = (Pane) root.lookup("#hideMemoryField");
+
+      if(show) {
+         transition.setToY(0.0d);
+         isMemoryShown = true;
+      } else {
+         transition.setToY(300.0d);
+         isMemoryShown = false;
+      }
+
+       hideMemoryField.setVisible(isMemoryShown);
+       transition.play();
+   }
 }
