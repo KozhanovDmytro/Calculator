@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
@@ -125,9 +126,18 @@ public class Launcher extends Application {
         Button hide = (Button) root.lookup("#hide");
         AnchorPane mainPane = (AnchorPane) root.lookup("#mainPane");
 
-        close.setOnMouseClicked(event -> primaryStage.close());
-        hide.setOnMouseClicked(event -> primaryStage.setIconified(!primaryStage.isIconified()));
-        full.setOnMouseClicked(event -> setFullScreen());
+        close.setOnMouseClicked(event -> {
+            menuSize(false);
+            primaryStage.close();
+        });
+        hide.setOnMouseClicked(event -> {
+            menuSize(false);
+            primaryStage.setIconified(!primaryStage.isIconified());
+        });
+        full.setOnMouseClicked(event -> {
+            menuSize(false);
+            setFullScreen();
+        });
 
         mainPane.setOnMouseClicked(event -> {
             if(event.getButton().equals(MouseButton.PRIMARY)){
@@ -639,13 +649,11 @@ public class Launcher extends Application {
     private void setActionForDropDownMenu() {
         Button menuBtn = (Button) root.lookup("#menuBtn");
         AnchorPane mainPane = (AnchorPane) root.lookup("#mainPane");
-        AnchorPane mainField = (AnchorPane) root.lookup("#mainField");
         Pane hideMenu = (Pane) root.lookup("#hideMenu");
 
         hideMenu.setVisible(false);
 
         mainPane.setOnMouseClicked(event -> menuSize(false));
-        mainField.setOnMouseClicked(event -> menuSize(false));
         hideMenu.setOnMouseClicked(event -> menuSize(false));
 
         menuBtn.setOnMouseClicked(event -> {

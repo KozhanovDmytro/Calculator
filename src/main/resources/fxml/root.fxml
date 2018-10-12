@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="321.0" styleClass="Canvas" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.implemica.controller.Controller">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="321.0" styleClass="Canvas" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.implemica.controller.Controller">
    <center>
       <AnchorPane fx:id="mainField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <AnchorPane maxHeight="42.0" maxWidth="1.7976931348623157E308" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -330,7 +330,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="M?">
+               <Button disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefWidth="50.0" text="M">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -343,6 +343,13 @@
                   <font>
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
+                  <graphic>
+                     <Label text="">
+                        <font>
+                           <Font name="Segoe MDL2 Assets" size="6.0" />
+                        </font>
+                     </Label>
+                  </graphic>
                </Button>
             </HBox>
             <HBox fx:id="resultLabelBox" alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" GridPane.columnSpan="4" GridPane.rowIndex="1">
@@ -389,15 +396,404 @@
                <Cursor fx:constant="NW_RESIZE" />
             </cursor>
          </Pane>
-         <Pane fx:id="hideMenu" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
-         <AnchorPane fx:id="menu" maxWidth="260.0" minWidth="0.0" prefWidth="260.0" style="-fx-background-color: #ebebeb;" translateX="-260.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <Pane fx:id="hideMenu" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
+         <AnchorPane fx:id="menu" maxWidth="260.0" minWidth="0.0" prefWidth="260.0" style="-fx-background-color: #f0f0f0;" translateX="-261.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-               <Button layoutX="78.0" layoutY="278.0" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="О программе" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-               <ScrollPane layoutX="30.0" layoutY="127.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+               <ScrollPane layoutX="30.0" layoutY="127.0" prefHeight="200.0" prefWidth="200.0" styleClass="scrollMenu" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
                   <content>
-                     <VBox prefHeight="400.0" prefWidth="245.0" />
+                     <VBox maxWidth="1.7976931348623157E308" prefHeight="712.0" prefWidth="252.0" style="-fx-background-color: #f0f0f0;">
+                        <children>
+                           <Label fx:id="menuCalculator" text="Calculator">
+                              <font>
+                                 <Font name="Segoe UI Bold" size="16.0" />
+                              </font>
+                              <opaqueInsets>
+                                 <Insets />
+                              </opaqueInsets>
+                              <VBox.margin>
+                                 <Insets />
+                              </VBox.margin>
+                              <padding>
+                                 <Insets bottom="7.0" left="10.0" top="7.0" />
+                              </padding>
+                           </Label>
+                           <Button fx:id="standard" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Обычный">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                              <VBox.margin>
+                                 <Insets />
+                              </VBox.margin>
+                           </Button>
+                           <Button fx:id="scientific" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="43.0" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Инженерный">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="programmer" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Программист">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="dateCalculation" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Вычисление даты">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Label fx:id="menuConverter" text="Преобразователь">
+                              <font>
+                                 <Font name="Segoe UI Bold" size="16.0" />
+                              </font>
+                              <opaqueInsets>
+                                 <Insets />
+                              </opaqueInsets>
+                              <padding>
+                                 <Insets bottom="7.0" left="10.0" top="7.0" />
+                              </padding>
+                           </Label>
+                           <Button fx:id="currency" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Валюта">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="volume" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Объем">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="length" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Длина">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="weight" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Вес и масса">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="temperature" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Температура">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="energy" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Энергия">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="area" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Площадь">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="speed" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Скорость">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="time" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Время">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="power" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Мощность">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="data" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Данные">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="pressure" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Давление">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                           <Button fx:id="angle" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Угол">
+                              <styleClass>
+                                 <String fx:value="MainBtn" />
+                                 <String fx:value="OtherBtn" />
+                                 <String fx:value="RegularBtn" />
+                              </styleClass>
+                              <graphic>
+                                 <Label text="">
+                                    <font>
+                                       <Font name="Segoe MDL2 Assets" size="16.0" />
+                                    </font>
+                                    <padding>
+                                       <Insets right="10.0" />
+                                    </padding>
+                                 </Label>
+                              </graphic>
+                              <font>
+                                 <Font name="Segoe UI" size="12.0" />
+                              </font>
+                           </Button>
+                        </children></VBox>
                   </content>
                </ScrollPane>
+               <Button fx:id="about" alignment="BASELINE_LEFT" layoutX="97.0" layoutY="46.0" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="О программе" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <styleClass>
+                     <String fx:value="MainBtn" />
+                     <String fx:value="OtherBtn" />
+                     <String fx:value="RegularBtn" />
+                  </styleClass>
+                  <graphic>
+                     <Label text="">
+                        <font>
+                           <Font name="Segoe MDL2 Assets" size="16.0" />
+                        </font>
+                        <padding>
+                           <Insets right="10.0" />
+                        </padding>
+                     </Label>
+                  </graphic>
+                  <font>
+                     <Font name="Segoe UI" size="12.0" />
+                  </font>
+               </Button>
             </children></AnchorPane>
          <Button fx:id="menuBtn" maxHeight="42.0" maxWidth="46.0" minHeight="42.0" minWidth="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="46.0" text="" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <styleClass>

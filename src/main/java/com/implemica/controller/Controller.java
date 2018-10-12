@@ -4,8 +4,6 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
@@ -19,11 +17,8 @@ import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import lombok.Getter;
-import lombok.Setter;
 
 public class Controller {
 
@@ -52,6 +47,15 @@ public class Controller {
    private Button clearMemory, recallMemory, addMemory, subtractMemory;
 
    @FXML
+   private Button currency, volume, length, weight, temperature, energy,
+           area, speed, time, power, data, pressure, angle, standard,
+            scientific, programmer, dateCalculation, about;
+
+   @FXML
+   private Label menuConverter, menuCalculator;
+
+
+   @FXML
    private Label resultLabel;
 
    @FXML
@@ -63,16 +67,9 @@ public class Controller {
    @FXML
    private Label historyLabel;
 
-   @FXML
-   @Getter
-   @Setter
-   private Scene scene;
-
    private Properties texts = new Properties();
 
    private Calculator calculator = new Calculator(new Arabic());
-
-   private boolean isThrownException = false;
 
    @FXML
    void initialize() {
@@ -82,6 +79,7 @@ public class Controller {
       actionsForMemory();
 
       executeProperties();
+      setTexts();
    }
 
    private void executeProperties(){
@@ -91,12 +89,37 @@ public class Controller {
          InputStream stream = new FileInputStream(file);
 
          texts.load(stream);
-
-         title.setText(texts.getProperty("title"));
-         mode.setText(texts.getProperty("mode"));
       } catch (IOException | URISyntaxException e) {
          e.printStackTrace();
       }
+   }
+
+   private void setTexts() {
+      title.setText(texts.getProperty("title"));
+      mode.setText(texts.getProperty("mode"));
+
+      standard.setText(texts.getProperty("standard"));
+      scientific.setText(texts.getProperty("scientific"));
+      programmer.setText(texts.getProperty("programmer"));
+      dateCalculation.setText(texts.getProperty("dateCalculation"));
+      currency.setText(texts.getProperty("currency"));
+      volume.setText(texts.getProperty("volume"));
+      length.setText(texts.getProperty("length"));
+      weight.setText(texts.getProperty("weight"));
+      temperature.setText(texts.getProperty("temperature"));
+      energy.setText(texts.getProperty("energy"));
+      area.setText(texts.getProperty("area"));
+      speed.setText(texts.getProperty("speed"));
+      time.setText(texts.getProperty("time"));
+      power.setText(texts.getProperty("power"));
+      data.setText(texts.getProperty("data"));
+      pressure.setText(texts.getProperty("pressure"));
+      angle.setText(texts.getProperty("angle"));
+
+      about.setText(texts.getProperty("about"));
+
+      menuConverter.setText(texts.getProperty("menuConverter"));
+      menuCalculator.setText(texts.getProperty("menuCalculator"));
    }
 
    private void actionsForOperationButtons() {
@@ -208,8 +231,6 @@ public class Controller {
    }
 
    private void blockButtons(boolean isThrownException) {
-      this.isThrownException = isThrownException;
-
       percentOperation.setDisable(isThrownException);
       sqrtOperation.setDisable(isThrownException);
       square.setDisable(isThrownException);

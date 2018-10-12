@@ -207,11 +207,6 @@ class CalculatorTest {
    @Test
    void boundaryTest() throws OverflowException, UndefinedResultException {
 
-      // this pattern generate the MAX value - 1e10000
-      // which must throw an exception!
-      String max = "1000000000000000*===================*================================*1000000000000000======" +
-              "*10==========";
-
       // this pattern create number by this short formula (MAX - 1).
       // number must be 99999999...
       // digit 9 must be 9999 times.
@@ -222,11 +217,6 @@ class CalculatorTest {
       // note! digit 9 must be 9999 times.
       String oneSubtractTheSmallestNumber = "1000000000000000*===================*================================*1000000000000000======" +
               "*10=========-1=r= M- C ";
-
-      // this pattern generate the MAX value: -1e10000
-      // which must throw an exception!
-      String negateMax = "1000000000000000*===================*================================*1000000000000000======" +
-              "*1n=*10==========";
 
       // this pattern create number by this short formula (-MAX - MIN).
       // number must be -99999999...

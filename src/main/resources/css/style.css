@@ -75,3 +75,27 @@
     -fx-font-size: 15px;
     -fx-text-fill: #000;
 }
+
+.scrollMenu {
+    -fx-background-color:  #f0f0f0;
+}
+.scroll-bar:vertical{
+    -fx-background-color: #f0f0f0;
+}
+.scroll-bar:vertical .track{
+    -fx-background-color:  #f0f0f0;
+}
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: #f0f0f0;
+}
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :1px 0px;
+    -fx-background-color: #f0f0f0;
+}
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #7a7a7a;
+}
