@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Launcher extends Application {
+
     private Stage primaryStage;
 
     private Point2D startDrag;
@@ -65,16 +67,18 @@ public class Launcher extends Application {
 
         root = loader.load();
         root.getStylesheets().add("/css/style.css");
-        Scene scene = new Scene(root, 321, 500);
+        Scene scene = new Scene(root, 323, 500);
 
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(scene);
 
         primaryStage.setMinHeight(500);
-        primaryStage.setMinWidth(320);
+        primaryStage.setMinWidth(323);
 
         primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX());
         primaryStage.setMaxHeight(Screen.getPrimary().getBounds().getMaxY());
+
+        primaryStage.getIcons().add(new Image("icons/icon.png"));
 
         setUserAgentStylesheet(STYLESHEET_CASPIAN);
     }
@@ -299,13 +303,7 @@ public class Launcher extends Application {
 
         extraInfoFull.widthProperty().addListener((observable, oldValue, newValue) -> {
            Button showMemory = (Button) root.lookup("#showMemory");
-//            if (newValue.intValue() >= 240 && newValue.intValue() <= 260 && extraMemoryLabel.getText().length() > 19) {
-//                StringBuilder result = new StringBuilder(extraMemoryLabel.getText());
-//                result.setCharAt(18, '\n');
-//                extraMemoryLabel.setText(result.toString());
-//            } else {
-//                extraMemoryLabel.setText(extraMemoryLabel.getText().replace('\n', ' '));
-//            }
+           Button logButton = (Button) root.lookup("#logButton");
 
             Stream.of(right, rightBottom)
                     .collect(Collectors.toList())
@@ -327,8 +325,10 @@ public class Launcher extends Application {
 
             if(extraInfoFull.getPrefWidth() == 0.0d) {
                showMemory.setVisible(true);
+                logButton.setVisible(true);
             } else {
                showMemory.setVisible(false);
+                logButton.setVisible(false);
             }
 
             extraInfoFull.setVisible(true);
@@ -699,6 +699,7 @@ public class Launcher extends Application {
 
         hideMenu.setVisible(isMenuShown);
         animation.play();
+        menu.setVisible(show);
     }
 
     private void memorySize(boolean show) {
@@ -716,5 +717,6 @@ public class Launcher extends Application {
 
        hideMemoryField.setVisible(isMemoryShown);
        transition.play();
+        memoryField.setVisible(show);
    }
 }

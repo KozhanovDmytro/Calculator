@@ -1,3 +1,6 @@
+.button:focused {
+    -fx-background-insets: 0, 1, 2;
+}
 .Canvas{
     -fx-background-size: 319 499;
     -fx-background-color: #e6e6e6;

@@ -260,7 +260,7 @@
                <padding>
                   <Insets bottom="1.0" />
                </padding>
-               <Button fx:id="clearMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="MC">
+               <Button fx:id="clearMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="MC">
                   <styleClass>
                      <String fx:value="MainBtn" />
                      <String fx:value="RegularBtn" />
@@ -274,7 +274,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button fx:id="recallMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="MR">
+               <Button fx:id="recallMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="MR">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -288,7 +288,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button fx:id="addMemory" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="M+">
+               <Button fx:id="addMemory" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="M+">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -302,7 +302,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button fx:id="subtractMemory" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="M-">
+               <Button fx:id="subtractMemory" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="M-">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -316,7 +316,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" prefWidth="50.0" text="MS">
+               <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="MS">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -330,7 +330,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button fx:id="showMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefWidth="50.0" text="M">
+               <Button fx:id="showMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefWidth="50.0" text="M">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -397,7 +397,7 @@
             </cursor>
          </Pane>
          <Pane fx:id="hideMenu" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
-         <AnchorPane fx:id="memoryField" prefHeight="300.0" prefWidth="319.0" style="-fx-background-color: #f0f0f0;" translateY="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <AnchorPane fx:id="memoryField" prefHeight="300.0" prefWidth="319.0" style="-fx-background-color: #f0f0f0;" translateY="301.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
                <Label fx:id="memoryLabel" layoutX="191.0" layoutY="46.0" text="0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <font>
@@ -409,7 +409,7 @@
                </Label>
             </children>
          </AnchorPane>
-         <AnchorPane fx:id="menu" maxWidth="260.0" minWidth="0.0" prefWidth="260.0" style="-fx-background-color: #f0f0f0;" translateX="-261.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <AnchorPane fx:id="menu" maxWidth="260.0" minWidth="0.0" prefWidth="260.0" style="-fx-background-color: #f0f0f0;" translateX="-261.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                <ScrollPane layoutX="30.0" layoutY="127.0" prefHeight="200.0" prefWidth="200.0" styleClass="scrollMenu" AnchorPane.bottomAnchor="68.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
                   <content>
