@@ -19,6 +19,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import lombok.Getter;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -67,13 +68,13 @@ public class Launcher extends Application {
 
         root = loader.load();
         root.getStylesheets().add("/css/style.css");
-        Scene scene = new Scene(root, 323, 500);
+        Scene scene = new Scene(root, 322, 500);
 
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(scene);
 
         primaryStage.setMinHeight(500);
-        primaryStage.setMinWidth(323);
+        primaryStage.setMinWidth(322);
 
         primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX());
         primaryStage.setMaxHeight(Screen.getPrimary().getBounds().getMaxY());
@@ -230,10 +231,10 @@ public class Launcher extends Application {
                 .collect(Collectors.toList())
                 .forEach(pane -> pane.setOnMouseDragged(event -> {
                     double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY());
-                    double width = primaryStage.getWidth() + event.getX();
+                    double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX());
 
                     if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth())
-                        primaryStage.setWidth(event.getSceneX());
+                        primaryStage.setWidth(width);
                     if (startDrag.getY() > primaryStage.getY() + primaryStage.getMinHeight() - 5) {
                         if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
                             primaryStage.setHeight(height);
@@ -243,7 +244,7 @@ public class Launcher extends Application {
                 }));
 
         leftBottom.setOnMouseDragged(event -> {
-            double width = primaryStage.getWidth() - event.getScreenX() + primaryStage.getX();
+            double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
             double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY());
 
             if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
@@ -252,13 +253,13 @@ public class Launcher extends Application {
             }
 
             if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth()) {
-                primaryStage.setWidth(primaryStage.getX() - event.getScreenX() + primaryStage.getWidth());
+                primaryStage.setWidth(width);
                 primaryStage.setX(event.getScreenX());
             }
         });
 
         rightTop.setOnMouseDragged(event -> {
-            double width = primaryStage.getWidth() + event.getX();
+            double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX());
             double height = primaryStage.getHeight() + (startDrag.getY() - event.getScreenY());
 
             if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
@@ -268,11 +269,11 @@ public class Launcher extends Application {
             }
 
             if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth())
-                primaryStage.setWidth(event.getSceneX());
+                primaryStage.setWidth(width);
         });
 
         leftTop.setOnMouseDragged(event -> {
-            double width = primaryStage.getWidth() - event.getScreenX() + primaryStage.getX();
+            double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
             double height = primaryStage.getHeight() + (startDrag.getY() - event.getScreenY());
 
             if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
@@ -282,7 +283,7 @@ public class Launcher extends Application {
             }
 
             if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth()) {
-                primaryStage.setWidth(primaryStage.getX() - event.getScreenX() + primaryStage.getWidth());
+                primaryStage.setWidth(width);
                 primaryStage.setX(event.getScreenX());
             }
         });

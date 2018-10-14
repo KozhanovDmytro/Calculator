@@ -1,4 +1,4 @@
-package com.implemica.model;
+package com.implemica;
 
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectPackages;
