@@ -19,7 +19,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import lombok.Getter;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -130,17 +129,17 @@ public class Launcher extends Application {
 
         close.setOnMouseClicked(event -> {
             menuSize(false);
-           memorySize(false);
+            memorySize(false);
             primaryStage.close();
         });
         hide.setOnMouseClicked(event -> {
             menuSize(false);
-           memorySize(false);
+            memorySize(false);
             primaryStage.setIconified(!primaryStage.isIconified());
         });
         full.setOnMouseClicked(event -> {
             menuSize(false);
-           memorySize(false);
+            memorySize(false);
             setFullScreen();
         });
 
@@ -231,10 +230,10 @@ public class Launcher extends Application {
                 .collect(Collectors.toList())
                 .forEach(pane -> pane.setOnMouseDragged(event -> {
                     double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY());
-                    double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX());
+                    double width = primaryStage.getWidth() + event.getX();
 
                     if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth())
-                        primaryStage.setWidth(width);
+                        primaryStage.setWidth(event.getSceneX());
                     if (startDrag.getY() > primaryStage.getY() + primaryStage.getMinHeight() - 5) {
                         if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
                             primaryStage.setHeight(height);
@@ -244,7 +243,7 @@ public class Launcher extends Application {
                 }));
 
         leftBottom.setOnMouseDragged(event -> {
-            double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
+            double width = primaryStage.getWidth() - event.getScreenX() + primaryStage.getX();
             double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY());
 
             if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
@@ -253,7 +252,7 @@ public class Launcher extends Application {
             }
 
             if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth()) {
-                primaryStage.setWidth(width);
+                primaryStage.setWidth(primaryStage.getX() - event.getScreenX() + primaryStage.getWidth());
                 primaryStage.setX(event.getScreenX());
             }
         });
@@ -269,11 +268,11 @@ public class Launcher extends Application {
             }
 
             if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth())
-                primaryStage.setWidth(width);
+                primaryStage.setWidth(event.getSceneX());
         });
 
         leftTop.setOnMouseDragged(event -> {
-            double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
+            double width = primaryStage.getX() - event.getScreenX() + primaryStage.getWidth();
             double height = primaryStage.getHeight() + (startDrag.getY() - event.getScreenY());
 
             if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
@@ -303,8 +302,8 @@ public class Launcher extends Application {
 
 
         extraInfoFull.widthProperty().addListener((observable, oldValue, newValue) -> {
-           Button showMemory = (Button) root.lookup("#showMemory");
-           Button logButton = (Button) root.lookup("#logButton");
+            Button showMemory = (Button) root.lookup("#showMemory");
+            Button logButton = (Button) root.lookup("#logButton");
 
             Stream.of(right, rightBottom)
                     .collect(Collectors.toList())
@@ -325,10 +324,10 @@ public class Launcher extends Application {
                     });
 
             if(extraInfoFull.getPrefWidth() == 0.0d) {
-               showMemory.setVisible(true);
+                showMemory.setVisible(true);
                 logButton.setVisible(true);
             } else {
-               showMemory.setVisible(false);
+                showMemory.setVisible(false);
                 logButton.setVisible(false);
             }
 
@@ -662,26 +661,26 @@ public class Launcher extends Application {
         Button menuBtn = (Button) root.lookup("#menuBtn");
         AnchorPane mainPane = (AnchorPane) root.lookup("#mainPane");
         Pane hideMenu = (Pane) root.lookup("#hideMenu");
-       Pane hideMemoryField = (Pane) root.lookup("#hideMemoryField");
+        Pane hideMemoryField = (Pane) root.lookup("#hideMemoryField");
 
         Button showMemory = (Button) root.lookup("#showMemory");
 
         hideMenu.setVisible(false);
-       hideMemoryField.setVisible(false);
+        hideMemoryField.setVisible(false);
 
         mainPane.setOnMouseClicked(event -> {
-           memorySize(false);
-           menuSize(false);
+            memorySize(false);
+            menuSize(false);
         });
         hideMenu.setOnMouseClicked(event -> menuSize(false));
-       hideMemoryField.setOnMouseClicked(event -> memorySize(false));
+        hideMemoryField.setOnMouseClicked(event -> memorySize(false));
 
         menuBtn.setOnMouseClicked(event -> {
             menuSize(!isMenuShown);
         });
 
         showMemory.setOnMouseClicked(event -> {
-           memorySize(!isMemoryShown);
+            memorySize(!isMemoryShown);
         });
     }
 
@@ -704,20 +703,20 @@ public class Launcher extends Application {
     }
 
     private void memorySize(boolean show) {
-       AnchorPane memoryField = (AnchorPane) root.lookup("#memoryField");
-      TranslateTransition transition = new TranslateTransition(Duration.millis(50), memoryField);
-       Pane hideMemoryField = (Pane) root.lookup("#hideMemoryField");
+        AnchorPane memoryField = (AnchorPane) root.lookup("#memoryField");
+        TranslateTransition transition = new TranslateTransition(Duration.millis(50), memoryField);
+        Pane hideMemoryField = (Pane) root.lookup("#hideMemoryField");
 
-      if(show) {
-         transition.setToY(0.0d);
-         isMemoryShown = true;
-      } else {
-         transition.setToY(300.0d);
-         isMemoryShown = false;
-      }
+        if(show) {
+            transition.setToY(0.0d);
+            isMemoryShown = true;
+        } else {
+            transition.setToY(300.0d);
+            isMemoryShown = false;
+        }
 
-       hideMemoryField.setVisible(isMemoryShown);
-       transition.play();
+        hideMemoryField.setVisible(isMemoryShown);
+        transition.play();
         memoryField.setVisible(show);
-   }
+    }
 }

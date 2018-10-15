@@ -2,6 +2,7 @@ package com.implemica.model.calculator;
 
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
+import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.interfaces.Numeral;
@@ -15,7 +16,6 @@ import com.implemica.model.validation.Validator;
 import lombok.Getter;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class Calculator {
 
@@ -51,6 +51,14 @@ public class Calculator {
          clear();
          return new ResponseDto(showResult(), null, showHistory(), null,
                  ExceptionType.UNDEFINED_RESULT);
+      } catch (ArithmeticException e) {
+         clear();
+         return new ResponseDto(showResult(), null, showHistory(), null,
+                 ExceptionType.DIVIDE_BY_ZERO);
+      } catch (InvalidInputException e) {
+         clear();
+         return new ResponseDto(showResult(), null, showHistory(), null,
+                 ExceptionType.INVALID_INPUT);
       }
 
       if(container.getOperation().isShowOperand()){
@@ -85,6 +93,12 @@ public class Calculator {
       } catch (OverflowException e) {
          clear();
          exceptionType = ExceptionType.OVERFLOW;
+      } catch(ArithmeticException e) {
+         clear();
+         exceptionType = ExceptionType.DIVIDE_BY_ZERO;
+      } catch (InvalidInputException e) {
+         clear();
+         exceptionType = ExceptionType.INVALID_INPUT;
       }
       container.setMadeOperand(false);
       return new ResponseDto(null, showOperand(), showHistory(), null, exceptionType);
@@ -126,6 +140,12 @@ public class Calculator {
       } catch (UndefinedResultException e) {
          clear();
          return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.UNDEFINED_RESULT);
+      } catch(ArithmeticException e) {
+         clear();
+         return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.DIVIDE_BY_ZERO);
+      } catch (InvalidInputException e) {
+         clear();
+         return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.INVALID_INPUT);
       }
       Equals equals = new Equals(container.getOperation());
       container.getHistory().clear();

@@ -1,5 +1,6 @@
 package com.implemica.model.calculator;
 
+import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.history.MainHistory;
@@ -32,7 +33,7 @@ public class Container {
 
     private boolean madeOperand;
 
-    public void calculate() throws OverflowException, UndefinedResultException {
+    public void calculate() throws OverflowException, UndefinedResultException, InvalidInputException {
         result = this.operation.calculate(result);
         checkOverflow(result);
 
@@ -45,7 +46,7 @@ public class Container {
     /**
      * Function which calculate for {@link SpecialOperation}.
      */
-    public void change(SpecialOperation operation, boolean isResult) throws UndefinedResultException, OverflowException {
+    public void change(SpecialOperation operation, boolean isResult) throws UndefinedResultException, OverflowException, InvalidInputException {
         if(isResult && !this.operation.isShowOperand()){
             this.operation.setStringOperand(new Validator().showNumber(result));
             this.operation.getOperandHistory().add(operation);

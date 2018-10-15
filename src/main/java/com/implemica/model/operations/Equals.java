@@ -1,5 +1,6 @@
 package com.implemica.model.operations;
 
+import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class Equals extends SimpleOperation {
     }
 
     @Override
-    public BigDecimal calculate(BigDecimal result) throws UndefinedResultException {
+    public BigDecimal calculate(BigDecimal result) throws UndefinedResultException, InvalidInputException {
         return lastOperation.calculate(result);
     }
 

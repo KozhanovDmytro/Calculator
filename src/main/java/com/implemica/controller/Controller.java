@@ -1,17 +1,11 @@
 package com.implemica.controller;
 
-import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
-import com.implemica.model.operations.*;
+import com.implemica.model.operations.SimpleOperation;
 import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
@@ -21,8 +15,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class Controller {
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
+public class Controller {
    @FXML
    private ResourceBundle resources;
 
@@ -72,7 +71,7 @@ public class Controller {
    private Calculator calculator = new Calculator(new Arabic());
 
    @FXML
-   void initialize() {
+   void initialize() throws IOException, URISyntaxException {
       actionsForBuildOperand();
       actionsForOperationButtons();
       actionsForCleanOperations();
@@ -82,17 +81,13 @@ public class Controller {
       setTexts();
    }
 
-   private void executeProperties(){
-      try {
-         File file = new File(getClass().getResource("/properties/text_En.properties").toURI());
+   private void executeProperties() throws IOException, URISyntaxException {
+      File file = new File(getClass().getResource("/properties/text_En.properties").toURI());
 
-         InputStream stream = new FileInputStream(file);
+      InputStream stream = new FileInputStream(file);
 
-         texts.load(stream);
-         stream.close();
-      } catch (IOException | URISyntaxException e) {
-         e.printStackTrace();
-      }
+      texts.load(stream);
+      stream.close();
    }
 
    private void setTexts() {
@@ -142,7 +137,7 @@ public class Controller {
 
       equalsOperation.setOnAction(event -> {
          ResponseDto response = calculator.equalsOperation();
-         if(!disassembleDto(response)) {
+         if(disassembleDto(response)) {
             showResult(response.getResult());
             updateHistory(response.getHistory());
          }
@@ -151,7 +146,7 @@ public class Controller {
 
    private void actionForOperations(SimpleOperation operation) {
       ResponseDto response = calculator.executeSimpleOperation(operation);
-      if(!disassembleDto(response)) {
+      if(disassembleDto(response)) {
          showResult(response.getResult());
          updateHistory(response.getHistory());
       }
@@ -160,7 +155,7 @@ public class Controller {
    private void actionForSpecialOperations(SpecialOperation operation) {
       ResponseDto response = calculator.executeSpecialOperation(operation);
 
-      if(!disassembleDto(response)){
+      if(disassembleDto(response)){
          showResult(response.getOperand());
          updateHistory(response.getHistory());
       }
@@ -259,19 +254,24 @@ public class Controller {
    }
 
    private boolean disassembleDto(ResponseDto response) {
-      boolean result = false;
       switch (response.getExceptionType()) {
          case OVERFLOW:
             showResult(texts.getProperty("overflow"));
             blockButtons(true);
-            result = true;
-            break;
+            return false;
          case UNDEFINED_RESULT:
             showResult(texts.getProperty("undefinedResult"));
             blockButtons(true);
-            result = true;
-            break;
+            return false;
+         case DIVIDE_BY_ZERO:
+            showResult(texts.getProperty("divideByZero"));
+            blockButtons(true);
+            return false;
+         case INVALID_INPUT:
+            showResult(texts.getProperty("invalidInput"));
+            blockButtons(true);
+            return false;
       }
-      return result;
+      return true;
    }
 }

@@ -1,5 +1,6 @@
 package com.implemica.model.calculator;
 
+import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.operations.Default;
@@ -25,7 +26,7 @@ class ContainerTest {
    }
 
    @Test
-   void minusOperations() throws OverflowException, UndefinedResultException {
+   void minusOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
       calculate(new Default(), "10");
       calculate(new Minus(), "1");
       calculate(new Minus(), "2");
@@ -36,7 +37,7 @@ class ContainerTest {
    }
 
    @Test
-   void plusOperations() throws OverflowException, UndefinedResultException {
+   void plusOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
       calculate(new Default(), "10");
 
       calculate(new Plus(), "1");
@@ -48,7 +49,7 @@ class ContainerTest {
    }
 
    @Test
-   void multiplyOperations() throws OverflowException, UndefinedResultException {
+   void multiplyOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
       calculate(new Default(), "2");
 
       calculate(new Multiply(), "3");
@@ -59,7 +60,7 @@ class ContainerTest {
    }
 
    @Test
-   void divideOperations() throws OverflowException, UndefinedResultException {
+   void divideOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
       calculate(new Default(), "90");
 
       calculate(new Divide(), "3");
@@ -69,12 +70,12 @@ class ContainerTest {
    }
 
    @Test
-   void boundaryTest() throws OverflowException, UndefinedResultException {
+   void boundaryTest() throws OverflowException, UndefinedResultException, InvalidInputException {
       calculate(new Default(), "1000000000000000");
 //      calculate();
    }
 
-   private void calculate(SimpleOperation operation, String number) throws OverflowException, UndefinedResultException {
+   private void calculate(SimpleOperation operation, String number) throws OverflowException, UndefinedResultException, InvalidInputException {
       operation.setShowOperand(true);
       for (char c : number.toCharArray()) {
          operation.buildOperand(c);

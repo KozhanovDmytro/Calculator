@@ -3,6 +3,7 @@ package com.implemica.model.calculator.until;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
+import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.interfaces.History;
@@ -16,7 +17,6 @@ import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
 import lombok.Getter;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -32,7 +32,7 @@ public class TestBuilder {
 
    private String memory;
 
-   private ExceptionType exceptionType;
+   private ExceptionType exceptionType = ExceptionType.NOTHING;
 
    public TestBuilder() {
       calculator = new Calculator(new Arabic());
@@ -47,12 +47,18 @@ public class TestBuilder {
          case UNDEFINED_RESULT:
             expected = new UndefinedResultException();
             break;
+         case DIVIDE_BY_ZERO:
+            expected = new ArithmeticException();
+            break;
+         case INVALID_INPUT:
+            expected = new InvalidInputException();
+            break;
       }
 
       assertThrows(expected.getClass(), () -> doTest(pattern, null, 0, null, null));
    }
 
-   public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException, UndefinedResultException {
+   public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException, UndefinedResultException, InvalidInputException {
       calculator = new Calculator(new Arabic());
       this.result = "0";
       this.operand = "0";
@@ -246,12 +252,16 @@ public class TestBuilder {
       assertEquals(expectedHistory, history.buildHistory());
    }
 
-   private void checkException() throws OverflowException, UndefinedResultException {
+   private void checkException() throws OverflowException, UndefinedResultException, InvalidInputException {
       switch (exceptionType){
          case OVERFLOW:
             throw new OverflowException();
          case UNDEFINED_RESULT:
             throw new UndefinedResultException();
+         case DIVIDE_BY_ZERO:
+            throw new ArithmeticException();
+         case INVALID_INPUT:
+            throw new InvalidInputException();
       }
    }
 }
