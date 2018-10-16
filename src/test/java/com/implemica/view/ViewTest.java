@@ -41,6 +41,10 @@ public class ViewTest extends TestFxBase {
       checkDrag(Side.BOTTOM, 0, -20);
 
       // left-top side
+      checkDrag(Side.LEFT_TOP, 0, -20);
+      checkDrag(Side.LEFT_TOP, 0, 20);
+      checkDrag(Side.LEFT_TOP, -10, 0);
+      checkDrag(Side.LEFT_TOP, 10, 0);
       checkDrag(Side.LEFT_TOP, -20, -20);
       checkDrag(Side.LEFT_TOP, 20, 20);
       checkDrag(Side.LEFT_TOP, -100, -40);

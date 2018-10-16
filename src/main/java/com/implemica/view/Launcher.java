@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.sql.SQLOutput;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -182,7 +183,6 @@ public class Launcher extends Application {
                         startDrag = new Point2D(event.getScreenX(), event.getScreenY());
                     });
                     pane.setOnMouseReleased(event -> isDragging = false);
-
                 });
 
         Stream.of(right, extraRight, rightResizeFull)
@@ -230,31 +230,32 @@ public class Launcher extends Application {
                 .collect(Collectors.toList())
                 .forEach(pane -> pane.setOnMouseDragged(event -> {
                     double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY());
-                    double width = primaryStage.getWidth() + event.getX();
+                    double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX());
 
-                    if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth())
-                        primaryStage.setWidth(event.getSceneX());
-                    if (startDrag.getY() > primaryStage.getY() + primaryStage.getMinHeight() - 5) {
-                        if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
-                            primaryStage.setHeight(height);
-                            startDrag = new Point2D(event.getScreenX(), event.getScreenY());
-                        }
+                    if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
+                        primaryStage.setWidth(width);
                     }
+
+                    if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
+                        primaryStage.setHeight(height);
+                    }
+
+                    startDrag = new Point2D(event.getScreenX(), event.getScreenY());
                 }));
 
         leftBottom.setOnMouseDragged(event -> {
-            double width = primaryStage.getWidth() - event.getScreenX() + primaryStage.getX();
+            double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
             double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY());
 
             if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
                 primaryStage.setHeight(height);
-                startDrag = new Point2D(event.getScreenX(), event.getScreenY());
             }
 
-            if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth()) {
-                primaryStage.setWidth(primaryStage.getX() - event.getScreenX() + primaryStage.getWidth());
-                primaryStage.setX(event.getScreenX());
+            if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
+                primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
+                primaryStage.setWidth(width);
             }
+            startDrag = new Point2D(event.getScreenX(), event.getScreenY());
         });
 
         rightTop.setOnMouseDragged(event -> {
@@ -264,27 +265,28 @@ public class Launcher extends Application {
             if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
                 primaryStage.setY(primaryStage.getY() + (event.getScreenY() - startDrag.getY()));
                 primaryStage.setHeight(height);
-                startDrag = new Point2D(event.getScreenX(), event.getScreenY());
             }
 
             if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth())
-                primaryStage.setWidth(event.getSceneX());
+                primaryStage.setWidth(width);
+
+            startDrag = new Point2D(event.getScreenX(), event.getScreenY());
         });
 
         leftTop.setOnMouseDragged(event -> {
-            double width = primaryStage.getX() - event.getScreenX() + primaryStage.getWidth();
+            double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
             double height = primaryStage.getHeight() + (startDrag.getY() - event.getScreenY());
 
             if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
                 primaryStage.setY(primaryStage.getY() + (event.getScreenY() - startDrag.getY()));
                 primaryStage.setHeight(height);
-                startDrag = new Point2D(event.getScreenX(), event.getScreenY());
             }
 
-            if (width >= primaryStage.getMinWidth() && width <= primaryStage.getMaxWidth()) {
+            if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
+                primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
                 primaryStage.setWidth(width);
-                primaryStage.setX(event.getScreenX());
             }
+            startDrag = new Point2D(event.getScreenX(), event.getScreenY());
         });
 
         primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {

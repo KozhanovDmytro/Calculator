@@ -10,6 +10,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.robot.Motion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.framework.junit.ApplicationTest.launch;
 
 public class TestFxBase {
@@ -71,11 +72,9 @@ public class TestFxBase {
       assertEquals(initialHeight + y * side.coefficient()[Coordinates.Y.ordinal()], robot.targetWindow().getHeight());
    }
 
-   private void drag(Point2D start, double x, double y) {
+   public void drag(Point2D start, double x, double y) {
       robot.drag(start.getX(), start.getY(), MouseButton.PRIMARY);
       robot.moveBy(x, y);
       robot.drop();
    }
-
-
 }
