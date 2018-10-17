@@ -35,6 +35,7 @@ public class Container {
 
     public void calculate() throws OverflowException, UndefinedResultException, InvalidInputException {
         result = this.operation.calculate(result);
+        result = checkForZero(result);
         checkOverflow(result);
 
         if(operation instanceof Default && !history.contains(Default.class)){
@@ -69,6 +70,7 @@ public class Container {
                 getHistory().add(this.operation);
             }
         }
+        this.operation.setOperand(checkForZero(this.operation.getOperand()));
         checkOverflow(this.operation.getOperand());
     }
 
@@ -77,6 +79,14 @@ public class Container {
                 (number.abs().compareTo(BigDecimal.ZERO)) > 0 &&
                         number.abs().compareTo(new BigDecimal("1e-10000")) <= 0) {
             throw new OverflowException(number);
+        }
+    }
+
+    private BigDecimal checkForZero(BigDecimal number) {
+        if(number.abs().compareTo(new BigDecimal("1e-18000")) < 0) {
+            return BigDecimal.ZERO;
+        } else {
+            return number;
         }
     }
 }
