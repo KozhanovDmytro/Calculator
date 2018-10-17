@@ -16,7 +16,7 @@ public class Multiply extends SimpleOperation {
     public BigDecimal calculate(BigDecimal result) {
         MathContext context = MathContext.UNLIMITED;
         if(result.scale() > 16 || operand.scale() > 16)
-            context = MathContext.DECIMAL128;
+            context = MathContext.DECIMAL64;
 
         if(this.isShowOperand() || !operand.equals(BigDecimal.ZERO))
             return result.multiply(operand, context);

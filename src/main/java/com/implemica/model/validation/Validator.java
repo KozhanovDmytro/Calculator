@@ -2,6 +2,7 @@ package com.implemica.model.validation;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -44,11 +45,11 @@ public class Validator {
          dfs.setExponentSeparator(INTEGER_EXPONENT_SEPARATOR);
          df.applyPattern(PATTERN_FOR_EXPONENT);
          df.setDecimalSeparatorAlwaysShown(true);
-      } else if(number.scale() > 16 && number.toPlainString().matches("\\d+\\.000\\d+")) {
+      } else if(number.scale() > 16) {
          dfs.setExponentSeparator(DECIMAL_EXPONENT_SEPARATOR);
          df.applyPattern(PATTERN_FOR_EXPONENT);
          df.setDecimalSeparatorAlwaysShown(true);
-      } else if(number.scale() > 0){
+      } else {
          df.applyPattern(PATTERN_FOR_NUMBER);
       }
 
@@ -103,14 +104,6 @@ public class Validator {
    }
 
    private BigDecimal checkScale(BigDecimal number){
-      if(number.toBigInteger().compareTo(BigInteger.ZERO) == 0){
-         return number;
-      }
-
-      int length = number.toBigInteger().toString().length();
-      while(length + number.scale() > 16) {
-         number = number.setScale(number.scale() - 1, RoundingMode.HALF_UP);
-      }
-      return number;
+      return number.round(MathContext.DECIMAL64);
    }
 }
