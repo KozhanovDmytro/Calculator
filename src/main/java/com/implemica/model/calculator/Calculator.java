@@ -87,6 +87,7 @@ public class Calculator {
       ExceptionType exceptionType = ExceptionType.NOTHING;
       try {
          container.change(operation, isShownResult);
+         container.setMadeOperand(false);
       } catch (UndefinedResultException e) {
          clear();
          exceptionType = ExceptionType.UNDEFINED_RESULT;
@@ -100,7 +101,6 @@ public class Calculator {
          clear();
          exceptionType = ExceptionType.INVALID_INPUT;
       }
-      container.setMadeOperand(false);
       return new ResponseDto(null, showOperand(), showHistory(), null, exceptionType);
    }
 
@@ -244,5 +244,9 @@ public class Calculator {
 
    private String showHistory(){
       return container.getHistory().buildHistory();
+   }
+
+   public ResponseDto getCurrentState() {
+      return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.NOTHING);
    }
 }

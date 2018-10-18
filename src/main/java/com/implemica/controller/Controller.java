@@ -70,6 +70,8 @@ public class Controller {
 
    private Calculator calculator = new Calculator(new Arabic());
 
+   private boolean isBlocked;
+
    @FXML
    void initialize() throws IOException, URISyntaxException {
       actionsForBuildOperand();
@@ -136,6 +138,10 @@ public class Controller {
       negate.setOnAction(event -> actionForSpecialOperations(new Negate()));
 
       equalsOperation.setOnAction(event -> {
+         if(isBlocked) {
+            unlock();
+            return;
+         }
          ResponseDto response = calculator.equalsOperation();
          if(disassembleDto(response)) {
             showResult(response.getResult());
@@ -180,21 +186,33 @@ public class Controller {
    }
 
    private void actionForBuildOperand(Number number) {
+      if(isBlocked) {
+         unlock();
+      }
       ResponseDto response = calculator.buildOperand(number);
       showResult(response.getBuildOperand());
    }
 
    private void actionsForCleanOperations() {
       backSpace.setOnAction(event -> {
+         if(isBlocked) {
+            unlock();
+         }
          ResponseDto response = calculator.backspace();
          showResult(response.getBuildOperand());
       });
       c.setOnAction(event -> {
+         if(isBlocked) {
+            unlock();
+         }
          ResponseDto response = calculator.clear();
          showResult(response.getOperand());
          updateHistory(response.getHistory());
       });
       ce.setOnAction(event -> {
+         if(isBlocked) {
+            unlock();
+         }
          ResponseDto response = calculator.clearEntry();
          showResult(response.getOperand());
          updateHistory(response.getHistory());
@@ -241,6 +259,7 @@ public class Controller {
    }
 
    private void blockButtons(boolean isThrownException) {
+      isBlocked = isThrownException;
       percentOperation.setDisable(isThrownException);
       sqrtOperation.setDisable(isThrownException);
       square.setDisable(isThrownException);
@@ -273,5 +292,12 @@ public class Controller {
             return false;
       }
       return true;
+   }
+
+   private void unlock(){
+      blockButtons(false);
+      ResponseDto response = calculator.getCurrentState();
+      showResult(response.getResult());
+      updateHistory(response.getHistory());
    }
 }
