@@ -175,7 +175,7 @@ public class Controller {
 
       separateBtn.setOnAction(event -> {
          ResponseDto response = calculator.separateOperand();
-         showResult(response.getOperand());
+         showResult(response.getBuildOperand());
       });
    }
 

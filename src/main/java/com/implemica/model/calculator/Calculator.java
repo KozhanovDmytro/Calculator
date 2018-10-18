@@ -157,7 +157,7 @@ public class Calculator {
 
    public ResponseDto separateOperand() {
       container.getOperation().setSeparated(true);
-      return new ResponseDto(null, showOperand(), null, null, ExceptionType.NOTHING);
+      return new ResponseDto(null, null, null, showBuiltOperand(), ExceptionType.NOTHING);
    }
 
    public ResponseDto backspace(){
@@ -233,7 +233,7 @@ public class Calculator {
 
       BigDecimal operand = container.getOperation().getOperand();
 
-      return validator.showNumber(operand.stripTrailingZeros(), container.getOperation().isSeparated());
+      return validator.showNumber(operand.stripTrailingZeros());
    }
 
    private String showBuiltOperand() {

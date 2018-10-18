@@ -22,7 +22,6 @@ class CalculatorTest {
    @Test
    void manySimpleOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
       builder.doTest("2+", "2 + ", 2, "2", null);
-
       builder.doTest("3+++++", "3 + ", 2, "3", null);
       builder.doTest("5-----", "5 - ", 2, "5", null);
       builder.doTest("8*****", "8 * ", 2, "8", null);
@@ -105,6 +104,40 @@ class CalculatorTest {
       builder.doTest("1234567890<<<<<<<<<<<<<<<<<<<<<=", "", 0, "0", null);
       builder.doTest("<<<<2√q=", "", 0, "2", null);
       builder.doTest("2+3=<<<<", "", 0, "5", null);
+
+      builder.checkBuildOperand("<", "0");
+      builder.checkBuildOperand(".", "0,");
+      builder.checkBuildOperand("...", "0,");
+      builder.checkBuildOperand(".<", "0");
+      builder.checkBuildOperand("...<<<", "0");
+      builder.checkBuildOperand("...<", "0");
+      builder.checkBuildOperand("<.", "0,");
+      builder.checkBuildOperand("<...", "0,");
+
+      builder.checkBuildOperand("<0", "0");
+      builder.checkBuildOperand("0<", "0");
+      builder.checkBuildOperand("000000<<<<<", "0");
+      builder.checkBuildOperand("0.0001<", "0,000");
+      builder.checkBuildOperand("0.0<", "0,");
+      builder.checkBuildOperand("1.0<", "1,");
+      builder.checkBuildOperand("1.01<", "1,0");
+      builder.checkBuildOperand("12.0<", "12,");
+      builder.checkBuildOperand("12.0<<", "12");
+      builder.checkBuildOperand("12.0<<<", "1");
+      builder.checkBuildOperand("12.0<<<<", "0");
+      builder.checkBuildOperand("<<<1234.12345", "1 234,12345");
+      builder.checkBuildOperand("1234.12345<<<", "1 234,12");
+      builder.checkBuildOperand("1234.12345<<<<", "1 234,1");
+      builder.checkBuildOperand("1234.12345<<<<<", "1 234,");
+      builder.checkBuildOperand("1234.12345<<<<<<", "1 234");
+      builder.checkBuildOperand("1234.12345<<<<<<<", "123");
+
+      builder.checkBuildOperand("1000000000000000.", "1 000 000 000 000 000,");
+      builder.checkBuildOperand("1000000000000000.<", "1 000 000 000 000 000");
+      builder.checkBuildOperand("1000000000000000.<.00", "1 000 000 000 000 000,");
+      builder.checkBuildOperand("1000000000000000.<.10", "1 000 000 000 000 000,");
+      builder.checkBuildOperand("1000000000000000.<0", "1 000 000 000 000 000");
+
    }
 
    @Test
@@ -138,6 +171,8 @@ class CalculatorTest {
       builder.doTest("2+=", "", 0, "4", null);
       builder.doTest("4+n", "4 + negate(4) ", 2, "4", "-4");
       builder.doTest("4+n=", "", 0, "0", null);
+      builder.doTest("/*-+", "0 + ", 2, "0", null);
+      builder.doTest("-9√=", "", 0, "-3", null);
    }
 
    @Test
@@ -145,9 +180,9 @@ class CalculatorTest {
       builder.doTest("0.0000000000000001+1=", "", 0, "1", null);
       builder.doTest("1/3*3=", "", 0, "1", null);
       builder.doTest("1/3*3-1", "1 / 3 * 3 - 1 ", 4, "1", null);
+      builder.doTest("0.0111111111111111*0.1=", "", 0, "0,0011111111111111", null);
       builder.doTest("0.0111111111111111*0.1==", "", 0, "1,11111111111111e-4", null);
-      builder.doTest("0.0011111111111111*0.1=", "", 0, "1,1111111111111e-4", null);
-      builder.doTest("0.0011111111111111*0.1==", "", 0, "1,1111111111111e-5", null);
+      builder.doTest("0.0111111111111111*0.1===", "", 0, "1,11111111111111e-5", null);
       builder.doTest("1/3*3-1=", "", 0, "0", null);
       builder.doTest("2.0000000000000001+1========", "", 0, "10", null);
       builder.doTest("0.1*================", "", 0, "1,e-17", null);

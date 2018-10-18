@@ -62,9 +62,23 @@ public abstract class SimpleOperation implements Operation {
     }
 
     public void removeLast(){
-        if(operand.toString().length() > 1)
+        if(operand.toString().length() > 1 || separated) {
+            if(separated){
+                separated = false;
+                return;
+            }
+
+            if(operand.toPlainString().charAt(operand.toPlainString().length() - 2) == '.') {
+                separated = true;
+            }
+
             operand = new BigDecimal(operand.toPlainString().substring(0, operand.toPlainString().length() - 1));
-        else
+
+            if(operand.toPlainString().charAt(operand.toPlainString().length() - 1) == '.') {
+                separated = true;
+            }
+
+        } else
             operand = new BigDecimal(BigInteger.ZERO);
     }
 

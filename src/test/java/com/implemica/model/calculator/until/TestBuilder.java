@@ -104,7 +104,11 @@ public class TestBuilder {
 
    }
 
-   private void checkBySymbols(String pattern) {
+   public void checkBuildOperand(String pattern, String expected) throws OverflowException, InvalidInputException, UndefinedResultException {
+      doTest(pattern, "", 0, null, expected);
+   }
+
+   private void checkBySymbols(String pattern) throws OverflowException, InvalidInputException, UndefinedResultException {
       for (char action : pattern.toCharArray()) {
          switch (action) {
             case '0':
@@ -177,16 +181,18 @@ public class TestBuilder {
       }
    }
 
-   private void executeSimpleOperation(SimpleOperation operation) {
+   private void executeSimpleOperation(SimpleOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
       ResponseDto response = calculator.executeSimpleOperation(operation);
       result = response.getResult();
       exceptionType = response.getExceptionType();
+      checkException();
    }
 
-   private void executeSpecialOperation(SpecialOperation operation) {
+   private void executeSpecialOperation(SpecialOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
       ResponseDto response = calculator.executeSpecialOperation(operation);
       operand = response.getOperand();
       exceptionType = response.getExceptionType();
+      checkException();
    }
 
    private void clear(){
@@ -218,11 +224,11 @@ public class TestBuilder {
    }
 
    private void executeBackSpace() {
-      operand = calculator.backspace().getOperand();
+      operand = calculator.backspace().getBuildOperand();
    }
 
    private void executeSeparate() {
-      operand = calculator.separateOperand().getOperand();
+      operand = calculator.separateOperand().getBuildOperand();
    }
 
    private void equals() {
@@ -242,7 +248,7 @@ public class TestBuilder {
    }
 
    private void buildOperand(Number number) {
-      operand = calculator.buildOperand(number).getOperand();
+      operand = calculator.buildOperand(number).getBuildOperand();
    }
 
    private void checkHistory(String expectedHistory, int size) {
