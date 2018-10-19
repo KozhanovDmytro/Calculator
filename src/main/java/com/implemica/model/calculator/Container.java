@@ -63,8 +63,9 @@ public class Container {
             this.operation.setOperand(operand);
             this.operation.setShowOperand(true);
         } else {
-            getOperation().setOperand(operation.calculate(getOperation().getOperand()));
             getOperation().getOperandHistory().add(operation);
+            getOperation().setOperand(operation.calculate(getOperation().getOperand()));
+
 
             if(this.operation instanceof Default && getHistory().size() == 0){
                 getHistory().add(this.operation);

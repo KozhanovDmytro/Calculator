@@ -23,6 +23,8 @@ import javafx.util.Duration;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.lang.Thread.sleep;
+
 public class Launcher extends Application {
 
    private Stage primaryStage;
@@ -87,12 +89,15 @@ public class Launcher extends Application {
       Label resultLabel = (Label) root.lookup("#resultLabel");
       HBox resultLabelBox = (HBox) root.lookup("#resultLabelBox");
 
-      resultLabel.widthProperty()
-              .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
+//      resultLabel.widthProperty()
+//              .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
       resultLabelBox.widthProperty()
               .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
       resultLabel.textProperty()
-              .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
+              .addListener((observable, oldValue, newValue) -> {
+                 System.out.println("boom!");
+                 calculateSizeForResultLabel(resultLabel, resultLabelBox);
+              });
    }
 
    private void calculateSizeForResultLabel(Label resultLabel, HBox resultLabelBox) {
@@ -100,8 +105,10 @@ public class Launcher extends Application {
       Text text = new Text(resultLabel.getText());
       text.setFont(resultLabel.getFont());
       double width = text.getBoundsInLocal().getWidth();
-      if (width + 5 > resultLabelBox.getWidth() || resultLabel.getText().length() >= 13) {
-         fontSize = fontSize * resultLabelBox.getWidth() / (width + 5);
+      if (width + 10 > resultLabelBox.getWidth() || resultLabel.getText().length() >= 13) {
+         fontSize = fontSize * resultLabelBox.getWidth() / (width + 10);
+      } else {
+         fontSize = 48.0d;
       }
       if (fontSize <= 48)
          resultLabel.setFont(new Font(resultLabel.getFont().getName(), fontSize));

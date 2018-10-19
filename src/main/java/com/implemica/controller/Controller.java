@@ -145,8 +145,8 @@ public class Controller {
          ResponseDto response = calculator.equalsOperation();
          if(disassembleDto(response)) {
             showResult(response.getResult());
-            updateHistory(response.getHistory());
          }
+         updateHistory(response.getHistory());
       });
    }
 
@@ -154,8 +154,8 @@ public class Controller {
       ResponseDto response = calculator.executeSimpleOperation(operation);
       if(disassembleDto(response)) {
          showResult(response.getResult());
-         updateHistory(response.getHistory());
       }
+      updateHistory(response.getHistory());
    }
 
    private void actionForSpecialOperations(SpecialOperation operation) {
@@ -163,8 +163,8 @@ public class Controller {
 
       if(disassembleDto(response)){
          showResult(response.getOperand());
-         updateHistory(response.getHistory());
       }
+      updateHistory(response.getHistory());
    }
 
    private void actionsForBuildOperand() {

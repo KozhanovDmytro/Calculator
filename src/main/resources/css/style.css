@@ -13,7 +13,7 @@
     -fx-background-radius: none;
     -fx-font-family: "Segoe MDL2 Assets";
     -fx-font-size: 10px;
-    -fx-text-fill: #000;
+    -fx-text-fill: rgb(0, 0, 0);
 }
 .CloseBtn:hover{
     -fx-text-fill: #fff;
@@ -64,7 +64,7 @@
 .ExtraInfoBtn{
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 15px;
-    -fx-text-fill: #000;
+    -fx-text-fill: rgb(0, 0, 0);
     -fx-padding: 5px 0px;
 }
 .ExtraInfoBtn:hover{
@@ -76,7 +76,7 @@
 .ExtraInfoLabel{
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 15px;
-    -fx-text-fill: #000;
+    -fx-text-fill: rgb(0, 0, 0);
 }
 
 .scrollMenu {
@@ -101,4 +101,7 @@
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
     -fx-background-color: #7a7a7a;
+}
+.Result {
+    -fx-text-fill: rgb(0, 0, 0);
 }
