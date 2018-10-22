@@ -138,6 +138,7 @@ public class Controller {
       negate.setOnAction(event -> actionForSpecialOperations(new Negate()));
 
       equalsOperation.setOnAction(event -> {
+         // TODO look at this.
          if(isBlocked) {
             unlock();
             return;
@@ -155,6 +156,7 @@ public class Controller {
       if(disassembleDto(response)) {
          showResult(response.getResult());
       }
+
       updateHistory(response.getHistory());
    }
 

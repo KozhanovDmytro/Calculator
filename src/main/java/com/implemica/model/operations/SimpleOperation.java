@@ -63,6 +63,7 @@ public abstract class SimpleOperation implements Operation {
 
     public void removeLast(){
         if(operand.toString().length() > 1 || separated) {
+//            TODO look at this.
             if(separated){
                 separated = false;
                 return;

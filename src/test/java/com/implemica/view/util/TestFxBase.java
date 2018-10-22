@@ -1,26 +1,36 @@
 package com.implemica.view.util;
 
 import com.implemica.view.Launcher;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Window;
 import org.junit.jupiter.api.BeforeAll;
 import org.loadui.testfx.utils.FXTestUtils;
+import org.testfx.api.FxRobot;
+import org.testfx.robot.Motion;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.framework.junit.ApplicationTest.launch;
 
 public class TestFxBase {
 
-   protected static Robot robot;
+   private static Robot robotAwt;
+
+   private static FxRobot robotFx;
 
    @BeforeAll
    public static void setUp() throws Exception {
       launch(Launcher.class);
 
-      robot = new Robot();
+      robotAwt = new Robot();
+
+      robotFx = new FxRobot();
    }
 
    private Point2D getBound(Side side) {
@@ -65,17 +75,63 @@ public class TestFxBase {
       FXTestUtils.awaitEvents();
 
       // check width
+//      double expectedWidth = initialWidth + x * side.coefficient()[Coordinates.X.ordinal()];
+//      assertTrue(window.getWidth() <= expectedWidth + 1 && window.getWidth() >= expectedWidth - 1);
       assertEquals(initialWidth + x * side.coefficient()[Coordinates.X.ordinal()], window.getWidth());
 
       // check height
+//      double expectedHeight = initialHeight + y * side.coefficient()[Coordinates.Y.ordinal()];
+//      assertTrue(window.getHeight() <= expectedHeight + 1 && window.getHeight() >= expectedHeight - 1);
       assertEquals(initialHeight + y * side.coefficient()[Coordinates.Y.ordinal()], window.getHeight());
    }
 
    public void drag(Point2D start, double x, double y) {
-      robot.mouseMove((int)start.getX(), (int)start.getY());
-      robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-      robot.mouseMove((int)(start.getX() + x), (int)(start.getY() + y));
-      robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+      robotAwt.mouseMove((int)start.getX(), (int)start.getY());
+      robotAwt.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+      robotAwt.mouseMove((int)(start.getX() + x), (int)(start.getY() + y));
+      robotAwt.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+   }
+
+   public void moveWindow(Point2D[] points) {
+      Window window = getCurrentWindow();
+
+      double initialX = window.getX() + window.getWidth() / 2;
+      double initialY = window.getY() + 10;
+
+      robotFx.drag(initialX, initialY);
+
+      for(Point2D point : points) {
+         robotFx.moveTo(point.getX(), point.getY());
+         // check X
+         assertEquals(point.getX() - window.getWidth() / 2, window.getX());
+
+         // check Y
+         assertEquals(point.getY() - 10, window.getY());
+      }
+      robotFx.moveTo(initialX, initialY);
+      robotFx.drop();
+   }
+
+   public <T extends Node> T findBy(String query) {
+      Window window = getCurrentWindow();
+      return (T) window.getScene().getRoot().lookup(query);
+   }
+
+   public void clickOn (Node node) {
+      Bounds boundsInScreen = node.localToScreen(node.getBoundsInLocal());
+
+      int centerForNodeByX = (int) (boundsInScreen.getMinX() + (boundsInScreen.getMaxX() - boundsInScreen.getMinX()) / 2.0d);
+      int centerForNodeByY = (int) (boundsInScreen.getMinY() + (boundsInScreen.getMaxY() - boundsInScreen.getMinY()) / 2.0d);
+
+      robotAwt.mouseMove(centerForNodeByX, centerForNodeByY);
+      robotAwt.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+      robotAwt.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+
+      FXTestUtils.awaitEvents();
+   }
+
+   public void compareValues(double expected, double actual) {
+      assertEquals(expected, actual);
    }
 
    private Window getCurrentWindow(){

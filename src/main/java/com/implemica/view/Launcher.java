@@ -35,8 +35,6 @@ public class Launcher extends Application {
 
    private boolean isFullScreen;
 
-   private boolean isHalfFullScreen;
-
    private boolean isDragging;
 
    private boolean isMenuShown;
@@ -95,7 +93,6 @@ public class Launcher extends Application {
               .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
       resultLabel.textProperty()
               .addListener((observable, oldValue, newValue) -> {
-                 System.out.println("boom!");
                  calculateSizeForResultLabel(resultLabel, resultLabelBox);
               });
    }
@@ -298,7 +295,6 @@ public class Launcher extends Application {
 
       primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
          if (newValue.intValue() >= 560 && !isFullScreen) {
-            replaceNodesInGrid();
             double plusPx = newValue.intValue() - 560;
             if (240 + plusPx * 0.5 <= 325)
                extraInfoFull.setPrefWidth(240 + plusPx * 0.5);
@@ -306,9 +302,6 @@ public class Launcher extends Application {
             extraInfoFull.setPrefWidth(0);
          }
       });
-
-      primaryStage.heightProperty().addListener((observable, oldValue, newValue) -> replaceNodesInGrid());
-
 
       extraInfoFull.widthProperty().addListener((observable, oldValue, newValue) -> {
          Button showMemory = (Button) root.lookup("#showMemory");
@@ -345,161 +338,6 @@ public class Launcher extends Application {
          extraInfoBtns.setVisible(true);
          extraInfoBtns.setDisable(false);
       });
-   }
-
-   private void replaceNodesInGrid() {
-      GridPane grid = (GridPane) root.lookup("#grid");
-      if (primaryStage.getWidth() >= 1025 && primaryStage.getHeight() >= 640 && !isHalfFullScreen) {
-         Label historyLabel = (Label) grid.lookup("#historyLabel");
-         HBox resultLabelBox = (HBox) grid.lookup("#resultLabelBox");
-         HBox memoryBox = (HBox) grid.lookup("#MemoryBox");
-         Button percentOperation = (Button) grid.lookup("#percentOperation");
-         Button sqrtOperation = (Button) grid.lookup("#sqrtOperation");
-         Button square = (Button) grid.lookup("#square");
-         Button divideByX = (Button) grid.lookup("#divideByX");
-         Button ce = (Button) grid.lookup("#ce");
-         Button c = (Button) grid.lookup("#c");
-         Button backSpace = (Button) grid.lookup("#backSpace");
-         Button divideOperation = (Button) grid.lookup("#divideOperation");
-         Button btn7 = (Button) grid.lookup("#btn7");
-         Button btn8 = (Button) grid.lookup("#btn8");
-         Button btn9 = (Button) grid.lookup("#btn9");
-         Button multiplyOperation = (Button) grid.lookup("#multiplyOperation");
-         Button btn4 = (Button) grid.lookup("#btn4");
-         Button btn5 = (Button) grid.lookup("#btn5");
-         Button btn6 = (Button) grid.lookup("#btn6");
-         Button minusOperation = (Button) grid.lookup("#minusOperation");
-         Button btn1 = (Button) grid.lookup("#btn1");
-         Button btn2 = (Button) grid.lookup("#btn2");
-         Button btn3 = (Button) grid.lookup("#btn3");
-         Button plusOperation = (Button) grid.lookup("#plusOperation");
-         Button negate = (Button) grid.lookup("#negate");
-         Button btn0 = (Button) grid.lookup("#btn0");
-         Button separateBtn = (Button) grid.lookup("#separateBtn");
-         Button equalsOperation = (Button) grid.lookup("#equalsOperation");
-
-         grid.getChildren().clear();
-
-         ColumnConstraints constraints = new ColumnConstraints(10, 100, Double.MAX_VALUE);
-         constraints.setFillWidth(true);
-         constraints.setHgrow(Priority.SOMETIMES);
-
-         grid.getColumnConstraints().add(constraints);
-         grid.getRowConstraints().remove(8);
-
-         grid.add(historyLabel, 0, 0, 5, 1);
-         grid.add(resultLabelBox, 0, 1, 5, 1);
-         grid.add(memoryBox, 0, 2, 5, 1);
-
-         grid.add(percentOperation, 0, 3);
-         grid.add(ce, 1, 3);
-         grid.add(c, 2, 3);
-         grid.add(backSpace, 3, 3);
-         grid.add(divideOperation, 4, 3);
-
-         grid.add(sqrtOperation, 0, 4);
-         grid.add(btn7, 1, 4);
-         grid.add(btn8, 2, 4);
-         grid.add(btn9, 3, 4);
-         grid.add(multiplyOperation, 4, 4);
-
-         grid.add(square, 0, 5);
-         grid.add(btn4, 1, 5);
-         grid.add(btn5, 2, 5);
-         grid.add(btn6, 3, 5);
-         grid.add(minusOperation, 4, 5);
-
-         Button tripleX = new Button("x³");
-         tripleX.setId("tripleX");
-         tripleX.setMaxWidth(Double.MAX_VALUE);
-         tripleX.setMaxHeight(Double.MAX_VALUE);
-         tripleX.getStyleClass().addAll("MainBtn", "RegularBorderBtn", "RegularBtn", "OtherBtn");
-
-         grid.add(tripleX, 0, 6);
-         grid.add(btn1, 1, 6);
-         grid.add(btn2, 2, 6);
-         grid.add(btn3, 3, 6);
-         grid.add(plusOperation, 4, 6);
-
-         grid.add(divideByX, 0, 7);
-         grid.add(negate, 1, 7);
-         grid.add(btn0, 2, 7);
-         grid.add(separateBtn, 3, 7);
-         grid.add(equalsOperation, 4, 7);
-
-         isHalfFullScreen = true;
-      } else if ((primaryStage.getWidth() <= 1025 || primaryStage.getHeight() <= 640) && isHalfFullScreen) {
-         Label historyLabel = (Label) grid.lookup("#historyLabel");
-         HBox resultLabelBox = (HBox) grid.lookup("#resultLabelBox");
-         HBox memoryBox = (HBox) grid.lookup("#MemoryBox");
-         Button percentOperation = (Button) grid.lookup("#percentOperation");
-         Button sqrtOperation = (Button) grid.lookup("#sqrtOperation");
-         Button square = (Button) grid.lookup("#square");
-         Button divideByX = (Button) grid.lookup("#divideByX");
-         Button ce = (Button) grid.lookup("#ce");
-         Button c = (Button) grid.lookup("#c");
-         Button backSpace = (Button) grid.lookup("#backSpace");
-         Button divideOperation = (Button) grid.lookup("#divideOperation");
-         Button btn7 = (Button) grid.lookup("#btn7");
-         Button btn8 = (Button) grid.lookup("#btn8");
-         Button btn9 = (Button) grid.lookup("#btn9");
-         Button multiplyOperation = (Button) grid.lookup("#multiplyOperation");
-         Button btn4 = (Button) grid.lookup("#btn4");
-         Button btn5 = (Button) grid.lookup("#btn5");
-         Button btn6 = (Button) grid.lookup("#btn6");
-         Button minusOperation = (Button) grid.lookup("#minusOperation");
-         Button btn1 = (Button) grid.lookup("#btn1");
-         Button btn2 = (Button) grid.lookup("#btn2");
-         Button btn3 = (Button) grid.lookup("#btn3");
-         Button plusOperation = (Button) grid.lookup("#plusOperation");
-         Button negate = (Button) grid.lookup("#negate");
-         Button btn0 = (Button) grid.lookup("#btn0");
-         Button separateBtn = (Button) grid.lookup("#separateBtn");
-         Button equalsOperation = (Button) grid.lookup("#equalsOperation");
-
-         grid.getChildren().clear();
-         grid.getColumnConstraints().remove(4);
-
-         RowConstraints newRow = new RowConstraints(40, 40, Double.MAX_VALUE);
-         newRow.setVgrow(Priority.SOMETIMES);
-         grid.getRowConstraints().add(newRow);
-
-         grid.add(historyLabel, 0, 0, 5, 1);
-         grid.add(resultLabelBox, 0, 1, 5, 1);
-         grid.add(memoryBox, 0, 2, 5, 1);
-
-         grid.add(percentOperation, 0, 3);
-         grid.add(sqrtOperation, 1, 3);
-         grid.add(square, 2, 3);
-         grid.add(divideByX, 3, 3);
-
-         grid.add(ce, 0, 4);
-         grid.add(c, 1, 4);
-         grid.add(backSpace, 2, 4);
-         grid.add(divideOperation, 3, 4);
-
-         grid.add(btn7, 0, 5);
-         grid.add(btn8, 1, 5);
-         grid.add(btn9, 2, 5);
-         grid.add(multiplyOperation, 3, 5);
-
-         grid.add(btn4, 0, 6);
-         grid.add(btn5, 1, 6);
-         grid.add(btn6, 2, 6);
-         grid.add(minusOperation, 3, 6);
-
-         grid.add(btn1, 0, 7);
-         grid.add(btn2, 1, 7);
-         grid.add(btn3, 2, 7);
-         grid.add(plusOperation, 3, 7);
-
-         grid.add(negate, 0, 8);
-         grid.add(btn0, 1, 8);
-         grid.add(separateBtn, 2, 8);
-         grid.add(equalsOperation, 3, 8);
-
-         isHalfFullScreen = false;
-      }
    }
 
    private void setFullScreen() {

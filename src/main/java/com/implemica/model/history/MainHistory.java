@@ -40,6 +40,7 @@ public class MainHistory implements History<SimpleOperation> {
         for (SimpleOperation so : operations) {
             if(operation.equals(so.getClass())) {
                 result = true;
+                break;
             }
         }
         return result;
