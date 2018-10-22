@@ -4,18 +4,15 @@ import com.implemica.view.Launcher;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.input.MouseButton;
 import javafx.stage.Window;
 import org.junit.jupiter.api.BeforeAll;
 import org.loadui.testfx.utils.FXTestUtils;
 import org.testfx.api.FxRobot;
-import org.testfx.robot.Motion;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.framework.junit.ApplicationTest.launch;
 
 public class TestFxBase {

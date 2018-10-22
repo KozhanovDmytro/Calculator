@@ -11,6 +11,10 @@ import org.junit.jupiter.api.Test;
 
 public class ViewTest extends TestFxBase {
 
+   /*
+   *  TODO drag for corners
+   *  TODO check buttons
+   */
    @Test
    public void dragTest(){
       // left side
@@ -76,6 +80,58 @@ public class ViewTest extends TestFxBase {
       checkDrag(Side.BOTTOM, 0, -50);
       checkDrag(Side.BOTTOM, 0, 60);
       checkDrag(Side.BOTTOM, 0, -60);
+
+      checkDrag(Side.LEFT_TOP, -10, -10);
+      checkDrag(Side.LEFT_TOP, 10, 10);
+      checkDrag(Side.LEFT_TOP, -50, -10);
+      checkDrag(Side.LEFT_TOP, 50, 10);
+      checkDrag(Side.LEFT_TOP, -100, -20);
+      checkDrag(Side.LEFT_TOP, 100, 20);
+      checkDrag(Side.LEFT_TOP, -200, -30);
+      checkDrag(Side.LEFT_TOP, 200, 30);
+      checkDrag(Side.LEFT_TOP, -500, -50);
+      checkDrag(Side.LEFT_TOP, 500, 50);
+
+      checkDrag(Side.RIGHT_TOP, 10, -10);
+      checkDrag(Side.RIGHT_TOP, -10, 10);
+      checkDrag(Side.RIGHT_TOP, 50, -20);
+      checkDrag(Side.RIGHT_TOP, -50, 20);
+      checkDrag(Side.RIGHT_TOP, 100, -20);
+      checkDrag(Side.RIGHT_TOP, -100, 20);
+      checkDrag(Side.RIGHT_TOP, 150, -30);
+      checkDrag(Side.RIGHT_TOP, -150, 30);
+      checkDrag(Side.RIGHT_TOP, 200, -40);
+      checkDrag(Side.RIGHT_TOP, -200, 40);
+      checkDrag(Side.RIGHT_TOP, 400, -50);
+      checkDrag(Side.RIGHT_TOP, -400, 50);
+      checkDrag(Side.RIGHT_TOP, 500, -50);
+      checkDrag(Side.RIGHT_TOP, -500, 50);
+
+      checkDrag(Side.RIGHT_BOTTOM, 10, 10);
+      checkDrag(Side.RIGHT_BOTTOM, -10, -10);
+      checkDrag(Side.RIGHT_BOTTOM, 50, 30);
+      checkDrag(Side.RIGHT_BOTTOM, -50, -30);
+      checkDrag(Side.RIGHT_BOTTOM, 100, 40);
+      checkDrag(Side.RIGHT_BOTTOM, -100, -40);
+      checkDrag(Side.RIGHT_BOTTOM, 200, 50);
+      checkDrag(Side.RIGHT_BOTTOM, -200, -50);
+      checkDrag(Side.RIGHT_BOTTOM, 300, 60);
+      checkDrag(Side.RIGHT_BOTTOM, -300, -60);
+      checkDrag(Side.RIGHT_BOTTOM, 500, 70);
+      checkDrag(Side.RIGHT_BOTTOM, -500, -70);
+
+      checkDrag(Side.LEFT_BOTTOM, -10, 10);
+      checkDrag(Side.LEFT_BOTTOM, 10, -10);
+      checkDrag(Side.LEFT_BOTTOM, -50, 30);
+      checkDrag(Side.LEFT_BOTTOM, 50, -30);
+      checkDrag(Side.LEFT_BOTTOM, -100, 40);
+      checkDrag(Side.LEFT_BOTTOM, 100, -40);
+      checkDrag(Side.LEFT_BOTTOM, -200, 50);
+      checkDrag(Side.LEFT_BOTTOM, 200, -50);
+      checkDrag(Side.LEFT_BOTTOM, -300, 60);
+      checkDrag(Side.LEFT_BOTTOM, 300, -60);
+      checkDrag(Side.LEFT_BOTTOM, -500, 70);
+      checkDrag(Side.LEFT_BOTTOM, 500, -70);
    }
 
    @Test
