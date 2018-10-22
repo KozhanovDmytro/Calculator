@@ -2,10 +2,8 @@ package com.implemica.view;
 
 import com.implemica.view.util.Side;
 import com.implemica.view.util.TestFxBase;
-import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 
-@Ignore
 public class ViewTest extends TestFxBase {
 
    @Test

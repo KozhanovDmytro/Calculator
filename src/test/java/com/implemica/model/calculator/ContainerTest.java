@@ -9,18 +9,19 @@ import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
+import com.implemica.model.validation.Validator;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Ignore
 class ContainerTest {
 
    private Container container;
+
+   private Validator validator = new Validator();
 
    @BeforeEach
    void init(){
@@ -71,12 +72,6 @@ class ContainerTest {
       checkResult("3");
    }
 
-   @Test
-   void boundaryTest() throws OverflowException, UndefinedResultException, InvalidInputException {
-      calculate(new Default(), "1000000000000000");
-//      calculate();
-   }
-
    private void calculate(SimpleOperation operation, String number) throws OverflowException, UndefinedResultException, InvalidInputException {
       operation.setShowOperand(true);
       for (char c : number.toCharArray()) {
@@ -87,7 +82,7 @@ class ContainerTest {
    }
 
    private void checkResult(String number){
-      assertEquals(new BigDecimal(number), container.getResult());
+      assertEquals(number, validator.showNumber(container.getResult()));
    }
 
 }

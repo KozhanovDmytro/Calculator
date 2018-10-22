@@ -2,29 +2,29 @@ package com.implemica.view.util;
 
 import com.implemica.view.Launcher;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.input.MouseButton;
 import javafx.stage.Window;
 import org.junit.jupiter.api.BeforeAll;
-import org.testfx.api.FxRobot;
-import org.testfx.robot.Motion;
+import org.loadui.testfx.utils.FXTestUtils;
+
+import java.awt.*;
+import java.awt.event.InputEvent;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.framework.junit.ApplicationTest.launch;
 
 public class TestFxBase {
 
-   protected static FxRobot robot = new FxRobot();
+   protected static Robot robot;
 
    @BeforeAll
    public static void setUp() throws Exception {
       launch(Launcher.class);
-      robot = robot.targetWindow(robot.listTargetWindows().get(0));
+
+      robot = new Robot();
    }
 
    private Point2D getBound(Side side) {
-      Window window = robot.targetWindow();
+      Window window = getCurrentWindow();
       Point2D point = null;
       switch (side) {
          case LEFT:
@@ -55,26 +55,30 @@ public class TestFxBase {
       return point;
    }
 
-   public void click(String query) {
-      robot.clickOn(query);
-   }
-
    public void checkDrag(Side side, double x, double y) {
-      double initialHeight = robot.targetWindow().getHeight();
-      double initialWidth = robot.targetWindow().getWidth();
+      Window window = getCurrentWindow();
+      double initialHeight = window.getHeight();
+      double initialWidth = window.getWidth();
 
       drag(getBound(side), x, y);
 
+      FXTestUtils.awaitEvents();
+
       // check width
-      assertEquals(initialWidth + x * side.coefficient()[Coordinates.X.ordinal()], robot.targetWindow().getWidth());
+      assertEquals(initialWidth + x * side.coefficient()[Coordinates.X.ordinal()], window.getWidth());
 
       // check height
-      assertEquals(initialHeight + y * side.coefficient()[Coordinates.Y.ordinal()], robot.targetWindow().getHeight());
+      assertEquals(initialHeight + y * side.coefficient()[Coordinates.Y.ordinal()], window.getHeight());
    }
 
    public void drag(Point2D start, double x, double y) {
-      robot.drag(start.getX(), start.getY(), MouseButton.PRIMARY);
-      robot.moveBy(x, y);
-      robot.drop();
+      robot.mouseMove((int)start.getX(), (int)start.getY());
+      robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+      robot.mouseMove((int)(start.getX() + x), (int)(start.getY() + y));
+      robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+   }
+
+   private Window getCurrentWindow(){
+      return Window.getWindows().get(0);
    }
 }
