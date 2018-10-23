@@ -1,18 +1,19 @@
 package com.implemica.view;
 
+import com.implemica.view.util.NodesFinder;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
-import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -46,6 +47,18 @@ public class Launcher extends Application {
 
    private Parent root;
 
+   /*constants*/
+   private final String WAY_TO_ROOT_FXML_FILE = "/fxml/root.fxml";
+   private final String WAY_TO_STYLESHEET_FILE = "/css/style.css";
+   private final String WAY_TO_ICON = "icons/icon.png";
+
+   private final int MIN_WIDTH = 322;
+   private final int MIN_HEIGHT = 500;
+
+   private final int OFFSET_RESIZE_FOR_RESULT = 10;
+   private final int MAX_LENGTH_FOR_RESULT = 13;
+   private final double MAX_FONT_SIZE_FOR_RESULT = 48.0d;
+
    @Override
    public void start(Stage stage) throws Exception {
       setSettingsForStage(stage);
@@ -66,56 +79,56 @@ public class Launcher extends Application {
    private void setSettingsForStage(Stage stage) throws Exception {
       primaryStage = stage;
 
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/root.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource(WAY_TO_ROOT_FXML_FILE));
 
       root = loader.load();
-      root.getStylesheets().add("/css/style.css");
-      Scene scene = new Scene(root, 322, 500);
+      root.getStylesheets().add(WAY_TO_STYLESHEET_FILE);
+      Scene scene = new Scene(root, MIN_WIDTH, MIN_HEIGHT);
 
       primaryStage.initStyle(StageStyle.UNDECORATED);
       primaryStage.setScene(scene);
 
-      primaryStage.setMinHeight(500);
-      primaryStage.setMinWidth(322);
+      primaryStage.setMinHeight(MIN_HEIGHT);
+      primaryStage.setMinWidth(MIN_WIDTH);
 
       primaryStage.setMaxWidth(Screen.getPrimary().getBounds().getMaxX());
       primaryStage.setMaxHeight(Screen.getPrimary().getBounds().getMaxY());
 
-      primaryStage.getIcons().add(new Image("icons/icon.png"));
+      primaryStage.getIcons().add(new Image(WAY_TO_ICON));
 
       setUserAgentStylesheet(STYLESHEET_CASPIAN);
    }
 
    private void setActionForResultLabel() {
-      Label resultLabel = (Label) root.lookup("#resultLabel");
-      HBox resultLabelBox = (HBox) root.lookup("#resultLabelBox");
+      Label resultLabel = findBy(NodesFinder.RESULT_LABEL);
+      HBox resultLabelBox = findBy(NodesFinder.RESULT_LABEL_BOX);
 
-//      resultLabel.widthProperty()
-//              .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
       resultLabelBox.widthProperty()
               .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
       resultLabel.textProperty()
-              .addListener((observable, oldValue, newValue) -> {
-                 calculateSizeForResultLabel(resultLabel, resultLabelBox);
-              });
+              .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
    }
 
    private void calculateSizeForResultLabel(Label resultLabel, HBox resultLabelBox) {
       double fontSize = resultLabel.getFont().getSize();
+
       Text text = new Text(resultLabel.getText());
       text.setFont(resultLabel.getFont());
-      double width = text.getBoundsInLocal().getWidth();
-      if (width + 10 > resultLabelBox.getWidth() || resultLabel.getText().length() >= 13) {
-         fontSize = fontSize * resultLabelBox.getWidth() / (width + 10);
+
+      double width = text.getBoundsInLocal().getWidth() + OFFSET_RESIZE_FOR_RESULT;
+
+      if (width > resultLabelBox.getWidth() || resultLabel.getText().length() >= MAX_LENGTH_FOR_RESULT) {
+         fontSize = fontSize * resultLabelBox.getWidth() / (width);
       } else {
-         fontSize = 48.0d;
+         fontSize = MAX_FONT_SIZE_FOR_RESULT;
       }
-      if (fontSize <= 48)
+
+      if (fontSize <= MAX_FONT_SIZE_FOR_RESULT)
          resultLabel.setFont(new Font(resultLabel.getFont().getName(), fontSize));
    }
 
    private void setMoveActionForWindow() {
-      AnchorPane mainPane = (AnchorPane) root.lookup("#mainPane");
+      AnchorPane mainPane = findBy(NodesFinder.MAIN_PANE);
       mainPane.setOnMouseDragged(event -> {
          if (!isDragging && !isFullScreen) {
             primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
@@ -129,10 +142,9 @@ public class Launcher extends Application {
    }
 
    private void setActionsForMainPainAndButtons() {
-      Button close = (Button) root.lookup("#close");
-      Button full = (Button) root.lookup("#full");
-      Button hide = (Button) root.lookup("#hide");
-      AnchorPane mainPane = (AnchorPane) root.lookup("#mainPane");
+      Button close = findBy(NodesFinder.CLOSE);
+      Button full = findBy(NodesFinder.FULL);
+      Button hide = findBy(NodesFinder.HIDE);
 
       close.setOnMouseClicked(event -> {
          menuSize(false);
@@ -149,36 +161,28 @@ public class Launcher extends Application {
          memorySize(false);
          setFullScreen();
       });
-
-      mainPane.setOnMouseClicked(event -> {
-         if (event.getButton().equals(MouseButton.PRIMARY)) {
-            if (event.getClickCount() == 2) {
-               setFullScreen();
-            }
-         }
-      });
    }
 
    private void setResizeActionForStage() {
-      AnchorPane extraInfoFull = (AnchorPane) root.lookup("#extraInfoFull");
-      HBox extraInfoBtns = (HBox) root.lookup("#extraInfoBtns");
-      Label extraMemoryLabel = (Label) root.lookup("#extraMemoryLabel");
+      AnchorPane extraInfoFull = findBy(NodesFinder.EXTRA_INFO_FULL);
+      HBox extraInfoBtns = findBy(NodesFinder.EXTRA_INFO_BTNS);
+      Label extraMemoryLabel = findBy(NodesFinder.EXTRA_MEMORY_LABEL);
 
-      Pane left = (Pane) root.lookup("#leftResize");
-      Pane extraLeft = (Pane) root.lookup("#extraLeftResize");
-      Pane right = (Pane) root.lookup("#rightResize");
-      Pane extraRight = (Pane) root.lookup("#extraRightResize");
-      Pane top = (Pane) root.lookup("#topResize");
-      Pane bottom = (Pane) root.lookup("#bottomResize");
+      Pane left = findBy(NodesFinder.LEFT_RESIZE);
+      Pane extraLeft = findBy(NodesFinder.EXTRA_LEFT_RESIZE);
+      Pane right = findBy(NodesFinder.RIGHT_RESIZE);
+      Pane extraRight = findBy(NodesFinder.EXTRA_RIGHT_RESIZE);
+      Pane top = findBy(NodesFinder.TOP_RESIZE);
+      Pane bottom = findBy(NodesFinder.BOTTOM_RESIZE);
 
-      Pane leftBottom = (Pane) root.lookup("#leftBottomResize");
-      Pane rightBottom = (Pane) root.lookup("#rightBottomResize");
-      Pane leftTop = (Pane) root.lookup("#leftTopResize");
-      Pane rightTop = (Pane) root.lookup("#rightTopResize");
+      Pane leftBottom = findBy(NodesFinder.LEFT_BOTTOM_RESIZE);
+      Pane rightBottom = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE);
+      Pane leftTop = findBy(NodesFinder.LEFT_TOP_RESIZE);
+      Pane rightTop = findBy(NodesFinder.RIGHT_TOP_RESIZE);
 
-      Pane rightResizeFull = (Pane) root.lookup("#rightResizeFull");
-      Pane rightBottomResizeFull = (Pane) root.lookup("#rightBottomResizeFull");
-      Pane bottomResizeFull = (Pane) root.lookup("#bottomResizeFull");
+      Pane rightResizeFull = findBy(NodesFinder.RIGHT_RESIZE_FULL);
+      Pane rightBottomResizeFull = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE_FULL);
+      Pane bottomResizeFull = findBy(NodesFinder.BOTTOM_RESIZE_FULL);
 
       Stream.of(left, extraLeft, right, extraRight, top, bottom, leftBottom,
               rightBottom, leftTop, rightTop, rightResizeFull, rightBottomResizeFull, bottomResizeFull)
@@ -576,43 +580,8 @@ public class Launcher extends Application {
       memoryField.setVisible(show);
    }
 
-   private void setResizeControl(Pane pane, final String direction) {
-      pane.setOnMouseDragged(new EventHandler<MouseEvent>() {
-         public void handle(MouseEvent mouseEvent) {
-            if (mouseEvent.isPrimaryButtonDown()) {
-               double width = primaryStage.getWidth();
-               double height = primaryStage.getHeight();
-
-               // Horizontal resize.
-               if (direction.endsWith("left")) {
-                  if ((width > primaryStage.getMinWidth()) || (mouseEvent.getX() < 0)) {
-                     primaryStage.setWidth(width - mouseEvent.getScreenX() + primaryStage.getX());
-                     primaryStage.setX(mouseEvent.getScreenX());
-                  }
-               } else if ((direction.endsWith("right"))
-                       && ((width > primaryStage.getMinWidth()) || (mouseEvent.getX() > 0))) {
-                  primaryStage.setWidth(width + mouseEvent.getX());
-               }
-
-               // Vertical resize.
-               if (direction.startsWith("top")) {
-                  if (isDragging) {
-                     primaryStage.setHeight(startDrag.getY());
-                     isDragging = false;
-                  } else if ((height > primaryStage.getMinHeight()) || (mouseEvent.getY() < 0)) {
-                     primaryStage.setHeight(height - mouseEvent.getScreenY() + primaryStage.getY());
-                     primaryStage.setY(mouseEvent.getScreenY());
-                  }
-               } else if (direction.startsWith("bottom")) {
-                  if (isDragging) {
-                     primaryStage.setY(startDrag.getY());
-                     isDragging = false;
-                  } else if ((height > primaryStage.getMinHeight()) || (mouseEvent.getY() > 0)) {
-                     primaryStage.setHeight(height + mouseEvent.getY());
-                  }
-               }
-            }
-         }
-      });
+   public <T extends Node> T findBy(NodesFinder desiredNode) {
+      return (T) root.lookup(desiredNode.getQuery());
    }
+
 }

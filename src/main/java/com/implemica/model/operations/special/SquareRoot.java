@@ -13,7 +13,7 @@ public class SquareRoot implements SpecialOperation {
       if(result.compareTo(BigDecimal.ZERO) < 0) {
          throw new InvalidInputException(result);
       }
-      return result.sqrt(MathContext.DECIMAL128);
+      return result.sqrt(MathContext.DECIMAL64);
    }
 
    @Override

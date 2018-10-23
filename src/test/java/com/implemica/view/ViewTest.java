@@ -7,13 +7,18 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
+import javafx.stage.Window;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ViewTest extends TestFxBase {
 
    /*
-   *  TODO drag for corners
    *  TODO check buttons
+   *  TODO check resize for result label
    */
    @Test
    public void dragTest(){
@@ -154,30 +159,70 @@ public class ViewTest extends TestFxBase {
    @Test
    public void checkExtraInfoFullTest() {
       AnchorPane extraInfoFull = findBy("#extraInfoFull");
+      Button logButton = findBy("#logButton");
+      Button showMemory = findBy("#showMemory");
       Button fullScreen = findBy("#full");
 
-      compareValues(0.0d, extraInfoFull.getWidth());
+      // for left side
+      assertEquals(0.0d, extraInfoFull.getWidth());
+      assertTrue(logButton.isVisible());
+      assertTrue(showMemory.isVisible());
+
       checkDrag(Side.LEFT, -237.0d, 0.0d);
-      compareValues(0.0d, extraInfoFull.getWidth());
+      assertEquals(0.0d, extraInfoFull.getWidth());
+      assertTrue(logButton.isVisible());
+      assertTrue(showMemory.isVisible());
+
       checkDrag(Side.LEFT, -1.0d, 0.0d);
-      compareValues(240.0d, extraInfoFull.getWidth());
+      assertEquals(240.0d, extraInfoFull.getWidth());
+      assertFalse(logButton.isVisible());
+      assertFalse(showMemory.isVisible());
+
       checkDrag(Side.LEFT, -1.0d, 0.0d);
-      compareValues(241.0d, extraInfoFull.getWidth());
+      assertEquals(241.0d, extraInfoFull.getWidth());
+      assertFalse(logButton.isVisible());
+      assertFalse(showMemory.isVisible());
+
       checkDrag(Side.LEFT, 239.0d, 0.0d);
+      assertEquals(0.0d, extraInfoFull.getWidth());
+      assertTrue(logButton.isVisible());
+      assertTrue(showMemory.isVisible());
 
-      compareValues(0.0d, extraInfoFull.getWidth());
+      // for right side
+      assertEquals(0.0d, extraInfoFull.getWidth());
+      assertTrue(logButton.isVisible());
+      assertTrue(showMemory.isVisible());
+
       checkDrag(Side.RIGHT, 237.0d, 0.0d);
-      compareValues(0.0d, extraInfoFull.getWidth());
-      checkDrag(Side.RIGHT, 1.0d, 0.0d);
-      compareValues(240.0d, extraInfoFull.getWidth());
-      checkDrag(Side.RIGHT, 1.0d, 0.0d);
-      compareValues(241.0d, extraInfoFull.getWidth());
-      checkDrag(Side.RIGHT, -239.0d, 0.0d);
+      assertEquals(0.0d, extraInfoFull.getWidth());
+      assertTrue(logButton.isVisible());
+      assertTrue(showMemory.isVisible());
 
-      compareValues(0.0d, extraInfoFull.getWidth());
+      checkDrag(Side.RIGHT, 1.0d, 0.0d);
+      assertEquals(240.0d, extraInfoFull.getWidth());
+      assertFalse(logButton.isVisible());
+      assertFalse(showMemory.isVisible());
+
+      checkDrag(Side.RIGHT, 1.0d, 0.0d);
+      assertEquals(241.0d, extraInfoFull.getWidth());
+      assertFalse(logButton.isVisible());
+      assertFalse(showMemory.isVisible());
+
+      checkDrag(Side.RIGHT, -239.0d, 0.0d);
+      assertTrue(logButton.isVisible());
+      assertTrue(showMemory.isVisible());
+
+      // check extra info field for full screen.
+      assertEquals(0.0d, extraInfoFull.getWidth());
+
       clickOn(fullScreen);
-      compareValues(325.0d, extraInfoFull.getWidth());
+      assertEquals(325.0d, extraInfoFull.getWidth());
+      assertFalse(logButton.isVisible());
+      assertFalse(showMemory.isVisible());
+
       clickOn(fullScreen);
+      assertTrue(logButton.isVisible());
+      assertTrue(showMemory.isVisible());
    }
 
    @Test
@@ -199,5 +244,59 @@ public class ViewTest extends TestFxBase {
       clickOn(showMemory);
       clickOn(hideMemoryField);
       clickOn(clearMemory);
+   }
+
+   @Test
+   public void systemButtonsTest() {
+      Button hide = findBy("#hide");
+      Button full = findBy("#full");
+      Button close = findBy("#close");
+
+      clickOn(full);
+      checkStateForResizePane(true);
+      checkWindowSize(Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight() - 40.0d);
+
+      clickOn(full);
+      checkStateForResizePane(false);
+      checkWindowSize(322.0d, 500.0d);
+   }
+
+   private void checkStateForResizePane(boolean isFull) {
+      Pane rightTopResize = findBy("#rightTopResize");
+      Pane leftTopResize = findBy("#leftTopResize");
+      Pane topResize = findBy("#topResize");
+      Pane extraRightResize = findBy("#extraRightResize");
+      Pane extraLeftResize = findBy("#extraLeftResize");
+      Pane leftResize = findBy("#leftResize");
+      Pane leftBottomResize = findBy("#leftBottomResize");
+      Pane rightResize = findBy("#rightResize");
+      Pane rightBottomResize = findBy("#rightBottomResize");
+
+      if(isFull) {
+         assertTrue(rightTopResize.isDisable());
+         assertTrue(leftTopResize.isDisable());
+         assertTrue(topResize.isDisable());
+         assertTrue(extraRightResize.isDisable());
+         assertTrue(extraLeftResize.isDisable());
+         assertTrue(leftResize.isDisable());
+         assertTrue(leftBottomResize.isDisable());
+         assertTrue(rightResize.isDisable());
+         assertTrue(rightBottomResize.isDisable());
+      } else {
+         assertFalse(rightTopResize.isDisable());
+         assertFalse(leftTopResize.isDisable());
+         assertFalse(topResize.isDisable());
+         assertFalse(extraRightResize.isDisable());
+         assertFalse(extraLeftResize.isDisable());
+         assertFalse(leftResize.isDisable());
+         assertFalse(leftBottomResize.isDisable());
+      }
+   }
+
+   private void checkWindowSize(double expectedWidth, double expectedHeight) {
+      Window window = getCurrentWindow();
+
+      assertEquals(expectedWidth, window.getWidth());
+      assertEquals(expectedHeight, window.getHeight());
    }
 }

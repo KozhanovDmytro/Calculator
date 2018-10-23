@@ -72,13 +72,9 @@ public class TestFxBase {
       FXTestUtils.awaitEvents();
 
       // check width
-//      double expectedWidth = initialWidth + x * side.coefficient()[Coordinates.X.ordinal()];
-//      assertTrue(window.getWidth() <= expectedWidth + 1 && window.getWidth() >= expectedWidth - 1);
       assertEquals(initialWidth + x * side.coefficient()[Coordinates.X.ordinal()], window.getWidth());
 
       // check height
-//      double expectedHeight = initialHeight + y * side.coefficient()[Coordinates.Y.ordinal()];
-//      assertTrue(window.getHeight() <= expectedHeight + 1 && window.getHeight() >= expectedHeight - 1);
       assertEquals(initialHeight + y * side.coefficient()[Coordinates.Y.ordinal()], window.getHeight());
    }
 
@@ -127,11 +123,7 @@ public class TestFxBase {
       FXTestUtils.awaitEvents();
    }
 
-   public void compareValues(double expected, double actual) {
-      assertEquals(expected, actual);
-   }
-
-   private Window getCurrentWindow(){
+   public Window getCurrentWindow(){
       return Window.getWindows().get(0);
    }
 }
