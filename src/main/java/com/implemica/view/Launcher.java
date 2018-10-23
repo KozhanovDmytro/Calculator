@@ -1,9 +1,10 @@
 package com.implemica.view;
 
+import com.implemica.view.util.Coordinates;
 import com.implemica.view.util.NodesFinder;
+import com.implemica.view.util.Side;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -58,6 +59,10 @@ public class Launcher extends Application {
    private final int OFFSET_RESIZE_FOR_RESULT = 10;
    private final int MAX_LENGTH_FOR_RESULT = 13;
    private final double MAX_FONT_SIZE_FOR_RESULT = 48.0d;
+   private final double ZERO = 0.0d;
+   private final int MIN_SIZE_STAGE_FOR_EXTRA_INFO = 560;
+   private final int MIN_SIZE_FOR_EXTRA_INFO = 240;
+   private final int MAX_SIZE_FOR_EXTRA_INFO = 325;
 
    @Override
    public void start(Stage stage) throws Exception {
@@ -166,7 +171,6 @@ public class Launcher extends Application {
    private void setResizeActionForStage() {
       AnchorPane extraInfoFull = findBy(NodesFinder.EXTRA_INFO_FULL);
       HBox extraInfoBtns = findBy(NodesFinder.EXTRA_INFO_BTNS);
-      Label extraMemoryLabel = findBy(NodesFinder.EXTRA_MEMORY_LABEL);
 
       Pane left = findBy(NodesFinder.LEFT_RESIZE);
       Pane extraLeft = findBy(NodesFinder.EXTRA_LEFT_RESIZE);
@@ -192,145 +196,37 @@ public class Launcher extends Application {
                     isDragging = true;
                     startDrag = new Point2D(event.getScreenX(), event.getScreenY());
                  });
+
+                 pane.setOnMouseDragged(event -> doResize(pane, event));
                  pane.setOnMouseReleased(event -> isDragging = false);
               });
 
-      Stream.of(right, extraRight, rightResizeFull)
-              .collect(Collectors.toList())
-              .forEach(pane -> pane.setOnMouseDragged(event -> {
-                 double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX());
-                 if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
-                    primaryStage.setWidth(width);
-                    startDrag = new Point2D(event.getScreenX(), event.getScreenY());
-                 }
-              }));
-
-      Stream.of(left, extraLeft)
-              .collect(Collectors.toList())
-              .forEach(pane -> pane.setOnMouseDragged(event -> {
-                 double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
-
-                 if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
-                    primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
-                    primaryStage.setWidth(width);
-                    startDrag = new Point2D(event.getScreenX(), event.getScreenY());
-                 }
-              }));
-
-      Stream.of(bottom, bottomResizeFull)
-              .collect(Collectors.toList())
-              .forEach(pane -> pane.setOnMouseDragged(event -> {
-                 double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY());
-                 if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
-                    primaryStage.setHeight(height);
-                    startDrag = new Point2D(event.getScreenX(), event.getScreenY());
-                 }
-              }));
-
-      top.setOnMouseDragged(event -> {
-         double height = primaryStage.getHeight() + (startDrag.getY() - event.getScreenY());
-         if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
-            primaryStage.setY(primaryStage.getY() + (event.getScreenY() - startDrag.getY()));
-            primaryStage.setHeight(height);
-            startDrag = new Point2D(event.getScreenX(), event.getScreenY());
-         }
-      });
-
-      Stream.of(rightBottom, rightBottomResizeFull)
-              .collect(Collectors.toList())
-              .forEach(pane -> pane.setOnMouseDragged(event -> {
-                 double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY());
-                 double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX());
-
-                 if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
-                    primaryStage.setWidth(width);
-                    startDrag = new Point2D(event.getScreenX(), startDrag.getY());
-                 }
-
-                 if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
-                    primaryStage.setHeight(height);
-                    startDrag = new Point2D(startDrag.getX(), event.getScreenY());
-                 }
-              }));
-
-      leftBottom.setOnMouseDragged(event -> {
-         double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
-         double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY());
-
-         if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
-            primaryStage.setHeight(height);
-            startDrag = new Point2D(startDrag.getX(), event.getScreenY());
-         }
-
-         if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
-            primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
-            primaryStage.setWidth(width);
-            startDrag = new Point2D(event.getScreenX(), startDrag.getY());
-         }
-      });
-
-      rightTop.setOnMouseDragged(event -> {
-         double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX());
-         double height = primaryStage.getHeight() + (startDrag.getY() - event.getScreenY());
-
-         if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
-            primaryStage.setWidth(width);
-            startDrag = new Point2D(event.getScreenX(), startDrag.getY());
-         }
-
-         if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
-            primaryStage.setY(primaryStage.getY() + (event.getScreenY() - startDrag.getY()));
-            primaryStage.setHeight(height);
-            startDrag = new Point2D(startDrag.getX(), event.getScreenY());
-         }
-
-
-      });
-
-      leftTop.setOnMouseDragged(event -> {
-         double width = primaryStage.getWidth() + (startDrag.getX() - event.getScreenX());
-         double height = primaryStage.getHeight() + (startDrag.getY() - event.getScreenY());
-
-         if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
-            primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
-            primaryStage.setWidth(width);
-            startDrag = new Point2D(event.getScreenX(), startDrag.getY());
-         }
-
-         if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
-            primaryStage.setY(primaryStage.getY() + (event.getScreenY() - startDrag.getY()));
-            primaryStage.setHeight(height);
-            startDrag = new Point2D(startDrag.getX(), event.getScreenY());
-         }
-
-
-      });
-
       primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
-         if (newValue.intValue() >= 560 && !isFullScreen) {
-            double plusPx = newValue.intValue() - 560;
-            if (240 + plusPx * 0.5 <= 325)
-               extraInfoFull.setPrefWidth(240 + plusPx * 0.5);
-         } else if (extraInfoFull.getWidth() != 0) {
-            extraInfoFull.setPrefWidth(0);
+         if (newValue.intValue() >= MIN_SIZE_STAGE_FOR_EXTRA_INFO && !isFullScreen) {
+            // TODO Rename it.
+            double plusPx = newValue.intValue() - MIN_SIZE_STAGE_FOR_EXTRA_INFO;
+
+            double calculatedSize = MIN_SIZE_FOR_EXTRA_INFO + plusPx * 0.5;
+            if (calculatedSize <= MAX_SIZE_FOR_EXTRA_INFO) {
+               extraInfoFull.setPrefWidth(calculatedSize);
+            }
+         } else if (extraInfoFull.getWidth() != ZERO) {
+            extraInfoFull.setPrefWidth(ZERO);
          }
       });
 
       extraInfoFull.widthProperty().addListener((observable, oldValue, newValue) -> {
-         Button showMemory = (Button) root.lookup("#showMemory");
-         Button logButton = (Button) root.lookup("#logButton");
+         Button showMemory = findBy(NodesFinder.SHOW_MEMORY);
+         Button logButton = findBy(NodesFinder.LOG_BUTTON);
 
-         Stream.of(right, rightBottom)
-                 .collect(Collectors.toList())
-                 .forEach(pane -> {
-                    if (!isFullScreen) {
-                       pane.setVisible(false);
-                       pane.setDisable(true);
-                    }
-                 });
+         Stream.of(right, rightBottom).collect(Collectors.toList()).forEach(pane -> {
+            if (!isFullScreen) {
+               pane.setVisible(false);
+               pane.setDisable(true);
+            }
+         });
 
-         Stream.of(rightResizeFull, rightBottomResizeFull, bottomResizeFull)
-                 .collect(Collectors.toList())
+         Stream.of(rightResizeFull, rightBottomResizeFull, bottomResizeFull).collect(Collectors.toList())
                  .forEach(pane -> {
                     if (!isFullScreen) {
                        pane.setVisible(true);
@@ -338,7 +234,7 @@ public class Launcher extends Application {
                     }
                  });
 
-         if (extraInfoFull.getPrefWidth() == 0.0d) {
+         if (extraInfoFull.getPrefWidth() == ZERO) {
             showMemory.setVisible(true);
             logButton.setVisible(true);
          } else {
@@ -348,9 +244,34 @@ public class Launcher extends Application {
 
          extraInfoFull.setVisible(true);
          extraInfoFull.setDisable(false);
+
          extraInfoBtns.setVisible(true);
          extraInfoBtns.setDisable(false);
       });
+   }
+
+   private void doResize(Pane pane, MouseEvent event) {
+      Side side = NodesFinder.getSide(NodesFinder.findByQuery(pane.getId()));
+
+      double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX()) * side.coefficient(Coordinates.X);
+      double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY()) * side.coefficient(Coordinates.Y);
+
+      if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
+         if(side == Side.LEFT || side == Side.LEFT_TOP || side == Side.LEFT_BOTTOM) {
+            primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
+         }
+         primaryStage.setWidth(width);
+         startDrag = new Point2D(event.getScreenX(), startDrag.getY());
+      }
+
+      if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
+         if(side == Side.TOP || side == Side.LEFT_TOP || side == Side.RIGHT_TOP) {
+            primaryStage.setY(primaryStage.getY() + (event.getScreenY() - startDrag.getY()));
+         }
+         primaryStage.setHeight(height);
+         startDrag = new Point2D(startDrag.getX(), event.getScreenY());
+      }
+
    }
 
    private void setFullScreen() {

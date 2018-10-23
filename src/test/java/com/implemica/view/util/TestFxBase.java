@@ -72,10 +72,10 @@ public class TestFxBase {
       FXTestUtils.awaitEvents();
 
       // check width
-      assertEquals(initialWidth + x * side.coefficient()[Coordinates.X.ordinal()], window.getWidth());
+      assertEquals(initialWidth + x * side.coefficient(Coordinates.X), window.getWidth());
 
       // check height
-      assertEquals(initialHeight + y * side.coefficient()[Coordinates.Y.ordinal()], window.getHeight());
+      assertEquals(initialHeight + y * side.coefficient(Coordinates.Y), window.getHeight());
    }
 
    public void drag(Point2D start, double x, double y) {

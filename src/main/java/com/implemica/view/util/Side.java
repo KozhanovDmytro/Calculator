@@ -11,7 +11,7 @@ public enum Side {
    RIGHT_TOP,
    RIGHT_BOTTOM;
 
-   public int[] coefficient() {
+   public int coefficient(Coordinates coordinates) {
       int x = 1;
       int y = 1;
       switch (this) {
@@ -48,9 +48,12 @@ public enum Side {
             y = 1;
             break;
       }
-      int result[] = new int[2];
-      result[Coordinates.X.ordinal()] = x;
-      result[Coordinates.Y.ordinal()] = y;
-      return result;
+      if (coordinates == Coordinates.X) {
+         return x;
+      } else if (coordinates == Coordinates.Y) {
+         return y;
+      } else {
+         throw new IllegalArgumentException();
+      }
    }
 }

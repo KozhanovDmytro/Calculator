@@ -1,7 +1,6 @@
 package com.implemica.view.util;
 
 import lombok.Getter;
-import org.apache.commons.lang3.ObjectUtils;
 
 public enum NodesFinder {
    RESULT_LABEL("#resultLabel"),
@@ -30,7 +29,9 @@ public enum NodesFinder {
    RIGHT_TOP_RESIZE("#rightTopResize"),
    RIGHT_RESIZE_FULL("#rightResizeFull"),
    RIGHT_BOTTOM_RESIZE_FULL("#rightBottomResizeFull"),
-   BOTTOM_RESIZE_FULL("#bottomResizeFull");
+   BOTTOM_RESIZE_FULL("#bottomResizeFull"),
+   SHOW_MEMORY("#showMemory"),
+   LOG_BUTTON("#logButton");
 
    @Getter
    private String query;
@@ -39,7 +40,7 @@ public enum NodesFinder {
       this.query = query;
    }
 
-   public Side getSide(NodesFinder nodesFinder) {
+   public static Side getSide(NodesFinder nodesFinder) {
       Side result;
       switch (nodesFinder) {
          case LEFT_RESIZE:
@@ -87,9 +88,9 @@ public enum NodesFinder {
       return result;
    }
 
-   public NodesFinder findByQuery(String query) {
+   public static NodesFinder findByQuery(String query) {
       for (NodesFinder node: NodesFinder.values()) {
-         if(node.getQuery().equals(query)){
+         if(node.getQuery().equals("#" + query)){
             return node;
          }
       }
