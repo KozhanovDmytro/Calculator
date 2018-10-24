@@ -33,8 +33,6 @@ public class Validator {
       df.setMinimumFractionDigits(0);
       df.setMaximumFractionDigits(16);
 
-//      df.setDecimalSeparatorAlwaysShown(separator);
-
       if(number.compareTo(new BigDecimal("1e16")) >= 0){
          dfs.setExponentSeparator(INTEGER_EXPONENT_SEPARATOR);
          df.applyPattern(PATTERN_FOR_EXPONENT);
@@ -67,7 +65,6 @@ public class Validator {
       df.setMinimumFractionDigits(0);
       df.setMaximumFractionDigits(16);
 
-//      df.setDecimalSeparatorAlwaysShown(separator);
       df.applyPattern(PATTERN_FOR_NUMBER);
 
       df.setDecimalFormatSymbols(dfs);

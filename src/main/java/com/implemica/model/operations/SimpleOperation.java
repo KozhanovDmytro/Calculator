@@ -79,8 +79,10 @@ public abstract class SimpleOperation implements Operation {
                 separated = true;
             }
 
-        } else
+        } else {
             operand = new BigDecimal(BigInteger.ZERO);
+        }
+        stringOperand = operand.toPlainString();
     }
 
     @Override

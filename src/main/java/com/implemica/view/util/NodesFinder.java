@@ -31,7 +31,49 @@ public enum NodesFinder {
    RIGHT_BOTTOM_RESIZE_FULL("#rightBottomResizeFull"),
    BOTTOM_RESIZE_FULL("#bottomResizeFull"),
    SHOW_MEMORY("#showMemory"),
-   LOG_BUTTON("#logButton");
+   LOG_BUTTON("#logButton"),
+
+   LOG_BTN("#logBtn"),
+   LOG_SELECT("#logSelect"),
+   MEMORY_BTN("#memoryBtn"),
+   MEMORY_SELECT("#memorySelect"),
+   EXTRA_LOG_LABEL("#extraLogLabel"),
+
+   PERCENT_OPERATION("#percentOperation"),
+   SQRT_OPERATION("#sqrtOperation"),
+   SQUARE("#square"),
+   DIVIDE_BY_X("#divideByX"),
+
+   BTN0("#btn0"),
+   BTN1("#btn1"),
+   BTN2("#btn2"),
+   BTN3("#btn3"),
+   BTN4("#btn4"),
+   BTN5("#btn5"),
+   BTN6("#btn6"),
+   BTN7("#btn7"),
+   BTN8("#btn8"),
+   BTN9("#btn9"),
+
+   BACKSPACE("#backSpace"),
+   SEPARATE_BTN("#separateBtn"),
+   NEGATE("#negate"),
+   EQUALS_OPERATION("#equalsOperation"),
+   PLUS_OPERATION("#plusOperation"),
+   MINUS_OPERATION("#minusOperation"),
+   DIVIDE_OPERATION("#divideOperation"),
+   MULTIPLY_OPERATION("#multiplyOperation"),
+   C("#c"),
+   CE("#CE"),
+
+   MENU_BTN("#menuBtn"),
+   HIDE_MENU("#hideMenu"),
+   MEMORY_FIELD("#memoryField"),
+   HIDE_MEMORY_FIELD("#hideMemoryField"),
+   MENU("#menu");
+
+
+
 
    @Getter
    private String query;

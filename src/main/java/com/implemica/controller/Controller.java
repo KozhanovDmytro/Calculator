@@ -29,7 +29,7 @@ public class Controller {
    private URL location;
 
    @FXML
-   private Button c, ce, backSpace;
+   private Button clear, clearEntry, backSpace;
 
    @FXML
    private Button equalsOperation;
@@ -66,7 +66,7 @@ public class Controller {
    @FXML
    private Label mode;
 
-   private Properties texts = new Properties();
+   private Properties textsForLabel = new Properties();
 
    private Calculator calculator = new Calculator(new Arabic());
 
@@ -88,41 +88,41 @@ public class Controller {
 
       InputStream stream = new FileInputStream(file);
 
-      texts.load(stream);
+      textsForLabel.load(stream);
       stream.close();
    }
 
    private void setTexts() {
-      title.setText(texts.getProperty("title"));
-      mode.setText(texts.getProperty("mode"));
+      title.setText(textsForLabel.getProperty("title"));
+      mode.setText(textsForLabel.getProperty("mode"));
 
-      standard.setText(texts.getProperty("standard"));
-      scientific.setText(texts.getProperty("scientific"));
-      programmer.setText(texts.getProperty("programmer"));
-      dateCalculation.setText(texts.getProperty("dateCalculation"));
-      currency.setText(texts.getProperty("currency"));
-      volume.setText(texts.getProperty("volume"));
-      length.setText(texts.getProperty("length"));
-      weight.setText(texts.getProperty("weight"));
-      temperature.setText(texts.getProperty("temperature"));
-      energy.setText(texts.getProperty("energy"));
-      area.setText(texts.getProperty("area"));
-      speed.setText(texts.getProperty("speed"));
-      time.setText(texts.getProperty("time"));
-      power.setText(texts.getProperty("power"));
-      data.setText(texts.getProperty("data"));
-      pressure.setText(texts.getProperty("pressure"));
-      angle.setText(texts.getProperty("angle"));
+      standard.setText(textsForLabel.getProperty("standard"));
+      scientific.setText(textsForLabel.getProperty("scientific"));
+      programmer.setText(textsForLabel.getProperty("programmer"));
+      dateCalculation.setText(textsForLabel.getProperty("dateCalculation"));
+      currency.setText(textsForLabel.getProperty("currency"));
+      volume.setText(textsForLabel.getProperty("volume"));
+      length.setText(textsForLabel.getProperty("length"));
+      weight.setText(textsForLabel.getProperty("weight"));
+      temperature.setText(textsForLabel.getProperty("temperature"));
+      energy.setText(textsForLabel.getProperty("energy"));
+      area.setText(textsForLabel.getProperty("area"));
+      speed.setText(textsForLabel.getProperty("speed"));
+      time.setText(textsForLabel.getProperty("time"));
+      power.setText(textsForLabel.getProperty("power"));
+      data.setText(textsForLabel.getProperty("data"));
+      pressure.setText(textsForLabel.getProperty("pressure"));
+      angle.setText(textsForLabel.getProperty("angle"));
 
-      about.setText(texts.getProperty("about"));
+      about.setText(textsForLabel.getProperty("about"));
 
-      menuConverter.setText(texts.getProperty("menuConverter"));
-      menuCalculator.setText(texts.getProperty("menuCalculator"));
+      menuConverter.setText(textsForLabel.getProperty("menuConverter"));
+      menuCalculator.setText(textsForLabel.getProperty("menuCalculator"));
 
-      extraMemoryLabel.setText(texts.getProperty("noMemory"));
-      extraLogLabel.setText(texts.getProperty("noLog"));
-      memoryBtn.setText(texts.getProperty("memory"));
-      logBtn.setText(texts.getProperty("history"));
+      extraMemoryLabel.setText(textsForLabel.getProperty("noMemory"));
+      extraLogLabel.setText(textsForLabel.getProperty("noLog"));
+      memoryBtn.setText(textsForLabel.getProperty("memory"));
+      logBtn.setText(textsForLabel.getProperty("history"));
    }
 
    private void actionsForOperationButtons() {
@@ -138,26 +138,23 @@ public class Controller {
       negate.setOnAction(event -> actionForSpecialOperations(new Negate()));
 
       equalsOperation.setOnAction(event -> {
-         // TODO look at this.
-         if(isBlocked) {
-            unlock();
-            return;
-         }
+         unlock();
          ResponseDto response = calculator.equalsOperation();
          if(disassembleDto(response)) {
             showResult(response.getResult());
          }
-         updateHistory(response.getHistory());
+         showHistory(response.getHistory());
       });
    }
 
    private void actionForOperations(SimpleOperation operation) {
       ResponseDto response = calculator.executeSimpleOperation(operation);
+
       if(disassembleDto(response)) {
          showResult(response.getResult());
       }
 
-      updateHistory(response.getHistory());
+      showHistory(response.getHistory());
    }
 
    private void actionForSpecialOperations(SpecialOperation operation) {
@@ -166,7 +163,8 @@ public class Controller {
       if(disassembleDto(response)){
          showResult(response.getOperand());
       }
-      updateHistory(response.getHistory());
+
+      showHistory(response.getHistory());
    }
 
    private void actionsForBuildOperand() {
@@ -188,36 +186,31 @@ public class Controller {
    }
 
    private void actionForBuildOperand(Number number) {
-      if(isBlocked) {
-         unlock();
-      }
+      unlock();
       ResponseDto response = calculator.buildOperand(number);
       showResult(response.getBuildOperand());
+      if(response.getHistory() != null) {
+         showHistory(response.getHistory());
+      }
    }
 
    private void actionsForCleanOperations() {
       backSpace.setOnAction(event -> {
-         if(isBlocked) {
-            unlock();
-         }
+         unlock();
          ResponseDto response = calculator.backspace();
          showResult(response.getBuildOperand());
       });
-      c.setOnAction(event -> {
-         if(isBlocked) {
-            unlock();
-         }
+      clear.setOnAction(event -> {
+         unlock();
          ResponseDto response = calculator.clear();
          showResult(response.getOperand());
-         updateHistory(response.getHistory());
+         showHistory(response.getHistory());
       });
-      ce.setOnAction(event -> {
-         if(isBlocked) {
-            unlock();
-         }
+      clearEntry.setOnAction(event -> {
+         unlock();
          ResponseDto response = calculator.clearEntry();
          showResult(response.getOperand());
-         updateHistory(response.getHistory());
+         showHistory(response.getHistory());
       });
    }
 
@@ -245,7 +238,7 @@ public class Controller {
       clearMemory.setOnAction((event -> {
          calculator.getContainer().getMemory().clear();
          memoryLabel.setText("0");
-         extraMemoryLabel.setText(texts.getProperty("noMemory"));
+         extraMemoryLabel.setText(textsForLabel.getProperty("noMemory"));
          clearMemory.setDisable(true);
          recallMemory.setDisable(true);
          showMemory.setDisable(true);
@@ -256,7 +249,7 @@ public class Controller {
       resultLabel.setText(result);
    }
 
-   private void updateHistory(String history) {
+   private void showHistory(String history) {
       historyLabel.setText(history);
    }
 
@@ -277,19 +270,19 @@ public class Controller {
    private boolean disassembleDto(ResponseDto response) {
       switch (response.getExceptionType()) {
          case OVERFLOW:
-            showResult(texts.getProperty("overflow"));
+            showResult(textsForLabel.getProperty("overflow"));
             blockButtons(true);
             return false;
          case UNDEFINED_RESULT:
-            showResult(texts.getProperty("undefinedResult"));
+            showResult(textsForLabel.getProperty("undefinedResult"));
             blockButtons(true);
             return false;
          case DIVIDE_BY_ZERO:
-            showResult(texts.getProperty("divideByZero"));
+            showResult(textsForLabel.getProperty("divideByZero"));
             blockButtons(true);
             return false;
          case INVALID_INPUT:
-            showResult(texts.getProperty("invalidInput"));
+            showResult(textsForLabel.getProperty("invalidInput"));
             blockButtons(true);
             return false;
       }
@@ -297,9 +290,11 @@ public class Controller {
    }
 
    private void unlock(){
-      blockButtons(false);
-      ResponseDto response = calculator.getCurrentState();
-      showResult(response.getResult());
-      updateHistory(response.getHistory());
+      if(isBlocked) {
+         blockButtons(false);
+         ResponseDto response = calculator.getCurrentState();
+         showResult(response.getResult());
+         showHistory(response.getHistory());
+      }
    }
 }

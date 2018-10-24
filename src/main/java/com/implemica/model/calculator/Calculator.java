@@ -11,6 +11,7 @@ import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
 import com.implemica.model.operations.SimpleOperation;
+import com.implemica.model.operations.special.Negate;
 import com.implemica.model.operations.special.Percent;
 import com.implemica.model.validation.Validator;
 import lombok.Getter;
@@ -74,6 +75,7 @@ public class Calculator {
 
       container.setOperation(operation);
       container.setMadeOperand(true);
+      ResponseDto responseDto;
       return new ResponseDto(showResult(), null, history, null, exceptionType);
    }
 
@@ -88,7 +90,7 @@ public class Calculator {
       }
       try {
          container.change(operation, isShownResult);
-         container.setMadeOperand(false);
+         container.setMadeOperand(operation instanceof Negate);
       } catch (UndefinedResultException e) {
          exceptionType = ExceptionType.UNDEFINED_RESULT;
       } catch (OverflowException e) {
@@ -107,11 +109,20 @@ public class Calculator {
    }
 
    public ResponseDto buildOperand(Number number){
+      String history = null;
       if (container.isMadeOperand() || container.getOperation() instanceof Equals) {
          container.getOperation().buildOperand(numeral.translate(number));
          container.getOperation().setShowOperand(true);
+      } else if(container.getOperation().getOperandHistory().size() > 0) {
+         container.getOperation().getOperandHistory().clear();
+         container.getOperation().setShowOperand(false);
+         history = showHistory();
+         container.getOperation().setShowOperand(true);
+         container.getOperation().setOperand(BigDecimal.ZERO);
+         container.getOperation().buildOperand(numeral.translate(number));
+         container.setMadeOperand(true);
       }
-      return new ResponseDto(null, showOperand(), null, showBuiltOperand(), ExceptionType.NOTHING);
+      return new ResponseDto(null, showOperand(), history, showBuiltOperand(), ExceptionType.NOTHING);
    }
 
    public ResponseDto equalsOperation() {

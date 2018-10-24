@@ -73,7 +73,7 @@
                   <String fx:value="OtherBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="c" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="C" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="clear" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="C" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -126,7 +126,7 @@
                   <Font name="System Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="ce" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="CE" GridPane.rowIndex="4">
+            <Button fx:id="clearEntry" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="CE" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBtn" />
