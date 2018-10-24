@@ -12,8 +12,6 @@ class CalculatorTest {
 
    private TestBuilder builder;
 
-   private final String SQRT = "√";
-
    @BeforeEach
    void init() {
       builder = new TestBuilder();
@@ -521,9 +519,11 @@ class CalculatorTest {
    @Test
    void specialOperationsTests() throws OverflowException, UndefinedResultException, InvalidInputException {
       builder.doTest("4√", "√(4) ", 1, null, "2");
+      builder.doTest("4+5=√", "√(9) ", 1, "9", null);
+      builder.doTest("4+5=√=", "", 0, "8", "3");
       builder.doTest("8q", "sqr(8) ", 1, "0", "64");
       builder.doTest("2r", "1/(2) ", 1, "0", "0,5");
-      builder.doTest("200+4%rrq√", "200 + " + SQRT + "(sqr(1/(1/(8)))) ", 2, "200", "8");
+      builder.doTest("200+4%rrq√", "200 + √(sqr(1/(1/(8)))) ", 2, "200", "8");
       builder.doTest("5+qq", "5 + sqr(sqr(5)) ", 2, "5", "625");
       builder.doTest("5+qq=", "", 0, "630", "625");
       builder.doTest("2+3=q", "sqr(5) ", 1, "5", "25");
@@ -534,6 +534,7 @@ class CalculatorTest {
       builder.doTest("1000000000000000-r", "1000000000000000 - 1/(1000000000000000) ", 2, null, "0,000000000000001");
       builder.doTest("1000000000000000*=-r", "1,e+30 - 1/(1,e+30) ", 2, null, "1,e-30");
       builder.doTest("1000000000000000*=====-r", "1,e+90 - 1/(1,e+90) ", 2, null, "1,e-90");
+      builder.doTest("5+2√1", "5 + 1 ", 2, "5", "1");
    }
 
    @Test
@@ -655,7 +656,7 @@ class CalculatorTest {
       builder.doTest("1/7*7-1=", "", 0, "0", null);
       builder.doTest("1/7*1000000000000000*7-1000000000000000=", "", 0, "0", null);
       builder.doTest("1/3/7/11/13/17*1000000000000000*3*7*11*13*17-1000000000000000=", "", 0, "0", null);
-      builder.doTest("5√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null, 0, "0", "1,000000000000001");
+      builder.doTest("5√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null, 0, "0", "1,000000000000002");
       builder.doTest("1/3*0.0000000000000001*0.00000000001*1000000000000000*10000000000000*3=", "", 0, "10", null);
       builder.doTest("0.9999999999999999*999999999999999.1=", "", 0, "999 999 999 999 999", null);
       builder.doTest("0.9999999999999999*999999999999999.3=", "", 0, "999 999 999 999 999,2", null);

@@ -14,14 +14,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ViewTest extends TestFxBase {
+class ViewTest extends TestFxBase {
 
    /*
    *  TODO check buttons
    *  TODO check resize for result label
    */
    @Test
-   public void dragTest(){
+   void dragTest(){
       // left side
       checkDrag(Side.LEFT, -10, 0);
       checkDrag(Side.LEFT, 10, 0);
@@ -140,7 +140,7 @@ public class ViewTest extends TestFxBase {
    }
 
    @Test
-   public void moveWindowTest() {
+   void moveWindowTest() {
       double maxX = Screen.getPrimary().getBounds().getMaxX() - 1.0d;
       double maxY = Screen.getPrimary().getBounds().getMaxY() - 1.0d;
 
@@ -157,7 +157,7 @@ public class ViewTest extends TestFxBase {
    }
 
    @Test
-   public void checkExtraInfoFullTest() {
+   void checkExtraInfoFullTest() {
       AnchorPane extraInfoFull = findBy("#extraInfoFull");
       Button logButton = findBy("#logButton");
       Button showMemory = findBy("#showMemory");
@@ -226,7 +226,7 @@ public class ViewTest extends TestFxBase {
    }
 
    @Test
-   public void dropDownPaneTest() {
+   void dropDownPaneTest() {
       Button menu = findBy("#menuBtn");
       Button showMemory = findBy("#showMemory");
       Button btn1 = findBy("#btn1");
@@ -247,7 +247,7 @@ public class ViewTest extends TestFxBase {
    }
 
    @Test
-   public void systemButtonsTest() {
+   void systemButtonsTest() {
       Button hide = findBy("#hide");
       Button full = findBy("#full");
       Button close = findBy("#close");
