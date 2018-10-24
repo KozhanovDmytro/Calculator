@@ -248,6 +248,7 @@ public class TestBuilder {
    }
 
    private void buildOperand(Number number) {
+
       operand = calculator.buildOperand(number).getBuildOperand();
    }
 

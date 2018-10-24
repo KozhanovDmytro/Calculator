@@ -17,7 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
@@ -63,6 +62,12 @@ public class Launcher extends Application {
    private final int MIN_SIZE_STAGE_FOR_EXTRA_INFO = 560;
    private final int MIN_SIZE_FOR_EXTRA_INFO = 240;
    private final int MAX_SIZE_FOR_EXTRA_INFO = 325;
+   private final String FULL_SCREEN_ICON = "\uE922";
+   private final String SMALL_SCREEN_ICON = "\uE923";
+   private final String STYLE_FOR_BUTTON_IN_EXTRA_FIELD = "ExtraInfoBtnSelected";
+   private final double MENU_SIZE = 260.0d;
+   private final double MEMORY_FIELD_SIZE = 300.0d;
+   private final int ANIMATION_TIME = 50;
 
    @Override
    public void start(Stage stage) throws Exception {
@@ -203,7 +208,6 @@ public class Launcher extends Application {
 
       primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
          if (newValue.intValue() >= MIN_SIZE_STAGE_FOR_EXTRA_INFO && !isFullScreen) {
-            // TODO Rename it.
             double plusPx = newValue.intValue() - MIN_SIZE_STAGE_FOR_EXTRA_INFO;
 
             double calculatedSize = MIN_SIZE_FOR_EXTRA_INFO + plusPx * 0.5;
@@ -275,23 +279,23 @@ public class Launcher extends Application {
    }
 
    private void setFullScreen() {
-      Button full = (Button) root.lookup("#full");
+      Button full = findBy(NodesFinder.FULL);
 
-      Pane left = (Pane) root.lookup("#leftResize");
-      Pane extraLeft = (Pane) root.lookup("#extraLeftResize");
-      Pane right = (Pane) root.lookup("#rightResize");
-      Pane extraRight = (Pane) root.lookup("#extraRightResize");
-      Pane top = (Pane) root.lookup("#topResize");
-      Pane bottom = (Pane) root.lookup("#bottomResize");
+      Pane left = findBy(NodesFinder.LEFT_RESIZE);
+      Pane extraLeft = findBy(NodesFinder.EXTRA_LEFT_RESIZE);
+      Pane right = findBy(NodesFinder.RIGHT_RESIZE);
+      Pane extraRight = findBy(NodesFinder.EXTRA_RIGHT_RESIZE);
+      Pane top = findBy(NodesFinder.TOP_RESIZE);
+      Pane bottom = findBy(NodesFinder.BOTTOM_RESIZE);
 
-      Pane leftBottom = (Pane) root.lookup("#leftBottomResize");
-      Pane rightBottom = (Pane) root.lookup("#rightBottomResize");
-      Pane leftTop = (Pane) root.lookup("#leftTopResize");
-      Pane rightTop = (Pane) root.lookup("#rightTopResize");
+      Pane leftBottom = findBy(NodesFinder.LEFT_BOTTOM_RESIZE);
+      Pane rightBottom = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE);
+      Pane leftTop = findBy(NodesFinder.LEFT_TOP_RESIZE);
+      Pane rightTop = findBy(NodesFinder.RIGHT_TOP_RESIZE);
 
-      Pane rightResizeFull = (Pane) root.lookup("#rightResizeFull");
-      Pane rightBottomResizeFull = (Pane) root.lookup("#rightBottomResizeFull");
-      Pane bottomResizeFull = (Pane) root.lookup("#bottomResizeFull");
+      Pane rightResizeFull = findBy(NodesFinder.RIGHT_RESIZE_FULL);
+      Pane rightBottomResizeFull = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE_FULL);
+      Pane bottomResizeFull = findBy(NodesFinder.BOTTOM_RESIZE_FULL);
 
       if (isFullScreen) {
          primaryStage.setX(stagePosition.getX());
@@ -304,7 +308,7 @@ public class Launcher extends Application {
                  .collect(Collectors.toList())
                  .forEach(pane -> pane.setDisable(false));
 
-         full.setText("\uE922");
+         full.setText(FULL_SCREEN_ICON);
 
          isFullScreen = false;
       } else {
@@ -313,7 +317,7 @@ public class Launcher extends Application {
 
          stagePosition = new Point2D(primaryStage.getX(), primaryStage.getY());
 
-         ((AnchorPane) root.lookup("#extraInfoFull")).setPrefWidth(325);
+         ((AnchorPane) findBy(NodesFinder.EXTRA_INFO_FULL)).setPrefWidth(MAX_SIZE_FOR_EXTRA_INFO);
          primaryStage.setX(bounds.getMinX());
          primaryStage.setY(bounds.getMinY());
          primaryStage.setWidth(bounds.getWidth());
@@ -324,127 +328,125 @@ public class Launcher extends Application {
                  .collect(Collectors.toList())
                  .forEach(pane -> pane.setDisable(true));
 
-         full.setText("\uE923");
+         full.setText(SMALL_SCREEN_ICON);
 
          isFullScreen = true;
       }
    }
 
    private void setActionsForInfoBtns() {
-      Button logBtn = (Button) root.lookup("#logBtn");
-      Pane logSelect = (Pane) root.lookup("#logSelect");
+      Button logBtn = findBy(NodesFinder.LOG_BTN);
+      Pane logSelect = findBy(NodesFinder.LOG_SELECT);
 
-      Button memoryBtn = (Button) root.lookup("#memoryBtn");
-      Pane memorySelect = (Pane) root.lookup("#memorySelect");
+      Button memoryBtn = findBy(NodesFinder.MEMORY_BTN);
+      Pane memorySelect = findBy(NodesFinder.MEMORY_SELECT);
 
-      Label extraLogLabel = (Label) root.lookup("#extraLogLabel");
-      Label extraMemoryLabel = (Label) root.lookup("#extraMemoryLabel");
+      Label extraLogLabel = findBy(NodesFinder.EXTRA_LOG_LABEL);
+      Label extraMemoryLabel = findBy(NodesFinder.EXTRA_MEMORY_LABEL);
       extraMemoryLabel.setVisible(false);
       extraLogLabel.setVisible(true);
 
       memoryBtn.setOnMouseClicked(event -> {
          logSelect.getStyleClass().clear();
-         memorySelect.getStyleClass().add("ExtraInfoBtnSelected");
+         memorySelect.getStyleClass().add(STYLE_FOR_BUTTON_IN_EXTRA_FIELD);
          extraMemoryLabel.setVisible(true);
          extraLogLabel.setVisible(false);
       });
 
       logBtn.setOnMouseClicked(event -> {
          memorySelect.getStyleClass().clear();
-         logSelect.getStyleClass().add("ExtraInfoBtnSelected");
+         logSelect.getStyleClass().add(STYLE_FOR_BUTTON_IN_EXTRA_FIELD);
          extraMemoryLabel.setVisible(false);
          extraLogLabel.setVisible(true);
       });
    }
 
    private void setActionsForKeyboard() {
-      GridPane grid = (GridPane) root.lookup("#grid");
       primaryStage.getScene().setOnKeyPressed(key -> {
          if (key.getCode() == KeyCode.DIGIT5 && key.isShiftDown()) {
-            ((Button) grid.lookup("#percentOperation")).fire();
+            ((Button) findBy(NodesFinder.PERCENT_OPERATION)).fire();
             return;
          }
          if (key.getCode() == KeyCode.DIGIT2 && key.isShiftDown()) {
-            ((Button) grid.lookup("#sqrtOperation")).fire();
+            ((Button) findBy(NodesFinder.SQRT_OPERATION)).fire();
             return;
          }
-
          if (key.getCode() == KeyCode.Q && !key.isShiftDown()) {
-            ((Button) grid.lookup("#square")).fire();
+            ((Button) findBy(NodesFinder.SQUARE)).fire();
          }
          if (key.getCode() == KeyCode.R && !key.isShiftDown()) {
-            ((Button) grid.lookup("#divideByX")).fire();
+            ((Button) findBy(NodesFinder.DIVIDE_BY_X)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT0 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn0")).fire();
+            ((Button) findBy(NodesFinder.BTN0)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT1 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn1")).fire();
+            ((Button) findBy(NodesFinder.BTN1)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT2 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn2")).fire();
+            ((Button) findBy(NodesFinder.BTN2)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT3 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn3")).fire();
+            ((Button) findBy(NodesFinder.BTN3)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT4 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn4")).fire();
+            ((Button) findBy(NodesFinder.BTN4)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT5 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn5")).fire();
+            ((Button) findBy(NodesFinder.BTN5)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT6 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn6")).fire();
+            ((Button) findBy(NodesFinder.BTN6)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT7 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn7")).fire();
+            ((Button) findBy(NodesFinder.BTN7)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT8 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn8")).fire();
+            ((Button) findBy(NodesFinder.BTN8)).fire();
          }
          if (key.getCode() == KeyCode.DIGIT9 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#btn9")).fire();
+            ((Button) findBy(NodesFinder.BTN9)).fire();
          }
          if (key.getCode() == KeyCode.BACK_SPACE && !key.isShiftDown()) {
-            ((Button) grid.lookup("#backSpace")).fire();
+            ((Button) findBy(NodesFinder.BACKSPACE)).fire();
          }
          if (key.getCode() == KeyCode.COMMA) {
-            ((Button) grid.lookup("#separateBtn")).fire();
+            ((Button) findBy(NodesFinder.SEPARATE_BTN)).fire();
          }
          if (key.getCode() == KeyCode.F9 && !key.isShiftDown()) {
-            ((Button) grid.lookup("#negate")).fire();
+            ((Button) findBy(NodesFinder.NEGATE)).fire();
          }
          if (key.getCode() == KeyCode.EQUALS && !key.isShiftDown()) {
-            ((Button) grid.lookup("#equalsOperation")).fire();
+            ((Button) findBy(NodesFinder.EQUALS_OPERATION)).fire();
          }
          if (key.getCode() == KeyCode.PLUS || (key.getCode() == KeyCode.EQUALS && key.isShiftDown())) {
-            ((Button) grid.lookup("#plusOperation")).fire();
+            ((Button) findBy(NodesFinder.PLUS_OPERATION)).fire();
          }
          if (key.getCode() == KeyCode.MINUS) {
-            ((Button) grid.lookup("#minusOperation")).fire();
+            ((Button) findBy(NodesFinder.MINUS_OPERATION)).fire();
          }
-         if (key.getCode() == KeyCode.DIVIDE) {
-            ((Button) grid.lookup("#divideOperation")).fire();
+         if (key.getCode() == KeyCode.DIVIDE || key.getCode() == KeyCode.SLASH) {
+            ((Button) findBy(NodesFinder.DIVIDE_OPERATION)).fire();
          }
          if (key.getCode() == KeyCode.MULTIPLY || (key.getCode() == KeyCode.DIGIT8 && key.isShiftDown())) {
-            ((Button) grid.lookup("#plusOperation")).fire();
+            ((Button) findBy(NodesFinder.MULTIPLY_OPERATION)).fire();
          }
          if (key.getCode() == KeyCode.ESCAPE && !key.isShiftDown()) {
-            ((Button) grid.lookup("#c")).fire();
+            ((Button) findBy(NodesFinder.C)).fire();
          }
          if (key.getCode() == KeyCode.DELETE && !key.isShiftDown()) {
-            ((Button) grid.lookup("#ce")).fire();
+            ((Button) findBy(NodesFinder.CE)).fire();
          }
       });
    }
 
    private void setActionForDropDownMenu() {
-      Button menuBtn = (Button) root.lookup("#menuBtn");
-      AnchorPane mainPane = (AnchorPane) root.lookup("#mainPane");
-      Pane hideMenu = (Pane) root.lookup("#hideMenu");
-      Pane hideMemoryField = (Pane) root.lookup("#hideMemoryField");
+      Button menuBtn = findBy(NodesFinder.MENU_BTN);
+      AnchorPane mainPane = findBy(NodesFinder.MAIN_PANE);
+      Pane hideMenu = findBy(NodesFinder.HIDE_MENU);
+      Pane hideMemoryField = findBy(NodesFinder.HIDE_MEMORY_FIELD);
 
-      Button showMemory = (Button) root.lookup("#showMemory");
+      Button showMemory = findBy(NodesFinder.SHOW_MEMORY);
 
       hideMenu.setVisible(false);
       hideMemoryField.setVisible(false);
@@ -456,25 +458,20 @@ public class Launcher extends Application {
       hideMenu.setOnMouseClicked(event -> menuSize(false));
       hideMemoryField.setOnMouseClicked(event -> memorySize(false));
 
-      menuBtn.setOnMouseClicked(event -> {
-         menuSize(!isMenuShown);
-      });
-
-      showMemory.setOnMouseClicked(event -> {
-         memorySize(!isMemoryShown);
-      });
+      menuBtn.setOnMouseClicked(event -> menuSize(!isMenuShown));
+      showMemory.setOnMouseClicked(event -> memorySize(!isMemoryShown));
    }
 
    private void menuSize(boolean show) {
-      AnchorPane menu = (AnchorPane) root.lookup("#menu");
-      TranslateTransition animation = new TranslateTransition(Duration.millis(50), menu);
-      Pane hideMenu = (Pane) root.lookup("#hideMenu");
+      AnchorPane menu = findBy(NodesFinder.MENU);
+      TranslateTransition animation = new TranslateTransition(Duration.millis(ANIMATION_TIME), menu);
+      Pane hideMenu = findBy(NodesFinder.HIDE_MENU);
 
       if (show) {
-         animation.setToX(0.0d);
+         animation.setToX(ZERO);
          isMenuShown = true;
       } else {
-         animation.setToX(-260.0d);
+         animation.setToX(-MENU_SIZE);
          isMenuShown = false;
       }
 
@@ -484,15 +481,15 @@ public class Launcher extends Application {
    }
 
    private void memorySize(boolean show) {
-      AnchorPane memoryField = (AnchorPane) root.lookup("#memoryField");
-      TranslateTransition transition = new TranslateTransition(Duration.millis(50), memoryField);
-      Pane hideMemoryField = (Pane) root.lookup("#hideMemoryField");
+      AnchorPane memoryField = findBy(NodesFinder.MEMORY_FIELD);
+      TranslateTransition transition = new TranslateTransition(Duration.millis(ANIMATION_TIME), memoryField);
+      Pane hideMemoryField = findBy(NodesFinder.HIDE_MEMORY_FIELD);
 
       if (show) {
-         transition.setToY(0.0d);
+         transition.setToY(ZERO);
          isMemoryShown = true;
       } else {
-         transition.setToY(300.0d);
+         transition.setToY(MEMORY_FIELD_SIZE);
          isMemoryShown = false;
       }
 
