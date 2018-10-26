@@ -4,6 +4,7 @@ import com.implemica.view.Launcher;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.stage.Window;
 import org.junit.jupiter.api.BeforeAll;
 import org.loadui.testfx.utils.FXTestUtils;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.framework.junit.ApplicationTest.launch;
 
 public class TestFxBase {
@@ -79,9 +81,9 @@ public class TestFxBase {
    }
 
    public void drag(Point2D start, double x, double y) {
-      robotAwt.mouseMove((int)start.getX(), (int)start.getY());
+      robotAwt.mouseMove((int) start.getX(), (int) start.getY());
       robotAwt.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-      robotAwt.mouseMove((int)(start.getX() + x), (int)(start.getY() + y));
+      robotAwt.mouseMove((int) (start.getX() + x), (int) (start.getY() + y));
       robotAwt.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
    }
 
@@ -93,16 +95,27 @@ public class TestFxBase {
 
       robotFx.drag(initialX, initialY);
 
-      for(Point2D point : points) {
+      for (Point2D point : points) {
          robotFx.moveTo(point.getX(), point.getY());
          // check X
-         assertEquals(point.getX() - window.getWidth() / 2, window.getX());
+         assertEquals((int) point.getX() - window.getWidth() / 2, window.getX());
 
          // check Y
-         assertEquals(point.getY() - 10, window.getY());
+         assertEquals((int) point.getY() - 10, window.getY());
       }
       robotFx.moveTo(initialX, initialY);
       robotFx.drop();
+   }
+
+   public void checkSizeForResultLabel(int from, int to) {
+      Label resultLabel = findBy("#resultLabel");
+      double size = resultLabel.getFont().getSize();
+
+      assertTrue(from <= size && size <= to);
+   }
+
+   public void checkText(Label label, String expected) {
+      assertEquals(expected, label.getText());
    }
 
    public <T extends Node> T findBy(String query) {
@@ -110,7 +123,7 @@ public class TestFxBase {
       return (T) window.getScene().getRoot().lookup(query);
    }
 
-   public void clickOn (Node node) {
+   public void clickOn(Node node) {
       Bounds boundsInScreen = node.localToScreen(node.getBoundsInLocal());
 
       int centerForNodeByX = (int) (boundsInScreen.getMinX() + (boundsInScreen.getMaxX() - boundsInScreen.getMinX()) / 2.0d);
@@ -123,7 +136,7 @@ public class TestFxBase {
       FXTestUtils.awaitEvents();
    }
 
-   public Window getCurrentWindow(){
+   public Window getCurrentWindow() {
       return Window.getWindows().get(0);
    }
 }

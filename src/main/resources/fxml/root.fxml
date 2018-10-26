@@ -203,7 +203,7 @@
                   <String fx:value="OperationBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="btn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="1" GridPane.rowIndex="7">
+            <Button fx:id="btn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="1" userData="" GridPane.rowIndex="7">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -384,16 +384,6 @@
          <Pane fx:id="leftBottomResize" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5.0" prefWidth="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
             <cursor>
                <Cursor fx:constant="SW_RESIZE" />
-            </cursor>
-         </Pane>
-         <Pane fx:id="rightResize" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <cursor>
-               <Cursor fx:constant="E_RESIZE" />
-            </cursor>
-         </Pane>
-         <Pane fx:id="rightBottomResize" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5.0" prefWidth="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-            <cursor>
-               <Cursor fx:constant="NW_RESIZE" />
             </cursor>
          </Pane>
          <Pane fx:id="hideMenu" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
@@ -876,9 +866,9 @@
       </AnchorPane>
    </top>
    <right>
-      <AnchorPane fx:id="extraInfoFull" disable="true" minWidth="0.0" prefWidth="0.0" visible="false" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="extraInfoFull" minWidth="0.0" prefWidth="0.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox fx:id="extraInfoBtns" disable="true" visible="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+            <HBox fx:id="extraInfoBtns" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
                <children>
                   <VBox>
                      <HBox.margin>
@@ -912,17 +902,17 @@
             </HBox>
             <Label fx:id="extraLogLabel" lineSpacing="1.0" styleClass="ExtraInfoLabel" text="Журнала еще нет" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
             <Label fx:id="extraMemoryLabel" layoutX="20.0" layoutY="90.0" lineSpacing="1.0" styleClass="ExtraInfoLabel" text="Nothing to show" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
-            <Pane fx:id="rightResizeFull" maxHeight="5.0" maxWidth="-Infinity" minWidth="5.0" prefWidth="5.0" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane fx:id="rightResize" maxHeight="5.0" maxWidth="-Infinity" minWidth="5.0" prefWidth="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <cursor>
                   <Cursor fx:constant="E_RESIZE" />
                </cursor>
             </Pane>
-            <Pane fx:id="rightBottomResizeFull" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5.0" prefWidth="5.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <Pane fx:id="rightBottomResize" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5.0" prefWidth="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <cursor>
                   <Cursor fx:constant="NW_RESIZE" />
                </cursor>
             </Pane>
-            <Pane fx:id="bottomResizeFull" maxHeight="5.0" maxWidth="1.7976931348623157E308" minHeight="5.0" prefHeight="5.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0">
+            <Pane fx:id="bottomResizeFull" maxHeight="5.0" maxWidth="1.7976931348623157E308" minHeight="5.0" prefHeight="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0">
                <cursor>
                   <Cursor fx:constant="S_RESIZE" />
                </cursor>

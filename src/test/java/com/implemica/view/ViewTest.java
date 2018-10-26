@@ -1,5 +1,6 @@
 package com.implemica.view;
 
+import com.implemica.view.util.NodesFinder;
 import com.implemica.view.util.Side;
 import com.implemica.view.util.TestFxBase;
 import javafx.geometry.Point2D;
@@ -9,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Window;
 import org.junit.jupiter.api.Test;
+import org.loadui.testfx.utils.FXTestUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -16,10 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ViewTest extends TestFxBase {
 
-   /*
-   *  TODO check buttons
-   *  TODO check resize for result label
-   */
    @Test
    void dragTest(){
       // left side
@@ -140,24 +138,35 @@ class ViewTest extends TestFxBase {
    }
 
    @Test
-   void moveWindowTest() {
+   void movingWindowTest() {
       double maxX = Screen.getPrimary().getBounds().getMaxX() - 1.0d;
       double maxY = Screen.getPrimary().getBounds().getMaxY() - 1.0d;
 
       moveWindow(new Point2D[] {
               new Point2D(0.0d, 0.0d),
+              new Point2D(maxX/2, 0.0d),
               new Point2D(maxX, 0.0d),
+              new Point2D(maxX, maxY/2),
               new Point2D(maxX, maxY),
+              new Point2D(maxX/2, maxY),
               new Point2D(0.0d, maxY),
+              new Point2D(0.0d, maxY/2),
               new Point2D(0.0d, 0.0d),
+              new Point2D(maxX/4, maxY/4),
+              new Point2D(maxX/2, maxY/2),
+              new Point2D(maxX * 0.75, maxY * 0.75),
               new Point2D(maxX, maxY),
               new Point2D(maxX, 0.0d),
+
+              new Point2D(maxX * 0.75, maxY/4),
+              new Point2D(maxX/2, maxY/2),
+              new Point2D(maxX/4, maxY * 0.75),
               new Point2D(0.0d, maxY)
       });
    }
 
    @Test
-   void checkExtraInfoFullTest() {
+   void extraInfoFullTest() {
       AnchorPane extraInfoFull = findBy("#extraInfoFull");
       Button logButton = findBy("#logButton");
       Button showMemory = findBy("#showMemory");
@@ -259,6 +268,63 @@ class ViewTest extends TestFxBase {
       clickOn(full);
       checkStateForResizePane(false);
       checkWindowSize(322.0d, 500.0d);
+   }
+
+   @Test
+   void checkButtonsTest() {
+      clickOn(findBy("#clear"));
+      clickOn(findBy("#btn0"));
+      clickOn(findBy("#btn1"));
+      clickOn(findBy("#btn2"));
+      clickOn(findBy("#btn3"));
+      clickOn(findBy("#btn4"));
+      clickOn(findBy("#btn5"));
+      clickOn(findBy("#btn6"));
+      clickOn(findBy("#btn7"));
+      clickOn(findBy("#btn8"));
+      clickOn(findBy("#btn9"));
+      clickOn(findBy("#btn0"));
+
+      checkText(findBy("#resultLabel"), "1 234 567 890");
+      clickOn(findBy("#clear"));
+      checkText(findBy("#resultLabel"), "0");
+   }
+
+   @Test
+   void resizeResultLabelTest() {
+      clickOn(findBy("#clear"));
+      checkSizeForResultLabel(48, 48);
+      checkDrag(Side.LEFT, -500.0d, 0.0d);
+      checkSizeForResultLabel(48, 48);
+      checkDrag(Side.RIGHT, 500.0d, 0.0d);
+      checkSizeForResultLabel(48, 48);
+      checkDrag(Side.RIGHT, -500.0d, 0.0d);
+      checkDrag(Side.LEFT, 500.0d, 0.0d);
+      checkSizeForResultLabel(48, 48);
+
+      for (int i = 0; i < 20; i++) {
+         clickOn(findBy("#btn5"));
+      }
+      checkSizeForResultLabel(25, 30);
+      checkDrag(Side.RIGHT, 240.0d, 0.0d);
+      checkSizeForResultLabel(25, 48);
+      checkDrag(Side.RIGHT, 200.0d, 0.0d);
+      checkSizeForResultLabel(45, 48);
+      checkDrag(Side.RIGHT, -440.0d, 0.0d);
+      clickOn(findBy("#clear"));
+
+      for (int i = 0; i < 10; i++) {
+         clickOn(findBy("#btn9"));
+      }
+      checkDrag(Side.LEFT, -500.0d, 0.0d);
+      checkDrag(Side.RIGHT, 500.0d, 0.0d);
+
+      checkSizeForResultLabel(45, 48);
+
+      checkDrag(Side.LEFT, 500.0d, 0.0d);
+      checkDrag(Side.RIGHT, -500.0d, 0.0d);
+      clickOn(findBy("#clear"));
+
    }
 
    private void checkStateForResizePane(boolean isFull) {

@@ -55,7 +55,7 @@ public class Launcher extends Application {
    private final int MIN_WIDTH = 322;
    private final int MIN_HEIGHT = 500;
 
-   private final int OFFSET_RESIZE_FOR_RESULT = 10;
+   private final int OFFSET_RESIZE_FOR_RESULT = 15;
    private final int MAX_LENGTH_FOR_RESULT = 13;
    private final double MAX_FONT_SIZE_FOR_RESULT = 48.0d;
    private final double ZERO = 0.0d;
@@ -114,12 +114,15 @@ public class Launcher extends Application {
       HBox resultLabelBox = findBy(NodesFinder.RESULT_LABEL_BOX);
 
       resultLabelBox.widthProperty()
-              .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
+              .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel());
       resultLabel.textProperty()
-              .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel(resultLabel, resultLabelBox));
+              .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel());
    }
 
-   private void calculateSizeForResultLabel(Label resultLabel, HBox resultLabelBox) {
+   private void calculateSizeForResultLabel() {
+      Label resultLabel = findBy(NodesFinder.RESULT_LABEL);
+      HBox resultLabelBox = findBy(NodesFinder.RESULT_LABEL_BOX);
+
       double fontSize = resultLabel.getFont().getSize();
 
       Text text = new Text(resultLabel.getText());
@@ -189,21 +192,21 @@ public class Launcher extends Application {
       Pane leftTop = findBy(NodesFinder.LEFT_TOP_RESIZE);
       Pane rightTop = findBy(NodesFinder.RIGHT_TOP_RESIZE);
 
-      Pane rightResizeFull = findBy(NodesFinder.RIGHT_RESIZE_FULL);
-      Pane rightBottomResizeFull = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE_FULL);
-      Pane bottomResizeFull = findBy(NodesFinder.BOTTOM_RESIZE_FULL);
-
       Stream.of(left, extraLeft, right, extraRight, top, bottom, leftBottom,
-              rightBottom, leftTop, rightTop, rightResizeFull, rightBottomResizeFull, bottomResizeFull)
+              rightBottom, leftTop, rightTop)
               .collect(Collectors.toList())
               .forEach(pane -> {
                  pane.setOnMousePressed(event -> {
+                    calculateSizeForResultLabel();
                     isDragging = true;
                     startDrag = new Point2D(event.getScreenX(), event.getScreenY());
                  });
 
                  pane.setOnMouseDragged(event -> doResize(pane, event));
-                 pane.setOnMouseReleased(event -> isDragging = false);
+                 pane.setOnMouseReleased(event -> {
+                    calculateSizeForResultLabel();
+                    isDragging = false;
+                 });
               });
 
       primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
@@ -223,21 +226,6 @@ public class Launcher extends Application {
          Button showMemory = findBy(NodesFinder.SHOW_MEMORY);
          Button logButton = findBy(NodesFinder.LOG_BUTTON);
 
-         Stream.of(right, rightBottom).collect(Collectors.toList()).forEach(pane -> {
-            if (!isFullScreen) {
-               pane.setVisible(false);
-               pane.setDisable(true);
-            }
-         });
-
-         Stream.of(rightResizeFull, rightBottomResizeFull, bottomResizeFull).collect(Collectors.toList())
-                 .forEach(pane -> {
-                    if (!isFullScreen) {
-                       pane.setVisible(true);
-                       pane.setDisable(false);
-                    }
-                 });
-
          if (extraInfoFull.getPrefWidth() == ZERO) {
             showMemory.setVisible(true);
             logButton.setVisible(true);
@@ -245,12 +233,6 @@ public class Launcher extends Application {
             showMemory.setVisible(false);
             logButton.setVisible(false);
          }
-
-         extraInfoFull.setVisible(true);
-         extraInfoFull.setDisable(false);
-
-         extraInfoBtns.setVisible(true);
-         extraInfoBtns.setDisable(false);
       });
    }
 
@@ -292,10 +274,7 @@ public class Launcher extends Application {
       Pane rightBottom = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE);
       Pane leftTop = findBy(NodesFinder.LEFT_TOP_RESIZE);
       Pane rightTop = findBy(NodesFinder.RIGHT_TOP_RESIZE);
-
-      Pane rightResizeFull = findBy(NodesFinder.RIGHT_RESIZE_FULL);
-      Pane rightBottomResizeFull = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE_FULL);
-      Pane bottomResizeFull = findBy(NodesFinder.BOTTOM_RESIZE_FULL);
+      Pane bottomResizeFull = findBy(NodesFinder.BOTTOM_RESIZE);
 
       if (isFullScreen) {
          primaryStage.setX(stagePosition.getX());
@@ -303,8 +282,8 @@ public class Launcher extends Application {
          primaryStage.setWidth(primaryStage.getMinWidth());
          primaryStage.setHeight(primaryStage.getMinHeight());
 
-         Stream.of(leftTop, extraLeft, left, leftBottom, bottom, bottomResizeFull, rightBottom,
-                 rightBottomResizeFull, right, extraRight, rightResizeFull, rightTop, top)
+         Stream.of(leftTop, extraLeft, left, leftBottom, bottom, rightBottom,
+                 right, extraRight, rightTop, top, bottomResizeFull)
                  .collect(Collectors.toList())
                  .forEach(pane -> pane.setDisable(false));
 
@@ -323,8 +302,8 @@ public class Launcher extends Application {
          primaryStage.setWidth(bounds.getWidth());
          primaryStage.setHeight(bounds.getHeight());
 
-         Stream.of(leftTop, extraLeft, left, leftBottom, bottom, bottomResizeFull, rightBottom,
-                 rightBottomResizeFull, right, extraRight, rightResizeFull, rightTop, top)
+         Stream.of(leftTop, extraLeft, left, leftBottom, bottom, rightBottom,
+                 right, extraRight, rightTop, top, bottomResizeFull)
                  .collect(Collectors.toList())
                  .forEach(pane -> pane.setDisable(true));
 

@@ -27,8 +27,6 @@ public enum NodesFinder {
    RIGHT_BOTTOM_RESIZE("#rightBottomResize"),
    LEFT_TOP_RESIZE("#leftTopResize"),
    RIGHT_TOP_RESIZE("#rightTopResize"),
-   RIGHT_RESIZE_FULL("#rightResizeFull"),
-   RIGHT_BOTTOM_RESIZE_FULL("#rightBottomResizeFull"),
    BOTTOM_RESIZE_FULL("#bottomResizeFull"),
    SHOW_MEMORY("#showMemory"),
    LOG_BUTTON("#logButton"),
@@ -114,12 +112,6 @@ public enum NodesFinder {
             break;
          case RIGHT_TOP_RESIZE:
             result = Side.RIGHT_TOP;
-            break;
-         case RIGHT_RESIZE_FULL:
-            result = Side.RIGHT;
-            break;
-         case RIGHT_BOTTOM_RESIZE_FULL:
-            result = Side.RIGHT_BOTTOM;
             break;
          case BOTTOM_RESIZE_FULL:
             result = Side.BOTTOM;
