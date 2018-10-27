@@ -11,6 +11,7 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
+import com.implemica.model.validation.Validator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -69,6 +70,8 @@ public class Controller {
    private Properties textsForLabel = new Properties();
 
    private Calculator calculator = new Calculator(new Arabic());
+
+   private Validator validator = new Validator();
 
    private boolean isBlocked;
 
@@ -140,31 +143,18 @@ public class Controller {
       equalsOperation.setOnAction(event -> {
          unlock();
          ResponseDto response = calculator.equalsOperation();
-         if(disassembleDto(response)) {
-            showResult(response.getResult());
-         }
-         showHistory(response.getHistory());
+         parseDto(response);
       });
    }
 
    private void actionForOperations(SimpleOperation operation) {
       ResponseDto response = calculator.executeSimpleOperation(operation);
-
-      if(disassembleDto(response)) {
-         showResult(response.getResult());
-      }
-
-      showHistory(response.getHistory());
+      parseDto(response);
    }
 
    private void actionForSpecialOperations(SpecialOperation operation) {
       ResponseDto response = calculator.executeSpecialOperation(operation);
-
-      if(disassembleDto(response)){
-         showResult(response.getOperand());
-      }
-
-      showHistory(response.getHistory());
+      parseDto(response);
    }
 
    private void actionsForBuildOperand() {
@@ -181,42 +171,37 @@ public class Controller {
 
       separateBtn.setOnAction(event -> {
          ResponseDto response = calculator.separateOperand();
-         showResult(response.getBuildOperand());
+         showResult(validator.builtOperand(response.getOperand(), response.isSeparated()));
       });
    }
 
    private void actionForBuildOperand(Number number) {
       unlock();
       ResponseDto response = calculator.buildOperand(number);
-      showResult(response.getBuildOperand());
-      if(response.getHistory() != null) {
-         showHistory(response.getHistory());
-      }
+      showResult(validator.builtOperand(response.getOperand(), response.isSeparated()));
    }
 
    private void actionsForCleanOperations() {
       backSpace.setOnAction(event -> {
          unlock();
          ResponseDto response = calculator.backspace();
-         showResult(response.getBuildOperand());
+         showResult(validator.builtOperand(response.getOperand(), response.isSeparated()));
       });
       clear.setOnAction(event -> {
          unlock();
          ResponseDto response = calculator.clear();
-         showResult(response.getOperand());
-         showHistory(response.getHistory());
+         parseDto(response);
       });
       clearEntry.setOnAction(event -> {
          unlock();
          ResponseDto response = calculator.clearEntry();
-         showResult(response.getOperand());
-         showHistory(response.getHistory());
+         parseDto(response);
       });
    }
 
    private void actionsForMemory() {
       addMemory.setOnAction((event)->{
-         String result = calculator.addMemory();
+         String result = validator.showNumber(calculator.addMemory());
          memoryLabel.setText(result);
          extraMemoryLabel.setText(result);
          clearMemory.setDisable(false);
@@ -225,7 +210,7 @@ public class Controller {
       });
 
       subtractMemory.setOnAction((event)->{
-         String result = calculator.subtractMemory();
+         String result = validator.showNumber(calculator.subtractMemory());
          memoryLabel.setText(result);
          extraMemoryLabel.setText(result);
          clearMemory.setDisable(false);
@@ -233,7 +218,9 @@ public class Controller {
          showMemory.setDisable(false);
       });
 
-      recallMemory.setOnAction((event -> showResult(calculator.getMemory().getOperand())));
+      recallMemory.setOnAction((event -> {
+         parseDto(calculator.getMemory());
+      }));
 
       clearMemory.setOnAction((event -> {
          calculator.getContainer().getMemory().clear();
@@ -267,34 +254,53 @@ public class Controller {
       negate.setDisable(isThrownException);
    }
 
-   private boolean disassembleDto(ResponseDto response) {
+   private void parseDto(ResponseDto response) {
+      boolean isThrownException = false;
       switch (response.getExceptionType()) {
          case OVERFLOW:
             showResult(textsForLabel.getProperty("overflow"));
             blockButtons(true);
-            return false;
+            isThrownException = true;
+            break;
          case UNDEFINED_RESULT:
             showResult(textsForLabel.getProperty("undefinedResult"));
             blockButtons(true);
-            return false;
+            isThrownException = true;
+            break;
          case DIVIDE_BY_ZERO:
             showResult(textsForLabel.getProperty("divideByZero"));
             blockButtons(true);
-            return false;
+            isThrownException = true;
+            break;
          case INVALID_INPUT:
             showResult(textsForLabel.getProperty("invalidInput"));
             blockButtons(true);
-            return false;
+            isThrownException = true;
+            break;
       }
-      return true;
+      if(!isThrownException){
+         if(response.getResult() != null) {
+            showResult(validator.showNumber(response.getResult()));
+         }
+
+         if(response.getOperand() != null) {
+            showResult(validator.showNumber(response.getOperand().stripTrailingZeros()));
+         }
+
+         if(response.getHistory() != null) {
+            showHistory(response.getHistory().buildHistory());
+         }
+
+         if(response.isSeparated()) {
+            resultLabel.setText(resultLabel.getText() + ",");
+         }
+      }
    }
 
    private void unlock(){
       if(isBlocked) {
          blockButtons(false);
-         ResponseDto response = calculator.getCurrentState();
-         showResult(response.getResult());
-         showHistory(response.getHistory());
+         parseDto(calculator.getCurrentState());
       }
    }
 }

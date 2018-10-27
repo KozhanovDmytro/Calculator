@@ -16,6 +16,7 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
+import com.implemica.model.validation.Validator;
 import lombok.Getter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,6 +32,12 @@ public class TestBuilder {
    private String operand;
 
    private String memory;
+
+   private String history;
+
+   private boolean isSeparatedOperand;
+
+   private Validator validator = new Validator();
 
    private ExceptionType exceptionType = ExceptionType.NOTHING;
 
@@ -183,60 +190,56 @@ public class TestBuilder {
 
    private void executeSimpleOperation(SimpleOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
       ResponseDto response = calculator.executeSimpleOperation(operation);
-      result = response.getResult();
-      exceptionType = response.getExceptionType();
+      parseDto(response);
       checkException();
    }
 
    private void executeSpecialOperation(SpecialOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
       ResponseDto response = calculator.executeSpecialOperation(operation);
-      operand = response.getOperand();
-      exceptionType = response.getExceptionType();
+      parseDto(response);
       checkException();
    }
 
    private void clear(){
       ResponseDto response = calculator.clear();
-      result = response.getResult();
-      operand = response.getOperand();
+      parseDto(response);
    }
 
    private void memoryClear() {
       calculator.getContainer().getMemory().clear();
+      memory = validator.showNumber(calculator.getContainer().getMemory().recall());
    }
 
    private void memoryRecall() {
-      operand = calculator.getMemory().getOperand();
+      parseDto(calculator.getMemory());
    }
 
    private void addMemory() {
-      memory = calculator.addMemory();
+      memory = validator.showNumber(calculator.addMemory());
    }
 
    private void subtractMemory() {
-      memory = calculator.subtractMemory();
+      memory = validator.showNumber(calculator.subtractMemory());
    }
 
    private void clearEntry(){
       ResponseDto response = calculator.clearEntry();
-      result = response.getResult();
-      operand = response.getOperand();
+      parseDto(response);
    }
 
    private void executeBackSpace() {
-      operand = calculator.backspace().getBuildOperand();
+      ResponseDto response = calculator.backspace();
+      operand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
    private void executeSeparate() {
-      operand = calculator.separateOperand().getBuildOperand();
+      ResponseDto response = calculator.separateOperand();
+      operand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
    private void equals() {
       ResponseDto response = calculator.equalsOperation();
-
-      result = response.getResult();
-      exceptionType = response.getExceptionType();
-
+      parseDto(response);
    }
 
    private void checkResult(String expected) {
@@ -248,8 +251,8 @@ public class TestBuilder {
    }
 
    private void buildOperand(Number number) {
-
-      operand = calculator.buildOperand(number).getBuildOperand();
+      ResponseDto response = calculator.buildOperand(number);
+      operand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
    private void checkHistory(String expectedHistory, int size) {
@@ -270,5 +273,24 @@ public class TestBuilder {
          case INVALID_INPUT:
             throw new InvalidInputException();
       }
+   }
+   private void parseDto(ResponseDto response) {
+      if(response.getExceptionType() != null) {
+         exceptionType = response.getExceptionType();
+      }
+
+      if(response.getResult() != null) {
+         result = validator.showNumber(response.getResult());
+      }
+
+      if(response.getOperand() != null) {
+         operand = validator.showNumber(response.getOperand().stripTrailingZeros());
+      }
+
+      if(response.getHistory() != null) {
+        history = response.getHistory().buildHistory();
+      }
+
+      isSeparatedOperand = response.isSeparated();
    }
 }

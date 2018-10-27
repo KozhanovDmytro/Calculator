@@ -596,9 +596,9 @@ class CalculatorTest {
 
    @Test
    void clear() throws OverflowException, UndefinedResultException, InvalidInputException {
-      builder.doTest("2+2*2-6*3-10 C", "", 0, "0", "0");
-      builder.doTest("2+5/2 C C C C C C C C C", "", 0, "0", "0");
-      builder.doTest("5qqqqqq√√qqqqq√qqq C C", "", 0, "0", "0");
+      builder.doTest("2+2*2-6*3-10 C", "", 0, "0", null);
+      builder.doTest("2+5/2 C C C C C C C C C", "", 0, "0", null);
+      builder.doTest("5qqqqqq√√qqqqq√qqq C C", "", 0, "0", null);
 
       builder.doTest("85 CE", "", 0, "0", "0");
       builder.doTest("8+2 CE", "8 + ", 2, "8", "0");

@@ -4,7 +4,6 @@ import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.history.MainHistory;
-import com.implemica.model.interfaces.History;
 import com.implemica.model.interfaces.Memory;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.memory.MemoryImpl;
@@ -27,7 +26,7 @@ public class Container {
 
     private SimpleOperation operation = new Default();
 
-    private History<SimpleOperation> history = new MainHistory();
+    private MainHistory history = new MainHistory();
 
     private Memory memory = new MemoryImpl();
 

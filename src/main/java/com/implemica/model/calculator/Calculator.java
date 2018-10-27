@@ -5,6 +5,7 @@ import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
+import com.implemica.model.history.MainHistory;
 import com.implemica.model.interfaces.Numeral;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.numbers.Number;
@@ -13,7 +14,6 @@ import com.implemica.model.operations.Equals;
 import com.implemica.model.operations.SimpleOperation;
 import com.implemica.model.operations.special.Negate;
 import com.implemica.model.operations.special.Percent;
-import com.implemica.model.validation.Validator;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -24,8 +24,6 @@ public class Calculator {
    private Container container;
 
    private Numeral numeral;
-
-   private Validator validator = new Validator();
 
    @Getter
    private boolean isShownResult;
@@ -38,7 +36,6 @@ public class Calculator {
 
    public ResponseDto executeSimpleOperation(SimpleOperation operation) {
       ExceptionType exceptionType = ExceptionType.NOTHING;
-      String history = "";
 
       try {
          if (!(container.getOperation() instanceof Equals)) {
@@ -67,21 +64,23 @@ public class Calculator {
             container.getHistory().changeLast(operation);
          }
       }
-
-      history = showHistory();
       if(exceptionType != ExceptionType.NOTHING) {
          clear();
       }
 
       container.setOperation(operation);
       container.setMadeOperand(true);
-      ResponseDto responseDto;
-      return new ResponseDto(showResult(), null, history, null, exceptionType);
+      ResponseDto response = new ResponseDto();
+      response.setResult(showResult());
+      response.setHistory(showHistory());
+      response.setExceptionType(exceptionType);
+
+      return response;
    }
 
    public ResponseDto executeSpecialOperation(SpecialOperation operation) {
       ExceptionType exceptionType = ExceptionType.NOTHING;
-      String history = "";
+
       if(operation instanceof Percent) {
          ((Percent) operation).setResult(container.getResult());
       }
@@ -100,16 +99,20 @@ public class Calculator {
       } catch (InvalidInputException e) {
          exceptionType = ExceptionType.INVALID_INPUT;
       }
-      history = showHistory();
+
       if(exceptionType != ExceptionType.NOTHING) {
          clear();
       }
+      ResponseDto response = new ResponseDto();
+      response.setOperand(showOperand());
+      response.setHistory(showHistory());
+      response.setExceptionType(exceptionType);
 
-      return new ResponseDto(null, showOperand(), history, null, exceptionType);
+      return response;
    }
 
    public ResponseDto buildOperand(Number number){
-      String history = null;
+      MainHistory history = null;
       if (container.isMadeOperand() || container.getOperation() instanceof Equals) {
          container.getOperation().buildOperand(numeral.translate(number));
          container.getOperation().setShowOperand(true);
@@ -122,7 +125,13 @@ public class Calculator {
          container.getOperation().buildOperand(numeral.translate(number));
          container.setMadeOperand(true);
       }
-      return new ResponseDto(null, showOperand(), history, showBuiltOperand(), ExceptionType.NOTHING);
+      ResponseDto response = new ResponseDto();
+      response.setOperand(showOperand());
+      response.setHistory(history);
+      response.setSeparated(showBuiltOperand());
+      response.setExceptionType(ExceptionType.NOTHING);
+
+      return response;
    }
 
    public ResponseDto equalsOperation() {
@@ -145,45 +154,67 @@ public class Calculator {
             }
          }
       }
+
+      ExceptionType exceptionType = ExceptionType.NOTHING;
+
       try {
          container.calculate();
       } catch (OverflowException e) {
          clear();
-         return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.OVERFLOW);
+         exceptionType = ExceptionType.OVERFLOW;
       } catch (UndefinedResultException e) {
          clear();
-         return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.UNDEFINED_RESULT);
+         exceptionType = ExceptionType.UNDEFINED_RESULT;
       } catch(ArithmeticException e) {
          clear();
-         return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.DIVIDE_BY_ZERO);
+         exceptionType = ExceptionType.DIVIDE_BY_ZERO;
       } catch (InvalidInputException e) {
          clear();
-         return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.INVALID_INPUT);
+         exceptionType = ExceptionType.INVALID_INPUT;
       }
       Equals equals = new Equals(container.getOperation());
       container.getHistory().clear();
       container.setOperation(equals);
 
       container.setMadeOperand(false);
-      return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.NOTHING);
+      ResponseDto response = new ResponseDto();
+      response.setResult(showResult());
+      response.setHistory(showHistory());
+      response.setExceptionType(exceptionType);
+
+      return response;
    }
 
    public ResponseDto separateOperand() {
-      container.getOperation().setSeparated(true);
-      return new ResponseDto(null, null, null, showBuiltOperand(), ExceptionType.NOTHING);
+      if(container.getOperation().getOperand().scale() == 0) {
+         container.getOperation().setSeparated(true);
+      }
+
+      ResponseDto response = new ResponseDto();
+      response.setOperand(showOperand());
+      response.setSeparated(showBuiltOperand());
+      response.setExceptionType(ExceptionType.NOTHING);
+
+      return response;
    }
 
    public ResponseDto backspace(){
-      String result = "";
+      ResponseDto response = new ResponseDto();
+      response.setExceptionType(ExceptionType.NOTHING);
+
       if (container.isMadeOperand()) {
          container.getOperation().removeLast();
-         result = showBuiltOperand();
+         response.setOperand(showOperand());
+         response.setSeparated(showBuiltOperand());
+
       } else if(isShownResult) {
-         result = showResult();
+         response.setOperand(showResult());
+
       } else {
-         result = showOperand();
+         response.setOperand(showOperand());
       }
-      return new ResponseDto(null, null, null, result, ExceptionType.NOTHING);
+
+      return response;
    }
 
    public ResponseDto clear(){
@@ -192,74 +223,86 @@ public class Calculator {
       container.setOperation(new Default());
       container.setMadeOperand(true);
 
-      return new ResponseDto(showResult(), showOperand(), showHistory(), null, ExceptionType.NOTHING);
+      ResponseDto response = new ResponseDto();
+      response.setResult(showResult());
+      response.setHistory(showHistory());
+      response.setExceptionType(ExceptionType.NOTHING);
+
+      return response;
    }
 
    public ResponseDto clearEntry(){
       container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
 
-      return new ResponseDto(showResult(), showOperand(), showHistory(), null, ExceptionType.NOTHING);
+      ResponseDto response = new ResponseDto();
+      response.setOperand(showOperand());
+      response.setHistory(showHistory());
+      response.setExceptionType(ExceptionType.NOTHING);
+
+      return response;
    }
 
-   public String addMemory(){
+   public BigDecimal addMemory(){
       if(container.getOperation().isShowOperand()) {
          container.getMemory().add(container.getOperation().getOperand());
       } else {
          container.getMemory().add(container.getResult());
       }
 
-      return validator.showNumber(container.getMemory().recall());
+      return container.getMemory().recall();
    }
 
-   public String subtractMemory() {
+   public BigDecimal subtractMemory() {
       if(container.getOperation().isShowOperand()) {
          container.getMemory().subtract(container.getOperation().getOperand());
       } else {
          container.getMemory().subtract(container.getResult());
       }
 
-      return validator.showNumber(container.getMemory().recall());
+      return container.getMemory().recall();
    }
 
    public ResponseDto getMemory() {
       BigDecimal value = container.getMemory().recall();
-      String operand = "";
       if(value != null) {
          container.getOperation().setOperand(value);
-         operand = validator.showNumber(value);
          container.getOperation().setShowOperand(true);
       }
       this.isShownResult = false;
 
-      return new ResponseDto(null, operand, null, null, ExceptionType.NOTHING);
+      ResponseDto response = new ResponseDto();
+      response.setOperand(showOperand());
+      response.setExceptionType(ExceptionType.NOTHING);
+
+      return response;
    }
 
-   private String showResult(){
+   private BigDecimal showResult(){
       isShownResult = true;
-
-      return validator.showNumber(container.getResult().stripTrailingZeros());
+      return container.getResult().stripTrailingZeros();
    }
 
-   private String showOperand(){
+   private BigDecimal showOperand(){
       isShownResult = false;
-
-      BigDecimal operand = container.getOperation().getOperand();
-
-      return validator.showNumber(operand.stripTrailingZeros());
+      return container.getOperation().getOperand();
    }
 
-   private String showBuiltOperand() {
+   private boolean showBuiltOperand() {
       isShownResult = false;
-
-      return validator.builtOperand(container.getOperation().getOperand(), container.getOperation().isSeparated());
+      return container.getOperation().isSeparated();
    }
 
-   private String showHistory(){
-      return container.getHistory().buildHistory();
+   private MainHistory showHistory(){
+      return container.getHistory();
    }
 
    public ResponseDto getCurrentState() {
-      return new ResponseDto(showResult(), null, showHistory(), null, ExceptionType.NOTHING);
+      ResponseDto response = new ResponseDto();
+      response.setResult(showResult());
+      response.setHistory(showHistory());
+      response.setExceptionType(ExceptionType.NOTHING);
+
+      return response;
    }
 }
