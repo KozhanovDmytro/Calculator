@@ -540,9 +540,17 @@ class CalculatorTest {
    @Test
    void percentTest() throws OverflowException, UndefinedResultException, InvalidInputException {
       builder.doTest("2%", "0 ", 1, "0", "0");
+      builder.doTest("168%", "0 ", 1, "0", "0");
+      builder.doTest("6n%", "0 ", 1, "0", "0");
+      builder.doTest("7%%", "0 ", 1, "0", "0");
+      builder.doTest("10%%%%=", "", 0, "0", "0");
       builder.doTest("200+2%", "200 + 4 ", 2, "200", null);
       builder.doTest("200+2%=", "", 0, "204", null);
       builder.doTest("200+2%=%", "416.16 ", 1, null, "416,16");
+      builder.doTest("200+25%%%%%%%%%", "200 + 12800 ", 2, "200", null);
+      builder.doTest("200+25%%%%%%%%%=", "", 0, "13 000", null);
+      builder.doTest("300n+15%=", "", 0, "-345", null);
+      builder.doTest("245+63n%=", "", 0, "90,65", null);
       builder.doTest("199+1=", "", 0, "200", "1");
       builder.doTest("199+1=%", "400 ", 1, "200", "400");
       builder.doTest("199+1=%%", "800 ", 1, "200", "800");

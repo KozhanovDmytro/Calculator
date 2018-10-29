@@ -21,6 +21,7 @@ public abstract class SimpleOperation implements Operation {
     @Setter
     protected String stringOperand;
 
+    @Setter
     protected String character;
 
     @Getter
@@ -36,11 +37,12 @@ public abstract class SimpleOperation implements Operation {
 
     private Validator validator = new Validator();
 
-    public SimpleOperation(){
+    public SimpleOperation(String character) {
         operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
         stringOperand = operand.toPlainString();
         operandHistory = new OperandHistory();
         showOperand = false;
+        this.character = character;
     }
 
     public String buildHistory() {

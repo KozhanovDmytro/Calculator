@@ -6,9 +6,8 @@ import java.math.BigDecimal;
 
 public class Minus extends SimpleOperation {
 
-    public Minus(){
-        super();
-        character = "-";
+    public Minus(String character) {
+        super(character);
     }
 
     @Override

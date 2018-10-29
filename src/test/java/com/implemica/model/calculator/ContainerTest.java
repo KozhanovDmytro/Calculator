@@ -31,10 +31,10 @@ class ContainerTest {
    @Test
    void minusOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
       calculate(new Default(), "10");
-      calculate(new Minus(), "1");
-      calculate(new Minus(), "2");
-      calculate(new Minus(), "3");
-      calculate(new Minus(), "4");
+      calculate(new Minus("-"), "1");
+      calculate(new Minus("-"), "2");
+      calculate(new Minus("-"), "3");
+      calculate(new Minus("-"), "4");
 
       checkResult("0");
    }
@@ -43,10 +43,10 @@ class ContainerTest {
    void plusOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
       calculate(new Default(), "10");
 
-      calculate(new Plus(), "1");
-      calculate(new Plus(), "2");
-      calculate(new Plus(), "3");
-      calculate(new Plus(), "4");
+      calculate(new Plus("+"), "1");
+      calculate(new Plus("+"), "2");
+      calculate(new Plus("+"), "3");
+      calculate(new Plus("+"), "4");
 
       checkResult("20");
    }
@@ -55,9 +55,9 @@ class ContainerTest {
    void multiplyOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
       calculate(new Default(), "2");
 
-      calculate(new Multiply(), "3");
-      calculate(new Multiply(), "4");
-      calculate(new Multiply(), "5");
+      calculate(new Multiply("*"), "3");
+      calculate(new Multiply("*"), "4");
+      calculate(new Multiply("*"), "5");
 
       checkResult("120");
    }
@@ -66,8 +66,8 @@ class ContainerTest {
    void divideOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
       calculate(new Default(), "90");
 
-      calculate(new Divide(), "3");
-      calculate(new Divide(), "10");
+      calculate(new Divide("/"), "3");
+      calculate(new Divide("/"), "10");
 
       checkResult("3");
    }

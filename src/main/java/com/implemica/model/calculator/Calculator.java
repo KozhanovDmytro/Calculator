@@ -28,6 +28,10 @@ public class Calculator {
    @Getter
    private boolean isShownResult;
 
+   private interface ExceptionSupplier {
+      void calculate() throws Exception;
+   }
+
    public Calculator(Numeral numeral){
       this.numeral = numeral;
       container = new Container();
@@ -35,41 +39,28 @@ public class Calculator {
    }
 
    public ResponseDto executeSimpleOperation(SimpleOperation operation) {
-      ExceptionType exceptionType = ExceptionType.NOTHING;
 
-      try {
+      ExceptionType exceptionType = calculate(()-> {
          if (!(container.getOperation() instanceof Equals)) {
-               container.calculate();
+            container.calculate();
          } else if(container.getOperation().isShowOperand()) {
             container.setOperation(new Default(container.getOperation().getOperand()));
             container.calculate();
          }
-      } catch (OverflowException e) {
-         exceptionType = ExceptionType.OVERFLOW;
-      } catch (UndefinedResultException e) {
-         exceptionType = ExceptionType.UNDEFINED_RESULT;
-      } catch (ArithmeticException e) {
-         exceptionType = ExceptionType.DIVIDE_BY_ZERO;
-      } catch (InvalidInputException e) {
-         exceptionType = ExceptionType.INVALID_INPUT;
-      }
+      });
 
       if(container.getOperation().isShowOperand()){
          container.getHistory().add(operation);
+      } else if(container.getHistory().size() == 0){
+         container.getHistory().add(new Default(container.getResult()));
+         container.getHistory().add(operation);
       } else {
-         if(container.getHistory().size() == 0){
-            container.getHistory().add(new Default(container.getResult()));
-            container.getHistory().add(operation);
-         } else {
-            container.getHistory().changeLast(operation);
-         }
-      }
-      if(exceptionType != ExceptionType.NOTHING) {
-         clear();
+         container.getHistory().changeLast(operation);
       }
 
       container.setOperation(operation);
       container.setMadeOperand(true);
+
       ResponseDto response = new ResponseDto();
       response.setResult(showResult());
       response.setHistory(showHistory());
@@ -79,30 +70,19 @@ public class Calculator {
    }
 
    public ResponseDto executeSpecialOperation(SpecialOperation operation) {
-      ExceptionType exceptionType = ExceptionType.NOTHING;
-
       if(operation instanceof Percent) {
          ((Percent) operation).setResult(container.getResult());
       }
+
       if(container.getHistory().size() == 0 && container.getOperation() instanceof Equals){
          container.setOperation(new Default((Equals) container.getOperation(), container.getResult()));
       }
-      try {
+
+      ExceptionType exceptionType = calculate(() -> {
          container.change(operation, isShownResult);
          container.setMadeOperand(operation instanceof Negate);
-      } catch (UndefinedResultException e) {
-         exceptionType = ExceptionType.UNDEFINED_RESULT;
-      } catch (OverflowException e) {
-         exceptionType = ExceptionType.OVERFLOW;
-      } catch(ArithmeticException e) {
-         exceptionType = ExceptionType.DIVIDE_BY_ZERO;
-      } catch (InvalidInputException e) {
-         exceptionType = ExceptionType.INVALID_INPUT;
-      }
+      });
 
-      if(exceptionType != ExceptionType.NOTHING) {
-         clear();
-      }
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
       response.setHistory(showHistory());
@@ -135,54 +115,59 @@ public class Calculator {
    }
 
    public ResponseDto equalsOperation() {
-      if (container.isMadeOperand()) {
-         if(isShownResult){
-            container.getOperation().setOperand(container.getResult());
-         }
-      } else {
-         if (container.getOperation() instanceof Equals) {
-            Equals eq = (Equals) container.getOperation();
-            if (!isShownResult) {
-               container.setResult(container.getOperation().getOperand());
-            } else if(eq.getLastOperation() instanceof Default) {
+      if (container.isMadeOperand() && isShownResult){
+         container.getOperation().setOperand(container.getResult());
+      } else if (container.getOperation() instanceof Equals) {
+         Equals eq = (Equals) container.getOperation();
+         if (!isShownResult) {
+            container.setResult(container.getOperation().getOperand());
+         } else if (eq.getLastOperation() instanceof Default) {
+            eq.getLastOperation().setOperand(container.getResult());
+         } else if (eq.getLastOperation() instanceof Equals) {
+            if (((Equals) eq.getLastOperation()).getLastOperation() instanceof Default) {
+               eq.setLastOperation(((Equals) eq.getLastOperation()).getLastOperation());
                eq.getLastOperation().setOperand(container.getResult());
-            } else if(eq.getLastOperation() instanceof Equals) {
-               if(((Equals) eq.getLastOperation()).getLastOperation() instanceof Default) {
-                  eq.setLastOperation(((Equals) eq.getLastOperation()).getLastOperation());
-                  eq.getLastOperation().setOperand(container.getResult());
-               }
             }
          }
       }
 
-      ExceptionType exceptionType = ExceptionType.NOTHING;
+      ExceptionType exceptionType = calculate(()-> container.calculate());
 
-      try {
-         container.calculate();
-      } catch (OverflowException e) {
-         clear();
-         exceptionType = ExceptionType.OVERFLOW;
-      } catch (UndefinedResultException e) {
-         clear();
-         exceptionType = ExceptionType.UNDEFINED_RESULT;
-      } catch(ArithmeticException e) {
-         clear();
-         exceptionType = ExceptionType.DIVIDE_BY_ZERO;
-      } catch (InvalidInputException e) {
-         clear();
-         exceptionType = ExceptionType.INVALID_INPUT;
-      }
       Equals equals = new Equals(container.getOperation());
       container.getHistory().clear();
       container.setOperation(equals);
-
       container.setMadeOperand(false);
+
       ResponseDto response = new ResponseDto();
       response.setResult(showResult());
       response.setHistory(showHistory());
       response.setExceptionType(exceptionType);
 
       return response;
+   }
+
+   private ExceptionType calculate(ExceptionSupplier exceptionSupplier) {
+      ExceptionType exceptionType = ExceptionType.NOTHING;
+
+      try {
+         exceptionSupplier.calculate();
+      } catch (OverflowException e) {
+         exceptionType = ExceptionType.OVERFLOW;
+      } catch (UndefinedResultException e) {
+         exceptionType = ExceptionType.UNDEFINED_RESULT;
+      } catch (ArithmeticException e) {
+         exceptionType = ExceptionType.DIVIDE_BY_ZERO;
+      } catch (InvalidInputException e) {
+         exceptionType = ExceptionType.INVALID_INPUT;
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+
+      if(exceptionType != ExceptionType.NOTHING) {
+         clear();
+      }
+
+      return exceptionType;
    }
 
    public ResponseDto separateOperand() {

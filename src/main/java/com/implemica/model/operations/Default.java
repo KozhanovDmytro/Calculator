@@ -1,6 +1,5 @@
 package com.implemica.model.operations;
 
-import com.implemica.model.exceptions.UndefinedResultException;
 import lombok.SneakyThrows;
 
 import java.math.BigDecimal;
@@ -10,7 +9,7 @@ public class Default extends SimpleOperation {
     private Equals lastEquals;
 
     public Default() {
-        super();
+        super("");
         this.character = "";
     }
     public Default(BigDecimal operand){

@@ -43,9 +43,6 @@ public class Container {
         }
     }
 
-    /**
-     * Function which calculate for {@link SpecialOperation}.
-     */
     public void change(SpecialOperation operation, boolean isResult) throws UndefinedResultException, OverflowException, InvalidInputException {
         if(isResult && !this.operation.isShowOperand()){
             this.operation.setStringOperand(new Validator().showNumber(result));

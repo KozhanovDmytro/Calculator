@@ -17,6 +17,7 @@ public class Equals extends SimpleOperation {
     private String result;
 
     public Equals(SimpleOperation lastOperation) {
+        super("");
         this.lastOperation = lastOperation;
     }
 
