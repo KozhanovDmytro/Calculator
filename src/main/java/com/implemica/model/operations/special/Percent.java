@@ -26,7 +26,7 @@ public class Percent implements SpecialOperation {
       if(operand.equals(BigDecimal.ZERO)){
          operand = new BigDecimal(result.toPlainString());
       }
-      BigDecimal result = this.result.multiply(operand).divide(new BigDecimal(100), MathContext.DECIMAL128);
+      BigDecimal result = this.result.multiply(operand).divide(new BigDecimal(100), MathContext.DECIMAL64);
       history = result.toPlainString();
       return result;
    }

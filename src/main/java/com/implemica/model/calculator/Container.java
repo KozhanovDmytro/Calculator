@@ -9,6 +9,7 @@ import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.memory.MemoryImpl;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.SimpleOperation;
+import com.implemica.model.operations.special.Negate;
 import com.implemica.model.operations.special.Percent;
 import com.implemica.model.validation.Validator;
 import lombok.Getter;
@@ -62,11 +63,11 @@ public class Container {
             getOperation().getOperandHistory().add(operation);
             getOperation().setOperand(operation.calculate(getOperation().getOperand()));
 
-
             if(this.operation instanceof Default && getHistory().size() == 0){
                 getHistory().add(this.operation);
             }
         }
+        setMadeOperand(operation instanceof Negate);
         this.operation.setOperand(checkForZero(this.operation.getOperand()));
         checkOverflow(this.operation.getOperand());
     }

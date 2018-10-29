@@ -12,7 +12,6 @@ import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
 import com.implemica.model.operations.SimpleOperation;
-import com.implemica.model.operations.special.Negate;
 import com.implemica.model.operations.special.Percent;
 import lombok.Getter;
 
@@ -78,10 +77,7 @@ public class Calculator {
          container.setOperation(new Default((Equals) container.getOperation(), container.getResult()));
       }
 
-      ExceptionType exceptionType = calculate(() -> {
-         container.change(operation, isShownResult);
-         container.setMadeOperand(operation instanceof Negate);
-      });
+      ExceptionType exceptionType = calculate(() -> container.change(operation, isShownResult));
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());

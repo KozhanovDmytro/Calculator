@@ -518,23 +518,85 @@ class CalculatorTest {
 
    @Test
    void specialOperationsTests() throws OverflowException, UndefinedResultException, InvalidInputException {
-      builder.doTest("4√", "√(4) ", 1, null, "2");
-      builder.doTest("4+5=√", "√(9) ", 1, "9", null);
-      builder.doTest("4+5=√=", "", 0, "8", "3");
-      builder.doTest("8q", "sqr(8) ", 1, "0", "64");
-      builder.doTest("2r", "1/(2) ", 1, "0", "0,5");
+
       builder.doTest("200+4%rrq√", "200 + √(sqr(1/(1/(8)))) ", 2, "200", "8");
+      builder.doTest("1/3=r", null, 0, null, "3");
+      builder.doTest("5+2√1", "5 + 1 ", 2, "5", "1");
+   }
+
+   @Test
+   void negateTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+      builder.doTest("1n", "negate(1) ", 1, "0", "-1");
+      builder.doTest("5nn", "negate(negate(5)) ", 1, "0", "5");
+      builder.doTest("5+n", "5 + negate(5) ", 2, "5", "-5");
+      builder.doTest("5+n=", "", 0, "0", "-5");
+   }
+
+   @Test
+   void squareTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+      builder.doTest("0q", "sqr(0) ", 1, null, "0");
+      builder.doTest("1q", "sqr(1) ", 1, null, "1");
+      builder.doTest("2q", "sqr(2) ", 1, null, "4");
+      builder.doTest("2qq", "sqr(sqr(2)) ", 1, null, "16");
+      builder.doTest("2qqq", "sqr(sqr(sqr(2))) ", 1, null, "256");
+      builder.doTest("2nq", "sqr(negate(2)) ", 1, "0", "4");
+      builder.doTest("2√q√q√q", null, 0, null, "2");
+      builder.doTest("8q", "sqr(8) ", 1, "0", "64");
+      builder.doTest("5q+", "sqr(5) + ", 2, "25", null);
+      builder.doTest("5nq+", "sqr(negate(5)) + ", 2, "25", null);
+      builder.doTest("3q+7", "sqr(3) + 7 ", 2, "9", "7");
+      builder.doTest("3q+2q", "sqr(3) + sqr(2) ", 2, "9", "4");
+      builder.doTest("3q+2q=", "", 0, "13", null);
+      builder.doTest("3q+7=", "", 0, "16", null);
       builder.doTest("5+qq", "5 + sqr(sqr(5)) ", 2, "5", "625");
       builder.doTest("5+qq=", "", 0, "630", "625");
       builder.doTest("2+3=q", "sqr(5) ", 1, "5", "25");
 
-      builder.doTest("2√q√q√q", null, 0, null, "2");
+      builder.doTest("0.0000000000000001q", "sqr(0,0000000000000001) ", 1, "0", "1,e-32");
+      builder.doTest("0.0000000000000001qq", "sqr(sqr(0,0000000000000001)) ", 1, "0", "1,e-64");
+      builder.doTest("0.0000000000000001n=q", "sqr(-0,0000000000000001) ", 1, null, "1,e-32");
+      builder.doTest("0-0.0000000000000001=q", "sqr(-0,0000000000000001) ", 1, null, "1,e-32");
+      builder.doTest("9999999999999999q", "sqr(9999999999999999) ", 1, "0", "9,999999999999998e+31");
+      builder.doTest("9999999999999999qq", "sqr(sqr(9999999999999999)) ", 1, "0", "9,999999999999996e+63");
+   }
+
+   @Test
+   void squareRootTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+      builder.doTest("0√", "√(0) ", 1, null, "0");
+      builder.doTest("4√", "√(4) ", 1, null, "2");
+      builder.doTest("4√√", "√(√(4)) ", 1, null, "1,414213562373095");
+      builder.doTest("4√√√", "√(√(√(4))) ", 1, null, "1,189207115002721");
+      builder.doTest("4√√√=", "", 0, "1,189207115002721", null);
+      builder.doTest("3+4√=", "", 0, "5", null);
+      builder.doTest("4+√", "4 + √(4) ", 2, "4", "2");
+      builder.doTest("4+1+1+1+√", "4 + 1 + 1 + 1 + √(7) ", 5, "7", "2,645751311064591");
+      builder.doTest("121√", "√(121) ", 1, "0", "11");
+      builder.doTest("456√", "√(456) ", 1, "0", "21,35415650406262");
+      builder.doTest("2875√", "√(2875) ", 1, "0", "53,61902647381804");
+      builder.doTest("1785√", "√(1785) ", 1, "0", "42,24926034855522");
+      builder.doTest("2134√", "√(2134) ", 1, "0", "46,19523784980439");
+      builder.doTest("4+5=√", "√(9) ", 1, "9", null);
+      builder.doTest("4+5=√=", "", 0, "8", "3");
+
+      builder.doTest("0.0000000000000001√", "√(0,0000000000000001) ", 1, "0", "0,00000001");
+      builder.doTest("0.0000000000000001√√", "√(√(0,0000000000000001)) ", 1, "0", "0,0001");
+
+      builder.doTest("9999999999999999√", "√(9999999999999999) ", 1, "0", "100 000 000");
+   }
+
+   @Test
+   void divideByTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+      builder.doTest("1r", "1/(1) ", 1, "0", "1");
+      builder.doTest("2r", "1/(2) ", 1, "0", "0,5");
+      builder.doTest("10r", "1/(10) ", 1, "0", "0,1");
+      builder.doTest("5r+", "1/(5) + ", 2, "0,2", null);
+      builder.doTest("10+r", "10 + 1/(10) ", 2, "10", "0,1");
+      builder.doTest("10+12=r", "1/(22) ", 1, "22", "0,0454545454545454");
       builder.doTest("3rrrrrr", null, 0, null, "3");
       builder.doTest("1/3=r", null, 0, null, "3");
       builder.doTest("1000000000000000-r", "1000000000000000 - 1/(1000000000000000) ", 2, null, "0,000000000000001");
       builder.doTest("1000000000000000*=-r", "1,e+30 - 1/(1,e+30) ", 2, null, "1,e-30");
       builder.doTest("1000000000000000*=====-r", "1,e+90 - 1/(1,e+90) ", 2, null, "1,e-90");
-      builder.doTest("5+2√1", "5 + 1 ", 2, "5", "1");
    }
 
    @Test
@@ -676,8 +738,35 @@ class CalculatorTest {
    }
 
    @Test
-   void buildOperandTest() {
+   void buildOperandTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+      builder.doTest("1", "", 0, null, "1");
+      builder.doTest("2", "", 0, null, "2");
+      builder.doTest("3", "", 0, null, "3");
+      builder.doTest("4", "", 0, null, "4");
+      builder.doTest("5", "", 0, null, "5");
+      builder.doTest("6", "", 0, null, "6");
+      builder.doTest("7", "", 0, null, "7");
+      builder.doTest("8", "", 0, null, "8");
+      builder.doTest("9", "", 0, null, "9");
 
+      builder.doTest("0000000000000000000000000000000000000001", "", 0, null, "1");
+      builder.doTest("01010111101010101000011", "", 0, null, "1 010 111 101 010 101");
+      builder.doTest("123456789", "", 0, null, "123 456 789");
+      builder.doTest("1000000000000000000", "", 0, null, "1 000 000 000 000 000");
+      builder.doTest("1000000000000000000.", "", 0, null, "1 000 000 000 000 000,");
+      builder.doTest("9999999999999999999.", "", 0, null, "9 999 999 999 999 999,");
+      builder.doTest("1234567890123456789", "", 0, null, "1 234 567 890 123 456");
+
+      builder.doTest("3.0", "", 0, null, "3,0");
+      builder.doTest("3.00", "", 0, null, "3,00");
+      builder.doTest("0.00000000000000000", "", 0, null, "0,0000000000000000");
+      builder.doTest("3.00000000000000000", "", 0, null, "3,000000000000000");
+      builder.doTest("3.000000000000000001", "", 0, null, "3,000000000000000");
+      builder.doTest("10.000000000000000001", "", 0, null, "10,00000000000000");
+      builder.doTest("100.000000000000000001", "", 0, null, "100,0000000000000");
+      builder.doTest("1000.000000000000000001", "", 0, null, "1 000,000000000000");
+      builder.doTest("100000000000000.000000000000000001", "", 0, null, "100 000 000 000 000,0");
+      builder.doTest("1000000000000000.000000000000000001", "", 0, null, "1 000 000 000 000 000,");
    }
 
    @Test
