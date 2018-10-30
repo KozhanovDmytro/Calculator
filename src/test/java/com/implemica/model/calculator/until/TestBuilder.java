@@ -157,11 +157,11 @@ public class TestBuilder {
             case '-':
                executeSimpleOperation(new Minus("-"));
                break;
-            case '*':
-               executeSimpleOperation(new Multiply("*"));
+            case '×':
+               executeSimpleOperation(new Multiply("×"));
                break;
-            case '/':
-               executeSimpleOperation(new Divide("/"));
+            case '÷':
+               executeSimpleOperation(new Divide("÷"));
                break;
             case '=':
                equals();
@@ -188,61 +188,61 @@ public class TestBuilder {
       }
    }
 
-   private void executeSimpleOperation(SimpleOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
+   protected void executeSimpleOperation(SimpleOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
       ResponseDto response = calculator.executeSimpleOperation(operation);
       parseDto(response);
       checkException();
    }
 
-   private void executeSpecialOperation(SpecialOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
+   protected void executeSpecialOperation(SpecialOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
       ResponseDto response = calculator.executeSpecialOperation(operation);
       parseDto(response);
       checkException();
    }
 
-   private void clear(){
+   protected void clear(){
       ResponseDto response = calculator.clear();
       parseDto(response);
    }
 
-   private void memoryClear() {
+   protected void memoryClear() {
       calculator.getContainer().getMemory().clear();
       memory = validator.showNumber(calculator.getContainer().getMemory().recall());
    }
 
-   private void memoryRecall() {
+   protected void memoryRecall() {
       parseDto(calculator.getMemory());
    }
 
-   private void addMemory() {
+   protected void addMemory() {
       memory = validator.showNumber(calculator.addMemory());
    }
 
-   private void subtractMemory() {
+   protected void subtractMemory() {
       memory = validator.showNumber(calculator.subtractMemory());
    }
 
-   private void clearEntry(){
+   protected void clearEntry(){
       ResponseDto response = calculator.clearEntry();
       parseDto(response);
    }
 
-   private void executeBackSpace() {
+   protected void executeBackSpace() {
       ResponseDto response = calculator.backspace();
       operand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
-   private void executeSeparate() {
+   protected void executeSeparate() {
       ResponseDto response = calculator.separateOperand();
       operand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
-   private void equals() {
+   protected void equals() {
       ResponseDto response = calculator.equalsOperation();
       parseDto(response);
    }
 
-   private void checkResult(String expected) {
+   protected void checkResult(String expected) {
       assertEquals(expected, result);
    }
 
@@ -250,19 +250,19 @@ public class TestBuilder {
       assertEquals(expected, operand);
    }
 
-   private void buildOperand(Number number) {
+   protected void buildOperand(Number number) {
       ResponseDto response = calculator.buildOperand(number);
       operand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
-   private void checkHistory(String expectedHistory, int size) {
+   protected void checkHistory(String expectedHistory, int size) {
       History history = calculator.getContainer().getHistory();
 
       assertEquals(size, history.size());
       assertEquals(expectedHistory, history.buildHistory());
    }
 
-   private void checkException() throws OverflowException, UndefinedResultException, InvalidInputException {
+   protected void checkException() throws OverflowException, UndefinedResultException, InvalidInputException {
       switch (exceptionType){
          case OVERFLOW:
             throw new OverflowException();
@@ -274,6 +274,7 @@ public class TestBuilder {
             throw new InvalidInputException();
       }
    }
+
    private void parseDto(ResponseDto response) {
       if(response.getExceptionType() != null) {
          exceptionType = response.getExceptionType();

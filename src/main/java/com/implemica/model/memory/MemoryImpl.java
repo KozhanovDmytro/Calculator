@@ -11,12 +11,12 @@ public class MemoryImpl implements Memory {
 
    @Override
    public void add(BigDecimal operand) {
-      value = value.add(operand, MathContext.UNLIMITED);
+      value = value.add(operand);
    }
 
    @Override
    public void subtract(BigDecimal operand) {
-      value = value.subtract(operand, MathContext.UNLIMITED);
+      value = value.subtract(operand);
    }
 
    @Override

@@ -14,14 +14,11 @@ import java.math.MathContext;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidatorTest {
-
-   private static Validator validator;
    
    private static TestBuilder builder;
 
    @BeforeAll
    public static void init(){
-      validator = new Validator();
       builder = new TestBuilder();
    }
 

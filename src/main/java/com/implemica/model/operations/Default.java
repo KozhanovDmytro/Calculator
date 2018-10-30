@@ -12,6 +12,7 @@ public class Default extends SimpleOperation {
         super("");
         this.character = "";
     }
+
     public Default(BigDecimal operand){
         this();
         this.operand = operand;

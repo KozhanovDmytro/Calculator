@@ -33,7 +33,7 @@ public abstract class SimpleOperation implements Operation {
 
     @Getter
     @Setter
-    private boolean showOperand;  //TODO Rename it.
+    private boolean showOperand;
 
     private Validator validator = new Validator();
 

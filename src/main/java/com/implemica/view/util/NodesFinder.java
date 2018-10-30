@@ -61,14 +61,19 @@ public enum NodesFinder {
    MINUS_OPERATION("#minusOperation"),
    DIVIDE_OPERATION("#divideOperation"),
    MULTIPLY_OPERATION("#multiplyOperation"),
-   C("#c"),
-   CE("#CE"),
+   C("#clear"),
+   CE("#clearEntry"),
 
    MENU_BTN("#menuBtn"),
    HIDE_MENU("#hideMenu"),
    MEMORY_FIELD("#memoryField"),
    HIDE_MEMORY_FIELD("#hideMemoryField"),
-   MENU("#menu");
+   MENU("#menu"),
+   MEMORY_CLEAR("#clearMemory"),
+   MEMORY_RECALL("#recallMemory"),
+   MEMORY_ADD("#addMemory"),
+   MEMORY_SUBTRACT("#subtractMemory"),
+   HISTORY_LABEL("#historyLabel");
 
 
 

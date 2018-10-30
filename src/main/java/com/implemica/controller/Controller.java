@@ -131,8 +131,8 @@ public class Controller {
    private void actionsForOperationButtons() {
       plusOperation.setOnAction(event -> actionForOperations(new Plus("+")));
       minusOperation.setOnAction(event -> actionForOperations(new Minus("-")));
-      multiplyOperation.setOnAction(event -> actionForOperations(new Multiply("*")));
-      divideOperation.setOnAction(event -> actionForOperations(new Divide("/")));
+      multiplyOperation.setOnAction(event -> actionForOperations(new Multiply("×")));
+      divideOperation.setOnAction(event -> actionForOperations(new Divide("÷")));
 
       percentOperation.setOnAction(event -> actionForSpecialOperations(new Percent()));
       sqrtOperation.setOnAction(event -> actionForSpecialOperations(new SquareRoot()));

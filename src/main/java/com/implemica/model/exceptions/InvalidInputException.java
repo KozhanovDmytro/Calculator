@@ -8,7 +8,6 @@ public class InvalidInputException extends Exception {
    }
 
    public InvalidInputException(BigDecimal invalidNumber) {
-//      TODO look at this.
       super(String.format("This number is invalid. Number: %s", invalidNumber.toEngineeringString()));
    }
 }
