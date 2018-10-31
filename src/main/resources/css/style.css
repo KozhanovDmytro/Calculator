@@ -12,7 +12,6 @@
     -fx-background-color: none;
     -fx-background-radius: none;
     -fx-font-family: "Segoe MDL2 Assets";
-    -fx-font-size: 10px;
     -fx-text-fill: rgb(0, 0, 0);
 }
 .CloseBtn:hover{
@@ -32,6 +31,21 @@
 .HistoryBtn{
     -fx-background-image: url('../icons/history.png');
     -fx-background-position: 12 11;
+}
+.Currency {
+    -fx-background-image: url('../icons/currency.png');
+    -fx-background-repeat: stretch;
+    -fx-background-position: -1 -1;
+}
+.Data {
+    -fx-background-image: url('../icons/data.png');
+    -fx-background-repeat: stretch;
+    -fx-background-position: 0 0;
+}
+.Corner {
+    -fx-background-image: url('../icons/corner.png');
+    -fx-background-repeat: stretch;
+    -fx-background-position: -1 -1;
 }
 .MenuBtn{
     -fx-font-size: 14px;
@@ -104,4 +118,7 @@
 }
 .Result {
     -fx-text-fill: rgb(0, 0, 0);
+}
+.SystemBtn{
+    -fx-font-size: 10px;
 }

@@ -90,6 +90,12 @@ public class TestBuilder {
             case "M-":
                subtractMemory();
                break;
+            case "SQR":
+               executeSpecialOperation(new Square());
+               break;
+            case "1/x":
+               executeSpecialOperation(new DivideBy());
+               break;
             default:
                checkBySymbols(action);
          }
@@ -171,12 +177,6 @@ public class TestBuilder {
                break;
             case '√':
                executeSpecialOperation(new SquareRoot());
-               break;
-            case 'q':
-               executeSpecialOperation(new Square());
-               break;
-            case 'r':
-               executeSpecialOperation(new DivideBy());
                break;
             case '<':
                executeBackSpace();

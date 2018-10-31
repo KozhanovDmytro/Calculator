@@ -493,22 +493,22 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("5+3=", "", "8");
 
       doTest("4√=", "", "2");
-      doTest("8q=", "", "64");
-      doTest("2r=", "", "0,5");
-      doTest("5+3=r", "1/(8) ", "0,125");
-      doTest("5+3=r=", "", "3,125");
-      doTest("5+3=r==", "", "6,125");
-      doTest("5+3=r===", "", "9,125");
-      doTest("5+3=r===5=", "", "9,125");
+      doTest("8 SQR =", "", "64");
+      doTest("2 1/x =", "", "0,5");
+      doTest("5+3= 1/x ", "1/(8) ", "0,125");
+      doTest("5+3= 1/x =", "", "3,125");
+      doTest("5+3= 1/x ==", "", "6,125");
+      doTest("5+3= 1/x ===", "", "9,125");
+      doTest("5+3= 1/x ===5=", "", "9,125");
       doTest("3=6+", "6 + ", "6");
       doTest("2=+", "2 + ", "2");
    }
 
    @Test
    void specialOperationsTests() {
-      doTest("200+4%rrq√", "200 + √(sqr(1/(1/(8)))) ", "8");
-      doTest("1÷3=r", "1/(0,3333333333333333) ","3");
-      doTest("5+2√q√√√1+", "5 + 1 + ", "6");
+      doTest("200+4% 1/x 1/x SQR √", "200 + √(sqr(1/(1/(8)))) ", "8");
+      doTest("1÷3= 1/x ", "1/(0,3333333333333333) ","3");
+      doTest("5+2√ SQR √√√1+", "5 + 1 + ", "6");
    }
 
    @Test
@@ -521,30 +521,30 @@ public class PerformanceTest extends TestFxBaseBuilder {
 
    @Test
    void squareTest() {
-      doTest("0q", "sqr(0) ", "0");
-      doTest("1q", "sqr(1) ", "1");
-      doTest("2q", "sqr(2) ", "4");
-      doTest("2qq", "sqr(sqr(2)) ", "16");
-      doTest("2qqq", "sqr(sqr(sqr(2))) ", "256");
-      doTest("2nq", "sqr(negate(2)) ", "4");
-      doTest("2√q√q√q", "sqr(√(sqr(√(sqr(√(2)))))) ", "2");
-      doTest("8q", "sqr(8) ", "64");
-      doTest("5q+", "sqr(5) + ", "25");
-      doTest("5nq+", "sqr(negate(5)) + ", "25");
-      doTest("3q+7", "sqr(3) + ", "7");
-      doTest("3q+2q", "sqr(3) + sqr(2) ", "4");
-      doTest("3q+2q=", "", "13");
-      doTest("3q+7=", "", "16");
-      doTest("5+qq", "5 + sqr(sqr(5)) ", "625");
-      doTest("5+qq=", "", "630");
-      doTest("2+3=q", "sqr(5) ", "25");
+      doTest("0 SQR ", "sqr(0) ", "0");
+      doTest("1 SQR ", "sqr(1) ", "1");
+      doTest("2 SQR ", "sqr(2) ", "4");
+      doTest("2 SQR SQR ", "sqr(sqr(2)) ", "16");
+      doTest("2 SQR SQR SQR", "sqr(sqr(sqr(2))) ", "256");
+      doTest("2n SQR ", "sqr(negate(2)) ", "4");
+      doTest("2√ SQR √ SQR √ SQR ", "sqr(√(sqr(√(sqr(√(2)))))) ", "2");
+      doTest("8 SQR ", "sqr(8) ", "64");
+      doTest("5 SQR +", "sqr(5) + ", "25");
+      doTest("5n SQR +", "sqr(negate(5)) + ", "25");
+      doTest("3 SQR +7", "sqr(3) + ", "7");
+      doTest("3 SQR +2 SQR ", "sqr(3) + sqr(2) ", "4");
+      doTest("3 SQR +2 SQR =", "", "13");
+      doTest("3 SQR +7=", "", "16");
+      doTest("5+ SQR SQR", "5 + sqr(sqr(5)) ", "625");
+      doTest("5+ SQR SQR =", "", "630");
+      doTest("2+3= SQR ", "sqr(5) ", "25");
 
-      doTest("0.0000000000000001q", "sqr(0,0000000000000001) ", "1,e-32");
-      doTest("0.0000000000000001qq", "sqr(sqr(0,0000000000000001)) ", "1,e-64");
-      doTest("0.0000000000000001n=q", "sqr(-0,0000000000000001) ", "1,e-32");
-      doTest("0-0.0000000000000001=q", "sqr(-0,0000000000000001) ", "1,e-32");
-      doTest("9999999999999999q", "sqr(9999999999999999) ", "9,999999999999998e+31");
-      doTest("9999999999999999qq", "sqr(sqr(9999999999999999)) ", "9,999999999999996e+63");
+      doTest("0.0000000000000001 SQR ", "sqr(0,0000000000000001) ", "1,e-32");
+      doTest("0.0000000000000001 SQR SQR ", "sqr(sqr(0,0000000000000001)) ", "1,e-64");
+      doTest("0.0000000000000001n= SQR ", "sqr(-0,0000000000000001) ", "1,e-32");
+      doTest("0-0.0000000000000001= SQR ", "sqr(-0,0000000000000001) ", "1,e-32");
+      doTest("9999999999999999 SQR ", "sqr(9999999999999999) ", "9,999999999999998e+31");
+      doTest("9999999999999999 SQR SQR ", "sqr(sqr(9999999999999999)) ", "9,999999999999996e+63");
    }
 
    @Test
@@ -573,17 +573,17 @@ public class PerformanceTest extends TestFxBaseBuilder {
 
    @Test
    void divideByTest() {
-      doTest("1r", "1/(1) ", "1");
-      doTest("2r", "1/(2) ", "0,5");
-      doTest("10r", "1/(10) ", "0,1");
-      doTest("5r+", "1/(5) + ", "0,2");
-      doTest("10+r", "10 + 1/(10) ", "0,1");
-      doTest("10+12=r", "1/(22) ", "0,0454545454545454");
-      doTest("3rrrrrr", "1/(1/(1/(1/(1/(1/(3)))))) ", "3");
-      doTest("1÷3=r", "1/(0,3333333333333333) ", "3");
-      doTest("1000000000000000-r", "1000000000000000 - 1/(1000000000000000) ", "0,000000000000001");
-      doTest("1000000000000000×=-r", "1,e+30 - 1/(1,e+30) ", "1,e-30");
-      doTest("1000000000000000×=====-r", "1,e+90 - 1/(1,e+90) ", "1,e-90");
+      doTest("1 1/x ", "1/(1) ", "1");
+      doTest("2 1/x ", "1/(2) ", "0,5");
+      doTest("10 1/x ", "1/(10) ", "0,1");
+      doTest("5 1/x +", "1/(5) + ", "0,2");
+      doTest("10+ 1/x ", "10 + 1/(10) ", "0,1");
+      doTest("10+12= 1/x", "1/(22) ", "0,0454545454545454");
+      doTest("3 1/x 1/x 1/x 1/x 1/x 1/x", "1/(1/(1/(1/(1/(1/(3)))))) ", "3");
+      doTest("1÷3= 1/x ", "1/(0,3333333333333333) ", "3");
+      doTest("1000000000000000- 1/x", "1000000000000000 - 1/(1000000000000000) ", "0,000000000000001");
+      doTest("1000000000000000×=- 1/x", "1,e+30 - 1/(1,e+30) ", "1,e-30");
+      doTest("1000000000000000×=====- 1/x", "1,e+90 - 1/(1,e+90) ", "1,e-90");
    }
 
    @Test
@@ -609,10 +609,10 @@ public class PerformanceTest extends TestFxBaseBuilder {
 
    @Test
    void backspaceTest() {
-      doTest("2qqq<<<<<<<<=", "", "256");
+      doTest("2 SQR SQR SQR <<<<<<<<=", "", "256");
       doTest("70÷7=<<<", "", "10");
       doTest("1234567890<<<<<<<<<<<<<<<<<<<<<=", "", "0");
-      doTest("<<<<2√q=", "", "2");
+      doTest("<<<<2√ SQR =", "", "2");
       doTest("2+3=<<<<", "", "5");
 
       doTest("<", "", "0");
@@ -653,7 +653,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
    void clear() {
       doTest("2+2×2-6×3-10 C", "", "0");
       doTest("2+5÷2 C C C C C C C C C", "", "0");
-      doTest("5qqqqqq√√qqqqq√qqq C C", "", "0");
+      doTest("5 SQR SQR SQR SQR SQR SQR √√ SQR SQR SQR SQR SQR √ SQR SQR SQR C C", "", "0");
 
       doTest("85 CE", "", "0");
       doTest("8+2 CE", "8 + ", "0");
@@ -694,12 +694,12 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("9999999999999999×6=====", "", "7,775999999999999e+19");
       doTest("9999999999999999+6=", "", "1,e+16");
       doTest("9999999999999999+7=", "", "1,000000000000001e+16");
-      doTest("9999999999999999r+1=", "", "1");
-      doTest("9999999999999999r=", "", "1,e-16");
-      doTest("9999999999999999r+=", "", "2,e-16");
-      doTest("9999999999999999r+==", "", "3,e-16");
-      doTest("9999999999999999r+===", "", "4,e-16");
-      doTest("9999999999999999r+====", "", "5,000000000000001e-16");
+      doTest("9999999999999999 1/x +1=", "", "1");
+      doTest("9999999999999999 1/x =", "", "1,e-16");
+      doTest("9999999999999999 1/x +=", "", "2,e-16");
+      doTest("9999999999999999 1/x +==", "", "3,e-16");
+      doTest("9999999999999999 1/x +===", "", "4,e-16");
+      doTest("9999999999999999 1/x +====", "", "5,000000000000001e-16");
       doTest("2.000000000000001+1=", "", "3,000000000000001");
       doTest("2.000000000000001+2=", "", "4,000000000000001");
       doTest("2.000000000000001+3=", "", "5,000000000000001");
@@ -764,7 +764,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("0.0000000000000001+1=+=+=+", "4 + ", "4");
       doTest("0.0000000000000001+1=+=+=+=+", "8,000000000000001 + ", "8,000000000000001");
 
-      doTest("2+5q", "2 + sqr(5) ", "25");
+      doTest("2+5 SQR ", "2 + sqr(5) ", "25");
       doTest("1.00001√√√", "√(√(√(1,00001))) ", "1,000001249994531");
    }
 
@@ -783,15 +783,15 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("0 + 20 M- M- M- M- M- =- MR =", "", "120");
 
 
-      doTest("0,0000000000000001qqqqqq M+ √√√√ qqqq M- MR ", null, "0");
-      doTest("0,0000000000000001qqqqqq M+ √√√√ qqqq M- MR =", null, "0");
+      doTest("0,0000000000000001 SQR SQR SQR SQR SQR SQR M+ √√√√ SQR SQR SQR SQR M- MR ", null, "0");
+      doTest("0,0000000000000001 SQR SQR SQR SQR SQR SQR M+ √√√√ SQR SQR SQR SQR M- MR =", null, "0");
    }
 
    @Test
    void checkExceptions() {
       // overflow
-      doTest("1000000000000000qqqqqqqqqq", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))) ", "Overflow");
-      doTest("0.0000000000000001qqqqqqqqqq", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001))))))))) ", "Overflow");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))) ", "Overflow");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001))))))))) ", "Overflow");
 
       // undefined
       doTest("0÷0=", "0 ÷ ", "Result is undefined");
@@ -801,8 +801,8 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("1÷0=", "1 ÷ ", "Cannot divide by zero");
       doTest("5÷0=", "5 ÷ ", "Cannot divide by zero");
       doTest("0.0000000000000001÷0=", "0,0000000000000001 ÷ ", "Cannot divide by zero");
-      doTest("r", "", "Cannot divide by zero");
-      doTest("0r", "", "Cannot divide by zero");
+      doTest(" 1/x ", "", "Cannot divide by zero");
+      doTest("0 1/x ", "", "Cannot divide by zero");
       doTest("8÷0+", "8 ÷ ", "Cannot divide by zero");
       doTest("8÷0=", "8 ÷ ", "Cannot divide by zero");
 

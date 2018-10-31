@@ -1,5 +1,7 @@
 package com.implemica.controller.util;
 
+import com.implemica.model.operations.special.DivideBy;
+import com.implemica.model.operations.special.Square;
 import com.implemica.view.util.NodesFinder;
 import com.implemica.view.util.TestFxBase;
 import javafx.scene.control.Button;
@@ -30,6 +32,12 @@ public class TestFxBaseBuilder extends TestFxBase {
                break;
             case "M+":
                clickOnButton(NodesFinder.MEMORY_ADD);
+               break;
+            case "SQR":
+               clickOnButton(NodesFinder.SQUARE);
+               break;
+            case "1/x":
+               clickOnButton(NodesFinder.DIVIDE_BY_X);
                break;
             default:
                checkBySymbols(action);
@@ -104,12 +112,6 @@ public class TestFxBaseBuilder extends TestFxBase {
                break;
             case '√':
                clickOnButton(NodesFinder.SQRT_OPERATION);
-               break;
-            case 'q':
-               clickOnButton(NodesFinder.SQUARE);
-               break;
-            case 'r':
-               clickOnButton(NodesFinder.DIVIDE_BY_X);
                break;
             case '<':
                clickOnButton(NodesFinder.BACKSPACE);

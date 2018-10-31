@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -151,7 +152,12 @@ public class Launcher extends Application {
          }
       });
 
-      mainPane.setOnMousePressed(event -> startDrag = new Point2D(event.getScreenX(), event.getScreenY()));
+      mainPane.setOnMousePressed(event -> {
+         startDrag = new Point2D(event.getScreenX(), event.getScreenY());
+         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+            setFullScreen();
+         }
+      });
    }
 
    private void setActionsForMainPainAndButtons() {
@@ -276,6 +282,34 @@ public class Launcher extends Application {
       Pane rightTop = findBy(NodesFinder.RIGHT_TOP_RESIZE);
       Pane bottomResizeFull = findBy(NodesFinder.BOTTOM_RESIZE);
 
+      Button btn0 = findBy(NodesFinder.BTN0);
+      Button btn1 = findBy(NodesFinder.BTN1);
+      Button btn2 = findBy(NodesFinder.BTN2);
+      Button btn3 = findBy(NodesFinder.BTN3);
+      Button btn4 = findBy(NodesFinder.BTN4);
+      Button btn5 = findBy(NodesFinder.BTN5);
+      Button btn6 = findBy(NodesFinder.BTN6);
+      Button btn7 = findBy(NodesFinder.BTN7);
+      Button btn8 = findBy(NodesFinder.BTN8);
+      Button btn9 = findBy(NodesFinder.BTN9);
+      Button negate = findBy(NodesFinder.NEGATE);
+      Button separate = findBy(NodesFinder.SEPARATE_BTN);
+      Button equals = findBy(NodesFinder.EQUALS_OPERATION);
+      Button plus = findBy(NodesFinder.PLUS_OPERATION);
+      Button minus = findBy(NodesFinder.MINUS_OPERATION);
+      Button multiply = findBy(NodesFinder.MULTIPLY_OPERATION);
+      Button divide = findBy(NodesFinder.DIVIDE_OPERATION);
+      Button backspace = findBy(NodesFinder.BACKSPACE);
+      Button clear = findBy(NodesFinder.C);
+      Button clearEntry = findBy(NodesFinder.CE);
+      Button divideBy = findBy(NodesFinder.DIVIDE_BY_X);
+      Button square = findBy(NodesFinder.SQUARE);
+      Button sqrt = findBy(NodesFinder.SQRT_OPERATION);
+      Button percent = findBy(NodesFinder.PERCENT_OPERATION);
+
+      String fontSizeForNumberBtn;
+      String fontSizeForOtherBtn;
+
       if (isFullScreen) {
          primaryStage.setX(stagePosition.getX());
          primaryStage.setY(stagePosition.getY());
@@ -288,6 +322,9 @@ public class Launcher extends Application {
                  .forEach(pane -> pane.setDisable(false));
 
          full.setText(FULL_SCREEN_ICON);
+
+         fontSizeForNumberBtn = "24";
+         fontSizeForOtherBtn = "15";
 
          isFullScreen = false;
       } else {
@@ -307,10 +344,22 @@ public class Launcher extends Application {
                  .collect(Collectors.toList())
                  .forEach(pane -> pane.setDisable(true));
 
+         fontSizeForNumberBtn = "28";
+         fontSizeForOtherBtn = "21";
+
          full.setText(SMALL_SCREEN_ICON);
 
          isFullScreen = true;
       }
+
+      Stream.of(btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)
+              .collect(Collectors.toList())
+              .forEach(button -> button.setStyle(String.format("-fx-font-size: %spx;", fontSizeForNumberBtn)));
+
+      Stream.of(negate, separate, equals, plus, minus, multiply, divide, backspace,
+                  clear, clearEntry, divideBy, square, sqrt, percent)
+              .collect(Collectors.toList())
+              .forEach(button -> button.setStyle(String.format("-fx-font-size: %spx;", fontSizeForOtherBtn)));
    }
 
    private void setActionsForInfoBtns() {

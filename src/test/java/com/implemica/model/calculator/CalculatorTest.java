@@ -505,21 +505,21 @@ class CalculatorTest {
       builder.doTest("5+3=", "", 0, "8", "3");
 
       builder.doTest("4√=", "", 0, "2", "2");
-      builder.doTest("8q=", "", 0, "64", "64");
-      builder.doTest("2r=", "", 0, "0,5", null);
-      builder.doTest("5+3=r", "1/(8) ", 1, "8", "0,125");
-      builder.doTest("5+3=r=", "", 0, "3,125", "0,125");
-      builder.doTest("5+3=r==", "", 0, "6,125", null);
-      builder.doTest("5+3=r===", "", 0, "9,125", null);
-      builder.doTest("5+3=r===5=", "", 0, "9,125", null);
+      builder.doTest("8 SQR =", "", 0, "64", "64");
+      builder.doTest("2 1/x =", "", 0, "0,5", null);
+      builder.doTest("5+3= 1/x", "1/(8) ", 1, "8", "0,125");
+      builder.doTest("5+3= 1/x =", "", 0, "3,125", "0,125");
+      builder.doTest("5+3= 1/x ==", "", 0, "6,125", null);
+      builder.doTest("5+3= 1/x ===", "", 0, "9,125", null);
+      builder.doTest("5+3= 1/x ===5=", "", 0, "9,125", null);
       builder.doTest("3=6+", "6 + ", 2, "6", null);
       builder.doTest("2=+", "2 + ", 2, "2", null);
    }
 
    @Test
    void specialOperationsTests() throws OverflowException, UndefinedResultException, InvalidInputException {
-      builder.doTest("200+4%rrq√", "200 + √(sqr(1/(1/(8)))) ", 2, "200", "8");
-      builder.doTest("1÷3=r", null, 0, null, "3");
+      builder.doTest("200+4% 1/x 1/x SQR √", "200 + √(sqr(1/(1/(8)))) ", 2, "200", "8");
+      builder.doTest("1÷3= 1/x ", null, 0, null, "3");
       builder.doTest("5+2√1", "5 + 1 ", 2, "5", "1");
    }
 
@@ -533,30 +533,30 @@ class CalculatorTest {
 
    @Test
    void squareTest() throws OverflowException, InvalidInputException, UndefinedResultException {
-      builder.doTest("0q", "sqr(0) ", 1, null, "0");
-      builder.doTest("1q", "sqr(1) ", 1, null, "1");
-      builder.doTest("2q", "sqr(2) ", 1, null, "4");
-      builder.doTest("2qq", "sqr(sqr(2)) ", 1, null, "16");
-      builder.doTest("2qqq", "sqr(sqr(sqr(2))) ", 1, null, "256");
-      builder.doTest("2nq", "sqr(negate(2)) ", 1, "0", "4");
-      builder.doTest("2√q√q√q", null, 0, null, "2");
-      builder.doTest("8q", "sqr(8) ", 1, "0", "64");
-      builder.doTest("5q+", "sqr(5) + ", 2, "25", null);
-      builder.doTest("5nq+", "sqr(negate(5)) + ", 2, "25", null);
-      builder.doTest("3q+7", "sqr(3) + 7 ", 2, "9", "7");
-      builder.doTest("3q+2q", "sqr(3) + sqr(2) ", 2, "9", "4");
-      builder.doTest("3q+2q=", "", 0, "13", null);
-      builder.doTest("3q+7=", "", 0, "16", null);
-      builder.doTest("5+qq", "5 + sqr(sqr(5)) ", 2, "5", "625");
-      builder.doTest("5+qq=", "", 0, "630", "625");
-      builder.doTest("2+3=q", "sqr(5) ", 1, "5", "25");
+      builder.doTest("0 SQR", "sqr(0) ", 1, null, "0");
+      builder.doTest("1 SQR", "sqr(1) ", 1, null, "1");
+      builder.doTest("2 SQR", "sqr(2) ", 1, null, "4");
+      builder.doTest("2 SQR SQR", "sqr(sqr(2)) ", 1, null, "16");
+      builder.doTest("2 SQR SQR SQR", "sqr(sqr(sqr(2))) ", 1, null, "256");
+      builder.doTest("2n SQR", "sqr(negate(2)) ", 1, "0", "4");
+      builder.doTest("2√ SQR √ SQR √ SQR", null, 0, null, "2");
+      builder.doTest("8 SQR", "sqr(8) ", 1, "0", "64");
+      builder.doTest("5 SQR +", "sqr(5) + ", 2, "25", null);
+      builder.doTest("5n SQR +", "sqr(negate(5)) + ", 2, "25", null);
+      builder.doTest("3 SQR +7", "sqr(3) + 7 ", 2, "9", "7");
+      builder.doTest("3 SQR +2 SQR ", "sqr(3) + sqr(2) ", 2, "9", "4");
+      builder.doTest("3 SQR +2 SQR =", "", 0, "13", null);
+      builder.doTest("3 SQR +7=", "", 0, "16", null);
+      builder.doTest("5+ SQR SQR", "5 + sqr(sqr(5)) ", 2, "5", "625");
+      builder.doTest("5+ SQR SQR =", "", 0, "630", "625");
+      builder.doTest("2+3= SQR", "sqr(5) ", 1, "5", "25");
 
-      builder.doTest("0.0000000000000001q", "sqr(0,0000000000000001) ", 1, "0", "1,e-32");
-      builder.doTest("0.0000000000000001qq", "sqr(sqr(0,0000000000000001)) ", 1, "0", "1,e-64");
-      builder.doTest("0.0000000000000001n=q", "sqr(-0,0000000000000001) ", 1, null, "1,e-32");
-      builder.doTest("0-0.0000000000000001=q", "sqr(-0,0000000000000001) ", 1, null, "1,e-32");
-      builder.doTest("9999999999999999q", "sqr(9999999999999999) ", 1, "0", "9,999999999999998e+31");
-      builder.doTest("9999999999999999qq", "sqr(sqr(9999999999999999)) ", 1, "0", "9,999999999999996e+63");
+      builder.doTest("0.0000000000000001 SQR", "sqr(0,0000000000000001) ", 1, "0", "1,e-32");
+      builder.doTest("0.0000000000000001 SQR SQR", "sqr(sqr(0,0000000000000001)) ", 1, "0", "1,e-64");
+      builder.doTest("0.0000000000000001n= SQR", "sqr(-0,0000000000000001) ", 1, null, "1,e-32");
+      builder.doTest("0-0.0000000000000001= SQR", "sqr(-0,0000000000000001) ", 1, null, "1,e-32");
+      builder.doTest("9999999999999999 SQR", "sqr(9999999999999999) ", 1, "0", "9,999999999999998e+31");
+      builder.doTest("9999999999999999 SQR SQR", "sqr(sqr(9999999999999999)) ", 1, "0", "9,999999999999996e+63");
    }
 
    @Test
@@ -585,17 +585,17 @@ class CalculatorTest {
 
    @Test
    void divideByTest() throws OverflowException, InvalidInputException, UndefinedResultException {
-      builder.doTest("1r", "1/(1) ", 1, "0", "1");
-      builder.doTest("2r", "1/(2) ", 1, "0", "0,5");
-      builder.doTest("10r", "1/(10) ", 1, "0", "0,1");
-      builder.doTest("5r+", "1/(5) + ", 2, "0,2", null);
-      builder.doTest("10+r", "10 + 1/(10) ", 2, "10", "0,1");
-      builder.doTest("10+12=r", "1/(22) ", 1, "22", "0,0454545454545454");
-      builder.doTest("3rrrrrr", null, 0, null, "3");
-      builder.doTest("1÷3=r", null, 0, null, "3");
-      builder.doTest("1000000000000000-r", "1000000000000000 - 1/(1000000000000000) ", 2, null, "0,000000000000001");
-      builder.doTest("1000000000000000×=-r", "1,e+30 - 1/(1,e+30) ", 2, null, "1,e-30");
-      builder.doTest("1000000000000000×=====-r", "1,e+90 - 1/(1,e+90) ", 2, null, "1,e-90");
+      builder.doTest("1 1/x", "1/(1) ", 1, "0", "1");
+      builder.doTest("2 1/x", "1/(2) ", 1, "0", "0,5");
+      builder.doTest("10 1/x", "1/(10) ", 1, "0", "0,1");
+      builder.doTest("5 1/x +", "1/(5) + ", 2, "0,2", null);
+      builder.doTest("10+ 1/x ", "10 + 1/(10) ", 2, "10", "0,1");
+      builder.doTest("10+12= 1/x ", "1/(22) ", 1, "22", "0,0454545454545454");
+      builder.doTest("3 1/x 1/x 1/x 1/x 1/x 1/x", null, 0, null, "3");
+      builder.doTest("1÷3= 1/x", null, 0, null, "3");
+      builder.doTest("1000000000000000- 1/x", "1000000000000000 - 1/(1000000000000000) ", 2, null, "0,000000000000001");
+      builder.doTest("1000000000000000×=- 1/x", "1,e+30 - 1/(1,e+30) ", 2, null, "1,e-30");
+      builder.doTest("1000000000000000×=====- 1/x", "1,e+90 - 1/(1,e+90) ", 2, null, "1,e-90");
    }
 
    @Test
@@ -617,15 +617,15 @@ class CalculatorTest {
       builder.doTest("199+1=%%", "800 ", 1, "200", "800");
       builder.doTest("199+1=%%%", "1600 ", 1, "200", "1 600");
       builder.doTest("5+%", "5 + 0.25 ", 2, "5", "0,25");
-      builder.doTest("2qqq", "sqr(sqr(sqr(2))) ", 1, "0", "256");
+      builder.doTest("2 SQR SQR SQR", "sqr(sqr(sqr(2))) ", 1, "0", "256");
    }
 
    @Test
    void backspaceTest() throws OverflowException, UndefinedResultException, InvalidInputException {
-      builder.doTest("2qqq<<<<<<<<=", "", 0, "256", null);
+      builder.doTest("2 SQR SQR SQR <<<<<<<<=", "", 0, "256", null);
       builder.doTest("70÷7=<<<", "", 0, "10", null);
       builder.doTest("1234567890<<<<<<<<<<<<<<<<<<<<<=", "", 0, "0", null);
-      builder.doTest("<<<<2√q=", "", 0, "2", null);
+      builder.doTest("<<<<2√ SQR =", "", 0, "2", null);
       builder.doTest("2+3=<<<<", "", 0, "5", null);
 
       builder.checkBuildOperand("<", "0");
@@ -667,7 +667,7 @@ class CalculatorTest {
    void clear() throws OverflowException, UndefinedResultException, InvalidInputException {
       builder.doTest("2+2×2-6×3-10 C", "", 0, "0", null);
       builder.doTest("2+5÷2 C C C C C C C C C", "", 0, "0", null);
-      builder.doTest("5qqqqqq√√qqqqq√qqq C C", "", 0, "0", null);
+      builder.doTest("5 SQR SQR SQR SQR SQR SQR √√ SQR SQR SQR SQR SQR√ SQR SQR SQR C C", "", 0, "0", null);
 
       builder.doTest("85 CE", "", 0, "0", "0");
       builder.doTest("8+2 CE", "8 + ", 2, "8", "0");
@@ -708,12 +708,12 @@ class CalculatorTest {
       builder.doTest("9999999999999999×6=====", "", 0, "7,775999999999999e+19", null);
       builder.doTest("9999999999999999+6=", "", 0, "1,e+16", null);
       builder.doTest("9999999999999999+7=", "", 0, "1,000000000000001e+16", null);
-      builder.doTest("9999999999999999r+1=", "", 0, "1", null);
-      builder.doTest("9999999999999999r=", "", 0, "1,e-16", null);
-      builder.doTest("9999999999999999r+=", "", 0, "2,e-16", null);
-      builder.doTest("9999999999999999r+==", "", 0, "3,e-16", null);
-      builder.doTest("9999999999999999r+===", "", 0, "4,e-16", null);
-      builder.doTest("9999999999999999r+====", "", 0, "5,000000000000001e-16", null);
+      builder.doTest("9999999999999999 1/x +1=", "", 0, "1", null);
+      builder.doTest("9999999999999999 1/x =", "", 0, "1,e-16", null);
+      builder.doTest("9999999999999999 1/x +=", "", 0, "2,e-16", null);
+      builder.doTest("9999999999999999 1/x +==", "", 0, "3,e-16", null);
+      builder.doTest("9999999999999999 1/x +===", "", 0, "4,e-16", null);
+      builder.doTest("9999999999999999 1/x +====", "", 0, "5,000000000000001e-16", null);
       builder.doTest("2.000000000000001+1=", "", 0, "3,000000000000001", null);
       builder.doTest("2.000000000000001+2=", "", 0, "4,000000000000001", null);
       builder.doTest("2.000000000000001+3=", "", 0, "5,000000000000001", null);
@@ -778,7 +778,7 @@ class CalculatorTest {
       builder.doTest("0.0000000000000001+1=+=+=+", "4 + ", 2, null, null);
       builder.doTest("0.0000000000000001+1=+=+=+=+", "8,000000000000001 + ", 2, null, null);
 
-      builder.doTest("2+5q", "2 + sqr(5) ", 2, null, null);
+      builder.doTest("2+5 SQR", "2 + sqr(5) ", 2, null, null);
       builder.doTest("1.00001√√√", "√(√(√(1,00001))) ", 1, null, null);
    }
 
@@ -798,8 +798,8 @@ class CalculatorTest {
       builder.doTest("0 + 20 M- M- M- M- M- =- MR =", "", 0, "120", null);
 
 
-      builder.doTest("0,0000000000000001qqqqqq M+ √√√√ qqqq M- MR ", null, 0, "0", "0");
-      builder.doTest("0,0000000000000001qqqqqq M+ √√√√ qqqq M- MR =", null, 0, "0", "0");
+      builder.doTest("0,0000000000000001 SQR SQR SQR SQR SQR SQR M+ √√√√ SQR SQR SQR SQR M- MR ", null, 0, "0", "0");
+      builder.doTest("0,0000000000000001 SQR SQR SQR SQR SQR SQR M+ √√√√ SQR SQR SQR SQR M- MR =", null, 0, "0", "0");
 
       builder.doTest("1000000000000000×1000000000000000×1000000000000000= M- C 1÷7×1000000000000000×1000000000000000×1000000000000000×7= M+ C MR=", null, 0, "0", null);
    }
@@ -807,8 +807,8 @@ class CalculatorTest {
    @Test
    void checkExceptions() {
       // overflow
-      builder.doExceptionsTest("1000000000000000qqqqqqqqqq", ExceptionType.OVERFLOW);
-      builder.doExceptionsTest("0.0000000000000001qqqqqqqqqq", ExceptionType.OVERFLOW);
+      builder.doExceptionsTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
+      builder.doExceptionsTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
 
       // undefined
       builder.doExceptionsTest("0÷0=", ExceptionType.UNDEFINED_RESULT);
@@ -818,8 +818,8 @@ class CalculatorTest {
       builder.doExceptionsTest("1÷0=", ExceptionType.DIVIDE_BY_ZERO);
       builder.doExceptionsTest("5÷0=", ExceptionType.DIVIDE_BY_ZERO);
       builder.doExceptionsTest("0.0000000000000001÷0=", ExceptionType.DIVIDE_BY_ZERO);
-      builder.doExceptionsTest("r", ExceptionType.DIVIDE_BY_ZERO);
-      builder.doExceptionsTest("0r", ExceptionType.DIVIDE_BY_ZERO);
+      builder.doExceptionsTest(" 1/x ", ExceptionType.DIVIDE_BY_ZERO);
+      builder.doExceptionsTest("0 1/x ", ExceptionType.DIVIDE_BY_ZERO);
       builder.doExceptionsTest("8÷0+", ExceptionType.DIVIDE_BY_ZERO);
       builder.doExceptionsTest("8÷0=", ExceptionType.DIVIDE_BY_ZERO);
 
@@ -843,7 +843,7 @@ class CalculatorTest {
       // this pattern provide to storage in memory this number : 0.9999999999999999999...
       // note! digit 9 must be 9999 times.
       String oneSubtractTheSmallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
-              "×10=========-1=r= M- C ";
+              "×10=========-1= 1/x = M- C ";
 
       // this pattern create number by this short formula (-MAX - MIN).
       // number must be -99999999...
@@ -853,30 +853,32 @@ class CalculatorTest {
 
       // 0.000000000000000...00001
       String theSmallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
-              "×10=========r×0.1= ";
+              "×10========= 1/x ×0.1= ";
 
       // 0.000000000000000...00002
       String doubleSmallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
-              "×10=========r×0.2= ";
+              "×10========= 1/x ×0.2= ";
 
       // right side
       // 999999999999999999999999(9).999999999...99
-      builder.doTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR =", null, 0, null, null);
+//      builder.doTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR =", null, 0, null, null);
 
       // 1e10000
-      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + theSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
+//      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + theSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
 
       // 1000000000000000000(0).0000000000000000000...01
-      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + doubleSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
+//      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + doubleSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
 
       // left side
       // -999999999999999999999999(9).999999999...99
-      builder.doTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =", null, 0, null, null);
+//      builder.doTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =", null, 0, null, null);
+
+      builder.doTest(theSmallestNumber, null, 0, "", "");
 
       // -1e10000
-      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + theSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
+//      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + theSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
 
       // -1000000000000(0).000000000...01
-      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + doubleSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
+//      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + doubleSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
    }
 }
