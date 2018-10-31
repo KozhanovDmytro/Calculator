@@ -861,24 +861,30 @@ class CalculatorTest {
 
       // right side
       // 999999999999999999999999(9).999999999...99
-//      builder.doTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR =", null, 0, null, null);
+      builder.doTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR =", null, 0, null, null);
 
       // 1e10000
-//      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + theSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
+      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + theSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
 
       // 1000000000000000000(0).0000000000000000000...01
-//      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + doubleSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
+      builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + doubleSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
 
       // left side
       // -999999999999999999999999(9).999999999...99
-//      builder.doTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =", null, 0, null, null);
+      builder.doTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =", null, 0, null, null);
 
-      builder.doTest(theSmallestNumber, null, 0, "", "");
+      builder.doTest(theSmallestNumber, null, 0, null, null);
+      builder.doExceptionsTest(theSmallestNumber + "×0.9999999999999999=", ExceptionType.OVERFLOW);
+      builder.doExceptionsTest(theSmallestNumber + "×0.0999999999999999=", ExceptionType.OVERFLOW);
+
+      builder.doTest(theSmallestNumber + "M+ C 0 - MR =", null, 0, null, null);
+      builder.doExceptionsTest(theSmallestNumber + "M+ C 0 - MR =" + "×0.9999999999999999=", ExceptionType.OVERFLOW);
+      builder.doExceptionsTest(theSmallestNumber + "M+ C 0 - MR =" + "×0.0999999999999999=", ExceptionType.OVERFLOW);
 
       // -1e10000
-//      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + theSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
+      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + theSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
 
       // -1000000000000(0).000000000...01
-//      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + doubleSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
+      builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + doubleSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
    }
 }

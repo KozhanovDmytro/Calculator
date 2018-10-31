@@ -75,7 +75,7 @@ public class Container {
     private void checkOverflow(BigDecimal number) throws OverflowException {
         if(number.abs().compareTo(new BigDecimal("1e10000")) >= 0 ||
                 (number.abs().compareTo(BigDecimal.ZERO)) > 0 &&
-                        number.abs().compareTo(new BigDecimal("1e-10000")) <= 0) {
+                        number.abs().compareTo(new BigDecimal("9.99999999999999999e-10000")) <= 0) {
             throw new OverflowException(number);
         }
     }
