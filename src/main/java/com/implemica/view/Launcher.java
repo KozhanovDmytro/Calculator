@@ -49,9 +49,9 @@ public class Launcher extends Application {
    private Parent root;
 
    /*constants*/
-   private final String WAY_TO_ROOT_FXML_FILE = "/fxml/root.fxml";
-   private final String WAY_TO_STYLESHEET_FILE = "/css/style.css";
-   private final String WAY_TO_ICON = "icons/icon.png";
+   private final String WAY_TO_ROOT_FXML_FILE = "/com/implemica/view/resources/fxml/root.fxml";
+   private final String WAY_TO_STYLESHEET_FILE = "/com/implemica/view/resources/css/style.css";
+   private final String WAY_TO_ICON = "/com/implemica/view/resources/icons/icon.png";
 
    private final int MIN_WIDTH = 322;
    private final int MIN_HEIGHT = 500;

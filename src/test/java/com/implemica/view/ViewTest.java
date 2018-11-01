@@ -256,10 +256,9 @@ class ViewTest extends TestFxBase {
    }
 
    @Test
-   void systemButtonsTest() {
-      Button hide = findBy("#hide");
+   void fullScreenTest() {
       Button full = findBy("#full");
-      Button close = findBy("#close");
+      Pane mainPane = findBy(NodesFinder.MAIN_PANE.getQuery());
 
       clickOn(full);
       checkStateForResizePane(true);
@@ -268,6 +267,31 @@ class ViewTest extends TestFxBase {
       clickOn(full);
       checkStateForResizePane(false);
       checkWindowSize(322.0d, 500.0d);
+
+      clickOn(mainPane);
+      clickOn(mainPane);
+      checkWindowSize(Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight() - 40.0d);
+
+      clickOn(mainPane);
+      clickOn(mainPane);
+      checkWindowSize(322.0d, 500.0d);
+   }
+
+   @Test
+   void checkPositionStageAfterFullScreen() {
+      Button full = findBy("#full");
+      Pane mainPane = findBy(NodesFinder.MAIN_PANE.getQuery());
+
+      moveWindow(new Point2D(500, 100));
+
+      clickOn(mainPane);
+      clickOn(mainPane);
+      checkWindowPosition(new Point2D(0.0d, 0.0d));
+
+      clickOn(mainPane);
+      clickOn(mainPane);
+
+      checkWindowPosition(new Point2D(339.0, 90.0));
    }
 
    @Test

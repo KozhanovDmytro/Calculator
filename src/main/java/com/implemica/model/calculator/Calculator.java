@@ -8,6 +8,7 @@ import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.history.MainHistory;
 import com.implemica.model.interfaces.Numeral;
 import com.implemica.model.interfaces.SpecialOperation;
+import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;

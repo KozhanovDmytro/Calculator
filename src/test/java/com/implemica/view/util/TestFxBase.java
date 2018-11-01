@@ -107,6 +107,21 @@ public class TestFxBase {
       robotFx.drop();
    }
 
+   public void moveWindow(Point2D point) {
+      Window window = getCurrentWindow();
+
+      double initialX = window.getX() + window.getWidth() / 2;
+      double initialY = window.getY() + 10;
+
+      robotFx.drag(initialX, initialY);
+
+      robotFx.moveTo(point.getX(), point.getY());
+
+      assertEquals((int) point.getX() - window.getWidth() / 2, window.getX());
+      assertEquals((int) point.getY() - 10, window.getY());
+      robotFx.drop();
+   }
+
    public void checkSizeForResultLabel(int from, int to) {
       Label resultLabel = findBy("#resultLabel");
       double size = resultLabel.getFont().getSize();
@@ -121,6 +136,13 @@ public class TestFxBase {
    public <T extends Node> T findBy(String query) {
       Window window = getCurrentWindow();
       return (T) window.getScene().getRoot().lookup(query);
+   }
+
+   public void checkWindowPosition(Point2D expected) {
+      Window window = getCurrentWindow();
+
+      assertEquals(expected.getX(), window.getX());
+      assertEquals(expected.getY(), window.getY());
    }
 
    public void clickOn(Node node) {

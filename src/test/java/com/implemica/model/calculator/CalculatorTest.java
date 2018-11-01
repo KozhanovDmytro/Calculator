@@ -851,11 +851,11 @@ class CalculatorTest {
       String negateMaxSubtractMin = "1000000000000000×===================×================================×1000000000000000======" +
               "×10========= -1×10n-9= ";
 
-      // 0.000000000000000...00001
+      // 1e-9999
       String theSmallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
               "×10========= 1/x ×0.1= ";
 
-      // 0.000000000000000...00002
+      // 2e-9999
       String doubleSmallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
               "×10========= 1/x ×0.2= ";
 
@@ -866,25 +866,35 @@ class CalculatorTest {
       // 1e10000
       builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + theSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
 
-      // 1000000000000000000(0).0000000000000000000...01
+      // 1e10001
       builder.doExceptionsTest(oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C " + doubleSmallestNumber + " + MR =", ExceptionType.OVERFLOW);
+
+      // gets 9e-9999 number
+      builder.doTest(theSmallestNumber + "×9=", null, 0, null, null);
+
+      // gets 9,9999999999999999e-10000
+      builder.doExceptionsTest(theSmallestNumber + "×0.9999999999999999=", ExceptionType.OVERFLOW);
+
+      // gets 9,9999999999999998e-10000
+      builder.doExceptionsTest(theSmallestNumber + "×0.9999999999999998=", ExceptionType.OVERFLOW);
 
       // left side
       // -999999999999999999999999(9).999999999...99
       builder.doTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =", null, 0, null, null);
 
-      builder.doTest(theSmallestNumber, null, 0, null, null);
-      builder.doExceptionsTest(theSmallestNumber + "×0.9999999999999999=", ExceptionType.OVERFLOW);
-      builder.doExceptionsTest(theSmallestNumber + "×0.0999999999999999=", ExceptionType.OVERFLOW);
-
-      builder.doTest(theSmallestNumber + "M+ C 0 - MR =", null, 0, null, null);
-      builder.doExceptionsTest(theSmallestNumber + "M+ C 0 - MR =" + "×0.9999999999999999=", ExceptionType.OVERFLOW);
-      builder.doExceptionsTest(theSmallestNumber + "M+ C 0 - MR =" + "×0.0999999999999999=", ExceptionType.OVERFLOW);
-
       // -1e10000
       builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + theSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
 
-      // -1000000000000(0).000000000...01
+      // -1e10001
       builder.doExceptionsTest(oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C " + doubleSmallestNumber + " - MR =", ExceptionType.OVERFLOW);
+
+      // gets -9e-9999 number
+      builder.doTest(theSmallestNumber + "×9= M+ C 0 - MR =", null, 0, null, null);
+
+      // gets -9,9999999999999999e-10000 number
+      builder.doExceptionsTest(theSmallestNumber + "M+ C 0 - MR =" + "×0.9999999999999999=", ExceptionType.OVERFLOW);
+
+      // gets -9,9999999999999998e-10000 number
+      builder.doExceptionsTest(theSmallestNumber + "M+ C 0 - MR =" + "×0.9999999999999998=", ExceptionType.OVERFLOW);
    }
 }

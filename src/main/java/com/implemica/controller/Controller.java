@@ -87,7 +87,7 @@ public class Controller {
    }
 
    private void executeProperties() throws IOException, URISyntaxException {
-      File file = new File(getClass().getResource("/properties/text_En.properties").toURI());
+      File file = new File(getClass().getResource("/com/implemica/view/resources/properties/text_En.properties").toURI());
 
       InputStream stream = new FileInputStream(file);
 
