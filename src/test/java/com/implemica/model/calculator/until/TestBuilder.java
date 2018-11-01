@@ -42,7 +42,7 @@ public class TestBuilder {
    private ExceptionType exceptionType = ExceptionType.NOTHING;
 
    public TestBuilder() {
-      calculator = new Calculator(new Arabic());
+      calculator = new Calculator();
    }
 
    public void doExceptionsTest(String pattern, ExceptionType exceptionType) {
@@ -66,7 +66,7 @@ public class TestBuilder {
    }
 
    public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException, UndefinedResultException, InvalidInputException {
-      calculator = new Calculator(new Arabic());
+      calculator = new Calculator();
       this.result = "0";
       this.operand = "0";
       String[] actions = pattern.split(" ");

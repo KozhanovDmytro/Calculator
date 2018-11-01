@@ -23,7 +23,7 @@ public class Calculator {
    @Getter
    private Container container;
 
-   private Numeral numeral;
+   private Numeral numeral = new Arabic();
 
    @Getter
    private boolean isShownResult;
@@ -32,8 +32,7 @@ public class Calculator {
       void calculate() throws Exception;
    }
 
-   public Calculator(Numeral numeral){
-      this.numeral = numeral;
+   public Calculator(){
       container = new Container();
       container.setMadeOperand(true);
    }

@@ -14,7 +14,6 @@ import com.implemica.model.validation.Validator;
 import java.math.BigDecimal;
 
 public class ModelDemo {
-
    static class Cube implements SpecialOperation {
       @Override
       public String buildHistory(String history) {
@@ -26,10 +25,9 @@ public class ModelDemo {
          return result.pow(3);
       }
    }
-
    public static void main(String[] args) {
 
-      Calculator calculator = new Calculator(new Arabic());
+      Calculator calculator = new Calculator();
       Validator validator = new Validator();
 
       calculator.buildOperand(Number.THREE);

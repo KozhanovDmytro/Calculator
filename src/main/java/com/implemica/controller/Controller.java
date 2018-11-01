@@ -69,7 +69,7 @@ public class Controller {
 
    private Properties textsForLabel = new Properties();
 
-   private Calculator calculator = new Calculator(new Arabic());
+   private Calculator calculator = new Calculator();
 
    private Validator validator = new Validator();
 
