@@ -19,6 +19,8 @@ import com.implemica.model.operations.special.*;
 import com.implemica.model.validation.Validator;
 import lombok.Getter;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -27,7 +29,9 @@ public class TestBuilder {
    @Getter
    private Calculator calculator;
 
-   private String result;
+//   private String result;
+
+   private BigDecimal result;
 
    private String operand;
 
@@ -67,7 +71,7 @@ public class TestBuilder {
 
    public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException, UndefinedResultException, InvalidInputException {
       calculator = new Calculator();
-      this.result = "0";
+      this.result = BigDecimal.ZERO;
       this.operand = "0";
       String[] actions = pattern.split(" ");
       for (String action : actions) {
@@ -114,9 +118,14 @@ public class TestBuilder {
       if (result != null) {
          checkResult(result);
       }
+   }
 
+   public void doBoundaryTest(String pattern, String expected) throws OverflowException, InvalidInputException, UndefinedResultException {
+      doTest(pattern, null, 0, null, null);
 
-
+      if(expected != null) {
+         assertEquals(new BigDecimal(expected), result);
+      }
    }
 
    public void checkBuildOperand(String pattern, String expected) throws OverflowException, InvalidInputException, UndefinedResultException {
@@ -245,7 +254,7 @@ public class TestBuilder {
    }
 
    protected void checkResult(String expected) {
-      assertEquals(expected, result);
+      assertEquals(expected, validator.showNumber(result));
    }
 
    private void checkOperand(String expected) {
@@ -283,7 +292,7 @@ public class TestBuilder {
       }
 
       if(response.getResult() != null) {
-         result = validator.showNumber(response.getResult());
+         result = response.getResult();
       }
 
       if(response.getOperand() != null) {
