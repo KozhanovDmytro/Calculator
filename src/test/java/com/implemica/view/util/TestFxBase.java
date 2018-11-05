@@ -158,7 +158,7 @@ public class TestFxBase {
       FXTestUtils.awaitEvents();
    }
 
-   public Window getCurrentWindow() {
+   public static Window getCurrentWindow() {
       return Window.getWindows().get(0);
    }
 }

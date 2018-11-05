@@ -6,6 +6,8 @@ import com.implemica.view.util.NodesFinder;
 import com.implemica.view.util.TestFxBase;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import org.loadui.testfx.utils.FXTestUtils;
+import org.testfx.osgi.service.TestFx;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -43,6 +45,8 @@ public class TestFxBaseBuilder extends TestFxBase {
                checkBySymbols(action);
          }
       }
+
+      FXTestUtils.awaitEvents();
 
       if (history != null) {
          checkHistory(history);
