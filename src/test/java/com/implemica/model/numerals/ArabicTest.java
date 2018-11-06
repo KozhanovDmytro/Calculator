@@ -5,14 +5,14 @@ import com.implemica.model.numerals.numbers.Number;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ArabicTest {
+public class ArabicTest {
 
    private static Numeral arabic;
 
    @BeforeAll
-   public static void init(){
+   public static void init() {
       arabic = new Arabic();
    }
 
@@ -30,7 +30,7 @@ class ArabicTest {
       check(Number.NINE, '9');
    }
 
-   private void check(Number number, char expected){
+   private void check(Number number, char expected) {
       assertEquals(expected, arabic.translate(number));
    }
 }

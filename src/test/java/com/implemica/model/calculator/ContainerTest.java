@@ -10,21 +10,19 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.validation.Validator;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Ignore
-class ContainerTest {
+public class ContainerTest {
 
    private Container container;
 
    private Validator validator = new Validator();
 
    @BeforeEach
-   void init(){
+   void init() {
       container = new Container();
    }
 
@@ -81,7 +79,7 @@ class ContainerTest {
       container.calculate();
    }
 
-   private void checkResult(String number){
+   private void checkResult(String number) {
       assertEquals(number, validator.showNumber(container.getResult()));
    }
 

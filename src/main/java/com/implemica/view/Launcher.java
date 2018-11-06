@@ -3,8 +3,10 @@ package com.implemica.view;
 import com.implemica.view.util.Coordinates;
 import com.implemica.view.util.NodesFinder;
 import com.implemica.view.util.Side;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -27,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -492,19 +495,28 @@ public class Launcher extends Application {
 
    private void menuSize(boolean show) {
       AnchorPane menu = findBy(NodesFinder.MENU);
-      TranslateTransition animation = new TranslateTransition(Duration.millis(ANIMATION_TIME), menu);
+
       Pane hideMenu = findBy(NodesFinder.HIDE_MENU);
 
+      KeyFrame key1;
+      KeyFrame key2;
+      KeyFrame key3;
+
       if (show) {
-         animation.setToX(ZERO);
+         key1 = new KeyFrame(Duration.ZERO, new KeyValue(menu.translateXProperty(), -MENU_SIZE));
+         key2 = new KeyFrame(new Duration(40), new KeyValue(menu.translateXProperty(), ZERO - 50.0d));
+         key3 = new KeyFrame(new Duration(300), new KeyValue(menu.translateXProperty(), ZERO));
          isMenuShown = true;
       } else {
-         animation.setToX(-MENU_SIZE);
+         key1 = new KeyFrame(Duration.ZERO, new KeyValue(menu.translateXProperty(), ZERO));
+         key2 = new KeyFrame(new Duration(40), new KeyValue(menu.translateXProperty(), ZERO));
+         key3 = new KeyFrame(new Duration(300), new KeyValue(menu.translateXProperty(), -MENU_SIZE));
          isMenuShown = false;
       }
 
+      Timeline timeline = new Timeline(key1, key2, key3);
       hideMenu.setVisible(isMenuShown);
-      animation.play();
+      timeline.play();
       menu.setVisible(show);
    }
 

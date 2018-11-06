@@ -1,10 +1,20 @@
 package com.implemica;
 
+import com.implemica.controller.PerformanceTest;
+import com.implemica.model.calculator.CalculatorTest;
+import com.implemica.model.calculator.ContainerTest;
+import com.implemica.model.numerals.ArabicTest;
+import com.implemica.model.validation.ValidatorTest;
+import com.implemica.view.SystemButtonsTest;
+import com.implemica.view.ViewTest;
 import org.junit.platform.runner.JUnitPlatform;
-import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.SelectClasses;
 import org.junit.runner.RunWith;
 
 @RunWith(JUnitPlatform.class)
-@SelectPackages({ "com.implemica"})
+@SelectClasses({ViewTest.class, PerformanceTest.class,
+        SystemButtonsTest.class, CalculatorTest.class,
+        ContainerTest.class, ArabicTest.class,
+        ValidatorTest.class})
 public class AllTests {
 }

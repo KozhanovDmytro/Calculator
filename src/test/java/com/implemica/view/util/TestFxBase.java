@@ -25,7 +25,9 @@ public class TestFxBase {
 
    @BeforeAll
    public static void setUp() throws Exception {
-      launch(Launcher.class);
+      if (Window.getWindows().size() == 0) {
+         launch(Launcher.class);
+      }
 
       robotAwt = new Robot();
 

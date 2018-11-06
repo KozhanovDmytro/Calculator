@@ -4,21 +4,15 @@ import com.implemica.model.calculator.until.TestBuilder;
 import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
+public class ValidatorTest {
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class ValidatorTest {
-   
    private static TestBuilder builder;
 
    @BeforeAll
-   public static void init(){
+   public static void init() {
       builder = new TestBuilder();
    }
 

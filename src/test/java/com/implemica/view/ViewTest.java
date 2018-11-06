@@ -10,16 +10,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Window;
 import org.junit.jupiter.api.Test;
-import org.loadui.testfx.utils.FXTestUtils;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class ViewTest extends TestFxBase {
+public class ViewTest extends TestFxBase {
 
    @Test
-   void dragTest(){
+   void dragTest() {
       // left side
       checkDrag(Side.LEFT, -10, 0);
       checkDrag(Side.LEFT, 10, 0);
@@ -142,25 +139,25 @@ class ViewTest extends TestFxBase {
       double maxX = Screen.getPrimary().getBounds().getMaxX() - 1.0d;
       double maxY = Screen.getPrimary().getBounds().getMaxY() - 1.0d;
 
-      moveWindow(new Point2D[] {
+      moveWindow(new Point2D[]{
               new Point2D(0.0d, 0.0d),
-              new Point2D(maxX/2, 0.0d),
+              new Point2D(maxX / 2, 0.0d),
               new Point2D(maxX, 0.0d),
-              new Point2D(maxX, maxY/2),
+              new Point2D(maxX, maxY / 2),
               new Point2D(maxX, maxY),
-              new Point2D(maxX/2, maxY),
+              new Point2D(maxX / 2, maxY),
               new Point2D(0.0d, maxY),
-              new Point2D(0.0d, maxY/2),
+              new Point2D(0.0d, maxY / 2),
               new Point2D(0.0d, 0.0d),
-              new Point2D(maxX/4, maxY/4),
-              new Point2D(maxX/2, maxY/2),
+              new Point2D(maxX / 4, maxY / 4),
+              new Point2D(maxX / 2, maxY / 2),
               new Point2D(maxX * 0.75, maxY * 0.75),
               new Point2D(maxX, maxY),
               new Point2D(maxX, 0.0d),
 
-              new Point2D(maxX * 0.75, maxY/4),
-              new Point2D(maxX/2, maxY/2),
-              new Point2D(maxX/4, maxY * 0.75),
+              new Point2D(maxX * 0.75, maxY / 4),
+              new Point2D(maxX / 2, maxY / 2),
+              new Point2D(maxX / 4, maxY * 0.75),
               new Point2D(0.0d, maxY)
       });
    }
@@ -362,7 +359,7 @@ class ViewTest extends TestFxBase {
       Pane rightResize = findBy("#rightResize");
       Pane rightBottomResize = findBy("#rightBottomResize");
 
-      if(isFull) {
+      if (isFull) {
          assertTrue(rightTopResize.isDisable());
          assertTrue(leftTopResize.isDisable());
          assertTrue(topResize.isDisable());
