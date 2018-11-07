@@ -878,11 +878,11 @@ public class CalculatorTest {
       // gets 1.000000000000001e-10000 number
       builder.doBoundaryTest(smallNumber + "×0.1000000000000001=", "1.000000000000001e-10000");
 
-      // gets 1-10000
+      // gets 1e-10000
       builder.doExceptionsTest(smallNumber + "×0.1=", ExceptionType.OVERFLOW);
 
-      // gets 1.000000000000001e-10001 number
-      builder.doExceptionsTest(smallNumber + "×0.0100000000000001=", ExceptionType.OVERFLOW);
+      // gets 9.999999999999999e-10001 number
+      builder.doExceptionsTest(smallNumber + "×0.0999999999999999=", ExceptionType.OVERFLOW);
 
       // left side
       // -999999999999999999999999(9).999999999...99
@@ -901,7 +901,7 @@ public class CalculatorTest {
       // gets -1e-10000
       builder.doExceptionsTest(smallNumber + "M+ C 0 - MR =" + "×0.1=", ExceptionType.OVERFLOW);
 
-      // gets -1.000000000000001e-10001 number
-      builder.doExceptionsTest(smallNumber + "M+ C 0 - MR =" + "×0.0100000000000001=", ExceptionType.OVERFLOW);
+      // gets -9.999999999999999e-10001 number
+      builder.doExceptionsTest(smallNumber + "M+ C 0 - MR =" + "×0.0999999999999999=", ExceptionType.OVERFLOW);
    }
 }

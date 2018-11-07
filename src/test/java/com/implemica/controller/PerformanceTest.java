@@ -835,54 +835,54 @@ public class PerformanceTest extends TestFxBaseBuilder {
               "×10========= -1×10n-9= ";
 
       // 2e-9999
-      String doubleSmallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
+      String doubleSmallNumber = "1000000000000000×===================×================================×1000000000000000======" +
               "×10========= 1/x ×0.2= ";
 
       // 1e-9999
-      String theSmallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
+      String smallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
               "×10========= 1/x ×0.1= ";
 
 
-      String theMaxNumber = oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C "  + theSmallestNumber + " + MR =";
+      String theMaxNumber = oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C "  + smallestNumber + " + MR =";
 
-      String theMinNumber = oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C "  + theSmallestNumber + "×1n + MR =";
+      String theMinNumber = oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C "  + smallestNumber + "×1n + MR =";
 
       // right side
       // 999999999999999999999999(9).999999999...99
       doTest(theMaxNumber, null, "1,e+10000");
 
       // 1e10000
-      doTest(theMaxNumber + " MC M+ C " + theSmallestNumber + " + MR = ", null, "Overflow");
+      doTest(theMaxNumber + " MC M+ C " + smallestNumber + " + MR = ", null, "Overflow");
 
       // 1e10001
-      doTest(theMaxNumber + " MC M+ C " + doubleSmallestNumber + " + MR = ", null, "Overflow");
+      doTest(theMaxNumber + " MC M+ C " + doubleSmallNumber + " + MR = ", null, "Overflow");
 
       // gets 1.000000000000001e-10000 number
-      doTest(theSmallestNumber + "×0.1000000000000001=", null, "1,000000000000001e-10000");
+      doTest(smallestNumber + "×0.1000000000000001=", null, "1,000000000000001e-10000");
 
       // gets 1-10000
-      doTest(theSmallestNumber + "×0.1=", null, "Overflow");
+      doTest(smallestNumber + "×0.1=", null, "Overflow");
 
-      // gets 1.000000000000001e-10001 number
-      doTest(theSmallestNumber + "×0.0100000000000001=", null, "Overflow");
+      // gets 9.999999999999999e-10001 number
+      doTest(smallestNumber + "×0.0999999999999999=", null, "Overflow");
 
       // left side
       // -999999999999999999999999(9).999999999...99
       doTest(theMinNumber, null, "-1,e+10000");
 
       // -1e10000
-      doTest(theMinNumber + " MC M+ C " + theSmallestNumber + " ×1n + MR = ", null, "Overflow");
+      doTest(theMinNumber + " MC M+ C " + smallestNumber + " ×1n + MR = ", null, "Overflow");
 
       // -1e10001
-      doTest(theMinNumber + " MC M+ C " + doubleSmallestNumber + " ×1n + MR = ", null, "Overflow");
+      doTest(theMinNumber + " MC M+ C " + doubleSmallNumber + " ×1n + MR = ", null, "Overflow");
 
       // gets -1.000000000000001e-10000 number
-      doTest(theSmallestNumber + " ×0.1000000000000001n= ", null, "-1,000000000000001e-10000");
+      doTest(smallestNumber + " ×0.1000000000000001n= ", null, "-1,000000000000001e-10000");
 
       // gets -1-10000
-      doTest(theSmallestNumber + "M+ C 0 - MR =" + "×0.1=", null, "Overflow");
+      doTest(smallestNumber + "M+ C 0 - MR =" + "×0.1=", null, "Overflow");
 
       // gets -1.000000000000001e-10001 number
-      doTest(theSmallestNumber + "M+ C 0 - MR =" + "×0.0100000000000001=", null, "Overflow");
+      doTest(smallestNumber + "M+ C 0 - MR =" + "×0.0999999999999999=", null, "Overflow");
    }
 }
