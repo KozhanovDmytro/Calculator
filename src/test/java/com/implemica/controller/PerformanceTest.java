@@ -817,72 +817,72 @@ public class PerformanceTest extends TestFxBaseBuilder {
    @Test
    void boundaryTest() {
 
-      // this pattern create number by this short formula (MAX - 1).
-      // number must be 99999999...
-      // digit 9 must be 9999 times.
-      String maxMinusOne = "1000000000000000×===================×================================×1000000000000000======" +
-              "×10========= -1×10+9=";
-
-      // this pattern provide to storage in memory this number : 0.9999999999999999999...
-      // note! digit 9 must be 9999 times.
-      String oneSubtractTheSmallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
-              "×10=========-1= 1/x = M- C ";
-
-      // this pattern create number by this short formula (-MAX - MIN).
-      // number must be -99999999...
-      // digit 9 must be 9999 times.
-      String negateMaxSubtractMin = "1000000000000000×===================×================================×1000000000000000======" +
-              "×10========= -1×10n-9= ";
-
-      // 2e-9999
+      // this pattern reach to number: 2e-9999 and write it as a result.
       String doubleSmallNumber = "1000000000000000×===================×================================×1000000000000000======" +
               "×10========= 1/x ×0.2= ";
 
-      // 1e-9999
-      String smallestNumber = "1000000000000000×===================×================================×1000000000000000======" +
+      // this pattern reach to number: 1e-9999 and write it as a result.
+      String smallNumber = "1000000000000000×===================×================================×1000000000000000======" +
               "×10========= 1/x ×0.1= ";
 
+      // this pattern create number by this short formula (MAX - 1).
+      // number must be 99999999...
+      // digit 9 must be 10 000 times.
+      String maxMinusOne = "1000000000000000×===================×================================×1000000000000000======" +
+              "×10========= -1×10+9=";
 
-      String theMaxNumber = oneSubtractTheSmallestNumber + maxMinusOne + "+ MR = MC M+ C "  + smallestNumber + " + MR =";
+      // this pattern provide to storage in memory this number : 0.9999999999999999999..94
+      // note! digit 9 must be 19999 times and at the end of this number must be digit 4
+      String oneSubtractTheSmallestNumber = smallNumber + " M+ C " + "1000000000000000×===================×================================×1000000000000000======" +
+              "×10========= -1= 1/x - MR ×0.1=-0.9=×0.6=-0.4=n MC M+ C ";
 
-      String theMinNumber = oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR = MC M+ C "  + smallestNumber + "×1n + MR =";
+      // this pattern create number by this short formula (-MAX - MIN).
+      // number must be -99999999...
+      // digit 9 must be 10 000 times.
+      String negateMaxSubtractMin = "1000000000000000×===================×================================×1000000000000000======" +
+              "×10========= -1×10n-9= ";
+
+
+      String theMaxNumber = oneSubtractTheSmallestNumber + maxMinusOne + "+ MR =";
+
+      String theMinNumber = oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =";
 
       // right side
-      // 999999999999999999999999(9).999999999...99
+      // 999999..9,999999999...94
       doTest(theMaxNumber, null, "1,e+10000");
 
       // 1e10000
-      doTest(theMaxNumber + " MC M+ C " + smallestNumber + " + MR = ", null, "Overflow");
+      doTest(theMaxNumber + " MC M+ C " + smallNumber + " + MR = ", null, "Overflow");
 
       // 1e10001
       doTest(theMaxNumber + " MC M+ C " + doubleSmallNumber + " + MR = ", null, "Overflow");
 
       // gets 1.000000000000001e-10000 number
-      doTest(smallestNumber + "×0.1000000000000001=", null, "1,000000000000001e-10000");
+      doTest(smallNumber + "×0.1000000000000001=", null, "1,000000000000001e-10000");
 
       // gets 1-10000
-      doTest(smallestNumber + "×0.1=", null, "Overflow");
+      doTest(smallNumber + "×0.1=", null, "Overflow");
 
       // gets 9.999999999999999e-10001 number
-      doTest(smallestNumber + "×0.0999999999999999=", null, "Overflow");
+      doTest(smallNumber + "×0.0999999999999999=", null, "Overflow");
 
       // left side
-      // -999999999999999999999999(9).999999999...99
+      // -9999..9,999999999...94
       doTest(theMinNumber, null, "-1,e+10000");
 
       // -1e10000
-      doTest(theMinNumber + " MC M+ C " + smallestNumber + " ×1n + MR = ", null, "Overflow");
+      doTest(theMinNumber + " MC M+ C " + smallNumber + " ×1n + MR = ", null, "Overflow");
 
       // -1e10001
       doTest(theMinNumber + " MC M+ C " + doubleSmallNumber + " ×1n + MR = ", null, "Overflow");
 
       // gets -1.000000000000001e-10000 number
-      doTest(smallestNumber + " ×0.1000000000000001n= ", null, "-1,000000000000001e-10000");
+      doTest(smallNumber + " ×0.1000000000000001n= ", null, "-1,000000000000001e-10000");
 
       // gets -1-10000
-      doTest(smallestNumber + "M+ C 0 - MR =" + "×0.1=", null, "Overflow");
+      doTest(smallNumber + "M+ C 0 - MR =" + "×0.1=", null, "Overflow");
 
       // gets -1.000000000000001e-10001 number
-      doTest(smallestNumber + "M+ C 0 - MR =" + "×0.0999999999999999=", null, "Overflow");
+      doTest(smallNumber + "M+ C 0 - MR =" + "×0.0999999999999999=", null, "Overflow");
    }
 }
