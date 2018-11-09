@@ -6,12 +6,16 @@ import com.implemica.model.operations.SimpleOperation;
 
 import java.util.ArrayDeque;
 
-public class MainHistory implements History<SimpleOperation> {
+public class MainHistory implements History<SimpleOperation>, Cloneable {
 
     private ArrayDeque<SimpleOperation> operations;
 
     public MainHistory(){
         operations = new ArrayDeque<>();
+    }
+
+    private MainHistory(ArrayDeque<SimpleOperation> operations){
+        this.operations = operations;
     }
 
     @Override
@@ -64,5 +68,11 @@ public class MainHistory implements History<SimpleOperation> {
     public void hideLast() {
         if(operations.size() > 0)
             operations.getLast().setShowOperand(false);
+    }
+
+    @Override
+    public MainHistory clone()  {
+        MainHistory clone = new MainHistory(this.operations.clone());
+        return clone;
     }
 }

@@ -790,28 +790,28 @@ public class PerformanceTest extends TestFxBaseBuilder {
    @Test
    void checkExceptions() {
       // overflow
-      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))) ", "Overflow");
-      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001))))))))) ", "Overflow");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))) ", "Overflow");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001)))))))))) ", "Overflow");
 
       // undefined
-      doTest("0÷0=", "0 ÷ ", "Result is undefined");
-      doTest("0÷0+", "0 ÷ ", "Result is undefined");
+      doTest("0÷0=", "0 ÷ 0 ", "Result is undefined");
+      doTest("0÷0+", "0 + ", "Result is undefined");
 
       // divide by zero
-      doTest("1÷0=", "1 ÷ ", "Cannot divide by zero");
-      doTest("5÷0=", "5 ÷ ", "Cannot divide by zero");
-      doTest("0.0000000000000001÷0=", "0,0000000000000001 ÷ ", "Cannot divide by zero");
-      doTest(" 1/x ", "", "Cannot divide by zero");
-      doTest("0 1/x ", "", "Cannot divide by zero");
-      doTest("8÷0+", "8 ÷ ", "Cannot divide by zero");
-      doTest("8÷0=", "8 ÷ ", "Cannot divide by zero");
+      doTest("1÷0=", "1 ÷ 0 ", "Cannot divide by zero");
+      doTest("5÷0=", "5 ÷ 0 ", "Cannot divide by zero");
+      doTest("0.0000000000000001÷0=", "0,0000000000000001 ÷ 0 ", "Cannot divide by zero");
+      doTest(" 1/x ", "1/(0) ", "Cannot divide by zero");
+      doTest("0 1/x ", "1/(0) ", "Cannot divide by zero");
+      doTest("8÷0+", "8 + ", "Cannot divide by zero");
+      doTest("8÷0=", "8 ÷ 0 ", "Cannot divide by zero");
 
       // invalid input
-      doTest("5n√", "negate(5) ", "Invalid input");
-      doTest("55n√", "negate(55) ", "Invalid input");
-      doTest("50-45-500√=√", "", "Invalid input");
-      doTest("0.4565468n√", "negate(0,4565468) ", "Invalid input");
-      doTest("-0.57894=√", "", "Invalid input");
+      doTest("5n√", "√(negate(5)) ", "Invalid input");
+      doTest("55n√", "√(negate(55)) ", "Invalid input");
+      doTest("50-45-500√=√", "√(-17,3606797749979) ", "Invalid input");
+      doTest("0.4565468n√", "√(negate(0,4565468)) ", "Invalid input");
+      doTest("-0.57894=√", "√(-0,57894) ", "Invalid input");
    }
 
    @Test

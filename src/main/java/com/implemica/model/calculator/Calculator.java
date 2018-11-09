@@ -130,7 +130,9 @@ public class Calculator {
       ExceptionType exceptionType = calculate(()-> container.calculate());
 
       Equals equals = new Equals(container.getOperation());
-      container.getHistory().clear();
+      if(exceptionType == ExceptionType.NOTHING) {
+         container.getHistory().clear();
+      }
       container.setOperation(equals);
       container.setMadeOperand(false);
 
@@ -160,7 +162,9 @@ public class Calculator {
       }
 
       if(exceptionType != ExceptionType.NOTHING) {
+         MainHistory tempHistory = container.getHistory().clone();
          clear();
+         container.setHistory(tempHistory);
       }
 
       return exceptionType;
@@ -209,6 +213,7 @@ public class Calculator {
       response.setHistory(showHistory());
       response.setExceptionType(ExceptionType.NOTHING);
 
+      isShownResult = false;
       return response;
    }
 

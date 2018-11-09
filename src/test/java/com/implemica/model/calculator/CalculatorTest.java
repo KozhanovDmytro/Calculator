@@ -831,8 +831,10 @@ public class CalculatorTest {
 
    @Test
    void checkExceptions() {
-      // overflow
+      // check overflow exception for more than 10 000 scale.
       builder.doExceptionsTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
+
+      // check overflow exception for more than -10 000 scale.
       builder.doExceptionsTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
 
       // undefined
@@ -887,8 +889,6 @@ public class CalculatorTest {
       String theMaxNumber = oneSubtractTheSmallestNumber + maxMinusOne + "+ MR =";
 
       String theMinNumber = oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =";
-
-
 
       // right side
       // expected number : 9999999..9.999..94

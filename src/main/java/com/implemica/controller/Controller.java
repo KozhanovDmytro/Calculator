@@ -278,6 +278,11 @@ public class Controller {
             isThrownException = true;
             break;
       }
+
+      if(response.getHistory() != null) {
+         showHistory(response.getHistory().buildHistory());
+      }
+
       if(!isThrownException){
          if(response.getResult() != null) {
             showResult(validator.showNumber(response.getResult()));
@@ -285,10 +290,6 @@ public class Controller {
 
          if(response.getOperand() != null) {
             showResult(validator.showNumber(response.getOperand().stripTrailingZeros()));
-         }
-
-         if(response.getHistory() != null) {
-            showHistory(response.getHistory().buildHistory());
          }
 
          if(response.isSeparated()) {

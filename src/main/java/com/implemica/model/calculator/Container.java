@@ -24,7 +24,7 @@ import java.math.RoundingMode;
 @Setter
 public class Container {
 
-    private BigDecimal result = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL128);
+    private BigDecimal result = new BigDecimal(BigInteger.ZERO);
 
     private SimpleOperation operation = new Default();
 
@@ -59,16 +59,17 @@ public class Container {
             }
 
             this.operation.setOperand(operand);
-            this.operation.setShowOperand(true);
         } else {
-            getOperation().getOperandHistory().add(operation);
-            getOperation().setOperand(operation.calculate(getOperation().getOperand()));
-
             if(this.operation instanceof Default && getHistory().size() == 0){
                 getHistory().add(this.operation);
+                this.operation.setShowOperand(true);
             }
+
+            getOperation().getOperandHistory().add(operation);
+            getOperation().setOperand(operation.calculate(getOperation().getOperand()));
         }
         setMadeOperand(operation instanceof Negate);
+        this.operation.setShowOperand(true);
         this.operation.setOperand(checkForZero(this.operation.getOperand()));
         checkOverflow(this.operation.getOperand());
     }

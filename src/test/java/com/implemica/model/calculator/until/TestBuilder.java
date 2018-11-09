@@ -50,7 +50,7 @@ public class TestBuilder {
    }
 
    public void doExceptionsTest(String pattern, ExceptionType exceptionType) {
-      Exception expected = new Exception();
+      Exception expected = new Exception(); // todo переделать
       switch (exceptionType){
          case OVERFLOW:
             expected = new OverflowException();
