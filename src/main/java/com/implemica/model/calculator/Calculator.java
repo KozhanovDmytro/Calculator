@@ -220,10 +220,11 @@ public class Calculator {
    public ResponseDto clearEntry(){
       container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
+      container.getOperation().setShowOperand(true);
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
-      response.setHistory(showHistory());
+//      response.setHistory(showHistory());
       response.setExceptionType(ExceptionType.NOTHING);
 
       return response;

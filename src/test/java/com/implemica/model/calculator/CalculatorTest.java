@@ -846,13 +846,76 @@ public class CalculatorTest {
 
    @Test
    void clear() throws OverflowException, UndefinedResultException, InvalidInputException {
+      builder.doTest("C", "", 0, "0", "0");
+
+      builder.doTest("4 C", "", 0, "0", "4");
+      builder.doTest("1 C", "", 0, "0", "1");
+      builder.doTest("3 C", "", 0, "0", "3");
+      builder.doTest("4 C", "", 0, "0", "4");
+
+      builder.doTest("42 C 12", "", 0, "0", "12");
+      builder.doTest("85 C 47", "", 0, "0", "47");
+      builder.doTest("78 C 65", "", 0, "0", "65");
+      builder.doTest("96 C 32", "", 0, "0", "32");
+
+      builder.doTest("96 C 32 C", "", 0, "0", "32");
+      builder.doTest("75 C 76 C", "", 0, "0", "76");
+      builder.doTest("95 C 43 C", "", 0, "0", "43");
+      builder.doTest("32 C 16 C", "", 0, "0", "16");
+
+      builder.doTest("32 + C 16 - ", "16 - ", 2, "16", "16");
+      builder.doTest("75 - C 21 × ", "21 × ", 2, "21", "21");
+      builder.doTest("65 × C 82 ÷ ", "82 ÷ ", 2, "82", "82");
+      builder.doTest("32 ÷ C 10 + ", "10 + ", 2, "10", "10");
+
+      builder.doTest("+ C ÷", "0 ÷ ", 2, "0", "0");
+      builder.doTest("- C ×", "0 × ", 2, "0", "0");
+      builder.doTest("× C -", "0 - ", 2, "0", "0");
+      builder.doTest("÷ C +", "0 + ", 2, "0", "0");
+
+      builder.doTest("2 + 7 C 8 ÷ 2 C", "", 0, "0", "2");
+      builder.doTest("2 - 7 C 8 × 2 C", "", 0, "0", "2");
+      builder.doTest("2 × 7 C 8 - 2 C", "", 0, "0", "2");
+      builder.doTest("2 ÷ 7 C 8 + 2 C", "", 0, "0", "2");
+
       builder.doTest("2+2×2-6×3-10 C", "", 0, "0", null);
       builder.doTest("2+5÷2 C C C C C C C C C", "", 0, "0", null);
       builder.doTest("5 SQR SQR SQR SQR SQR SQR √√ SQR SQR SQR SQR SQR√ SQR SQR SQR C C", "", 0, "0", null);
+   }
 
+   @Test
+   void testClearEntry() throws OverflowException, UndefinedResultException, InvalidInputException {
+      builder.doTest(" CE ","", 0, "0", "0");
+
+      builder.doTest("5 CE ","", 0, "0", "0");
       builder.doTest("85 CE", "", 0, "0", "0");
-      builder.doTest("8+2 CE", "8 + ", 2, "8", "0");
-      builder.doTest("6- CE", "6 - ", 2, "6", "0");
+      builder.doTest("894 CE", "", 0, "0", "0");
+      builder.doTest("1245 CE", "", 0, "0", "0");
+
+      builder.doTest("1245 CE 45", "", 0, "0", "45");
+      builder.doTest("9845 CE 23", "", 0, "0", "23");
+      builder.doTest("1889 CE 87", "", 0, "0", "87");
+      builder.doTest("4651 CE 62", "", 0, "0", "62");
+
+      builder.doTest("4651 CE 21 CE ", "", 0, "0", "0");
+      builder.doTest("7621 CE 45 CE ", "", 0, "0", "0");
+      builder.doTest("9276 CE 32 CE ", "", 0, "0", "0");
+      builder.doTest("4628 CE 70 CE ", "", 0, "0", "0");
+
+      builder.doTest("+ CE ÷", "0 + 0 ÷ ", 3, "0", "0");
+      builder.doTest("- CE ×", "0 - 0 × ", 3, "0", "0");
+      builder.doTest("× CE -", "0 × 0 - ", 3, "0", "0");
+      builder.doTest("+ CE +", "0 + 0 + ", 3, "0", "0");
+
+      builder.doTest("1+2÷3 CE 9", "1 + 2 ÷ 9 ", 3, "3", "9");
+      builder.doTest("1-2×3 CE 9", "1 - 2 × 9 ", 3, "-1", "9");
+      builder.doTest("1×2-3 CE 9", "1 × 2 - 9 ", 3, "2", "9");
+      builder.doTest("1÷2+3 CE 9", "1 ÷ 2 + 9 ", 3, "0,5", "9");
+
+      builder.doTest("1 CE 5 CE 8 + 2 CE 6 ÷ 1 CE 5", "8 + 6 ÷ 5 ", 3, null, "5");
+      builder.doTest("2 CE 6 CE 9 - 3 CE 7 × 2 CE 6", "9 - 7 × 6 ", 3, null, "6");
+      builder.doTest("3 CE 7 CE 0 × 4 CE 8 - 3 CE 7", "0 × 8 - 7 ", 3, null, "7");
+      builder.doTest("4 CE 8 CE 1 ÷ 5 CE 9 + 4 CE 8", "1 ÷ 9 + 8 ", 3, null, "8");
    }
 
    @Test
