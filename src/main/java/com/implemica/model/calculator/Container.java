@@ -83,7 +83,7 @@ public class Container {
     }
 
     private BigDecimal checkForZero(BigDecimal number) {
-        if(number.abs().compareTo(new BigDecimal("1e-19000")) < 0) {
+        if(number.abs().compareTo(new BigDecimal("1e-19950")) < 0) {
             return BigDecimal.ZERO;
         } else {
             return number;

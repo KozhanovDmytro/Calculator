@@ -105,11 +105,11 @@ public class TestBuilder {
          }
       }
 
+      checkException();
+
       if (history != null) {
          checkHistory(history, historySize);
       }
-
-      checkException();
 
       if (operand != null) {
          checkOperand(operand);
