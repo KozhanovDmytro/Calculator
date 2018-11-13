@@ -11,14 +11,11 @@ import com.implemica.model.operations.Default;
 import com.implemica.model.operations.SimpleOperation;
 import com.implemica.model.operations.special.Negate;
 import com.implemica.model.operations.special.Percent;
-import com.implemica.model.validation.Validator;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
 @Getter
 @Setter
@@ -47,7 +44,7 @@ public class Container {
 
     public void change(SpecialOperation operation, boolean isResult) throws UndefinedResultException, OverflowException, InvalidInputException {
         if(isResult && !this.operation.isShowOperand()){
-            this.operation.setStringOperand(new Validator().showNumber(result));
+            this.operation.setInitialOperand(result);
             this.operation.getOperandHistory().add(operation);
 
             BigDecimal operand;

@@ -19,7 +19,7 @@ public abstract class SimpleOperation implements Operation {
 
     @Getter
     @Setter
-    protected String stringOperand;
+    protected BigDecimal initialOperand;
 
     @Setter
     protected String character;
@@ -39,7 +39,7 @@ public abstract class SimpleOperation implements Operation {
 
     public SimpleOperation(String character) {
         operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
-        stringOperand = operand.toPlainString();
+        initialOperand = operand;
         operandHistory = new OperandHistory();
         showOperand = false;
         this.character = character;
@@ -57,7 +57,7 @@ public abstract class SimpleOperation implements Operation {
             else
                 separator = "";
             operand = new BigDecimal(operand.toPlainString() + separator + number);
-            stringOperand = operand.toPlainString();
+            initialOperand = operand;
 
             this.setSeparated(false);
         }
@@ -65,7 +65,6 @@ public abstract class SimpleOperation implements Operation {
 
     public void removeLast(){
         if(operand.toString().length() > 1 || separated) {
-//            TODO look at this.
             if(separated){
                 separated = false;
                 return;
@@ -84,7 +83,7 @@ public abstract class SimpleOperation implements Operation {
         } else {
             operand = new BigDecimal(BigInteger.ZERO);
         }
-        stringOperand = operand.toPlainString();
+        initialOperand = operand;
     }
 
     @Override
@@ -93,7 +92,7 @@ public abstract class SimpleOperation implements Operation {
     }
 
     private String buildLocalHistory(){
-        return ((OperandHistory) operandHistory).buildHistory(validator.showNumber(this.stringOperand));
+        return ((OperandHistory) operandHistory).buildHistory(validator.showNumberForHistory(initialOperand));
     }
 
     private String getCharacter(){

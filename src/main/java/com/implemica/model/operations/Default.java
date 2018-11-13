@@ -16,7 +16,7 @@ public class Default extends SimpleOperation {
     public Default(BigDecimal operand){
         this();
         this.operand = operand;
-        this.stringOperand = operand.toString();
+        this.initialOperand = operand;
         this.setShowOperand(true);
     }
 

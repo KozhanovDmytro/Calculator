@@ -1,9 +1,7 @@
 package com.implemica.model.validation;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -11,6 +9,7 @@ import java.util.Locale;
 public class Validator {
 
    private final String PATTERN_FOR_NUMBER = ",###.################";
+   private final String PATTERN_FOR_NUMBER_WITHOUT_GROUP = "###.################";
 
    private final String PATTERN_FOR_EXPONENT = "#.################E0";
 
@@ -82,11 +81,34 @@ public class Validator {
       return result + (separator ? ',' : "");
    }
 
-   public String showNumber(String stringOperand) {
-      stringOperand = stringOperand.replace(" ", "")
-                                    .replace(",", "")
-                                    .replace("\\+", "");
+   public String showNumberForHistory(BigDecimal number) {
+      number = number.round(MathContext.DECIMAL64);
 
-      return showNumber(new BigDecimal(stringOperand)).replace(" ", "");
+      DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+      dfs.setDecimalSeparator(',');
+
+      DecimalFormat df = new DecimalFormat();
+      df.setGroupingSize(0);
+
+      df.setMinimumIntegerDigits(0);
+      df.setMaximumIntegerDigits(16);
+      df.setMinimumFractionDigits(0);
+      df.setMaximumFractionDigits(16);
+
+      if(number.abs().compareTo(new BigDecimal("1e16")) >= 0){
+         dfs.setExponentSeparator(INTEGER_EXPONENT_SEPARATOR);
+         df.applyPattern(PATTERN_FOR_EXPONENT);
+         df.setDecimalSeparatorAlwaysShown(true);
+      } else if(number.scale() > 16 && number.abs().compareTo(new BigDecimal("1e-3")) <= 0) {
+         dfs.setExponentSeparator(DECIMAL_EXPONENT_SEPARATOR);
+         df.applyPattern(PATTERN_FOR_EXPONENT);
+         df.setDecimalSeparatorAlwaysShown(true);
+      } else {
+         df.applyPattern(PATTERN_FOR_NUMBER_WITHOUT_GROUP);
+      }
+
+      df.setDecimalFormatSymbols(dfs);
+
+      return df.format(number);
    }
 }
