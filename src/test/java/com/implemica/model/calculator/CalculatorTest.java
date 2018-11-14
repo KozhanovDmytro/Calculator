@@ -13,33 +13,33 @@ public class CalculatorTest {
    private TestBuilder builder;
 
    // this pattern reach to number: 1e-9999 and write it as a result.
-   String smallNumber = "1000000000000000×===================×================================×1000000000000000======" +
+   private String smallNumber = "1000000000000000×===================×================================×1000000000000000======" +
            "×10========= 1/x ×0.1= ";
 
    // this pattern reach to number: 2e-9999 and write it as a result.
-   String doubleSmallNumber = "1000000000000000×===================×================================×1000000000000000======" +
+   private String doubleSmallNumber = "1000000000000000×===================×================================×1000000000000000======" +
            "×10========= 1/x ×0.2= ";
 
    // this pattern create number by this short formula (MAX - 1).
    // number must be 99999999...
    // digit 9 must be 10 000 times.
-   String maxMinusOne = "1000000000000000×===================×================================×1000000000000000======" +
+   private String maxMinusOne = "1000000000000000×===================×================================×1000000000000000======" +
            "×10========= -1×10+9=";
 
    // this pattern provide to storage in memory this number : 0.9999999999999999999..94
    // note! digit 9 must be 19999 times and at the end of this number must be digit 4
-   String oneSubtractTheSmallestNumber = smallNumber + " M+ C " + "1000000000000000×===================×================================×1000000000000000======" +
+   private String oneSubtractTheSmallestNumber = smallNumber + " M+ C " + "1000000000000000×===================×================================×1000000000000000======" +
            "×10========= -1= 1/x - MR ×0.1=-0.9=×0.6=-0.4=n MC M+ C ";
 
    // this pattern create number by this short formula (-MAX - MIN).
    // number must be -99999999...
    // digit 9 must be 10 000 times.
-   String negateMaxSubtractMin = "1000000000000000×===================×================================×1000000000000000======" +
+   private String negateMaxSubtractMin = "1000000000000000×===================×================================×1000000000000000======" +
            "×10========= -1×10n-9= ";
 
-   String theMaxNumber = oneSubtractTheSmallestNumber + maxMinusOne + "+ MR =";
+   private String theMaxNumber = oneSubtractTheSmallestNumber + maxMinusOne + " + MR =";
 
-   String theMinNumber = oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =";
+   private String theMinNumber = oneSubtractTheSmallestNumber + negateMaxSubtractMin + " - MR =";
 
    @BeforeEach
    void init() {
@@ -1056,7 +1056,6 @@ public class CalculatorTest {
       builder.doTest("0.0000000000000001+1=+=+=+", "4 + ", 2, null, null);
       builder.doTest("0.0000000000000001+1=+=+=+=+", "8,000000000000001 + ", 2, null, null);
 
-      builder.doTest("2+5 SQR", "2 + sqr(5) ", 2, null, null);
       builder.doTest("1.00001√√√", "√(√(√(1,00001))) ", 1, null, null);
    }
 
@@ -1139,6 +1138,7 @@ public class CalculatorTest {
 
    @Test
    void checkExceptions() {
+      // overflow
       builder.doExceptionsTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
       builder.doExceptionsTest("1000000000000000×=×=×=×=×=×=×=×=×=×=", ExceptionType.OVERFLOW);
       builder.doExceptionsTest("-1000000000000000×=×=×=×=×=×=×=×=×=×=", ExceptionType.OVERFLOW);
@@ -1240,7 +1240,18 @@ public class CalculatorTest {
    }
 
    @Test
-   void specialCases() {
-
+   void specialCases() throws OverflowException, InvalidInputException, UndefinedResultException {
+      builder.doTest("÷×-+", "0 + ", 2, "0", null);
+      builder.doTest("5+=", "", 0, "10", null);
+      builder.doTest("1+3===", "", 0, "10", null);
+      builder.doTest("3n3333.3333", null, 0, "0", "-33 333,3333");
+      builder.doTest("4-1+√", "4 - 1 + √(3) ", 3, "3", "1,732050807568877");
+      builder.doTest("1000000000000000×=====- 1/x", "1,e+90 - 1/(1,e+90) ", 2, null, "1,e-90");
+      builder.doTest("5+%", "5 + 0.25 ", 2, "5", "0,25");
+      builder.doTest("2 SQR SQR SQR <<<<<<<<=", "", 0, "256", null);
+      builder.doTest("2+3=<<<<", "", 0, "5", null);
+      builder.checkBuildOperand("1000000000000000.", "1 000 000 000 000 000,");
+      builder.doTest("+ CE ÷", "0 + 0 ÷ ", 3, "0", "0");
+      builder.doExceptionsTest("0÷0=", ExceptionType.UNDEFINED_RESULT);
    }
 }
