@@ -6,8 +6,9 @@ import java.math.BigDecimal;
 
 public class Multiply extends SimpleOperation {
 
-    public Multiply(String character) {
-        super(character);
+    public Multiply() {
+        super();
+        character = "×";
     }
 
     @Override

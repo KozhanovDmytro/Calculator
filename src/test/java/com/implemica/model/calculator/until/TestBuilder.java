@@ -171,16 +171,16 @@ public class TestBuilder {
                executeSeparate();
                break;
             case '+':
-               executeSimpleOperation(new Plus("+"));
+               executeSimpleOperation(new Plus());
                break;
             case '-':
-               executeSimpleOperation(new Minus("-"));
+               executeSimpleOperation(new Minus());
                break;
             case '×':
-               executeSimpleOperation(new Multiply("×"));
+               executeSimpleOperation(new Multiply());
                break;
             case '÷':
-               executeSimpleOperation(new Divide("÷"));
+               executeSimpleOperation(new Divide());
                break;
             case '=':
                equals();

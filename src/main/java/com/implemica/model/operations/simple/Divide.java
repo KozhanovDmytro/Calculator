@@ -8,8 +8,9 @@ import java.math.RoundingMode;
 
 public class Divide extends SimpleOperation {
 
-    public Divide(String character) {
-        super(character);
+    public Divide() {
+        super();
+        character = "÷";
     }
 
     @Override

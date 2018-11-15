@@ -254,6 +254,7 @@ public class Calculator {
       BigDecimal value = container.getMemory().recall();
       if(value != null) {
          container.getOperation().setOperand(value);
+         container.getOperation().setInitialOperand(value);
          container.getOperation().setShowOperand(true);
       }
       this.isShownResult = false;

@@ -1096,6 +1096,11 @@ public class CalculatorTest {
       builder.doTest(".n M- MR", null, 0, "0", "0");
       builder.doTest("0.n M- MR", null, 0, "0", "0");
 
+      builder.doTest("1 M+ M+ + MR ", "1 + 2 ", 2, "1", "2");
+      builder.doTest("1 M+ M+ - MR ", "1 - 2 ", 2, "1", "2");
+      builder.doTest("1 M+ M+ × MR ", "1 × 2 ", 2, "1", "2");
+      builder.doTest("1 M+ M+ ÷ MR ", "1 ÷ 2 ", 2, "1", "2");
+
       builder.doTest("1 M+ M+ ÷ MR =", "", 0, "0,5", null);
       builder.doTest("2 M+ M+ × MR =", "", 0, "8", null);
       builder.doTest("3 M+ M+ - MR =", "", 0, "-3", null);

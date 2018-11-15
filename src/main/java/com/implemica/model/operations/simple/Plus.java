@@ -6,8 +6,9 @@ import java.math.BigDecimal;
 
 public class Plus extends SimpleOperation {
 
-    public Plus(String character) {
-        super(character);
+    public Plus() {
+        super();
+        character = "+";
     }
 
     @Override

@@ -37,12 +37,11 @@ public abstract class SimpleOperation implements Operation {
 
     private Validator validator = new Validator();
 
-    public SimpleOperation(String character) {
+    public SimpleOperation() {
         operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
         initialOperand = operand;
         operandHistory = new OperandHistory();
         showOperand = false;
-        this.character = character;
     }
 
     public String buildHistory() {

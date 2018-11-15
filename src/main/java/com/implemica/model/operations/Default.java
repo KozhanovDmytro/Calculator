@@ -9,7 +9,7 @@ public class Default extends SimpleOperation {
     private Equals lastEquals;
 
     public Default() {
-        super("");
+        super();
         this.character = "";
     }
 
