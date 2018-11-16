@@ -772,10 +772,10 @@ public class CalculatorTest {
       builder.doTest("21+36= 1/x ", "1/(57) ", 1, "57", "0,0175438596491228");
       builder.doTest("83+37= 1/x ", "1/(120) ", 1, "120", "0,0083333333333333");
 
-      builder.doTest("3 1/x 1/x 1/x 1/x 1/x 1/x", null, 0, null, "3");
-      builder.doTest("7 1/x 1/x 1/x 1/x 1/x 1/x", null, 0, null, "7");
-      builder.doTest("11 1/x 1/x 1/x 1/x 1/x 1/x", null, 0, null, "11");
-      builder.doTest("5 1/x 1/x 1/x 1/x 1/x 1/x", null, 0, null, "5");
+      builder.doTest("3 1/x 1/x 1/x 1/x ", "1/(1/(1/(1/(3)))) ", 1, "0", "3");
+      builder.doTest("5 1/x 1/x 1/x 1/x ", "1/(1/(1/(1/(5)))) ", 1, "0", "5");
+      builder.doTest("7 1/x 1/x 1/x 1/x", "1/(1/(1/(1/(7)))) ", 1, "0", "7");
+      builder.doTest("9 1/x 1/x 1/x 1/x ", "1/(1/(1/(1/(9)))) ", 1, "0", "9");
 
       builder.doTest("1÷9= 1/x", null, 0, null, "9");
       builder.doTest("1÷3= 1/x", null, 0, null, "3");
