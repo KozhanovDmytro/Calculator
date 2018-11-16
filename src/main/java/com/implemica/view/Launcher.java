@@ -5,8 +5,6 @@ import com.implemica.view.util.NodesFinder;
 import com.implemica.view.util.Side;
 import javafx.animation.*;
 import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
@@ -29,7 +27,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -72,6 +69,13 @@ public class Launcher extends Application {
    private final double MENU_SIZE = 260.0d;
    private final double MEMORY_FIELD_SIZE = 300.0d;
    private final int ANIMATION_TIME = 50;
+   private final int MIN_FONT_SIZE_FOR_NUMBER_BUTTONS = 24;
+   private final int MAX_FONT_SIZE_FOR_NUMBER_BUTTONS = 28;
+   private final int MIN_FONT_SIZE_FOR_OTHER_BUTTONS = 15;
+   private final int MAX_FONT_SIZE_FOR_OTHER_BUTTONS = 21;
+   private final double OFFSET_FOR_MENU_ANIMATION = 50.0d;
+   private final double START_SLOW_MENU_ANIMATION = 40;
+   private final double END_SLOW_MENU_ANIMATION = 300;
 
    @Override
    public void start(Stage stage) throws Exception {
@@ -80,7 +84,7 @@ public class Launcher extends Application {
       setMoveActionForWindow();
       setActionsForMainPainAndButtons();
       setResizeActionForStage();
-      setActionsForInfoBtns();
+      setActionsForInfoButtons();
 
       setActionForResultLabel();
       setActionsForKeyboard();
@@ -140,8 +144,9 @@ public class Launcher extends Application {
          fontSize = MAX_FONT_SIZE_FOR_RESULT;
       }
 
-      if (fontSize <= MAX_FONT_SIZE_FOR_RESULT)
+      if (fontSize <= MAX_FONT_SIZE_FOR_RESULT) {
          resultLabel.setFont(new Font(resultLabel.getFont().getName(), fontSize));
+      }
    }
 
    private void setMoveActionForWindow() {
@@ -157,7 +162,7 @@ public class Launcher extends Application {
 
       mainPane.setOnMousePressed(event -> {
          startDrag = new Point2D(event.getScreenX(), event.getScreenY());
-         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+         if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
             setFullScreen();
          }
       });
@@ -165,8 +170,8 @@ public class Launcher extends Application {
 
    private void setActionsForMainPainAndButtons() {
       Button close = findBy(NodesFinder.CLOSE);
-      Button full = findBy(NodesFinder.FULL);
-      Button hide = findBy(NodesFinder.HIDE);
+      Button full  = findBy(NodesFinder.FULL);
+      Button hide  = findBy(NodesFinder.HIDE);
 
       close.setOnMouseClicked(event -> {
          menuSize(false);
@@ -187,19 +192,18 @@ public class Launcher extends Application {
 
    private void setResizeActionForStage() {
       AnchorPane extraInfoFull = findBy(NodesFinder.EXTRA_INFO_FULL);
-      HBox extraInfoBtns = findBy(NodesFinder.EXTRA_INFO_BTNS);
 
-      Pane left = findBy(NodesFinder.LEFT_RESIZE);
-      Pane extraLeft = findBy(NodesFinder.EXTRA_LEFT_RESIZE);
-      Pane right = findBy(NodesFinder.RIGHT_RESIZE);
-      Pane extraRight = findBy(NodesFinder.EXTRA_RIGHT_RESIZE);
-      Pane top = findBy(NodesFinder.TOP_RESIZE);
-      Pane bottom = findBy(NodesFinder.BOTTOM_RESIZE);
+      Pane left         = findBy(NodesFinder.LEFT_RESIZE);
+      Pane extraLeft    = findBy(NodesFinder.EXTRA_LEFT_RESIZE);
+      Pane right        = findBy(NodesFinder.RIGHT_RESIZE);
+      Pane extraRight   = findBy(NodesFinder.EXTRA_RIGHT_RESIZE);
+      Pane top          = findBy(NodesFinder.TOP_RESIZE);
+      Pane bottom       = findBy(NodesFinder.BOTTOM_RESIZE);
 
-      Pane leftBottom = findBy(NodesFinder.LEFT_BOTTOM_RESIZE);
-      Pane rightBottom = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE);
-      Pane leftTop = findBy(NodesFinder.LEFT_TOP_RESIZE);
-      Pane rightTop = findBy(NodesFinder.RIGHT_TOP_RESIZE);
+      Pane leftBottom   = findBy(NodesFinder.LEFT_BOTTOM_RESIZE);
+      Pane rightBottom  = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE);
+      Pane leftTop      = findBy(NodesFinder.LEFT_TOP_RESIZE);
+      Pane rightTop     = findBy(NodesFinder.RIGHT_TOP_RESIZE);
 
       Stream.of(left, extraLeft, right, extraRight, top, bottom, leftBottom,
               rightBottom, leftTop, rightTop)
@@ -252,7 +256,7 @@ public class Launcher extends Application {
       double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY()) * side.coefficient(Coordinates.Y);
 
       if (primaryStage.getMinWidth() <= width && width <= primaryStage.getMaxWidth()) {
-         if(side == Side.LEFT || side == Side.LEFT_TOP || side == Side.LEFT_BOTTOM) {
+         if (side == Side.LEFT || side == Side.LEFT_TOP || side == Side.LEFT_BOTTOM) {
             primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
          }
          primaryStage.setWidth(width);
@@ -260,7 +264,7 @@ public class Launcher extends Application {
       }
 
       if (primaryStage.getMinHeight() <= height && height <= primaryStage.getMaxHeight()) {
-         if(side == Side.TOP || side == Side.LEFT_TOP || side == Side.RIGHT_TOP) {
+         if (side == Side.TOP || side == Side.LEFT_TOP || side == Side.RIGHT_TOP) {
             primaryStage.setY(primaryStage.getY() + (event.getScreenY() - startDrag.getY()));
          }
          primaryStage.setHeight(height);
@@ -272,18 +276,18 @@ public class Launcher extends Application {
    private void setFullScreen() {
       Button full = findBy(NodesFinder.FULL);
 
-      Pane left = findBy(NodesFinder.LEFT_RESIZE);
-      Pane extraLeft = findBy(NodesFinder.EXTRA_LEFT_RESIZE);
-      Pane right = findBy(NodesFinder.RIGHT_RESIZE);
-      Pane extraRight = findBy(NodesFinder.EXTRA_RIGHT_RESIZE);
-      Pane top = findBy(NodesFinder.TOP_RESIZE);
-      Pane bottom = findBy(NodesFinder.BOTTOM_RESIZE);
+      Pane left         = findBy(NodesFinder.LEFT_RESIZE);
+      Pane extraLeft    = findBy(NodesFinder.EXTRA_LEFT_RESIZE);
+      Pane right        = findBy(NodesFinder.RIGHT_RESIZE);
+      Pane extraRight   = findBy(NodesFinder.EXTRA_RIGHT_RESIZE);
+      Pane top          = findBy(NodesFinder.TOP_RESIZE);
+      Pane bottom       = findBy(NodesFinder.BOTTOM_RESIZE);
 
-      Pane leftBottom = findBy(NodesFinder.LEFT_BOTTOM_RESIZE);
-      Pane rightBottom = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE);
-      Pane leftTop = findBy(NodesFinder.LEFT_TOP_RESIZE);
-      Pane rightTop = findBy(NodesFinder.RIGHT_TOP_RESIZE);
-      Pane bottomResizeFull = findBy(NodesFinder.BOTTOM_RESIZE);
+      Pane leftBottom         = findBy(NodesFinder.LEFT_BOTTOM_RESIZE);
+      Pane rightBottom        = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE);
+      Pane leftTop            = findBy(NodesFinder.LEFT_TOP_RESIZE);
+      Pane rightTop           = findBy(NodesFinder.RIGHT_TOP_RESIZE);
+      Pane bottomResizeFull   = findBy(NodesFinder.BOTTOM_RESIZE);
 
       Button btn0 = findBy(NodesFinder.BTN0);
       Button btn1 = findBy(NodesFinder.BTN1);
@@ -295,23 +299,27 @@ public class Launcher extends Application {
       Button btn7 = findBy(NodesFinder.BTN7);
       Button btn8 = findBy(NodesFinder.BTN8);
       Button btn9 = findBy(NodesFinder.BTN9);
-      Button negate = findBy(NodesFinder.NEGATE);
-      Button separate = findBy(NodesFinder.SEPARATE_BTN);
-      Button equals = findBy(NodesFinder.EQUALS_OPERATION);
-      Button plus = findBy(NodesFinder.PLUS_OPERATION);
-      Button minus = findBy(NodesFinder.MINUS_OPERATION);
-      Button multiply = findBy(NodesFinder.MULTIPLY_OPERATION);
-      Button divide = findBy(NodesFinder.DIVIDE_OPERATION);
-      Button backspace = findBy(NodesFinder.BACKSPACE);
-      Button clear = findBy(NodesFinder.C);
-      Button clearEntry = findBy(NodesFinder.CE);
-      Button divideBy = findBy(NodesFinder.DIVIDE_BY_X);
-      Button square = findBy(NodesFinder.SQUARE);
-      Button sqrt = findBy(NodesFinder.SQRT_OPERATION);
-      Button percent = findBy(NodesFinder.PERCENT_OPERATION);
 
-      String fontSizeForNumberBtn;
-      String fontSizeForOtherBtn;
+      Button negate     = findBy(NodesFinder.NEGATE);
+      Button separate   = findBy(NodesFinder.SEPARATE_BTN);
+      Button backspace  = findBy(NodesFinder.BACKSPACE);
+      Button clear      = findBy(NodesFinder.C);
+      Button clearEntry = findBy(NodesFinder.CE);
+
+      Button equals     = findBy(NodesFinder.EQUALS_OPERATION);
+      Button plus       = findBy(NodesFinder.PLUS_OPERATION);
+      Button minus      = findBy(NodesFinder.MINUS_OPERATION);
+      Button multiply   = findBy(NodesFinder.MULTIPLY_OPERATION);
+      Button divide     = findBy(NodesFinder.DIVIDE_OPERATION);
+
+
+      Button divideBy   = findBy(NodesFinder.DIVIDE_BY_X);
+      Button square     = findBy(NodesFinder.SQUARE);
+      Button sqrt       = findBy(NodesFinder.SQRT_OPERATION);
+      Button percent    = findBy(NodesFinder.PERCENT_OPERATION);
+
+      int fontSizeForNumberBtn;
+      int fontSizeForOtherBtn;
 
       if (isFullScreen) {
          primaryStage.setX(stagePosition.getX());
@@ -326,8 +334,8 @@ public class Launcher extends Application {
 
          full.setText(FULL_SCREEN_ICON);
 
-         fontSizeForNumberBtn = "24";
-         fontSizeForOtherBtn = "15";
+         fontSizeForNumberBtn = MIN_FONT_SIZE_FOR_NUMBER_BUTTONS;
+         fontSizeForOtherBtn = MIN_FONT_SIZE_FOR_OTHER_BUTTONS;
 
          isFullScreen = false;
       } else {
@@ -347,8 +355,8 @@ public class Launcher extends Application {
                  .collect(Collectors.toList())
                  .forEach(pane -> pane.setDisable(true));
 
-         fontSizeForNumberBtn = "28";
-         fontSizeForOtherBtn = "21";
+         fontSizeForNumberBtn = MAX_FONT_SIZE_FOR_NUMBER_BUTTONS;
+         fontSizeForOtherBtn = MAX_FONT_SIZE_FOR_OTHER_BUTTONS;
 
          full.setText(SMALL_SCREEN_ICON);
 
@@ -357,23 +365,23 @@ public class Launcher extends Application {
 
       Stream.of(btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9)
               .collect(Collectors.toList())
-              .forEach(button -> button.setStyle(String.format("-fx-font-size: %spx;", fontSizeForNumberBtn)));
+              .forEach(button -> button.setStyle(String.format("-fx-font-size: %dpx;", fontSizeForNumberBtn)));
 
       Stream.of(negate, separate, equals, plus, minus, multiply, divide, backspace,
-                  clear, clearEntry, divideBy, square, sqrt, percent)
+              clear, clearEntry, divideBy, square, sqrt, percent)
               .collect(Collectors.toList())
-              .forEach(button -> button.setStyle(String.format("-fx-font-size: %spx;", fontSizeForOtherBtn)));
+              .forEach(button -> button.setStyle(String.format("-fx-font-size: %dpx;", fontSizeForOtherBtn)));
    }
 
-   private void setActionsForInfoBtns() {
-      Button logBtn = findBy(NodesFinder.LOG_BTN);
+   private void setActionsForInfoButtons() {
+      Button logBtn  = findBy(NodesFinder.LOG_BTN);
       Pane logSelect = findBy(NodesFinder.LOG_SELECT);
 
-      Button memoryBtn = findBy(NodesFinder.MEMORY_BTN);
+      Button memoryBtn  = findBy(NodesFinder.MEMORY_BTN);
       Pane memorySelect = findBy(NodesFinder.MEMORY_SELECT);
 
-      Label extraLogLabel = findBy(NodesFinder.EXTRA_LOG_LABEL);
-      Label extraMemoryLabel = findBy(NodesFinder.EXTRA_MEMORY_LABEL);
+      Label extraLogLabel     = findBy(NodesFinder.EXTRA_LOG_LABEL);
+      Label extraMemoryLabel  = findBy(NodesFinder.EXTRA_MEMORY_LABEL);
       extraMemoryLabel.setVisible(false);
       extraLogLabel.setVisible(true);
 
@@ -472,9 +480,9 @@ public class Launcher extends Application {
    }
 
    private void setActionForDropDownMenu() {
-      Button menuBtn = findBy(NodesFinder.MENU_BTN);
-      AnchorPane mainPane = findBy(NodesFinder.MAIN_PANE);
-      Pane hideMenu = findBy(NodesFinder.HIDE_MENU);
+      Button menuBtn       = findBy(NodesFinder.MENU_BTN);
+      AnchorPane mainPane  = findBy(NodesFinder.MAIN_PANE);
+      Pane hideMenu        = findBy(NodesFinder.HIDE_MENU);
       Pane hideMemoryField = findBy(NodesFinder.HIDE_MEMORY_FIELD);
 
       Button showMemory = findBy(NodesFinder.SHOW_MEMORY);
@@ -504,13 +512,13 @@ public class Launcher extends Application {
 
       if (show) {
          key1 = new KeyFrame(Duration.ZERO, new KeyValue(menu.translateXProperty(), -MENU_SIZE));
-         key2 = new KeyFrame(new Duration(40), new KeyValue(menu.translateXProperty(), ZERO - 50.0d));
-         key3 = new KeyFrame(new Duration(300), new KeyValue(menu.translateXProperty(), ZERO));
+         key2 = new KeyFrame(new Duration(START_SLOW_MENU_ANIMATION), new KeyValue(menu.translateXProperty(), -OFFSET_FOR_MENU_ANIMATION));
+         key3 = new KeyFrame(new Duration(END_SLOW_MENU_ANIMATION), new KeyValue(menu.translateXProperty(), ZERO));
          isMenuShown = true;
       } else {
          key1 = new KeyFrame(Duration.ZERO, new KeyValue(menu.translateXProperty(), ZERO));
-         key2 = new KeyFrame(new Duration(40), new KeyValue(menu.translateXProperty(), ZERO));
-         key3 = new KeyFrame(new Duration(300), new KeyValue(menu.translateXProperty(), -MENU_SIZE));
+         key2 = new KeyFrame(new Duration(START_SLOW_MENU_ANIMATION), new KeyValue(menu.translateXProperty(), ZERO));
+         key3 = new KeyFrame(new Duration(END_SLOW_MENU_ANIMATION), new KeyValue(menu.translateXProperty(), -MENU_SIZE));
          isMenuShown = false;
       }
 
@@ -538,8 +546,7 @@ public class Launcher extends Application {
       memoryField.setVisible(show);
    }
 
-   public <T extends Node> T findBy(NodesFinder desiredNode) {
+   private <T extends Node> T findBy(NodesFinder desiredNode) {
       return (T) root.lookup(desiredNode.getQuery());
    }
-
 }

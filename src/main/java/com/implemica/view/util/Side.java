@@ -20,7 +20,6 @@ public enum Side {
             y = 0;
             break;
          case RIGHT:
-            x = 1;
             y = 0;
             break;
          case TOP:
@@ -28,7 +27,6 @@ public enum Side {
             x = 0;
             break;
          case BOTTOM:
-            y = 1;
             x = 0;
             break;
          case LEFT_TOP:
@@ -37,21 +35,18 @@ public enum Side {
             break;
          case LEFT_BOTTOM:
             x = -1;
-            y = 1;
             break;
          case RIGHT_TOP:
-            x = 1;
             y = -1;
             break;
-         case RIGHT_BOTTOM:
-            x = 1;
-            y = 1;
-            break;
       }
+
       if (coordinates == Coordinates.X) {
          return x;
+
       } else if (coordinates == Coordinates.Y) {
          return y;
+
       } else {
          throw new IllegalArgumentException();
       }

@@ -10,91 +10,91 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 public abstract class SimpleOperation implements Operation {
 
-    @Getter
-    @Setter
-    protected BigDecimal operand;
+   @Getter
+   @Setter
+   protected BigDecimal operand = BigDecimal.ZERO;
 
-    @Getter
-    @Setter
-    protected BigDecimal initialOperand;
+   @Getter
+   @Setter
+   protected BigDecimal initialOperand = BigDecimal.ZERO;
 
-    @Setter
-    protected String character;
+   @Setter
+   protected String character;
 
-    @Getter
-    protected History operandHistory;
+   @Getter
+   protected OperandHistory operandHistory = new OperandHistory();
 
-    @Getter
-    @Setter
-    private boolean separated;
+   @Getter
+   @Setter
+   protected boolean separated;
 
-    @Getter
-    @Setter
-    private boolean showOperand;
+   @Getter
+   @Setter
+   protected boolean showOperand;
 
-    private Validator validator = new Validator();
+   /*constants*/
+   private static final char SPACE = ' ';
+   private static final String NOTHING = "";
+   private static final String SEPARATOR = ".";
 
-    public SimpleOperation() {
-        operand = new BigDecimal(BigInteger.ZERO, MathContext.DECIMAL64);
-        initialOperand = operand;
-        operandHistory = new OperandHistory();
-        showOperand = false;
-    }
+   private Validator validator = new Validator();
 
-    public String buildHistory() {
-        return getCharacter() + (isShowOperand() ? buildLocalHistory() + " " : "");
-    }
+   public String buildHistory() {
+      return getCharacter() + (isShowOperand() ? buildLocalHistory() + SPACE : NOTHING);
+   }
 
-    public void buildOperand(char number) {
-        if((operand.toBigInteger().compareTo(BigInteger.ZERO) == 0 ? 0 : operand.toBigInteger().toString().length()) + operand.scale() < 16) {
-            String separator;
-            if(this.isSeparated())
-                separator = ".";
-            else
-                separator = "";
-            operand = new BigDecimal(operand.toPlainString() + separator + number);
-            initialOperand = operand;
+   public void buildOperand(char number) {
+      if (!isOverflow()) {
+         operand = new BigDecimal(operand.toPlainString() + (separated ? SEPARATOR : NOTHING) + number);
+         initialOperand = operand;
+         this.setSeparated(false);
+      }
+   }
 
-            this.setSeparated(false);
-        }
-    }
+   public void removeLast() {
+      if (separated) {
+         separated = false;
+         return;
+      }
 
-    public void removeLast(){
-        if(operand.toString().length() > 1 || separated) {
-            if(separated){
-                separated = false;
-                return;
-            }
+      if (operand.toString().length() <= 1) {
+         operand = BigDecimal.ZERO;
+         initialOperand = BigDecimal.ZERO;
+         return;
+      }
 
-            if(operand.toPlainString().charAt(operand.toPlainString().length() - 2) == '.') {
-                separated = true;
-            }
+      if (operand.scale() == 1) {
+         separated = true;
+      }
 
-            operand = new BigDecimal(operand.toPlainString().substring(0, operand.toPlainString().length() - 1));
+      operand = new BigDecimal(operand.toPlainString().substring(0, operand.toPlainString().length() - 1));
+      initialOperand = operand;
+   }
 
-            if(operand.toPlainString().charAt(operand.toPlainString().length() - 1) == '.') {
-                separated = true;
-            }
+   private String buildLocalHistory() {
+      return operandHistory.buildHistory(validator.showNumberForHistory(initialOperand));
+   }
 
-        } else {
-            operand = new BigDecimal(BigInteger.ZERO);
-        }
-        initialOperand = operand;
-    }
+   private String getCharacter() {
+      return character.equals(NOTHING) ? NOTHING : character + SPACE;
+   }
 
-    @Override
-    public String toString(){
-        return this.getClass().getName();
-    }
+   private boolean isOverflow() {
+      int quantityCharsOfIntegerNumber;
+      if (operand.toBigInteger().compareTo(BigInteger.ZERO) == 0) {
+         quantityCharsOfIntegerNumber = 0;
+      } else {
+         quantityCharsOfIntegerNumber = quantityCharsOfIntegerNumber(operand);
+      }
 
-    private String buildLocalHistory(){
-        return ((OperandHistory) operandHistory).buildHistory(validator.showNumberForHistory(initialOperand));
-    }
+      return quantityCharsOfIntegerNumber + operand.scale() >= 16;
+   }
 
-    private String getCharacter(){
-        return character.equals("") ? "" : character + " ";
-    }
+   private int quantityCharsOfIntegerNumber(BigDecimal number) {
+      return number.setScale(0, RoundingMode.DOWN).precision();
+   }
 }

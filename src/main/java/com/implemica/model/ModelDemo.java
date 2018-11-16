@@ -18,9 +18,7 @@ import java.math.BigDecimal;
 
 public class ModelDemo {
    public static void main(String[] args) {
-
       Calculator calculator = new Calculator();
-      Validator validator = new Validator();
 
       calculator.buildOperand(Number.THREE);
       calculator.executeSimpleOperation(new Plus());
@@ -34,7 +32,7 @@ public class ModelDemo {
       calculator.buildOperand(Number.FIVE);
 
       ResponseDto response = calculator.equalsOperation();
-      System.out.println(validator.showNumber(response.getResult()));
+      System.out.println(response.getResult());
 
    }
 }

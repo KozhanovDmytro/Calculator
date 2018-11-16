@@ -1,9 +1,9 @@
 package com.implemica.controller;
 
+import com.implemica.controller.util.Field;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.interfaces.SpecialOperation;
-import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.SimpleOperation;
 import com.implemica.model.operations.simple.Divide;
@@ -18,16 +18,13 @@ import javafx.scene.control.Label;
 
 import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class Controller {
-   @FXML
-   private ResourceBundle resources;
 
-   @FXML
-   private URL location;
+   private static final String PATH_TO_ENGLISH_TEXTS = "/com/implemica/view/resources/properties/text_En.properties";
+
+   private static final String PATH_TO_RUSSIAN_TEXTS = "/com/implemica/view/resources/properties/text_Ru.properties";
 
    @FXML
    private Button clear, clearEntry, backSpace;
@@ -50,7 +47,7 @@ public class Controller {
    @FXML
    private Button currency, volume, length, weight, temperature, energy,
            area, speed, time, power, data, pressure, angle, standard,
-            scientific, programmer, dateCalculation, about;
+           scientific, programmer, dateCalculation, about;
 
    @FXML
    private Label menuConverter, menuCalculator;
@@ -87,7 +84,7 @@ public class Controller {
    }
 
    private void executeProperties() throws IOException, URISyntaxException {
-      File file = new File(getClass().getResource("/com/implemica/view/resources/properties/text_En.properties").toURI());
+      File file = new File(getClass().getResource(PATH_TO_ENGLISH_TEXTS).toURI());
 
       InputStream stream = new FileInputStream(file);
 
@@ -96,36 +93,36 @@ public class Controller {
    }
 
    private void setTexts() {
-      title.setText(textsForLabel.getProperty("title"));
-      mode.setText(textsForLabel.getProperty("mode"));
+      title.setText(getText(Field.TITLE));
+      mode.setText(getText(Field.MODE));
 
-      standard.setText(textsForLabel.getProperty("standard"));
-      scientific.setText(textsForLabel.getProperty("scientific"));
-      programmer.setText(textsForLabel.getProperty("programmer"));
-      dateCalculation.setText(textsForLabel.getProperty("dateCalculation"));
-      currency.setText(textsForLabel.getProperty("currency"));
-      volume.setText(textsForLabel.getProperty("volume"));
-      length.setText(textsForLabel.getProperty("length"));
-      weight.setText(textsForLabel.getProperty("weight"));
-      temperature.setText(textsForLabel.getProperty("temperature"));
-      energy.setText(textsForLabel.getProperty("energy"));
-      area.setText(textsForLabel.getProperty("area"));
-      speed.setText(textsForLabel.getProperty("speed"));
-      time.setText(textsForLabel.getProperty("time"));
-      power.setText(textsForLabel.getProperty("power"));
-      data.setText(textsForLabel.getProperty("data"));
-      pressure.setText(textsForLabel.getProperty("pressure"));
-      angle.setText(textsForLabel.getProperty("angle"));
+      standard.setText(getText(Field.STANDARD));
+      scientific.setText(getText(Field.SCIENTIFIC));
+      programmer.setText(getText(Field.PROGRAMMER));
+      dateCalculation.setText(getText(Field.DATE_CALCULATION));
+      currency.setText(getText(Field.CURRENCY));
+      volume.setText(getText(Field.VOLUME));
+      length.setText(getText(Field.LENGTH));
+      weight.setText(getText(Field.WEIGHT));
+      temperature.setText(getText(Field.TEMPERATURE));
+      energy.setText(getText(Field.ENERGY));
+      area.setText(getText(Field.AREA));
+      speed.setText(getText(Field.SPEED));
+      time.setText(getText(Field.TIME));
+      power.setText(getText(Field.POWER));
+      data.setText(getText(Field.DATA));
+      pressure.setText(getText(Field.PRESSURE));
+      angle.setText(getText(Field.ANGLE));
 
-      about.setText(textsForLabel.getProperty("about"));
+      about.setText(getText(Field.ABOUT));
 
-      menuConverter.setText(textsForLabel.getProperty("menuConverter"));
-      menuCalculator.setText(textsForLabel.getProperty("menuCalculator"));
+      menuConverter.setText(getText(Field.MENU_CONVERTER));
+      menuCalculator.setText(getText(Field.MENU_CALCULATOR));
 
-      extraMemoryLabel.setText(textsForLabel.getProperty("noMemory"));
-      extraLogLabel.setText(textsForLabel.getProperty("noLog"));
-      memoryBtn.setText(textsForLabel.getProperty("memory"));
-      logBtn.setText(textsForLabel.getProperty("history"));
+      extraMemoryLabel.setText(getText(Field.NO_MEMORY));
+      extraLogLabel.setText(getText(Field.NO_LOG));
+      memoryBtn.setText(getText(Field.MEMORY));
+      logBtn.setText(getText(Field.HISTORY));
    }
 
    private void actionsForOperationButtons() {
@@ -142,19 +139,16 @@ public class Controller {
 
       equalsOperation.setOnAction(event -> {
          unlock();
-         ResponseDto response = calculator.equalsOperation();
-         parseDto(response);
+         parseDto(calculator.equalsOperation());
       });
    }
 
    private void actionForOperations(SimpleOperation operation) {
-      ResponseDto response = calculator.executeSimpleOperation(operation);
-      parseDto(response);
+      parseDto(calculator.executeSimpleOperation(operation));
    }
 
    private void actionForSpecialOperations(SpecialOperation operation) {
-      ResponseDto response = calculator.executeSpecialOperation(operation);
-      parseDto(response);
+      parseDto(calculator.executeSpecialOperation(operation));
    }
 
    private void actionsForBuildOperand() {
@@ -189,47 +183,39 @@ public class Controller {
       });
       clear.setOnAction(event -> {
          unlock();
-         ResponseDto response = calculator.clear();
-         parseDto(response);
+         parseDto(calculator.clear());
       });
       clearEntry.setOnAction(event -> {
          unlock();
-         ResponseDto response = calculator.clearEntry();
-         parseDto(response);
+         parseDto(calculator.clearEntry());
       });
    }
 
    private void actionsForMemory() {
-      addMemory.setOnAction((event)->{
-         String result = validator.showNumber(calculator.addMemory());
-         memoryLabel.setText(result);
-         extraMemoryLabel.setText(result);
-         clearMemory.setDisable(false);
-         recallMemory.setDisable(false);
-         showMemory.setDisable(false);
-      });
+      addMemory.setOnAction(event -> disableMemory(false, validator.showNumber(calculator.addMemory())));
 
-      subtractMemory.setOnAction((event)->{
-         String result = validator.showNumber(calculator.subtractMemory());
-         memoryLabel.setText(result);
-         extraMemoryLabel.setText(result);
-         clearMemory.setDisable(false);
-         recallMemory.setDisable(false);
-         showMemory.setDisable(false);
-      });
+      subtractMemory.setOnAction(event -> disableMemory(false, validator.showNumber(calculator.subtractMemory())));
 
-      recallMemory.setOnAction((event -> {
-         parseDto(calculator.getMemory());
-      }));
+      recallMemory.setOnAction((event -> parseDto(calculator.getMemory())));
 
-      clearMemory.setOnAction((event -> {
+      clearMemory.setOnAction(event -> disableMemory(true, "0"));
+   }
+
+   private void disableMemory(boolean disable, String memory) {
+      if (disable) {
          calculator.getContainer().getMemory().clear();
          memoryLabel.setText("0");
-         extraMemoryLabel.setText(textsForLabel.getProperty("noMemory"));
+         extraMemoryLabel.setText(getText(Field.NO_MEMORY));
          clearMemory.setDisable(true);
          recallMemory.setDisable(true);
          showMemory.setDisable(true);
-      }));
+      } else {
+         memoryLabel.setText(memory);
+         extraMemoryLabel.setText(memory);
+         clearMemory.setDisable(false);
+         recallMemory.setDisable(false);
+         showMemory.setDisable(false);
+      }
    }
 
    private void showResult(String result) {
@@ -258,50 +244,58 @@ public class Controller {
       boolean isThrownException = false;
       switch (response.getExceptionType()) {
          case OVERFLOW:
-            showResult(textsForLabel.getProperty("overflow"));
+            showResult(getText(Field.OVERFLOW));
             blockButtons(true);
             isThrownException = true;
             break;
          case UNDEFINED_RESULT:
-            showResult(textsForLabel.getProperty("undefinedResult"));
+            showResult(getText(Field.UNDEFINED_RESULT));
             blockButtons(true);
             isThrownException = true;
             break;
          case DIVIDE_BY_ZERO:
-            showResult(textsForLabel.getProperty("divideByZero"));
+            showResult(getText(Field.DIVIDE_BY_ZERO));
             blockButtons(true);
             isThrownException = true;
             break;
          case INVALID_INPUT:
-            showResult(textsForLabel.getProperty("invalidInput"));
+            showResult(getText(Field.INVALID_INPUT));
             blockButtons(true);
             isThrownException = true;
             break;
       }
 
-      if(response.getHistory() != null) {
+      if (response.getHistory() != null) {
          showHistory(response.getHistory().buildHistory());
       }
 
-      if(!isThrownException){
-         if(response.getResult() != null) {
-            showResult(validator.showNumber(response.getResult()));
-         }
-
-         if(response.getOperand() != null) {
-            showResult(validator.showNumber(response.getOperand().stripTrailingZeros()));
-         }
-
-         if(response.isSeparated()) {
-            resultLabel.setText(resultLabel.getText() + ",");
-         }
+      if (!isThrownException) {
+         updateData(response);
       }
    }
 
-   private void unlock(){
-      if(isBlocked) {
+   private void updateData(ResponseDto response) {
+      if (response.getResult() != null) {
+         showResult(validator.showNumber(response.getResult()));
+      }
+
+      if (response.getOperand() != null) {
+         showResult(validator.showNumber(response.getOperand().stripTrailingZeros()));
+      }
+
+      if (response.isSeparated()) {
+         resultLabel.setText(resultLabel.getText() + validator.SEPARATOR);
+      }
+   }
+
+   private void unlock() {
+      if (isBlocked) {
          blockButtons(false);
          parseDto(calculator.getCurrentState());
       }
+   }
+
+   private String getText(Field field) {
+      return textsForLabel.getProperty(field.getName());
    }
 }
