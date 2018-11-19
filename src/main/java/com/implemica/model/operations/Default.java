@@ -1,5 +1,7 @@
 package com.implemica.model.operations;
 
+import com.implemica.model.exceptions.InvalidInputException;
+import com.implemica.model.exceptions.UndefinedResultException;
 import lombok.SneakyThrows;
 
 import java.math.BigDecimal;
@@ -26,8 +28,7 @@ public class Default extends SimpleOperation {
     }
 
     @Override
-    @SneakyThrows
-    public BigDecimal calculate(BigDecimal result) {
+    public BigDecimal calculate(BigDecimal result) throws UndefinedResultException, InvalidInputException {
         if(lastEquals != null) {
             return lastEquals.calculate(this.operand);
         } else {

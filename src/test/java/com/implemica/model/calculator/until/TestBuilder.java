@@ -219,8 +219,8 @@ public class TestBuilder {
    }
 
    protected void memoryClear() {
-      calculator.getContainer().getMemory().clear();
-      memory = validator.showNumber(calculator.getContainer().getMemory().recall());
+      BigDecimal memoryValue = calculator.clearMemory();
+      memory = validator.showNumber(memoryValue);
    }
 
    protected void memoryRecall() {

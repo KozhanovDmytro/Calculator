@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
@@ -203,8 +204,8 @@ public class Controller {
 
    private void disableMemory(boolean disable, String memory) {
       if (disable) {
-         calculator.getContainer().getMemory().clear();
-         memoryLabel.setText("0");
+         BigDecimal memoryValue = calculator.clearMemory();
+         memoryLabel.setText(validator.showNumber(memoryValue));
          extraMemoryLabel.setText(getText(Field.NO_MEMORY));
          clearMemory.setDisable(true);
          recallMemory.setDisable(true);

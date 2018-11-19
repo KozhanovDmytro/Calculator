@@ -32,25 +32,25 @@ public class Calculator {
       void calculate() throws Exception;
    }
 
-   public Calculator(){
+   public Calculator() {
       container = new Container();
-      container.setMadeOperand(true);
+      container.setMakingOperand(true);
    }
 
    public ResponseDto executeSimpleOperation(SimpleOperation operation) {
 
-      ExceptionType exceptionType = calculate(()-> {
+      ExceptionType exceptionType = calculate(() -> {
          if (!(container.getOperation() instanceof Equals)) {
             container.calculate();
-         } else if(container.getOperation().isShowOperand()) {
+         } else if (container.getOperation().isShowOperand()) {
             container.setOperation(new Default(container.getOperation().getOperand()));
             container.calculate();
          }
       });
 
-      if(container.getOperation().isShowOperand()){
+      if (container.getOperation().isShowOperand()) {
          container.getHistory().add(operation);
-      } else if(container.getHistory().size() == 0){
+      } else if (container.getHistory().size() == 0) {
          container.getHistory().add(new Default(container.getResult()));
          container.getHistory().add(operation);
       } else {
@@ -58,7 +58,7 @@ public class Calculator {
       }
 
       container.setOperation(operation);
-      container.setMadeOperand(true);
+      container.setMakingOperand(true);
 
       ResponseDto response = new ResponseDto();
       response.setResult(showResult());
@@ -69,11 +69,11 @@ public class Calculator {
    }
 
    public ResponseDto executeSpecialOperation(SpecialOperation operation) {
-      if(operation instanceof Percent) {
+      if (operation instanceof Percent) {
          ((Percent) operation).setResult(container.getResult());
       }
 
-      if(container.getHistory().size() == 0 && container.getOperation() instanceof Equals){
+      if (container.getHistory().size() == 0 && container.getOperation() instanceof Equals) {
          container.setOperation(new Default((Equals) container.getOperation(), container.getResult()));
       }
 
@@ -87,19 +87,19 @@ public class Calculator {
       return response;
    }
 
-   public ResponseDto buildOperand(Number number){
+   public ResponseDto buildOperand(Number number) {
       MainHistory history = null;
-      if (container.isMadeOperand() || container.getOperation() instanceof Equals) {
+      if (container.isMakingOperand() || container.getOperation() instanceof Equals) {
          container.getOperation().buildOperand(numeral.translate(number));
          container.getOperation().setShowOperand(true);
-      } else if(container.getOperation().getOperandHistory().size() > 0) {
+      } else if (container.getOperation().getOperandHistory().size() > 0) {
          container.getOperation().getOperandHistory().clear();
          container.getOperation().setShowOperand(false);
          history = showHistory();
          container.getOperation().setShowOperand(true);
          container.getOperation().setOperand(BigDecimal.ZERO);
          container.getOperation().buildOperand(numeral.translate(number));
-         container.setMadeOperand(true);
+         container.setMakingOperand(true);
       }
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
@@ -111,30 +111,20 @@ public class Calculator {
    }
 
    public ResponseDto equalsOperation() {
-      if (container.isMadeOperand() && isShownResult){
+      if (container.isMakingOperand() && isShownResult) {
          container.getOperation().setOperand(container.getResult());
       } else if (container.getOperation() instanceof Equals) {
-         Equals eq = (Equals) container.getOperation();
-         if (!isShownResult) {
-            container.setResult(container.getOperation().getOperand());
-         } else if (eq.getLastOperation() instanceof Default) {
-            eq.getLastOperation().setOperand(container.getResult());
-         } else if (eq.getLastOperation() instanceof Equals) {
-            if (((Equals) eq.getLastOperation()).getLastOperation() instanceof Default) {
-               eq.setLastOperation(((Equals) eq.getLastOperation()).getLastOperation());
-               eq.getLastOperation().setOperand(container.getResult());
-            }
-         }
+         doEqualsAfterEquals();
       }
 
-      ExceptionType exceptionType = calculate(()-> container.calculate());
+      ExceptionType exceptionType = calculate(() -> container.calculate());
 
       Equals equals = new Equals(container.getOperation());
-      if(exceptionType == ExceptionType.NOTHING) {
+      if (exceptionType == ExceptionType.NOTHING) {
          container.getHistory().clear();
       }
       container.setOperation(equals);
-      container.setMadeOperand(false);
+      container.setMakingOperand(false);
 
       ResponseDto response = new ResponseDto();
       response.setResult(showResult());
@@ -142,6 +132,24 @@ public class Calculator {
       response.setExceptionType(exceptionType);
 
       return response;
+   }
+
+   private void doEqualsAfterEquals() {
+      Equals currentEquals = (Equals) container.getOperation();
+      if (!isShownResult) {
+         container.setResult(container.getOperation().getOperand());
+      } else if (currentEquals.getLastOperation() instanceof Default) {
+         currentEquals.getLastOperation().setOperand(container.getResult());
+      } else if (currentEquals.getLastOperation() instanceof Equals) {
+         doEqualsAfterSpecialOperation(currentEquals);
+      }
+   }
+
+   private void doEqualsAfterSpecialOperation(Equals equals) {
+      if (((Equals) equals.getLastOperation()).getLastOperation() instanceof Default) {
+         equals.setLastOperation(((Equals) equals.getLastOperation()).getLastOperation());
+         equals.getLastOperation().setOperand(container.getResult());
+      }
    }
 
    private ExceptionType calculate(ExceptionSupplier exceptionSupplier) {
@@ -161,7 +169,7 @@ public class Calculator {
          e.printStackTrace();
       }
 
-      if(exceptionType != ExceptionType.NOTHING) {
+      if (exceptionType != ExceptionType.NOTHING) {
          MainHistory tempHistory = container.getHistory().clone();
          clear();
          container.setHistory(tempHistory);
@@ -171,7 +179,7 @@ public class Calculator {
    }
 
    public ResponseDto separateOperand() {
-      if(container.getOperation().getOperand().scale() == 0) {
+      if (container.getOperation().getOperand().scale() == 0) {
          container.getOperation().setSeparated(true);
       }
 
@@ -183,16 +191,16 @@ public class Calculator {
       return response;
    }
 
-   public ResponseDto backspace(){
+   public ResponseDto backspace() {
       ResponseDto response = new ResponseDto();
       response.setExceptionType(ExceptionType.NOTHING);
 
-      if (container.isMadeOperand()) {
+      if (container.isMakingOperand()) {
          container.getOperation().removeLast();
          response.setOperand(showOperand());
          response.setSeparated(showBuiltOperand());
 
-      } else if(isShownResult) {
+      } else if (isShownResult) {
          response.setOperand(showResult());
 
       } else {
@@ -202,11 +210,11 @@ public class Calculator {
       return response;
    }
 
-   public ResponseDto clear(){
+   public ResponseDto clear() {
       container.getHistory().clear();
       container.setResult(BigDecimal.ZERO);
       container.setOperation(new Default());
-      container.setMadeOperand(true);
+      container.setMakingOperand(true);
 
       ResponseDto response = new ResponseDto();
       response.setResult(showResult());
@@ -217,21 +225,20 @@ public class Calculator {
       return response;
    }
 
-   public ResponseDto clearEntry(){
+   public ResponseDto clearEntry() {
       container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
       container.getOperation().setShowOperand(true);
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
-//      response.setHistory(showHistory());
       response.setExceptionType(ExceptionType.NOTHING);
 
       return response;
    }
 
-   public BigDecimal addMemory(){
-      if(container.getOperation().isShowOperand()) {
+   public BigDecimal addMemory() {
+      if (container.getOperation().isShowOperand()) {
          container.getMemory().add(container.getOperation().getOperand());
       } else {
          container.getMemory().add(container.getResult());
@@ -241,7 +248,7 @@ public class Calculator {
    }
 
    public BigDecimal subtractMemory() {
-      if(container.getOperation().isShowOperand()) {
+      if (container.getOperation().isShowOperand()) {
          container.getMemory().subtract(container.getOperation().getOperand());
       } else {
          container.getMemory().subtract(container.getResult());
@@ -252,7 +259,7 @@ public class Calculator {
 
    public ResponseDto getMemory() {
       BigDecimal value = container.getMemory().recall();
-      if(value != null) {
+      if (value != null) {
          container.getOperation().setOperand(value);
          container.getOperation().setInitialOperand(value);
          container.getOperation().setShowOperand(true);
@@ -266,12 +273,17 @@ public class Calculator {
       return response;
    }
 
-   private BigDecimal showResult(){
+   public BigDecimal clearMemory() {
+      container.getMemory().clear();
+      return container.getMemory().recall();
+   }
+
+   private BigDecimal showResult() {
       isShownResult = true;
       return container.getResult().stripTrailingZeros();
    }
 
-   private BigDecimal showOperand(){
+   private BigDecimal showOperand() {
       isShownResult = false;
       return container.getOperation().getOperand();
    }
@@ -281,7 +293,7 @@ public class Calculator {
       return container.getOperation().isSeparated();
    }
 
-   private MainHistory showHistory(){
+   private MainHistory showHistory() {
       return container.getHistory();
    }
 

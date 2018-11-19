@@ -14,14 +14,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.name.Font?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" prefWidth="322.0" styleClass="Canvas" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.implemica.controller.Controller">
    <center>
       <AnchorPane fx:id="mainField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <AnchorPane maxHeight="42.0" maxWidth="1.7976931348623157E308" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0">
-               <Label fx:id="mode" maxHeight="1.7976931348623157E308" text="Обычный">
+               <Label fx:id="mode" maxHeight="1.7976931348623157E308" name="Обычный">
                   <font>
                      <Font name="Segoe UI" size="20.0" />
                   </font>
@@ -57,7 +57,7 @@
             <padding>
                <Insets bottom="4.0" left="4.0" right="4.0" top="2.0" />
             </padding>
-            <Button fx:id="percentOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" text="" GridPane.rowIndex="3">
+            <Button fx:id="percentOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" name="" GridPane.rowIndex="3">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBtn" />
@@ -65,7 +65,7 @@
                   <String fx:value="OtherBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="sqrtOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" text="" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Button fx:id="sqrtOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" name="" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBtn" />
@@ -73,7 +73,7 @@
                   <String fx:value="OtherBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="clear" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="C" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="clear" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="C" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -81,14 +81,14 @@
                   <String fx:value="OtherBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="equalsOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="" GridPane.columnIndex="3" GridPane.rowIndex="8">
+            <Button fx:id="equalsOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="" GridPane.columnIndex="3" GridPane.rowIndex="8">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="OtherBtn" />
                   <String fx:value="OperationBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="btn3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="3" GridPane.columnIndex="2" GridPane.rowIndex="7">
+            <Button fx:id="btn3" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="3" GridPane.columnIndex="2" GridPane.rowIndex="7">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -99,7 +99,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="btn5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="5" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <Button fx:id="btn5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="5" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -110,7 +110,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="square" lineSpacing="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" text="𝑥²" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Button fx:id="square" lineSpacing="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" name="𝑥²" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBtn" />
@@ -121,7 +121,7 @@
                   <Font name="System Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="divideByX" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" text="⅟𝑥" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <Button fx:id="divideByX" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="48.0" name="⅟𝑥" GridPane.columnIndex="3" GridPane.rowIndex="3">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -132,7 +132,7 @@
                   <Font name="System Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="clearEntry" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="CE" GridPane.rowIndex="4">
+            <Button fx:id="clearEntry" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="CE" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBtn" />
@@ -140,7 +140,7 @@
                   <String fx:value="OtherBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="backSpace" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <Button fx:id="backSpace" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -148,65 +148,14 @@
                   <String fx:value="OtherBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="divideOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="" GridPane.columnIndex="3" GridPane.rowIndex="4">
-               <styleClass>
-                  <String fx:value="MainBtn" />
-                  <String fx:value="OtherBtn" />
-                  <String fx:value="OperationBtn" />
-               </styleClass>
-            </Button>
-            <Button fx:id="btn7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="7" GridPane.rowIndex="5">
-               <styleClass>
-                  <String fx:value="MainBtn" />
-                  <String fx:value="RegularBorderBtn" />
-                  <String fx:value="RegularBtn" />
-                  <String fx:value="NumberBtn" />
-               </styleClass>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button fx:id="btn8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="8" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <styleClass>
-                  <String fx:value="MainBtn" />
-                  <String fx:value="RegularBorderBtn" />
-                  <String fx:value="RegularBtn" />
-                  <String fx:value="NumberBtn" />
-               </styleClass>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button fx:id="btn9" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="9" GridPane.columnIndex="2" GridPane.rowIndex="5">
-               <styleClass>
-                  <String fx:value="MainBtn" />
-                  <String fx:value="RegularBorderBtn" />
-                  <String fx:value="RegularBtn" />
-                  <String fx:value="NumberBtn" />
-               </styleClass>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button fx:id="multiplyOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="" GridPane.columnIndex="3" GridPane.rowIndex="5">
+            <Button fx:id="divideOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="OtherBtn" />
                   <String fx:value="OperationBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="btn4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="4" GridPane.rowIndex="6">
-               <styleClass>
-                  <String fx:value="MainBtn" />
-                  <String fx:value="RegularBtn" />
-                  <String fx:value="RegularBorderBtn" />
-                  <String fx:value="NumberBtn" />
-               </styleClass>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button fx:id="btn6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="6" textOverrun="LEADING_WORD_ELLIPSIS" GridPane.columnIndex="2" GridPane.rowIndex="6">
+            <Button fx:id="btn7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="7" GridPane.rowIndex="5">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -217,14 +166,47 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="minusOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="" GridPane.columnIndex="3" GridPane.rowIndex="6">
+            <Button fx:id="btn8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="8" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <styleClass>
+                  <String fx:value="MainBtn" />
+                  <String fx:value="RegularBorderBtn" />
+                  <String fx:value="RegularBtn" />
+                  <String fx:value="NumberBtn" />
+               </styleClass>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn9" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="9" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <styleClass>
+                  <String fx:value="MainBtn" />
+                  <String fx:value="RegularBorderBtn" />
+                  <String fx:value="RegularBtn" />
+                  <String fx:value="NumberBtn" />
+               </styleClass>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="multiplyOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="" GridPane.columnIndex="3" GridPane.rowIndex="5">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="OtherBtn" />
                   <String fx:value="OperationBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="btn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="1" userData="" GridPane.rowIndex="7">
+            <Button fx:id="btn4" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="4" GridPane.rowIndex="6">
+               <styleClass>
+                  <String fx:value="MainBtn" />
+                  <String fx:value="RegularBtn" />
+                  <String fx:value="RegularBorderBtn" />
+                  <String fx:value="NumberBtn" />
+               </styleClass>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn6" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="6" textOverrun="LEADING_WORD_ELLIPSIS" GridPane.columnIndex="2" GridPane.rowIndex="6">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -235,25 +217,43 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="btn2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="2" GridPane.columnIndex="1" GridPane.rowIndex="7">
-               <styleClass>
-                  <String fx:value="MainBtn" />
-                  <String fx:value="RegularBorderBtn" />
-                  <String fx:value="RegularBtn" />
-                  <String fx:value="NumberBtn" />
-               </styleClass>
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button fx:id="plusOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="" GridPane.columnIndex="3" GridPane.rowIndex="7">
+            <Button fx:id="minusOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="" GridPane.columnIndex="3" GridPane.rowIndex="6">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="OtherBtn" />
                   <String fx:value="OperationBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="negate" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="" GridPane.rowIndex="8">
+            <Button fx:id="btn1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="1" userData="" GridPane.rowIndex="7">
+               <styleClass>
+                  <String fx:value="MainBtn" />
+                  <String fx:value="RegularBorderBtn" />
+                  <String fx:value="RegularBtn" />
+                  <String fx:value="NumberBtn" />
+               </styleClass>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btn2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="2" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <styleClass>
+                  <String fx:value="MainBtn" />
+                  <String fx:value="RegularBorderBtn" />
+                  <String fx:value="RegularBtn" />
+                  <String fx:value="NumberBtn" />
+               </styleClass>
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="plusOperation" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="" GridPane.columnIndex="3" GridPane.rowIndex="7">
+               <styleClass>
+                  <String fx:value="MainBtn" />
+                  <String fx:value="OtherBtn" />
+                  <String fx:value="OperationBtn" />
+               </styleClass>
+            </Button>
+            <Button fx:id="negate" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="" GridPane.rowIndex="8">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -261,7 +261,7 @@
                   <String fx:value="OtherBtn" />
                </styleClass>
             </Button>
-            <Button fx:id="btn0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+            <Button fx:id="btn0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -278,7 +278,7 @@
                   <Font name="Segoe UI Semibold" size="24.0" />
                </font>
             </Button>
-            <Button fx:id="separateBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="," GridPane.columnIndex="2" GridPane.rowIndex="8">
+            <Button fx:id="separateBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" name="," GridPane.columnIndex="2" GridPane.rowIndex="8">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBorderBtn" />
@@ -290,7 +290,7 @@
                <padding>
                   <Insets bottom="1.0" />
                </padding>
-               <Button fx:id="clearMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="MC">
+               <Button fx:id="clearMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" name="MC">
                   <styleClass>
                      <String fx:value="MainBtn" />
                      <String fx:value="RegularBtn" />
@@ -304,7 +304,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button fx:id="recallMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="MR">
+               <Button fx:id="recallMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" name="MR">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -318,7 +318,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button fx:id="addMemory" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="M+">
+               <Button fx:id="addMemory" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" name="M+">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -332,7 +332,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button fx:id="subtractMemory" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="M-">
+               <Button fx:id="subtractMemory" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" name="M-">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -346,7 +346,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" text="MS">
+               <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefWidth="50.0" name="MS">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -360,7 +360,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                </Button>
-               <Button fx:id="showMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefWidth="50.0" text="M">
+               <Button fx:id="showMemory" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefWidth="50.0" name="M">
                   <HBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </HBox.margin>
@@ -374,7 +374,7 @@
                      <Font name="Segoe UI Semibold" size="12.0" />
                   </font>
                   <graphic>
-                     <Label text="">
+                     <Label name="">
                         <font>
                            <Font name="Segoe MDL2 Assets" size="6.0" />
                         </font>
@@ -383,7 +383,7 @@
                </Button>
             </HBox>
             <HBox fx:id="resultLabelBox" alignment="TOP_RIGHT" maxWidth="1.7976931348623157E308" GridPane.columnSpan="4" GridPane.rowIndex="1">
-               <Label fx:id="resultLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" styleClass="Result" text="0" textAlignment="RIGHT">
+               <Label fx:id="resultLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" styleClass="Result" name="0" textAlignment="RIGHT">
                   <font>
                      <Font name="Segoe UI Semibold" size="48.0" />
                   </font>
@@ -419,7 +419,7 @@
          <Pane fx:id="hideMenu" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" />
          <AnchorPane fx:id="memoryField" prefHeight="300.0" prefWidth="319.0" style="-fx-background-color: #f0f0f0;" translateY="301.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-               <Label fx:id="memoryLabel" layoutX="191.0" layoutY="46.0" text="0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <Label fx:id="memoryLabel" layoutX="191.0" layoutY="46.0" name="0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <font>
                      <Font name="Segoe UI Bold" size="22.0" />
                   </font>
@@ -435,7 +435,7 @@
                   <content>
                      <VBox maxWidth="1.7976931348623157E308" prefHeight="712.0" prefWidth="252.0" style="-fx-background-color: #f0f0f0;">
                         <children>
-                           <Label fx:id="menuCalculator" text="Calculator">
+                           <Label fx:id="menuCalculator" name="Calculator">
                               <font>
                                  <Font name="Segoe UI Bold" size="16.0" />
                               </font>
@@ -449,14 +449,14 @@
                                  <Insets bottom="7.0" left="10.0" top="7.0" />
                               </padding>
                            </Label>
-                           <Button fx:id="standard" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Обычный">
+                           <Button fx:id="standard" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Обычный">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -472,14 +472,14 @@
                                  <Insets />
                               </VBox.margin>
                            </Button>
-                           <Button fx:id="scientific" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="43.0" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Инженерный">
+                           <Button fx:id="scientific" alignment="BASELINE_LEFT" layoutX="10.0" layoutY="43.0" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Инженерный">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -492,14 +492,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="programmer" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Программист">
+                           <Button fx:id="programmer" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Программист">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -512,14 +512,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="dateCalculation" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Вычисление даты">
+                           <Button fx:id="dateCalculation" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Вычисление даты">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -532,7 +532,7 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Label fx:id="menuConverter" text="Преобразователь">
+                           <Label fx:id="menuConverter" name="Преобразователь">
                               <font>
                                  <Font name="Segoe UI Bold" size="16.0" />
                               </font>
@@ -543,7 +543,7 @@
                                  <Insets bottom="7.0" left="10.0" top="7.0" />
                               </padding>
                            </Label>
-                           <Button fx:id="currency" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Валюта">
+                           <Button fx:id="currency" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Валюта">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
@@ -563,14 +563,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="volume" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Объем">
+                           <Button fx:id="volume" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Объем">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -583,14 +583,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="length" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Длина">
+                           <Button fx:id="length" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Длина">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -603,14 +603,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="weight" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Вес и масса">
+                           <Button fx:id="weight" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Вес и масса">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -623,14 +623,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="temperature" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Температура">
+                           <Button fx:id="temperature" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Температура">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -643,7 +643,7 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="energy" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Энергия">
+                           <Button fx:id="energy" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Энергия">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
@@ -651,7 +651,7 @@
                               </styleClass>
                               <graphic>
                                  <!--ECAD-->
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -664,14 +664,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="area" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Площадь">
+                           <Button fx:id="area" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Площадь">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -684,14 +684,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="speed" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Скорость">
+                           <Button fx:id="speed" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Скорость">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -704,7 +704,7 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="time" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Время">
+                           <Button fx:id="time" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Время">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
@@ -712,7 +712,7 @@
                               </styleClass>
                               <graphic>
                                  <!--ED5A-->
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -725,14 +725,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="power" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Мощность">
+                           <Button fx:id="power" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Мощность">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -745,7 +745,7 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="data" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="   Данные">
+                           <Button fx:id="data" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="   Данные">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
@@ -765,14 +765,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="pressure" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="Давление">
+                           <Button fx:id="pressure" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="Давление">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label text="">
+                                 <Label name="">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -785,14 +785,14 @@
                                  <Font name="Segoe UI" size="12.0" />
                               </font>
                            </Button>
-                           <Button fx:id="angle" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="   Угол">
+                           <Button fx:id="angle" alignment="BASELINE_LEFT" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="   Угол">
                               <styleClass>
                                  <String fx:value="MainBtn" />
                                  <String fx:value="OtherBtn" />
                                  <String fx:value="RegularBtn" />
                               </styleClass>
                               <graphic>
-                                 <Label styleClass="Corner" text=" ">
+                                 <Label styleClass="Corner" name=" ">
                                     <font>
                                        <Font name="Segoe MDL2 Assets" size="16.0" />
                                     </font>
@@ -808,14 +808,14 @@
                         </children></VBox>
                   </content>
                </ScrollPane>
-               <Button fx:id="about" alignment="BASELINE_LEFT" layoutX="97.0" layoutY="46.0" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="О программе" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <Button fx:id="about" alignment="BASELINE_LEFT" layoutX="97.0" layoutY="46.0" maxHeight="40.0" maxWidth="1.7976931348623157E308" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" name="О программе" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                   <styleClass>
                      <String fx:value="MainBtn" />
                      <String fx:value="OtherBtn" />
                      <String fx:value="RegularBtn" />
                   </styleClass>
                   <graphic>
-                     <Label text="">
+                     <Label name="">
                         <font>
                            <Font name="Segoe MDL2 Assets" size="16.0" />
                         </font>
@@ -829,7 +829,7 @@
                   </font>
                </Button>
             </children></AnchorPane>
-         <Button fx:id="menuBtn" maxHeight="42.0" maxWidth="46.0" minHeight="42.0" minWidth="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="46.0" text="" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <Button fx:id="menuBtn" maxHeight="42.0" maxWidth="46.0" minHeight="42.0" minWidth="46.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="46.0" name="" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <styleClass>
                <String fx:value="MainBtn" />
                <String fx:value="MenuBtn" />
@@ -843,13 +843,13 @@
    <top>
       <AnchorPane fx:id="mainPane" maxHeight="31.0" maxWidth="1.7976931348623157E308" prefHeight="31.0" BorderPane.alignment="CENTER">
          <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <Label fx:id="title" maxHeight="1.7976931348623157E308" text="Бульбулятор">
+            <Label fx:id="title" maxHeight="1.7976931348623157E308" name="Бульбулятор">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin></Label>
          </HBox>
          <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <Button fx:id="hide" maxHeight="1.7976931348623157E308" maxWidth="46.0" mnemonicParsing="false" prefWidth="46.0" text="">
+            <Button fx:id="hide" maxHeight="1.7976931348623157E308" maxWidth="46.0" mnemonicParsing="false" prefWidth="46.0" name="">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBtn" />
@@ -859,7 +859,7 @@
                   <Font size="10.0" />
                </font>
             </Button>
-            <Button fx:id="full" maxHeight="1.7976931348623157E308" maxWidth="46.0" mnemonicParsing="false" prefWidth="46.0" text="">
+            <Button fx:id="full" maxHeight="1.7976931348623157E308" maxWidth="46.0" mnemonicParsing="false" prefWidth="46.0" name="">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="RegularBtn" />
@@ -869,7 +869,7 @@
                   <Font size="10.0" />
                </font>
             </Button>
-            <Button fx:id="close" maxHeight="1.7976931348623157E308" maxWidth="46.0" mnemonicParsing="false" prefWidth="46.0" text="">
+            <Button fx:id="close" maxHeight="1.7976931348623157E308" maxWidth="46.0" mnemonicParsing="false" prefWidth="46.0" name="">
                <styleClass>
                   <String fx:value="MainBtn" />
                   <String fx:value="CloseBtn" />
@@ -917,7 +917,7 @@
                         <Insets bottom="5.0" left="5.0" right="17.0" top="5.0" />
                      </HBox.margin>
                      <children>
-                        <Button fx:id="logBtn" mnemonicParsing="false" text="Журнал">
+                        <Button fx:id="logBtn" mnemonicParsing="false" name="Журнал">
                            <styleClass>
                               <String fx:value="MainBtn" />
                               <String fx:value="ExtraInfoBtn" />
@@ -931,7 +931,7 @@
                         <Insets bottom="5.0" left="17.0" right="5.0" top="5.0" />
                      </HBox.margin>
                      <children>
-                        <Button fx:id="memoryBtn" mnemonicParsing="false" text="Память">
+                        <Button fx:id="memoryBtn" mnemonicParsing="false" name="Память">
                            <styleClass>
                               <String fx:value="MainBtn" />
                               <String fx:value="ExtraInfoBtn" />
@@ -942,8 +942,8 @@
                   </VBox>
                </children>
             </HBox>
-            <Label fx:id="extraLogLabel" lineSpacing="1.0" styleClass="ExtraInfoLabel" text="Журнала еще нет" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
-            <Label fx:id="extraMemoryLabel" layoutX="20.0" layoutY="90.0" lineSpacing="1.0" styleClass="ExtraInfoLabel" text="Nothing to show" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
+            <Label fx:id="extraLogLabel" lineSpacing="1.0" styleClass="ExtraInfoLabel" name="Журнала еще нет" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
+            <Label fx:id="extraMemoryLabel" layoutX="20.0" layoutY="90.0" lineSpacing="1.0" styleClass="ExtraInfoLabel" name="Nothing to show" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="80.0" />
             <Pane fx:id="rightResize" maxHeight="5.0" maxWidth="-Infinity" minWidth="5.0" prefWidth="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <cursor>
                   <Cursor fx:constant="E_RESIZE" />
