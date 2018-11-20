@@ -1,5 +1,6 @@
 package com.implemica.model.operations.simple;
 
+import com.implemica.model.calculator.Calculator;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.operations.SimpleOperation;
 
@@ -8,19 +9,21 @@ import java.math.RoundingMode;
 
 public class Divide extends SimpleOperation {
 
-    public Divide() {
-        super();
-        character = "÷";
-    }
+   public Divide() {
+      super();
+      character = "÷";
+   }
 
-    @Override
-    public BigDecimal calculate(BigDecimal result) throws UndefinedResultException {
-        if(result.compareTo(BigDecimal.ZERO) == 0 && operand.compareTo(BigDecimal.ZERO) == 0 && isShowOperand()) {
-            throw new UndefinedResultException(result, operand);
-        }
+   @Override
+   public BigDecimal calculate(BigDecimal result) throws UndefinedResultException {
+      if (result.compareTo(BigDecimal.ZERO) == 0 && operand.compareTo(BigDecimal.ZERO) == 0 && isShowOperand()) {
+         throw new UndefinedResultException(result, operand);
+      }
 
-        if(isShowOperand() || !operand.equals(BigDecimal.ZERO)) {
-            return result.divide(operand, 20000, RoundingMode.HALF_UP);
-        } else return result;
-    }
+      if (isShowOperand() || !operand.equals(BigDecimal.ZERO)) {
+         return result.divide(operand, Calculator.MAX_SCALE, RoundingMode.HALF_UP);
+      } else {
+         return result;
+      }
+   }
 }

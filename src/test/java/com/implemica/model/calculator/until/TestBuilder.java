@@ -1,6 +1,7 @@
 package com.implemica.model.calculator.until;
 
 import com.implemica.model.calculator.Calculator;
+import com.implemica.model.calculator.Container;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.exceptions.InvalidInputException;
@@ -19,6 +20,7 @@ import com.implemica.model.operations.special.*;
 import com.implemica.model.validation.Validator;
 import lombok.Getter;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,8 +30,6 @@ public class TestBuilder {
 
    @Getter
    private Calculator calculator;
-
-//   private String result;
 
    private BigDecimal result;
 
@@ -242,7 +242,9 @@ public class TestBuilder {
 
    protected void executeBackSpace() {
       ResponseDto response = calculator.backspace();
-      operand = validator.builtOperand(response.getOperand(), response.isSeparated());
+      if(response.getOperand() != null) {
+         operand = validator.builtOperand(response.getOperand(), response.isSeparated());
+      }
    }
 
    protected void executeSeparate() {
@@ -269,7 +271,18 @@ public class TestBuilder {
    }
 
    protected void checkHistory(String expectedHistory, int size) {
-      History history = calculator.getContainer().getHistory();
+      Container container = null;
+      try {
+         Field f = calculator.getClass().getDeclaredField("container");
+         f.setAccessible(true);
+         container = (Container) f.get(calculator);
+      } catch (NoSuchFieldException | IllegalAccessException e) {
+         e.printStackTrace();
+      }
+
+      assert container != null;
+
+      History history = container.getHistory();
 
       assertEquals(size, history.size());
       assertEquals(expectedHistory, history.buildHistory());

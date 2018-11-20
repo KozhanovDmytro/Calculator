@@ -1,5 +1,6 @@
 package com.implemica.model.operations.special;
 
+import com.implemica.model.calculator.Calculator;
 import com.implemica.model.interfaces.SpecialOperation;
 
 import java.math.BigDecimal;
@@ -11,7 +12,7 @@ public class DivideBy implements SpecialOperation {
 
    @Override
    public BigDecimal calculate(BigDecimal result) {
-      return new BigDecimal(BigInteger.ONE).divide(result, 20000, RoundingMode.HALF_UP);
+      return new BigDecimal(BigInteger.ONE).divide(result, Calculator.MAX_SCALE, RoundingMode.HALF_UP);
    }
 
    @Override

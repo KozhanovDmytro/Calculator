@@ -20,10 +20,6 @@ public class Percent implements SpecialOperation {
       result = BigDecimal.ZERO;
    }
 
-   public Percent(BigDecimal result){
-      this.result = result;
-   }
-
    @Override
    public BigDecimal calculate(BigDecimal operand) {
       if(operand.equals(BigDecimal.ZERO)){

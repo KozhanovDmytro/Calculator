@@ -20,33 +20,21 @@ import java.math.BigDecimal;
 
 public class Calculator {
 
-   @Getter
-   private Container container;
+   private Container container = new Container();
 
    private Numeral numeral = new Arabic();
 
-   @Getter
    private boolean isShownResult;
+
+   /*constants*/
+   public static final int MAX_SCALE = 20000;
 
    private interface ExceptionSupplier {
       void calculate() throws Exception;
    }
 
-   public Calculator() {
-      container = new Container();
-      container.setMakingOperand(true);
-   }
-
    public ResponseDto executeSimpleOperation(SimpleOperation operation) {
-
-      ExceptionType exceptionType = calculate(() -> {
-         if (!(container.getOperation() instanceof Equals)) {
-            container.calculate();
-         } else if (container.getOperation().isShowOperand()) {
-            container.setOperation(new Default(container.getOperation().getOperand()));
-            container.calculate();
-         }
-      });
+      ExceptionType exceptionType = calculate(this::calculateSimpleOperation);
 
       if (container.getOperation().isShowOperand()) {
          container.getHistory().add(operation);
@@ -66,6 +54,15 @@ public class Calculator {
       response.setExceptionType(exceptionType);
 
       return response;
+   }
+
+   private void calculateSimpleOperation() throws OverflowException, UndefinedResultException, InvalidInputException {
+      if (!(container.getOperation() instanceof Equals)) {
+         container.calculate();
+      } else if (container.getOperation().isShowOperand()) {
+         container.setOperation(new Default(container.getOperation().getOperand()));
+         container.calculate();
+      }
    }
 
    public ResponseDto executeSpecialOperation(SpecialOperation operation) {
@@ -96,9 +93,9 @@ public class Calculator {
          container.getOperation().getOperandHistory().clear();
          container.getOperation().setShowOperand(false);
          history = showHistory();
-         container.getOperation().setShowOperand(true);
          container.getOperation().setOperand(BigDecimal.ZERO);
          container.getOperation().buildOperand(numeral.translate(number));
+         container.getOperation().setShowOperand(true);
          container.setMakingOperand(true);
       }
       ResponseDto response = new ResponseDto();
@@ -199,12 +196,6 @@ public class Calculator {
          container.getOperation().removeLast();
          response.setOperand(showOperand());
          response.setSeparated(showBuiltOperand());
-
-      } else if (isShownResult) {
-         response.setOperand(showResult());
-
-      } else {
-         response.setOperand(showOperand());
       }
 
       return response;
@@ -280,12 +271,19 @@ public class Calculator {
 
    private BigDecimal showResult() {
       isShownResult = true;
-      return container.getResult().stripTrailingZeros();
+      return checkScale(container.getResult());
+   }
+
+   private BigDecimal checkScale(BigDecimal number) {
+      if(number.scale() > MAX_SCALE) {
+         number = number.stripTrailingZeros();
+      }
+      return number;
    }
 
    private BigDecimal showOperand() {
       isShownResult = false;
-      return container.getOperation().getOperand();
+      return checkScale(container.getOperation().getOperand());
    }
 
    private boolean showBuiltOperand() {

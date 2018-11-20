@@ -24,24 +24,8 @@ public class OperandHistory implements History<SpecialOperation> {
    }
 
    @Override
-   public SpecialOperation getLast() {
-      return operations.getLast();
-   }
-
-   @Override
    public int size() {
       return operations.size();
-   }
-
-   @Override
-   public boolean contains(Class operation) {
-      boolean result = false;
-      for (SpecialOperation so : operations) {
-         if(operation.equals(so.getClass())) {
-            result = true;
-         }
-      }
-      return result;
    }
 
    @Override

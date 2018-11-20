@@ -6,11 +6,7 @@ public interface History<T extends Operation> {
 
     void clear();
 
-    T getLast();
-
     int size();
-
-    boolean contains(Class operation);
 
     void changeLast(T operation);
 

@@ -4,9 +4,8 @@ import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.history.MainHistory;
-import com.implemica.model.interfaces.Memory;
 import com.implemica.model.interfaces.SpecialOperation;
-import com.implemica.model.memory.MemoryImpl;
+import com.implemica.model.memory.Memory;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.SimpleOperation;
 import com.implemica.model.operations.special.Negate;
@@ -26,15 +25,15 @@ public class Container {
 
    private MainHistory history = new MainHistory();
 
-   private Memory memory = new MemoryImpl();
+   private Memory memory = new Memory();
 
-   private boolean makingOperand;
+   private boolean makingOperand = true;
 
    /*constants*/
 
    private final BigDecimal MAX = new BigDecimal("1e10000");
    private final BigDecimal MIN = new BigDecimal("1e-10000");
-   private final BigDecimal ZERO = new BigDecimal("1e-19950");
+   private final BigDecimal CLOSER_TO_ZERO = new BigDecimal("1e-19950");
 
    public void calculate() throws OverflowException, UndefinedResultException, InvalidInputException {
       result = this.operation.calculate(result);
@@ -47,13 +46,13 @@ public class Container {
       if (isResult && !operation.isShowOperand()) {
          operation.setInitialOperand(result);
          operation.getOperandHistory().add(specialOperation);
-
          operation.setOperand(resolveSpecialOperation(specialOperation));
+
       } else {
          addToHistoryDefaultOperation();
-
          operation.getOperandHistory().add(specialOperation);
          operation.setOperand(specialOperation.calculate(getOperation().getOperand()));
+
       }
 
       makingOperand = specialOperation instanceof Negate;
@@ -88,7 +87,7 @@ public class Container {
    }
 
    private BigDecimal checkForZero(BigDecimal number) {
-      if (number.abs().compareTo(ZERO) < 0) {
+      if (number.abs().compareTo(CLOSER_TO_ZERO) < 0) {
          return BigDecimal.ZERO;
       } else {
          return number;

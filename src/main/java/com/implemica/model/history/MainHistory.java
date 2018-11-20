@@ -29,25 +29,8 @@ public class MainHistory implements History<SimpleOperation>, Cloneable {
     }
 
     @Override
-    public SimpleOperation getLast() {
-        return operations.size() != 0 ? operations.getLast() : null;
-    }
-
-    @Override
     public int size() {
         return operations.size();
-    }
-
-    @Override
-    public boolean contains(Class operation) {
-        boolean result = false;
-        for (SimpleOperation so : operations) {
-            if(operation.equals(so.getClass())) {
-                result = true;
-                break;
-            }
-        }
-        return result;
     }
 
     @Override
@@ -66,8 +49,9 @@ public class MainHistory implements History<SimpleOperation>, Cloneable {
 
     @Override
     public void hideLast() {
-        if(operations.size() > 0)
+        if(operations.size() > 0) {
             operations.getLast().setShowOperand(false);
+        }
     }
 
     @Override

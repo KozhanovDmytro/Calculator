@@ -25,8 +25,6 @@ public class Controller {
 
    private static final String PATH_TO_ENGLISH_TEXTS = "/com/implemica/view/resources/properties/text_En.properties";
 
-   private static final String PATH_TO_RUSSIAN_TEXTS = "/com/implemica/view/resources/properties/text_Ru.properties";
-
    @FXML
    private Button clear, clearEntry, backSpace;
 
@@ -166,21 +164,21 @@ public class Controller {
 
       separateBtn.setOnAction(event -> {
          ResponseDto response = calculator.separateOperand();
-         showResult(validator.builtOperand(response.getOperand(), response.isSeparated()));
+         parseBuiltOperand(response);
       });
    }
 
    private void actionForBuildOperand(Number number) {
       unlock();
       ResponseDto response = calculator.buildOperand(number);
-      showResult(validator.builtOperand(response.getOperand(), response.isSeparated()));
+      parseBuiltOperand(response);
    }
 
    private void actionsForCleanOperations() {
       backSpace.setOnAction(event -> {
          unlock();
          ResponseDto response = calculator.backspace();
-         showResult(validator.builtOperand(response.getOperand(), response.isSeparated()));
+         parseBuiltOperand(response);
       });
       clear.setOnAction(event -> {
          unlock();
@@ -190,6 +188,12 @@ public class Controller {
          unlock();
          parseDto(calculator.clearEntry());
       });
+   }
+
+   private void parseBuiltOperand(ResponseDto response) {
+      if (response.getOperand() != null) {
+         showResult(validator.builtOperand(response.getOperand(), response.isSeparated()));
+      }
    }
 
    private void actionsForMemory() {
