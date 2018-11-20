@@ -4,7 +4,7 @@ import com.implemica.model.interfaces.SpecialOperation;
 
 import java.math.BigDecimal;
 
-public class Negate implements SpecialOperation {
+public class Negate extends SpecialOperation {
 
    @Override
    public BigDecimal calculate(BigDecimal operand) {

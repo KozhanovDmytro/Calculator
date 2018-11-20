@@ -5,7 +5,7 @@ import com.implemica.model.interfaces.SpecialOperation;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-public class Square implements SpecialOperation {
+public class Square extends SpecialOperation {
 
    @Override
    public BigDecimal calculate(BigDecimal result) {

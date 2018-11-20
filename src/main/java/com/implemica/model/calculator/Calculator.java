@@ -7,6 +7,7 @@ import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.history.MainHistory;
 import com.implemica.model.interfaces.Numeral;
+import com.implemica.model.interfaces.Operation;
 import com.implemica.model.interfaces.SpecialOperation;
 import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
@@ -14,7 +15,6 @@ import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
 import com.implemica.model.operations.SimpleOperation;
 import com.implemica.model.operations.special.Percent;
-import lombok.Getter;
 
 import java.math.BigDecimal;
 
@@ -25,9 +25,6 @@ public class Calculator {
    private Numeral numeral = new Arabic();
 
    private boolean isShownResult;
-
-   /*constants*/
-   public static final int MAX_SCALE = 20000;
 
    private interface ExceptionSupplier {
       void calculate() throws Exception;
@@ -275,7 +272,7 @@ public class Calculator {
    }
 
    private BigDecimal checkScale(BigDecimal number) {
-      if(number.scale() > MAX_SCALE) {
+      if(number.scale() > Operation.MAX_SCALE) {
          number = number.stripTrailingZeros();
       }
       return number;

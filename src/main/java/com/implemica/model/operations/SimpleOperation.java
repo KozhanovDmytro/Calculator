@@ -12,7 +12,7 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-public abstract class SimpleOperation implements Operation {
+public abstract class SimpleOperation extends Operation {
 
    @Getter
    @Setter

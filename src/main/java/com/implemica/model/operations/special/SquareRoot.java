@@ -6,7 +6,7 @@ import com.implemica.model.interfaces.SpecialOperation;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-public class SquareRoot implements SpecialOperation {
+public class SquareRoot extends SpecialOperation {
 
    @Override
    public BigDecimal calculate(BigDecimal result) throws InvalidInputException {

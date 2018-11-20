@@ -1,6 +1,5 @@
 package com.implemica.model.operations.simple;
 
-import com.implemica.model.calculator.Calculator;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.operations.SimpleOperation;
 
@@ -21,7 +20,7 @@ public class Divide extends SimpleOperation {
       }
 
       if (isShowOperand() || !operand.equals(BigDecimal.ZERO)) {
-         return result.divide(operand, Calculator.MAX_SCALE, RoundingMode.HALF_UP);
+         return result.divide(operand, MAX_SCALE, RoundingMode.HALF_UP);
       } else {
          return result;
       }

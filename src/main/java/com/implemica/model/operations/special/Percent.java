@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-public class Percent implements SpecialOperation {
+public class Percent extends SpecialOperation {
 
    @Setter
    private BigDecimal result;

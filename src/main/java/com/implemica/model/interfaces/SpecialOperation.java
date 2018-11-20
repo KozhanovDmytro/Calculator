@@ -1,7 +1,7 @@
 package com.implemica.model.interfaces;
 
-public interface SpecialOperation extends Operation {
+public abstract class SpecialOperation extends Operation {
 
-   String buildHistory(String history);
+   public abstract String buildHistory(String history);
 
 }
