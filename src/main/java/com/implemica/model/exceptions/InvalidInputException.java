@@ -2,6 +2,7 @@ package com.implemica.model.exceptions;
 
 import java.math.BigDecimal;
 
+@Deprecated
 public class InvalidInputException extends Exception {
 
    public InvalidInputException() {

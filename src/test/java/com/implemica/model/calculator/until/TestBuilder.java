@@ -4,76 +4,51 @@ import com.implemica.model.calculator.Calculator;
 import com.implemica.model.calculator.Container;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
-import com.implemica.model.exceptions.InvalidInputException;
-import com.implemica.model.exceptions.OverflowException;
-import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.interfaces.History;
-import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
+import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
 import com.implemica.model.validation.Validator;
-import lombok.Getter;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestBuilder {
 
-   @Getter
-   private Calculator calculator;
+   private Calculator calculator = new Calculator();
 
    private BigDecimal result;
 
-   private String operand;
+   private BigDecimal operand;
 
-   private String memory;
+   private String builtOperand;
 
-   private String history;
-
-   private boolean isSeparatedOperand;
+   private boolean checkException = true;
 
    private Validator validator = new Validator();
 
    private ExceptionType exceptionType = ExceptionType.NOTHING;
 
-   public TestBuilder() {
-      calculator = new Calculator();
+   public void doExceptionsTest(String pattern, ExceptionType expectedExceptionType) {
+      checkException = false;
+      doTest(pattern, null, 0, null, null);
+      assertEquals(expectedExceptionType, this.exceptionType);
+      checkException = true;
    }
 
-   public void doExceptionsTest(String pattern, ExceptionType exceptionType) {
-      Exception expected = null;
-      switch (exceptionType){
-         case OVERFLOW:
-            expected = new OverflowException();
-            break;
-         case UNDEFINED_RESULT:
-            expected = new UndefinedResultException();
-            break;
-         case DIVIDE_BY_ZERO:
-            expected = new ArithmeticException();
-            break;
-         case INVALID_INPUT:
-            expected = new InvalidInputException();
-            break;
-      }
-
-      assert expected != null;
-
-      assertThrows(expected.getClass(), () -> doTest(pattern, null, 0, null, null));
-   }
-
-   public void doTest(String pattern, String history, int historySize, String result, String operand) throws OverflowException, UndefinedResultException, InvalidInputException {
+   public void doTest(String pattern, String history, int historySize, String result, String operand) {
       calculator = new Calculator();
+      exceptionType = ExceptionType.NOTHING;
       this.result = BigDecimal.ZERO;
-      this.operand = "0";
+      this.operand = BigDecimal.ZERO;
+      this.builtOperand = "0";
       String[] actions = pattern.split(" ");
       for (String action : actions) {
          switch (action) {
@@ -106,8 +81,6 @@ public class TestBuilder {
          }
       }
 
-      checkException();
-
       if (history != null) {
          checkHistory(history, historySize);
       }
@@ -121,7 +94,7 @@ public class TestBuilder {
       }
    }
 
-   public void doBoundaryTest(String pattern, String expected) throws OverflowException, InvalidInputException, UndefinedResultException {
+   public void doBoundaryTest(String pattern, String expected) {
       doTest(pattern, null, 0, null, null);
 
       if(expected != null) {
@@ -129,11 +102,12 @@ public class TestBuilder {
       }
    }
 
-   public void checkBuildOperand(String pattern, String expected) throws OverflowException, InvalidInputException, UndefinedResultException {
-      doTest(pattern, "", 0, null, expected);
+   public void checkBuildOperand(String pattern, String expected) {
+      doTest(pattern, "", 0, null, null);
+      assertEquals(expected, builtOperand);
    }
 
-   private void checkBySymbols(String pattern) throws OverflowException, InvalidInputException, UndefinedResultException {
+   private void checkBySymbols(String pattern) {
       for (char action : pattern.toCharArray()) {
          switch (action) {
             case '0':
@@ -200,76 +174,78 @@ public class TestBuilder {
       }
    }
 
-   protected void executeSimpleOperation(SimpleOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
+   private void executeSimpleOperation(SimpleOperation operation) {
       ResponseDto response = calculator.executeSimpleOperation(operation);
       parseDto(response);
-      checkException();
+      checkException(response.getExceptionType());
    }
 
-   protected void executeSpecialOperation(SpecialOperation operation) throws OverflowException, InvalidInputException, UndefinedResultException {
+   private void executeSpecialOperation(SpecialOperation operation) {
       ResponseDto response = calculator.executeSpecialOperation(operation);
       parseDto(response);
-      checkException();
+      checkException(response.getExceptionType());
    }
 
-   protected void clear(){
+   private void clear(){
       ResponseDto response = calculator.clear();
       parseDto(response);
    }
 
-   protected void memoryClear() {
+   private void memoryClear() {
       BigDecimal memoryValue = calculator.clearMemory();
-      memory = validator.showNumber(memoryValue);
+      validator.showNumber(memoryValue);
    }
 
-   protected void memoryRecall() {
+   private void memoryRecall() {
       parseDto(calculator.getMemory());
    }
 
-   protected void addMemory() {
-      memory = validator.showNumber(calculator.addMemory());
+   private void addMemory() {
+      calculator.addMemory();
    }
 
-   protected void subtractMemory() {
-      memory = validator.showNumber(calculator.subtractMemory());
+   private void subtractMemory() {
+      calculator.subtractMemory();
    }
 
-   protected void clearEntry(){
+   private void clearEntry(){
       ResponseDto response = calculator.clearEntry();
       parseDto(response);
    }
 
-   protected void executeBackSpace() {
+   private void executeBackSpace() {
       ResponseDto response = calculator.backspace();
       if(response.getOperand() != null) {
-         operand = validator.builtOperand(response.getOperand(), response.isSeparated());
+         builtOperand = validator.builtOperand(response.getOperand(), response.isSeparated());
       }
    }
 
-   protected void executeSeparate() {
+   private void executeSeparate() {
       ResponseDto response = calculator.separateOperand();
-      operand = validator.builtOperand(response.getOperand(), response.isSeparated());
+      builtOperand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
-   protected void equals() {
+   private void equals() {
       ResponseDto response = calculator.equalsOperation();
       parseDto(response);
+      checkException(response.getExceptionType());
    }
 
-   protected void checkResult(String expected) {
+   private void checkResult(String expected) {
       assertEquals(expected, validator.showNumber(result));
    }
 
    private void checkOperand(String expected) {
-      assertEquals(expected, operand);
+      assertEquals(expected, validator.showNumber(operand.stripTrailingZeros()));
    }
 
-   protected void buildOperand(Number number) {
+   private void buildOperand(Number number) {
       ResponseDto response = calculator.buildOperand(number);
-      operand = validator.builtOperand(response.getOperand(), response.isSeparated());
+      operand = response.getOperand();
+      builtOperand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
-   protected void checkHistory(String expectedHistory, int size) {
+   private void checkHistory(String expectedHistory, int size) {
       Container container = null;
       try {
          Field f = calculator.getClass().getDeclaredField("container");
@@ -287,36 +263,23 @@ public class TestBuilder {
       assertEquals(expectedHistory, history.buildHistory());
    }
 
-   protected void checkException() throws OverflowException, UndefinedResultException, InvalidInputException {
-      switch (exceptionType){
-         case OVERFLOW:
-            throw new OverflowException();
-         case UNDEFINED_RESULT:
-            throw new UndefinedResultException();
-         case DIVIDE_BY_ZERO:
-            throw new ArithmeticException();
-         case INVALID_INPUT:
-            throw new InvalidInputException();
+   private void checkException(ExceptionType exceptionType) {
+      if(exceptionType != ExceptionType.NOTHING) {
+         this.exceptionType = exceptionType;
+      }
+
+      if(checkException) {
+         assertEquals(ExceptionType.NOTHING, exceptionType);
       }
    }
 
    private void parseDto(ResponseDto response) {
-      if(response.getExceptionType() != null) {
-         exceptionType = response.getExceptionType();
-      }
-
       if(response.getResult() != null) {
          result = response.getResult();
       }
 
       if(response.getOperand() != null) {
-         operand = validator.showNumber(response.getOperand().stripTrailingZeros());
+         operand = response.getOperand();
       }
-
-      if(response.getHistory() != null) {
-        history = response.getHistory().buildHistory();
-      }
-
-      isSeparatedOperand = response.isSeparated();
    }
 }

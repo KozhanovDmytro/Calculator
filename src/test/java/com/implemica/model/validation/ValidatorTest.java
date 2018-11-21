@@ -1,9 +1,6 @@
 package com.implemica.model.validation;
 
 import com.implemica.model.calculator.until.TestBuilder;
-import com.implemica.model.exceptions.InvalidInputException;
-import com.implemica.model.exceptions.OverflowException;
-import com.implemica.model.exceptions.UndefinedResultException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +14,7 @@ public class ValidatorTest {
    }
 
    @Test
-   void showComfortableNumber() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void showComfortableNumber() {
       builder.checkBuildOperand("0", "0");
       builder.checkBuildOperand("00", "0");
       builder.checkBuildOperand("0000000000", "0");

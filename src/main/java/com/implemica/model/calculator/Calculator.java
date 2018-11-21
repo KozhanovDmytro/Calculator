@@ -1,10 +1,7 @@
 package com.implemica.model.calculator;
 
 import com.implemica.model.dto.ResponseDto;
-import com.implemica.model.exceptions.ExceptionType;
-import com.implemica.model.exceptions.InvalidInputException;
-import com.implemica.model.exceptions.OverflowException;
-import com.implemica.model.exceptions.UndefinedResultException;
+import com.implemica.model.exceptions.*;
 import com.implemica.model.history.MainHistory;
 import com.implemica.model.interfaces.Numeral;
 import com.implemica.model.operations.operation.Operation;
@@ -53,7 +50,7 @@ public class Calculator {
       return response;
    }
 
-   private void calculateSimpleOperation() throws OverflowException, UndefinedResultException, InvalidInputException {
+   private void calculateSimpleOperation() throws CalculatorException {
       if (!(container.getOperation() instanceof Equals)) {
          container.calculate();
       } else if (container.getOperation().isShowOperand()) {
@@ -145,18 +142,13 @@ public class Calculator {
 
       try {
          exceptionSupplier.calculate();
-      } catch (OverflowException e) {
-         exceptionType = ExceptionType.OVERFLOW;
-      } catch (UndefinedResultException e) {
-         exceptionType = ExceptionType.UNDEFINED_RESULT;
-      } catch (ArithmeticException e) {
-         exceptionType = ExceptionType.DIVIDE_BY_ZERO;
-      } catch (InvalidInputException e) {
-         exceptionType = ExceptionType.INVALID_INPUT;
+      } catch (CalculatorException e) {
+         exceptionType = e.getExceptionType();
       } catch (Exception e) {
          e.printStackTrace();
       }
 
+//      TODO i don't like that!
       if (exceptionType != ExceptionType.NOTHING) {
          MainHistory tempHistory = container.getHistory().clone();
          clear();

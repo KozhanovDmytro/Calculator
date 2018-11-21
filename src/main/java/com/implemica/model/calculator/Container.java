@@ -1,8 +1,6 @@
 package com.implemica.model.calculator;
 
-import com.implemica.model.exceptions.InvalidInputException;
-import com.implemica.model.exceptions.OverflowException;
-import com.implemica.model.exceptions.UndefinedResultException;
+import com.implemica.model.exceptions.*;
 import com.implemica.model.history.MainHistory;
 import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.memory.Memory;
@@ -35,14 +33,14 @@ public class Container {
    private final BigDecimal MIN = new BigDecimal("1e-10000");
    private final BigDecimal CLOSER_TO_ZERO = new BigDecimal("1e-19950");
 
-   public void calculate() throws OverflowException, UndefinedResultException, InvalidInputException {
+   public void calculate() throws CalculatorException {
       result = this.operation.calculate(result);
       result = checkForZero(result);
       checkOverflow(result);
       addToHistoryDefaultOperation();
    }
 
-   void change(SpecialOperation specialOperation, boolean isResult) throws UndefinedResultException, OverflowException, InvalidInputException {
+   void change(SpecialOperation specialOperation, boolean isResult) throws CalculatorException{
       if (isResult && !operation.isShowOperand()) {
          operation.setInitialOperand(result);
          operation.getOperandHistory().add(specialOperation);
@@ -61,7 +59,7 @@ public class Container {
       checkOverflow(operation.getOperand());
    }
 
-   private BigDecimal resolveSpecialOperation(SpecialOperation operation) throws UndefinedResultException, InvalidInputException {
+   private BigDecimal resolveSpecialOperation(SpecialOperation operation) throws CalculatorException{
       BigDecimal operand;
       if (operation instanceof Percent) {
          operand = operation.calculate(getOperation().getOperand());
@@ -78,11 +76,11 @@ public class Container {
       }
    }
 
-   private void checkOverflow(BigDecimal number) throws OverflowException {
+   private void checkOverflow(BigDecimal number) throws CalculatorException {
       if (number.abs().compareTo(MAX) >= 0 ||
               (number.abs().compareTo(BigDecimal.ZERO)) > 0 &&
                       number.abs().compareTo(MIN) <= 0) {
-         throw new OverflowException(number);
+         throw new CalculatorException(ExceptionType.OVERFLOW);
       }
    }
 

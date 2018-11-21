@@ -2,9 +2,6 @@ package com.implemica.model.calculator;
 
 import com.implemica.model.calculator.until.TestBuilder;
 import com.implemica.model.exceptions.ExceptionType;
-import com.implemica.model.exceptions.InvalidInputException;
-import com.implemica.model.exceptions.OverflowException;
-import com.implemica.model.exceptions.UndefinedResultException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +44,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void simpleOperationTests() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void simpleOperationTests() {
       builder.doTest("+", "0 + ", 2, "0", null);
       builder.doTest("-", "0 - ", 2, "0", null);
       builder.doTest("×", "0 × ", 2, "0", null);
@@ -82,7 +79,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void plusOperationTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void plusOperationTest() {
       builder.doTest("2+2=", "", 0, "4", null);
       builder.doTest("7+3=", "", 0, "10", null);
       builder.doTest("1+8=", "", 0, "9", null);
@@ -195,7 +192,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void subtractOperationTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void subtractOperationTest() {
       builder.doTest("2-2=", "", 0, "0", null);
       builder.doTest("7-3=", "", 0, "4", null);
       builder.doTest("1-8=", "", 0, "-7", null);
@@ -308,7 +305,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void multiplyOperationTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void multiplyOperationTest() {
       builder.doTest("2×2=", "", 0, "4", null);
       builder.doTest("7×3=", "", 0, "21", null);
       builder.doTest("1×8=", "", 0, "8", null);
@@ -421,7 +418,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void divideOperationTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void divideOperationTest() {
       builder.doTest("2÷2=", "", 0, "1", null);
       builder.doTest("7÷3=", "", 0, "2,333333333333333", null);
       builder.doTest("1÷8=", "", 0, "0,125", null);
@@ -531,7 +528,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void equalsTests() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void equalsTests() {
       builder.doTest("=", "", 0, "0", null);
 
       builder.doTest("+=", "", 0, "0", null);
@@ -618,7 +615,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void mixOfOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void mixOfOperations() {
       builder.doTest("300+5=%√-1000000000000000= SQR + 9999999999999999 1/x × 1000000000000000 ÷ 50 ", "sqr(-999999999999964,5) + 1/(9999999999999999) × 1000000000000000 ÷ 50 ", 4, "9,99999999999928e+44", "50");
       builder.doTest("12345 1/x n 500 = 400 + % × 0.0001 SQR 123.3 √ 1/x ÷ 55 × 12253 + 124n - 73 CE 81", "400 + 1600 × 1/(√(123,3)) ÷ 55 × 12253 + negate(124) - 81 ", 7, "40 002,2155146669", "81");
       builder.doTest("0.01 × 123 + % = √ SQR + 20 1/x ÷ 7.1 - % + 876 CE 765n ", "sqr(√(1,245129)) + 1/(20) ÷ 7,1 - 3,40562592057925e-4 + negate(765) ", 5, "0,1842028176896322", "-765");
@@ -637,7 +634,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void negateTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void negateTest() {
       builder.doTest("1n", "negate(1) ", 1, "0", "-1");
       builder.doTest("2n", "negate(2) ", 1, "0", "-2");
       builder.doTest("7n", "negate(7) ", 1, "0", "-7");
@@ -670,7 +667,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void squareTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void squareTest() {
       builder.doTest("SQR", "sqr(0) ", 1, null, "0");
 
       builder.doTest("0 SQR", "sqr(0) ", 1, null, "0");
@@ -717,7 +714,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void squareRootTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void squareRootTest() {
       builder.doTest("√", "√(0) ", 1, null, "0");
 
       builder.doTest("0√", "√(0) ", 1, null, "0");
@@ -749,7 +746,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void divideByTest() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void divideByTest() {
       builder.doExceptionsTest(" 1/x ", ExceptionType.DIVIDE_BY_ZERO);
 
       builder.doTest("1 1/x", "1/(1) ", 1, "0", "1");
@@ -794,7 +791,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void percentTest() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void percentTest() {
       builder.doTest("%", "0 ", 1, "0", "0");
 
       builder.doTest("2%", "0 ", 1, "0", "0");
@@ -845,7 +842,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void backspaceTest() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void backspaceTest() {
       builder.doTest("2 SQR SQR SQR <<<<<<<<=", "", 0, "256", null);
       builder.doTest("70÷7=<<<", "", 0, "10", null);
       builder.doTest("1234567890<<<<<<<<<<<<<<<<<<<<<=", "", 0, "0", null);
@@ -888,7 +885,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void clear() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void clear() {
       builder.doTest("C", "", 0, "0", "0");
 
       builder.doTest("4 C", "", 0, "0", "4");
@@ -927,7 +924,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void testClearEntry() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void testClearEntry() {
       builder.doTest(" CE ","", 0, "0", "0");
 
       builder.doTest("5 CE ","", 0, "0", "0");
@@ -957,7 +954,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void testRoundingMode() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void testRoundingMode() {
       builder.doTest("0.0000000000000001+1=", "", 0, "1", null);
       builder.doTest("1÷3×3=", "", 0, "1", null);
       builder.doTest("1÷3×3-1", "1 ÷ 3 × 3 - 1 ", 4, "1", null);
@@ -1010,39 +1007,39 @@ public class CalculatorTest {
    }
 
    @Test
-   void buildOperandTest() throws OverflowException, InvalidInputException, UndefinedResultException {
-      builder.doTest("1", "", 0, null, "1");
-      builder.doTest("2", "", 0, null, "2");
-      builder.doTest("3", "", 0, null, "3");
-      builder.doTest("4", "", 0, null, "4");
-      builder.doTest("5", "", 0, null, "5");
-      builder.doTest("6", "", 0, null, "6");
-      builder.doTest("7", "", 0, null, "7");
-      builder.doTest("8", "", 0, null, "8");
-      builder.doTest("9", "", 0, null, "9");
+   void buildOperandTest() {
+      builder.checkBuildOperand("1", "1");
+      builder.checkBuildOperand("2", "2");
+      builder.checkBuildOperand("3", "3");
+      builder.checkBuildOperand("4", "4");
+      builder.checkBuildOperand("5", "5");
+      builder.checkBuildOperand("6", "6");
+      builder.checkBuildOperand("7", "7");
+      builder.checkBuildOperand("8", "8");
+      builder.checkBuildOperand("9", "9");
 
-      builder.doTest("0000000000000000000000000000000000000001", "", 0, null, "1");
-      builder.doTest("01010111101010101000011", "", 0, null, "1 010 111 101 010 101");
-      builder.doTest("123456789", "", 0, null, "123 456 789");
-      builder.doTest("1000000000000000000", "", 0, null, "1 000 000 000 000 000");
-      builder.doTest("1000000000000000000.", "", 0, null, "1 000 000 000 000 000,");
-      builder.doTest("9999999999999999999.", "", 0, null, "9 999 999 999 999 999,");
-      builder.doTest("1234567890123456789", "", 0, null, "1 234 567 890 123 456");
+      builder.checkBuildOperand("0000000000000000000000000000000000000001", "1");
+      builder.checkBuildOperand("01010111101010101000011", "1 010 111 101 010 101");
+      builder.checkBuildOperand("123456789", "123 456 789");
+      builder.checkBuildOperand("1000000000000000000", "1 000 000 000 000 000");
+      builder.checkBuildOperand("1000000000000000000.", "1 000 000 000 000 000,");
+      builder.checkBuildOperand("9999999999999999999.", "9 999 999 999 999 999,");
+      builder.checkBuildOperand("1234567890123456789", "1 234 567 890 123 456");
 
-      builder.doTest("3.0", "", 0, null, "3,0");
-      builder.doTest("3.00", "", 0, null, "3,00");
-      builder.doTest("0.00000000000000000", "", 0, null, "0,0000000000000000");
-      builder.doTest("3.00000000000000000", "", 0, null, "3,000000000000000");
-      builder.doTest("3.000000000000000001", "", 0, null, "3,000000000000000");
-      builder.doTest("10.000000000000000001", "", 0, null, "10,00000000000000");
-      builder.doTest("100.000000000000000001", "", 0, null, "100,0000000000000");
-      builder.doTest("1000.000000000000000001", "", 0, null, "1 000,000000000000");
-      builder.doTest("100000000000000.000000000000000001", "", 0, null, "100 000 000 000 000,0");
-      builder.doTest("1000000000000000.000000000000000001", "", 0, null, "1 000 000 000 000 000,");
+      builder.checkBuildOperand("3.0", "3,0");
+      builder.checkBuildOperand("3.00", "3,00");
+      builder.checkBuildOperand("0.00000000000000000", "0,0000000000000000");
+      builder.checkBuildOperand("3.00000000000000000", "3,000000000000000");
+      builder.checkBuildOperand("3.000000000000000001", "3,000000000000000");
+      builder.checkBuildOperand("10.000000000000000001", "10,00000000000000");
+      builder.checkBuildOperand("100.000000000000000001", "100,0000000000000");
+      builder.checkBuildOperand("1000.000000000000000001", "1 000,000000000000");
+      builder.checkBuildOperand("100000000000000.000000000000000001", "100 000 000 000 000,0");
+      builder.checkBuildOperand("1000000000000000.000000000000000001", "1 000 000 000 000 000,");
    }
 
    @Test
-   void historyTest() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void historyTest() {
       builder.doTest("0.0000000000000001+", "0,0000000000000001 + ", 2, null, null);
       builder.doTest("0.0000000000000001+1", "0,0000000000000001 + 1 ", 2, null, null);
       builder.doTest("0.0000000000000001+1=", "", 0, null, null);
@@ -1055,7 +1052,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void memoryTest() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void memoryTest() {
       builder.doTest("MR", "", 0, "0", "0");
       builder.doTest("M+ MR", "", 0, "0", "0");
       builder.doTest("M- MR", "", 0, "0", "0");
@@ -1183,7 +1180,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void boundaryTest() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void boundaryTest() {
 
       // right side
       // expected number : 9999999..9.999..94
@@ -1227,7 +1224,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void boundaryTestForSpecialOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void boundaryTestForSpecialOperations() {
       builder.doTest          ("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))) ", 1, "0", "1,e+7680");
       builder.doExceptionsTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
       builder.doExceptionsTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
@@ -1258,7 +1255,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void testWithSpecialOperationsUsingBounds() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void testWithSpecialOperationsUsingBounds() {
       builder.doExceptionsTest(theMaxNumber + " SQR ", ExceptionType.OVERFLOW);
       builder.doTest(theMaxNumber + " √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null, 0, null, "1,000000000000001");
       builder.doTest(theMaxNumber + " √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null, 0, null, "1");
@@ -1274,7 +1271,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void specialCases() throws OverflowException, InvalidInputException, UndefinedResultException {
+   void specialCases() {
       builder.doTest("÷×-+", "0 + ", 2, "0", null);
       builder.doTest("5+=", "", 0, "10", null);
       builder.doTest("1+3===", "", 0, "10", null);

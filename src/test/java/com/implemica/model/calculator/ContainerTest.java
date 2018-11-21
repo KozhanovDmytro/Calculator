@@ -1,8 +1,6 @@
 package com.implemica.model.calculator;
 
-import com.implemica.model.exceptions.InvalidInputException;
-import com.implemica.model.exceptions.OverflowException;
-import com.implemica.model.exceptions.UndefinedResultException;
+import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.simple.Divide;
@@ -27,7 +25,7 @@ public class ContainerTest {
    }
 
    @Test
-   void minusOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void minusOperations() throws CalculatorException {
       calculate(new Default(), "10");
       calculate(new Minus(), "1");
       calculate(new Minus(), "2");
@@ -38,7 +36,7 @@ public class ContainerTest {
    }
 
    @Test
-   void plusOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void plusOperations() throws CalculatorException {
       calculate(new Default(), "10");
 
       calculate(new Plus(), "1");
@@ -50,7 +48,7 @@ public class ContainerTest {
    }
 
    @Test
-   void multiplyOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void multiplyOperations() throws CalculatorException {
       calculate(new Default(), "2");
 
       calculate(new Multiply(), "3");
@@ -61,7 +59,7 @@ public class ContainerTest {
    }
 
    @Test
-   void divideOperations() throws OverflowException, UndefinedResultException, InvalidInputException {
+   void divideOperations() throws CalculatorException {
       calculate(new Default(), "90");
 
       calculate(new Divide(), "3");
@@ -70,7 +68,7 @@ public class ContainerTest {
       checkResult("3");
    }
 
-   private void calculate(SimpleOperation operation, String number) throws OverflowException, UndefinedResultException, InvalidInputException {
+   private void calculate(SimpleOperation operation, String number) throws CalculatorException {
       operation.setShowOperand(true);
       for (char c : number.toCharArray()) {
          operation.buildOperand(c);
