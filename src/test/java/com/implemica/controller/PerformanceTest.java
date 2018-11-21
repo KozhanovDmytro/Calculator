@@ -1118,6 +1118,26 @@ public class PerformanceTest extends TestFxBaseBuilder {
    
    @Test
    void boundaryTestForSpecialOperations() {
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))) ", "1,e+7680");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))) ", "Overflow");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))) ", "Overflow");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ","sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))) ", "Overflow");
+
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001))))))))) ", "1,e-8192");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001)))))))))) ", "Overflow");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001)))))))))) ", "Overflow");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001)))))))))) ", "Overflow");
+
+      doTest("1000000000000000 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1,000000000000001");
+      doTest("1000000000000000 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1");
+      doTest("1000000000000000 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1");
+      doTest("1000000000000000 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1");
+
+      doTest("0.0000000000000001 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"0,9999999999999999");
+      doTest("0.0000000000000001 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1");
+      doTest("0.0000000000000001 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1");
+      doTest("0.0000000000000001 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1");
+      
       doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+9836 ", "1,e+9836");
       doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+10134 ", "Overflow");
       doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+10134 ", "Overflow");
