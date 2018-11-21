@@ -1,4 +1,4 @@
-package com.implemica.model.interfaces;
+package com.implemica.model.operations.operation;
 
 public abstract class SpecialOperation extends Operation {
 

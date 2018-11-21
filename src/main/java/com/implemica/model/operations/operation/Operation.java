@@ -1,4 +1,4 @@
-package com.implemica.model.interfaces;
+package com.implemica.model.operations.operation;
 
 import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.UndefinedResultException;

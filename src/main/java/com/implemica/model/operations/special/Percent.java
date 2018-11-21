@@ -1,6 +1,6 @@
 package com.implemica.model.operations.special;
 
-import com.implemica.model.interfaces.SpecialOperation;
+import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.validation.Validator;
 import lombok.Setter;
 
@@ -16,13 +16,13 @@ public class Percent extends SpecialOperation {
 
    private Validator validator = new Validator();
 
-   public Percent(){
+   public Percent() {
       result = BigDecimal.ZERO;
    }
 
    @Override
    public BigDecimal calculate(BigDecimal operand) {
-      if(operand.equals(BigDecimal.ZERO)){
+      if (operand.equals(BigDecimal.ZERO)) {
          operand = new BigDecimal(result.toPlainString());
       }
       BigDecimal result = this.result.multiply(operand).divide(new BigDecimal(100), MathContext.DECIMAL64);

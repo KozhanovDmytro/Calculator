@@ -1,6 +1,6 @@
 package com.implemica.model.operations.special;
 
-import com.implemica.model.interfaces.SpecialOperation;
+import com.implemica.model.operations.operation.SpecialOperation;
 
 import java.math.BigDecimal;
 

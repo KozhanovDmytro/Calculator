@@ -4,5 +4,5 @@ import com.implemica.model.numerals.numbers.Number;
 
 public interface Numeral {
 
-    char translate(Number number);
+   char translate(Number number);
 }

@@ -1,15 +1,12 @@
-package com.implemica.model.operations;
+package com.implemica.model.operations.operation;
 
 import com.implemica.model.history.OperandHistory;
-import com.implemica.model.interfaces.History;
-import com.implemica.model.interfaces.Operation;
 import com.implemica.model.validation.Validator;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.math.RoundingMode;
 
 public abstract class SimpleOperation extends Operation {

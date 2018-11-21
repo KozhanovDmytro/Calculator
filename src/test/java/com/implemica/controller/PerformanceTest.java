@@ -1,6 +1,7 @@
 package com.implemica.controller;
 
 import com.implemica.controller.util.TestFxBaseBuilder;
+import com.implemica.model.exceptions.ExceptionType;
 import org.junit.jupiter.api.Test;
 
 public class PerformanceTest extends TestFxBaseBuilder {
@@ -813,11 +814,6 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("9276 CE 32 CE ", "", "0");
       doTest("4628 CE 70 CE ", "", "0");
 
-      doTest("+ CE ÷", "0 + 0 ÷ ", "0");
-      doTest("- CE ×", "0 - 0 × ", "0");
-      doTest("× CE -", "0 × 0 - ", "0");
-      doTest("+ CE +", "0 + 0 + ", "0");
-
       doTest("1+2÷3 CE 9", "1 + 2 ÷ ", "9");
       doTest("1-2×3 CE 9", "1 - 2 × ", "9");
       doTest("1×2-3 CE 9", "1 × 2 - ", "9");
@@ -1118,5 +1114,16 @@ public class PerformanceTest extends TestFxBaseBuilder {
 
       // gets -1.000000000000001e-10001 number
       doTest(smallNumber + "M+ C 0 - MR =" + "×0.0999999999999999=", null, "Overflow");
+   }
+   
+   @Test
+   void boundaryTestForSpecialOperations() {
+      doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+9836 ", "1,e+9836");
+      doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+10134 ", "Overflow");
+      doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+10134 ", "Overflow");
+
+      doTest("0.000000000000001×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e-9964 ","1,e-9964");
+      doTest("0.000000000000001×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e-10266 ", "Overflow");
+      doTest("0.000000000000001×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e-10266 ", "Overflow");
    }
 }

@@ -945,11 +945,6 @@ public class CalculatorTest {
       builder.doTest("9276 CE 32 CE ", "", 0, "0", "0");
       builder.doTest("4628 CE 70 CE ", "", 0, "0", "0");
 
-      builder.doTest("+ CE ÷", "0 + 0 ÷ ", 3, "0", "0");
-      builder.doTest("- CE ×", "0 - 0 × ", 3, "0", "0");
-      builder.doTest("× CE -", "0 × 0 - ", 3, "0", "0");
-      builder.doTest("+ CE +", "0 + 0 + ", 3, "0", "0");
-
       builder.doTest("1+2÷3 CE 9", "1 + 2 ÷ 9 ", 3, "3", "9");
       builder.doTest("1-2×3 CE 9", "1 - 2 × 9 ", 3, "-1", "9");
       builder.doTest("1×2-3 CE 9", "1 × 2 - 9 ", 3, "2", "9");
@@ -1290,7 +1285,6 @@ public class CalculatorTest {
       builder.doTest("2 SQR SQR SQR <<<<<<<<=", "", 0, "256", null);
       builder.doTest("2+3=<<<<", "", 0, "5", null);
       builder.checkBuildOperand("1000000000000000.", "1 000 000 000 000 000,");
-      builder.doTest("+ CE ÷", "0 + 0 ÷ ", 3, "0", "0");
       builder.doExceptionsTest("0÷0=", ExceptionType.UNDEFINED_RESULT);
    }
 }

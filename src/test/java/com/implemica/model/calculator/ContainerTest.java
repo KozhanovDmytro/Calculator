@@ -4,7 +4,7 @@ import com.implemica.model.exceptions.InvalidInputException;
 import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.operations.Default;
-import com.implemica.model.operations.SimpleOperation;
+import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;

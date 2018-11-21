@@ -7,13 +7,13 @@ import com.implemica.model.exceptions.OverflowException;
 import com.implemica.model.exceptions.UndefinedResultException;
 import com.implemica.model.history.MainHistory;
 import com.implemica.model.interfaces.Numeral;
-import com.implemica.model.interfaces.Operation;
-import com.implemica.model.interfaces.SpecialOperation;
+import com.implemica.model.operations.operation.Operation;
+import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.numerals.Arabic;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
-import com.implemica.model.operations.SimpleOperation;
+import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.special.Percent;
 
 import java.math.BigDecimal;
@@ -82,22 +82,16 @@ public class Calculator {
    }
 
    public ResponseDto buildOperand(Number number) {
-      MainHistory history = null;
-      if (container.isMakingOperand() || container.getOperation() instanceof Equals) {
-         container.getOperation().buildOperand(numeral.translate(number));
-         container.getOperation().setShowOperand(true);
-      } else if (container.getOperation().getOperandHistory().size() > 0) {
-         container.getOperation().getOperandHistory().clear();
-         container.getOperation().setShowOperand(false);
-         history = showHistory();
-         container.getOperation().setOperand(BigDecimal.ZERO);
-         container.getOperation().buildOperand(numeral.translate(number));
-         container.getOperation().setShowOperand(true);
-         container.setMakingOperand(true);
+      if (!container.isMakingOperand()) {
+         clearEntry();
       }
+
+      container.getOperation().buildOperand(numeral.translate(number));
+      container.getOperation().setShowOperand(true);
+
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
-      response.setHistory(history);
+      response.setHistory(showHistory());
       response.setSeparated(showBuiltOperand());
       response.setExceptionType(ExceptionType.NOTHING);
 
@@ -216,10 +210,12 @@ public class Calculator {
    public ResponseDto clearEntry() {
       container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
-      container.getOperation().setShowOperand(true);
+      container.setMakingOperand(true);
+      container.getOperation().getOperandHistory().clear();
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
+      response.setHistory(showHistory());
       response.setExceptionType(ExceptionType.NOTHING);
 
       return response;
@@ -247,11 +243,10 @@ public class Calculator {
 
    public ResponseDto getMemory() {
       BigDecimal value = container.getMemory().recall();
-      if (value != null) {
-         container.getOperation().setOperand(value);
-         container.getOperation().setInitialOperand(value);
-         container.getOperation().setShowOperand(true);
-      }
+      container.getOperation().setOperand(value);
+      container.getOperation().setInitialOperand(value);
+      container.getOperation().setShowOperand(true);
+
       this.isShownResult = false;
 
       ResponseDto response = new ResponseDto();
@@ -272,7 +267,7 @@ public class Calculator {
    }
 
    private BigDecimal checkScale(BigDecimal number) {
-      if(number.scale() > Operation.MAX_SCALE) {
+      if (number.scale() > Operation.MAX_SCALE) {
          number = number.stripTrailingZeros();
       }
       return number;

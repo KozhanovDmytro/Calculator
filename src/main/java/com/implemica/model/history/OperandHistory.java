@@ -1,7 +1,7 @@
 package com.implemica.model.history;
 
 import com.implemica.model.interfaces.History;
-import com.implemica.model.interfaces.SpecialOperation;
+import com.implemica.model.operations.operation.SpecialOperation;
 
 import java.util.ArrayDeque;
 
@@ -52,5 +52,6 @@ public class OperandHistory implements History<SpecialOperation> {
 
    @Override
    @Deprecated
-   public void hideLast() {}
+   public void hideLast() {
+   }
 }
