@@ -4,7 +4,7 @@ import com.implemica.model.calculator.Calculator;
 import com.implemica.model.calculator.Container;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
-import com.implemica.model.interfaces.History;
+import com.implemica.model.history.MainHistory;
 import com.implemica.model.numerals.numbers.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
@@ -257,7 +257,7 @@ public class TestBuilder {
 
       assert container != null;
 
-      History history = container.getHistory();
+      MainHistory history = container.getHistory();
 
       assertEquals(size, history.size());
       assertEquals(expectedHistory, history.buildHistory());

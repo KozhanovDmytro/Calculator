@@ -19,16 +19,36 @@ public class Calculator {
 
    private Container container = new Container();
 
-   private Numeral numeral = new Arabic();
+   private Numeral numeral = new Arabic(); // todo delete it.
+
+   private ExceptionType exceptionType = ExceptionType.NOTHING;
 
    private boolean isShownResult;
 
    private interface ExceptionSupplier {
-      void calculate() throws Exception;
+      void calculate() throws CalculatorException;
    }
 
    public ResponseDto executeSimpleOperation(SimpleOperation operation) {
-      ExceptionType exceptionType = calculate(this::calculateSimpleOperation);
+      if(exceptionType == ExceptionType.NOTHING) {
+         exceptionType = calculate(() -> calculateSimpleOperation(operation));
+      }
+
+      ResponseDto response = new ResponseDto();
+      response.setResult(showResult());
+      response.setHistory(showHistory());
+      response.setExceptionType(exceptionType);
+
+      return response;
+   }
+
+   private void calculateSimpleOperation(SimpleOperation operation) throws CalculatorException {
+      if (!(container.getOperation() instanceof Equals)) {
+         container.calculate();
+      } else if (container.getOperation().isShowOperand()) {
+         container.setOperation(new Default(container.getOperation().getOperand()));
+         container.calculate();
+      }
 
       if (container.getOperation().isShowOperand()) {
          container.getHistory().add(operation);
@@ -41,34 +61,12 @@ public class Calculator {
 
       container.setOperation(operation);
       container.setMakingOperand(true);
-
-      ResponseDto response = new ResponseDto();
-      response.setResult(showResult());
-      response.setHistory(showHistory());
-      response.setExceptionType(exceptionType);
-
-      return response;
-   }
-
-   private void calculateSimpleOperation() throws CalculatorException {
-      if (!(container.getOperation() instanceof Equals)) {
-         container.calculate();
-      } else if (container.getOperation().isShowOperand()) {
-         container.setOperation(new Default(container.getOperation().getOperand()));
-         container.calculate();
-      }
    }
 
    public ResponseDto executeSpecialOperation(SpecialOperation operation) {
-      if (operation instanceof Percent) {
-         ((Percent) operation).setResult(container.getResult());
+      if(exceptionType == ExceptionType.NOTHING) {
+         exceptionType = calculate(() -> container.change(operation, isShownResult));
       }
-
-      if (container.getHistory().size() == 0 && container.getOperation() instanceof Equals) {
-         container.setOperation(new Default((Equals) container.getOperation(), container.getResult()));
-      }
-
-      ExceptionType exceptionType = calculate(() -> container.change(operation, isShownResult));
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
@@ -79,6 +77,7 @@ public class Calculator {
    }
 
    public ResponseDto buildOperand(Number number) {
+      exceptionType = ExceptionType.NOTHING;
       if (!container.isMakingOperand()) {
          clearEntry();
       }
@@ -90,7 +89,7 @@ public class Calculator {
       response.setOperand(showOperand());
       response.setHistory(showHistory());
       response.setSeparated(showBuiltOperand());
-      response.setExceptionType(ExceptionType.NOTHING);
+      response.setExceptionType(exceptionType);
 
       return response;
    }
@@ -102,7 +101,7 @@ public class Calculator {
          doEqualsAfterEquals();
       }
 
-      ExceptionType exceptionType = calculate(() -> container.calculate());
+      exceptionType = calculate(() -> container.calculate());
 
       Equals equals = new Equals(container.getOperation());
       if (exceptionType == ExceptionType.NOTHING) {
@@ -144,11 +143,9 @@ public class Calculator {
          exceptionSupplier.calculate();
       } catch (CalculatorException e) {
          exceptionType = e.getExceptionType();
-      } catch (Exception e) {
-         e.printStackTrace();
       }
 
-//      TODO i don't like that!
+      // that's need for history when exception was appear.
       if (exceptionType != ExceptionType.NOTHING) {
          MainHistory tempHistory = container.getHistory().clone();
          clear();
@@ -166,14 +163,15 @@ public class Calculator {
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
       response.setSeparated(showBuiltOperand());
-      response.setExceptionType(ExceptionType.NOTHING);
+      response.setExceptionType(exceptionType);
 
       return response;
    }
 
    public ResponseDto backspace() {
+      exceptionType = ExceptionType.NOTHING;
       ResponseDto response = new ResponseDto();
-      response.setExceptionType(ExceptionType.NOTHING);
+      response.setExceptionType(exceptionType);
 
       if (container.isMakingOperand()) {
          container.getOperation().removeLast();
@@ -189,17 +187,19 @@ public class Calculator {
       container.setResult(BigDecimal.ZERO);
       container.setOperation(new Default());
       container.setMakingOperand(true);
+      exceptionType = ExceptionType.NOTHING;
 
       ResponseDto response = new ResponseDto();
       response.setResult(showResult());
       response.setHistory(showHistory());
-      response.setExceptionType(ExceptionType.NOTHING);
+      response.setExceptionType(exceptionType);
 
       isShownResult = false;
       return response;
    }
 
    public ResponseDto clearEntry() {
+      exceptionType = ExceptionType.NOTHING;
       container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
       container.setMakingOperand(true);
@@ -208,7 +208,7 @@ public class Calculator {
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
       response.setHistory(showHistory());
-      response.setExceptionType(ExceptionType.NOTHING);
+      response.setExceptionType(exceptionType);
 
       return response;
    }
@@ -234,6 +234,7 @@ public class Calculator {
    }
 
    public ResponseDto getMemory() {
+      exceptionType = ExceptionType.NOTHING;
       BigDecimal value = container.getMemory().recall();
       container.getOperation().setOperand(value);
       container.getOperation().setInitialOperand(value);
@@ -243,7 +244,7 @@ public class Calculator {
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
-      response.setExceptionType(ExceptionType.NOTHING);
+      response.setExceptionType(exceptionType);
 
       return response;
    }
@@ -281,9 +282,9 @@ public class Calculator {
 
    public ResponseDto getCurrentState() {
       ResponseDto response = new ResponseDto();
-      response.setResult(showResult());
+      response.setOperand(showOperand());
       response.setHistory(showHistory());
-      response.setExceptionType(ExceptionType.NOTHING);
+      response.setExceptionType(exceptionType);
 
       return response;
    }

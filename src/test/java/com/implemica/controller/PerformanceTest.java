@@ -1016,7 +1016,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("0÷0=", "0 ÷ 0 ", "Result is undefined");
       doTest("0.0000000000000000÷0=", "0 ÷ 0 ", "Result is undefined");
       doTest("1-1 M+ MR ÷0=", "1 - 1 ÷ 0 ", "Result is undefined");
-      doTest("0÷0+", "0 + ", "Result is undefined");
+      doTest("0÷0+", "0 ÷ 0 ", "Result is undefined");
 
       doTest("2+2×2-8÷0=", "2 + 2 × 2 - 8 ÷ 0 ", "Result is undefined");
       doTest("2+4×6-36÷0=", "2 + 4 × 6 - 36 ÷ 0 ", "Result is undefined");

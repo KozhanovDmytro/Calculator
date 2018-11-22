@@ -13,7 +13,8 @@ public class Square extends SpecialOperation {
    }
 
    @Override
-   public String buildHistory(String history) {
-      return "sqr(" + history + ")";
+   public StringBuilder buildHistory(StringBuilder history) {
+      return new StringBuilder().append("sqr(").append(history).append(")");
+//      return "sqr(" + history + ")";
    }
 }

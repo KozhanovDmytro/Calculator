@@ -20,7 +20,8 @@ public class DivideBy extends SpecialOperation {
    }
 
    @Override
-   public String buildHistory(String history) {
-      return "1/(" + history + ")";
+   public StringBuilder buildHistory(StringBuilder history) {
+//      return "1/(" + history + ")";
+      return new StringBuilder().append("1/(").append(history).append(")");
    }
 }

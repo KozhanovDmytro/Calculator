@@ -40,8 +40,14 @@ public abstract class SimpleOperation extends Operation {
 
    private Validator validator = new Validator();
 
-   public String buildHistory() {
-      return getCharacter() + (isShowOperand() ? buildLocalHistory() + SPACE : NOTHING);
+   public StringBuilder buildHistory() {
+      StringBuilder result = new StringBuilder();
+      if(isShowOperand()) {
+         result.append(buildLocalHistory()).append(SPACE);
+      } else {
+         result.append(NOTHING);
+      }
+      return new StringBuilder(getCharacter()).append(result);
    }
 
    public void buildOperand(char number) {
@@ -72,8 +78,8 @@ public abstract class SimpleOperation extends Operation {
       initialOperand = operand;
    }
 
-   private String buildLocalHistory() {
-      return operandHistory.buildHistory(validator.showNumberForHistory(initialOperand));
+   private StringBuilder buildLocalHistory() {
+      return operandHistory.buildHistory(new StringBuilder(validator.showNumberForHistory(initialOperand)));
    }
 
    private String getCharacter() {

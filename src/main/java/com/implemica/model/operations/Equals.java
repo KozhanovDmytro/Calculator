@@ -27,7 +27,7 @@ public class Equals extends SimpleOperation {
    }
 
    @Override
-   public String buildHistory() {
-      return result;
+   public StringBuilder buildHistory() {
+      return new StringBuilder(result);
    }
 }

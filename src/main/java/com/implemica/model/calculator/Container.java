@@ -2,6 +2,7 @@ package com.implemica.model.calculator;
 
 import com.implemica.model.exceptions.*;
 import com.implemica.model.history.MainHistory;
+import com.implemica.model.operations.Equals;
 import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.memory.Memory;
 import com.implemica.model.operations.Default;
@@ -40,7 +41,15 @@ public class Container {
       addToHistoryDefaultOperation();
    }
 
-   void change(SpecialOperation specialOperation, boolean isResult) throws CalculatorException{
+   void change(SpecialOperation specialOperation, boolean isResult) throws CalculatorException {
+      if (specialOperation instanceof Percent) {
+         ((Percent) specialOperation).setResult(result);
+      }
+
+      if (history.size() == 0 && operation instanceof Equals) {
+         operation = new Default((Equals) operation, result);
+      }
+
       if (isResult && !operation.isShowOperand()) {
          operation.setInitialOperand(result);
          operation.getOperandHistory().add(specialOperation);
@@ -77,11 +86,17 @@ public class Container {
    }
 
    private void checkOverflow(BigDecimal number) throws CalculatorException {
-      if (number.abs().compareTo(MAX) >= 0 ||
-              (number.abs().compareTo(BigDecimal.ZERO)) > 0 &&
-                      number.abs().compareTo(MIN) <= 0) {
+      if (outFromMaxRange(number) || outFromMinRange(number)) {
          throw new CalculatorException(ExceptionType.OVERFLOW);
       }
+   }
+
+   private boolean outFromMaxRange(BigDecimal number) {
+      return number.abs().compareTo(MAX) >= 0;
+   }
+
+   private boolean outFromMinRange(BigDecimal number) {
+      return number.abs().compareTo(BigDecimal.ZERO) > 0 && number.abs().compareTo(MIN) <= 0;
    }
 
    private BigDecimal checkForZero(BigDecimal number) {

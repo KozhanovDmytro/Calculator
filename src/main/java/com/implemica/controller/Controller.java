@@ -137,8 +137,8 @@ public class Controller {
       negate.setOnAction(event -> actionForSpecialOperations(new Negate()));
 
       equalsOperation.setOnAction(event -> {
-         unlock();
          parseDto(calculator.equalsOperation());
+         unlock();
       });
    }
 
@@ -169,24 +169,22 @@ public class Controller {
    }
 
    private void actionForBuildOperand(Number number) {
+      parseBuiltOperand(calculator.buildOperand(number));
       unlock();
-      ResponseDto response = calculator.buildOperand(number);
-      parseBuiltOperand(response);
    }
 
    private void actionsForCleanOperations() {
       backSpace.setOnAction(event -> {
+         parseBuiltOperand(calculator.backspace());
          unlock();
-         ResponseDto response = calculator.backspace();
-         parseBuiltOperand(response);
       });
       clear.setOnAction(event -> {
-         unlock();
          parseDto(calculator.clear());
+         unlock();
       });
       clearEntry.setOnAction(event -> {
-         unlock();
          parseDto(calculator.clearEntry());
+         unlock();
       });
    }
 

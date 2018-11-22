@@ -12,7 +12,8 @@ public class Negate extends SpecialOperation {
    }
 
    @Override
-   public String buildHistory(String history) {
-      return "negate(" + history + ")";
+   public StringBuilder buildHistory(StringBuilder history) {
+      return new StringBuilder().append("negate(").append(history).append(")");
+//      return "negate(" + history + ")";
    }
 }
