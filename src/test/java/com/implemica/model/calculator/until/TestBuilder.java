@@ -5,7 +5,7 @@ import com.implemica.model.calculator.Container;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.history.MainHistory;
-import com.implemica.model.numerals.numbers.Number;
+import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.operations.simple.Divide;

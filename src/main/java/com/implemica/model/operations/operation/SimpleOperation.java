@@ -41,21 +41,24 @@ public abstract class SimpleOperation extends Operation {
    private Validator validator = new Validator();
 
    public StringBuilder buildHistory() {
-      StringBuilder result = new StringBuilder();
+      StringBuilder result;
       if(isShowOperand()) {
-         result.append(buildLocalHistory()).append(SPACE);
+         result = buildLocalHistory().append(SPACE);
       } else {
-         result.append(NOTHING);
+         result = new StringBuilder(NOTHING);
       }
-      return new StringBuilder(getCharacter()).append(result);
+      return result.insert(0, getCharacter());
    }
 
    public void buildOperand(char number) {
       if (!isOverflow()) {
          operand = new BigDecimal(operand.toPlainString() + (separated ? SEPARATOR : NOTHING) + number);
          initialOperand = operand;
-         this.setSeparated(false);
+
+         separated = false;
+         showOperand = true;
       }
+
    }
 
    public void removeLast() {

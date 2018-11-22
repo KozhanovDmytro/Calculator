@@ -21,7 +21,6 @@ public class DivideBy extends SpecialOperation {
 
    @Override
    public StringBuilder buildHistory(StringBuilder history) {
-//      return "1/(" + history + ")";
-      return new StringBuilder().append("1/(").append(history).append(")");
+      return history.insert(0, "1/(").append(")");
    }
 }

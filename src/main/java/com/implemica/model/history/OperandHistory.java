@@ -30,12 +30,10 @@ public class OperandHistory {
    }
 
    public StringBuilder buildHistory(StringBuilder operand) {
-      StringBuilder result = operand;
-
       for (SpecialOperation sc : operations) {
-         result = sc.buildHistory(result);
+         sc.buildHistory(operand);
       }
 
-      return result;
+      return operand;
    }
 }

@@ -14,7 +14,6 @@ public class Square extends SpecialOperation {
 
    @Override
    public StringBuilder buildHistory(StringBuilder history) {
-      return new StringBuilder().append("sqr(").append(history).append(")");
-//      return "sqr(" + history + ")";
+      return history.insert(0, "sqr(").append(")");
    }
 }

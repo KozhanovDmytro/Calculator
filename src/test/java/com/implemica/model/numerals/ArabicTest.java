@@ -1,20 +1,11 @@
 package com.implemica.model.numerals;
 
-import com.implemica.model.interfaces.Numeral;
-import com.implemica.model.numerals.numbers.Number;
-import org.junit.jupiter.api.BeforeAll;
+import com.implemica.model.operations.operation.Number;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ArabicTest {
-
-   private static Numeral arabic;
-
-   @BeforeAll
-   public static void init() {
-      arabic = new Arabic();
-   }
 
    @Test
    void translate() {
@@ -31,6 +22,6 @@ public class ArabicTest {
    }
 
    private void check(Number number, char expected) {
-      assertEquals(expected, arabic.translate(number));
+      assertEquals(expected, number.translate());
    }
 }

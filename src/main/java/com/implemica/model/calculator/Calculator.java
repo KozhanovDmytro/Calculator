@@ -1,25 +1,21 @@
 package com.implemica.model.calculator;
 
 import com.implemica.model.dto.ResponseDto;
-import com.implemica.model.exceptions.*;
+import com.implemica.model.exceptions.CalculatorException;
+import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.history.MainHistory;
-import com.implemica.model.interfaces.Numeral;
-import com.implemica.model.operations.operation.Operation;
-import com.implemica.model.operations.operation.SpecialOperation;
-import com.implemica.model.numerals.Arabic;
-import com.implemica.model.numerals.numbers.Number;
+import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
+import com.implemica.model.operations.operation.Operation;
 import com.implemica.model.operations.operation.SimpleOperation;
-import com.implemica.model.operations.special.Percent;
+import com.implemica.model.operations.operation.SpecialOperation;
 
 import java.math.BigDecimal;
 
 public class Calculator {
 
    private Container container = new Container();
-
-   private Numeral numeral = new Arabic(); // todo delete it.
 
    private ExceptionType exceptionType = ExceptionType.NOTHING;
 
@@ -82,8 +78,7 @@ public class Calculator {
          clearEntry();
       }
 
-      container.getOperation().buildOperand(numeral.translate(number));
-      container.getOperation().setShowOperand(true);
+      container.getOperation().buildOperand(number.translate());
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
@@ -214,23 +209,24 @@ public class Calculator {
    }
 
    public BigDecimal addMemory() {
-      if (container.getOperation().isShowOperand()) {
-         container.getMemory().add(container.getOperation().getOperand());
-      } else {
-         container.getMemory().add(container.getResult());
-      }
-
+      container.getMemory().add(resolveMemory());
       return container.getMemory().recall();
    }
 
    public BigDecimal subtractMemory() {
+      container.getMemory().subtract(resolveMemory());
+      return container.getMemory().recall();
+   }
+
+   private BigDecimal resolveMemory() {
+      BigDecimal number;
       if (container.getOperation().isShowOperand()) {
-         container.getMemory().subtract(container.getOperation().getOperand());
+         number = container.getOperation().getOperand();
       } else {
-         container.getMemory().subtract(container.getResult());
+         number = container.getResult();
       }
 
-      return container.getMemory().recall();
+      return number;
    }
 
    public ResponseDto getMemory() {

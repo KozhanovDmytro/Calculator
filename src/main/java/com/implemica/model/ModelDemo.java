@@ -2,7 +2,7 @@ package com.implemica.model;
 
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
-import com.implemica.model.numerals.numbers.Number;
+import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Plus;
