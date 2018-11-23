@@ -39,24 +39,27 @@ public class Calculator {
    }
 
    private void calculateSimpleOperation(SimpleOperation operation) throws CalculatorException {
-      if (!(container.getOperation() instanceof Equals)) {
-         container.calculate();
-      } else if (container.getOperation().isShowOperand()) {
-         container.setOperation(new Default(container.getOperation().getOperand()));
+      if(isEquals()) {
+         BigDecimal operand = container.getOperation().getOperand();
+         Default initialOperation = new Default(operand);
+         container.setOperation(initialOperation);
+      }
+
+      if(isNotEquals()) {
          container.calculate();
       }
 
-      if (container.getOperation().isShowOperand()) {
-         container.getHistory().add(operation);
-      } else if (container.getHistory().size() == 0) {
-         container.getHistory().add(new Default(container.getResult()));
-         container.getHistory().add(operation);
-      } else {
-         container.getHistory().changeLast(operation);
-      }
-
+      container.addToHistory(operation);
       container.setOperation(operation);
       container.setMakingOperand(true);
+   }
+
+   private boolean isNotEquals() {
+      return !(container.getOperation() instanceof Equals) || container.getOperation().isShowOperand();
+   }
+
+   private boolean isEquals() {
+      return container.getOperation() instanceof Equals && container.getOperation().isShowOperand();
    }
 
    public ResponseDto executeSpecialOperation(SpecialOperation operation) {
@@ -166,7 +169,6 @@ public class Calculator {
    public ResponseDto backspace() {
       exceptionType = ExceptionType.NOTHING;
       ResponseDto response = new ResponseDto();
-      response.setExceptionType(exceptionType);
 
       if (container.isMakingOperand()) {
          container.getOperation().removeLast();
@@ -174,6 +176,7 @@ public class Calculator {
          response.setSeparated(showBuiltOperand());
       }
 
+      response.setExceptionType(exceptionType);
       return response;
    }
 
@@ -232,9 +235,7 @@ public class Calculator {
    public ResponseDto getMemory() {
       exceptionType = ExceptionType.NOTHING;
       BigDecimal value = container.getMemory().recall();
-      container.getOperation().setOperand(value);
-      container.getOperation().setInitialOperand(value);
-      container.getOperation().setShowOperand(true);
+      container.getOperation().setOperandFromMemory(value);
 
       this.isShownResult = false;
 

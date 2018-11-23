@@ -606,12 +606,6 @@ public class CalculatorTest {
       builder.doTest("8 SQR =", "", 0, "64", "64");
       builder.doTest("2 1/x =", "", 0, "0,5", null);
       builder.doTest("5 % =", "", 0, "0", null);
-
-      builder.doTest("5+3= 1/x", "1/(8) ", 1, "8", "0,125");
-      builder.doTest("5+3= 1/x =", "", 0, "3,125", "0,125");
-      builder.doTest("5+3= 1/x ==", "", 0, "6,125", null);
-      builder.doTest("5+3= 1/x ===", "", 0, "9,125", null);
-      builder.doTest("5+3= 1/x ===5=", "", 0, "9,125", null);
    }
 
    @Test

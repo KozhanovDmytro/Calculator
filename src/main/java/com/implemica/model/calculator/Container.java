@@ -68,6 +68,16 @@ public class Container {
       checkOverflow(operation.getOperand());
    }
 
+   void addToHistory(SimpleOperation simpleOperation) {
+      if (history.size() == 0) {
+         history.firstAdd(new Default(result), simpleOperation);
+      } else if (this.operation.isShowOperand()) {
+         history.add(simpleOperation);
+      } else {
+         history.changeLast(simpleOperation);
+      }
+   }
+
    private BigDecimal resolveSpecialOperation(SpecialOperation operation) throws CalculatorException{
       BigDecimal operand;
       if (operation instanceof Percent) {

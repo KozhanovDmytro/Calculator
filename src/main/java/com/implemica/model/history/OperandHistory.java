@@ -20,15 +20,6 @@ public class OperandHistory {
       operations.clear();
    }
 
-   public int size() {
-      return operations.size();
-   }
-
-   public void changeLast(SpecialOperation operation) {
-      operations.removeLast();
-      add(operation);
-   }
-
    public StringBuilder buildHistory(StringBuilder operand) {
       for (SpecialOperation sc : operations) {
          sc.buildHistory(operand);

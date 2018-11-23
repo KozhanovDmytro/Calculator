@@ -1,5 +1,6 @@
 package com.implemica.model.history;
 
+import com.implemica.model.operations.Default;
 import com.implemica.model.operations.operation.SimpleOperation;
 
 import java.util.ArrayDeque;
@@ -18,6 +19,11 @@ public class MainHistory implements Cloneable {
 
    public void add(SimpleOperation operation) {
       operations.add(operation);
+   }
+
+   public void firstAdd(Default firstOperation, SimpleOperation secondOperation) {
+      operations.add(firstOperation);
+      operations.add(secondOperation);
    }
 
    public void clear() {

@@ -13,8 +13,11 @@ import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
 import com.implemica.model.validation.Validator;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 
 import java.io.*;
 import java.math.BigDecimal;
@@ -92,49 +95,57 @@ public class Controller {
    }
 
    private void setTexts() {
-      title.setText(getText(Field.TITLE));
-      mode.setText(getText(Field.MODE));
+      // labels
+      setText(title, Field.TITLE);
+      setText(mode, Field.MODE);
 
-      standard.setText(getText(Field.STANDARD));
-      scientific.setText(getText(Field.SCIENTIFIC));
-      programmer.setText(getText(Field.PROGRAMMER));
-      dateCalculation.setText(getText(Field.DATE_CALCULATION));
-      currency.setText(getText(Field.CURRENCY));
-      volume.setText(getText(Field.VOLUME));
-      length.setText(getText(Field.LENGTH));
-      weight.setText(getText(Field.WEIGHT));
-      temperature.setText(getText(Field.TEMPERATURE));
-      energy.setText(getText(Field.ENERGY));
-      area.setText(getText(Field.AREA));
-      speed.setText(getText(Field.SPEED));
-      time.setText(getText(Field.TIME));
-      power.setText(getText(Field.POWER));
-      data.setText(getText(Field.DATA));
-      pressure.setText(getText(Field.PRESSURE));
-      angle.setText(getText(Field.ANGLE));
+      // buttons in menu
+      setText(standard, Field.STANDARD);
+      setText(scientific, Field.SCIENTIFIC);
+      setText(programmer, Field.PROGRAMMER);
+      setText(dateCalculation, Field.DATE_CALCULATION);
+      setText(currency, Field.CURRENCY);
+      setText(volume, Field.VOLUME);
+      setText(length, Field.LENGTH);
+      setText(weight, Field.WEIGHT);
+      setText(temperature, Field.TEMPERATURE);
+      setText(energy, Field.ENERGY);
+      setText(area, Field.AREA);
+      setText(speed, Field.SPEED);
+      setText(time, Field.TIME);
+      setText(power, Field.POWER);
+      setText(data, Field.DATA);
+      setText(pressure, Field.PRESSURE);
+      setText(angle, Field.ANGLE);
+      setText(about, Field.ABOUT);
 
-      about.setText(getText(Field.ABOUT));
+      // labels in menu
+      setText(menuConverter, Field.MENU_CONVERTER);
+      setText(menuCalculator, Field.MENU_CALCULATOR);
 
-      menuConverter.setText(getText(Field.MENU_CONVERTER));
-      menuCalculator.setText(getText(Field.MENU_CALCULATOR));
-
-      extraMemoryLabel.setText(getText(Field.NO_MEMORY));
-      extraLogLabel.setText(getText(Field.NO_LOG));
-      memoryBtn.setText(getText(Field.MEMORY));
-      logBtn.setText(getText(Field.HISTORY));
+      // extra field
+      setText(extraMemoryLabel, Field.NO_MEMORY);
+      setText(extraLogLabel, Field.NO_LOG);
+      setText(memoryBtn, Field.MEMORY);
+      setText(logBtn, Field.HISTORY);
    }
+   
+   private void setText(Labeled node, Field field) {
+      node.setText(getText(field));
+   }
+   
 
    private void actionsForOperationButtons() {
-      plusOperation.setOnAction(event -> actionForOperations(new Plus()));
-      minusOperation.setOnAction(event -> actionForOperations(new Minus()));
-      multiplyOperation.setOnAction(event -> actionForOperations(new Multiply()));
-      divideOperation.setOnAction(event -> actionForOperations(new Divide()));
+      plusOperation     .setOnAction(event -> actionForOperations(new Plus()));
+      minusOperation    .setOnAction(event -> actionForOperations(new Minus()));
+      multiplyOperation .setOnAction(event -> actionForOperations(new Multiply()));
+      divideOperation   .setOnAction(event -> actionForOperations(new Divide()));
 
-      percentOperation.setOnAction(event -> actionForSpecialOperations(new Percent()));
-      sqrtOperation.setOnAction(event -> actionForSpecialOperations(new SquareRoot()));
-      square.setOnAction(event -> actionForSpecialOperations(new Square()));
-      divideByX.setOnAction(event -> actionForSpecialOperations(new DivideBy()));
-      negate.setOnAction(event -> actionForSpecialOperations(new Negate()));
+      percentOperation  .setOnAction(event -> actionForSpecialOperations(new Percent()));
+      sqrtOperation     .setOnAction(event -> actionForSpecialOperations(new SquareRoot()));
+      square            .setOnAction(event -> actionForSpecialOperations(new Square()));
+      divideByX         .setOnAction(event -> actionForSpecialOperations(new DivideBy()));
+      negate            .setOnAction(event -> actionForSpecialOperations(new Negate()));
 
       equalsOperation.setOnAction(event -> {
          parseDto(calculator.equalsOperation());

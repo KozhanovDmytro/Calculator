@@ -81,6 +81,12 @@ public abstract class SimpleOperation extends Operation {
       initialOperand = operand;
    }
 
+   public void setOperandFromMemory(BigDecimal number) {
+      operand = number;
+      initialOperand = number;
+      showOperand = true;
+   }
+
    private StringBuilder buildLocalHistory() {
       return operandHistory.buildHistory(new StringBuilder(validator.showNumberForHistory(initialOperand)));
    }
