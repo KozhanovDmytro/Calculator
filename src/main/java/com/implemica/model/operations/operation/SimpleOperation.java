@@ -2,8 +2,6 @@ package com.implemica.model.operations.operation;
 
 import com.implemica.model.history.OperandHistory;
 import com.implemica.model.validation.Validator;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -11,27 +9,17 @@ import java.math.RoundingMode;
 
 public abstract class SimpleOperation extends Operation {
 
-   @Getter
-   @Setter
    protected BigDecimal operand = BigDecimal.ZERO;
 
-   @Getter
-   @Setter
    protected BigDecimal initialOperand = BigDecimal.ZERO;
 
-   @Setter
    protected String character;
 
-   @Getter
-   protected OperandHistory operandHistory = new OperandHistory();
+   private OperandHistory operandHistory = new OperandHistory();
 
-   @Getter
-   @Setter
-   protected boolean separated;
+   private boolean separated;
 
-   @Getter
-   @Setter
-   protected boolean showOperand;
+   private boolean isShowOperand;
 
    /*constants*/
    private static final char SPACE = ' ';
@@ -42,7 +30,7 @@ public abstract class SimpleOperation extends Operation {
 
    public StringBuilder buildHistory() {
       StringBuilder result;
-      if(isShowOperand()) {
+      if(isShowOperand) {
          result = buildLocalHistory().append(SPACE);
       } else {
          result = new StringBuilder(NOTHING);
@@ -56,7 +44,7 @@ public abstract class SimpleOperation extends Operation {
          initialOperand = operand;
 
          separated = false;
-         showOperand = true;
+         isShowOperand = true;
       }
 
    }
@@ -84,7 +72,7 @@ public abstract class SimpleOperation extends Operation {
    public void setOperandFromMemory(BigDecimal number) {
       operand = number;
       initialOperand = number;
-      showOperand = true;
+      isShowOperand = true;
    }
 
    private StringBuilder buildLocalHistory() {
@@ -108,5 +96,37 @@ public abstract class SimpleOperation extends Operation {
 
    private int quantityCharsOfIntegerNumber(BigDecimal number) {
       return number.setScale(0, RoundingMode.DOWN).precision();
+   }
+
+   public BigDecimal getOperand() {
+      return operand;
+   }
+
+   public void setOperand(BigDecimal operand) {
+      this.operand = operand;
+   }
+
+   public void setInitialOperand(BigDecimal initialOperand) {
+      this.initialOperand = initialOperand;
+   }
+
+   public OperandHistory getOperandHistory() {
+      return operandHistory;
+   }
+
+   public boolean isSeparated() {
+      return separated;
+   }
+
+   public void setSeparated(boolean separated) {
+      this.separated = separated;
+   }
+
+   public boolean isShowOperand() {
+      return isShowOperand;
+   }
+
+   public void setShowOperand(boolean showOperand) {
+      this.isShowOperand = showOperand;
    }
 }

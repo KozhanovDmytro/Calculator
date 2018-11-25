@@ -1,7 +1,5 @@
 package com.implemica.view.util;
 
-import lombok.Getter;
-
 public enum NodesFinder {
    RESULT_LABEL("#resultLabel"),
    RESULT_LABEL_BOX("#resultLabelBox"),
@@ -75,11 +73,11 @@ public enum NodesFinder {
    MEMORY_SUBTRACT("#subtractMemory"),
    HISTORY_LABEL("#historyLabel");
 
-
-
-
-   @Getter
    private String query;
+
+   public String getQuery() {
+      return query;
+   }
 
    NodesFinder(String query) {
       this.query = query;

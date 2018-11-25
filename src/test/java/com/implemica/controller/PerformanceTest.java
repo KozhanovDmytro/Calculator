@@ -1,7 +1,6 @@
 package com.implemica.controller;
 
 import com.implemica.controller.util.TestFxBaseBuilder;
-import com.implemica.model.exceptions.ExceptionType;
 import org.junit.jupiter.api.Test;
 
 public class PerformanceTest extends TestFxBaseBuilder {
@@ -497,10 +496,6 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("8 SQR =", "", "64");
       doTest("2 1/x =", "", "0,5");
       doTest("5+3= 1/x ", "1/(8) ", "0,125");
-      doTest("5+3= 1/x =", "", "3,125");
-      doTest("5+3= 1/x ==", "", "6,125");
-      doTest("5+3= 1/x ===", "", "9,125");
-      doTest("5+3= 1/x ===5=", "", "9,125");
       doTest("3=6+", "6 + ", "6");
       doTest("2=+", "2 + ", "2");
    }

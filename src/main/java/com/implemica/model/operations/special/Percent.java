@@ -2,14 +2,13 @@ package com.implemica.model.operations.special;
 
 import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.validation.Validator;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
 public class Percent extends SpecialOperation {
 
-   @Setter
+
    private BigDecimal result;
 
    private String history;
@@ -33,5 +32,9 @@ public class Percent extends SpecialOperation {
    @Override
    public StringBuilder buildHistory(StringBuilder history) {
       return history.replace(0, history.length(), this.history);
+   }
+
+   public void setResult(BigDecimal result) {
+      this.result = result;
    }
 }
