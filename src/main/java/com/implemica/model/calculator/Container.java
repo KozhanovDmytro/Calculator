@@ -86,6 +86,7 @@ public class Container {
       }
 
       BigDecimal newOperand;
+      operation.getOperandHistory().add(specialOperation);
       if (isResult && !operation.isShowOperand()) {
          operation.setInitialOperand(result);
          newOperand = resolveSpecialOperation(specialOperation);
@@ -96,7 +97,6 @@ public class Container {
 
       }
 
-      operation.getOperandHistory().add(specialOperation);
       makingOperand = specialOperation instanceof Negate;
       operation.setShowOperand(true);
       operation.setOperand(checkForZero(newOperand));

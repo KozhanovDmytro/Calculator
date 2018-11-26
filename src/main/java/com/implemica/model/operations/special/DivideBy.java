@@ -11,12 +11,12 @@ import java.math.RoundingMode;
 public class DivideBy extends SpecialOperation {
 
    @Override
-   public BigDecimal calculate(BigDecimal result) throws CalculatorException {
-      if (result.compareTo(BigDecimal.ZERO) == 0) {
+   public BigDecimal calculate(BigDecimal operand) throws CalculatorException {
+      if (operand.compareTo(BigDecimal.ZERO) == 0) {
          throw new CalculatorException(ExceptionType.DIVIDE_BY_ZERO);
       }
 
-      return new BigDecimal(BigInteger.ONE).divide(result, MAX_SCALE, RoundingMode.HALF_UP);
+      return new BigDecimal(BigInteger.ONE).divide(operand, MAX_SCALE, RoundingMode.HALF_UP);
    }
 
    @Override

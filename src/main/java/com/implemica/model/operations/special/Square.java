@@ -8,8 +8,8 @@ import java.math.MathContext;
 public class Square extends SpecialOperation {
 
    @Override
-   public BigDecimal calculate(BigDecimal result) {
-      return result.pow(2, MathContext.DECIMAL64);
+   public BigDecimal calculate(BigDecimal operand) {
+      return operand.pow(2, MathContext.DECIMAL64);
    }
 
    @Override

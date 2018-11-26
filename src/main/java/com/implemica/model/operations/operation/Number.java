@@ -1,5 +1,10 @@
 package com.implemica.model.operations.operation;
 
+/**
+ * The enumeration of of digit.
+ *
+ * @author Dmytro Kozhanov
+ */
 public enum Number {
    ZERO,
    ONE,
@@ -12,6 +17,12 @@ public enum Number {
    EIGHT,
    NINE;
 
+   /**
+    * Function for translating digit to specific character.
+    * It's needed for build operand.
+    *
+    * @return representation digit as character.
+    */
    public char translate() {
       switch (this) {
          case ZERO:  return '0';

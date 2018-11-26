@@ -5,15 +5,28 @@ import com.implemica.model.operations.operation.SimpleOperation;
 
 import java.math.BigDecimal;
 
+/**
+ * Special class which uses as first operation in history.
+ *
+ * @author Dmytro Kozhanov
+ */
 public class Default extends SimpleOperation {
 
+   /** The last equals. */
    private Equals lastEquals;
 
+   /**
+    * Constructor.
+    */
    public Default() {
       super();
       this.character = "";
    }
 
+   /**
+    * Constructor.
+    * @param operand initial operand.
+    */
    public Default(BigDecimal operand) {
       this();
       this.operand = operand;
@@ -21,13 +34,25 @@ public class Default extends SimpleOperation {
       this.setShowOperand(true);
    }
 
+   /**
+    * Constructor.
+    *
+    * @param lastEquals last equals.
+    * @param operand initial operand.
+    */
    public Default(Equals lastEquals, BigDecimal operand) {
       this(operand);
       this.lastEquals = lastEquals;
    }
 
-   @Override
-   public BigDecimal calculate(BigDecimal result) throws CalculatorException {
+   /**
+    * This function is different than another implementation. Function just set operand to result.
+    *
+    * @param result initial result.
+    * @return operand this sets to result.
+    * @throws CalculatorException
+    */
+   @Override public BigDecimal calculate(BigDecimal result) throws CalculatorException {
       if (lastEquals != null) {
          return lastEquals.calculate(this.operand);
       } else {

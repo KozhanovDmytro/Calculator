@@ -255,7 +255,7 @@ public class ViewTest extends TestFxBase {
    @Test
    void fullScreenTest() {
       Button full = findBy("#full");
-      Pane mainPane = findBy(NodesFinder.MAIN_PANE.getQuery());
+      Pane mainPane = findBy(NodesFinder.MAIN_PANE.getName());
 
       clickOn(full);
       checkStateForResizePane(true);
@@ -277,7 +277,7 @@ public class ViewTest extends TestFxBase {
    @Test
    void checkPositionStageAfterFullScreen() {
       Button full = findBy("#full");
-      Pane mainPane = findBy(NodesFinder.MAIN_PANE.getQuery());
+      Pane mainPane = findBy(NodesFinder.MAIN_PANE.getName());
 
       moveWindow(new Point2D(500, 100));
 

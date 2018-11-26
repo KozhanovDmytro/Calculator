@@ -7,7 +7,6 @@ import com.implemica.model.history.MainHistory;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
 import com.implemica.model.operations.operation.Number;
-import com.implemica.model.operations.operation.Operation;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
 
@@ -132,12 +131,13 @@ public class Calculator {
     * @return current state of model
     */
    public ResponseDto buildOperand(Number number) {
-      exceptionType = ExceptionType.NOTHING;
+      disableException();
+
       if (!container.isMakingOperand()) {
          clearEntry();
       }
 
-      container.getOperation().buildOperand(number.translate());
+      container.getOperation().buildOperand(number);
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
@@ -146,6 +146,16 @@ public class Calculator {
       response.setExceptionType(exceptionType);
 
       return response;
+   }
+
+   /**
+    * Function for disable blocked some function when exception was thrown.
+    */
+   private void disableException() {
+      if(exceptionType != ExceptionType.NOTHING) {
+         exceptionType = ExceptionType.NOTHING;
+         clear();
+      }
    }
 
    /**
@@ -280,7 +290,7 @@ public class Calculator {
     * @return current state of model.
     */
    public ResponseDto clearEntry() {
-      exceptionType = ExceptionType.NOTHING;
+      disableException();
       container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
       container.setMakingOperand(true);
@@ -367,13 +377,13 @@ public class Calculator {
    }
 
    /**
-    * Function correct scale for number if it more than {@link Operation#MAX_SCALE}
+    * Function correct scale for number if it more than {@link SimpleOperation#MAX_SCALE}
     *
     * @param number BigDecimal number
-    * @return scaled number to {@link Operation#MAX_SCALE}
+    * @return scaled number to {@link SimpleOperation#MAX_SCALE}
     */
    private BigDecimal checkScale(BigDecimal number) {
-      if (number.scale() > Operation.MAX_SCALE) {
+      if (number.scale() > SimpleOperation.MAX_SCALE) {
          number = number.stripTrailingZeros();
       }
       return number;

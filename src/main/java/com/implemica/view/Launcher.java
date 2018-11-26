@@ -3,7 +3,10 @@ package com.implemica.view;
 import com.implemica.view.util.Coordinates;
 import com.implemica.view.util.NodesFinder;
 import com.implemica.view.util.Side;
-import javafx.animation.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
@@ -30,55 +33,131 @@ import javafx.util.Duration;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * This class represents view side.
+ *
+ * @see Stream
+ * @see Collectors
+ *
+ * @see Stage
+ * @see Parent
+ * @see Node
+ * @see Button
+ * @see Label
+ * @see Pane
+ *
+ * @see Coordinates
+ * @see NodesFinder
+ * @see Side
+ *
+ * @author Dmytro Kozhanov
+ */
 public class Launcher extends Application {
 
+   /** Current stage. */
    private Stage primaryStage;
 
+   /** The point where drag was started. */
    private Point2D startDrag;
 
+   /** Current position of stage. */
    private Point2D stagePosition;
 
+   /** The flag indicates whether the window has full screen or not. */
    private boolean isFullScreen;
 
+   /** The flag indicates whether the window resizing or not. */
    private boolean isDragging;
 
+   /** The flag indicates whether menu shown or not. */
    private boolean isMenuShown;
 
+   /** The flag indicates whether memory shown or not. */
    private boolean isMemoryShown;
 
+   /** The container of nodes. */
    private Parent root;
 
    /*constants*/
+   /** The way to root fxml file. */
    private final String WAY_TO_ROOT_FXML_FILE = "/com/implemica/view/resources/fxml/root.fxml";
+   
+   /** The way to stylesheet file. */
    private final String WAY_TO_STYLESHEET_FILE = "/com/implemica/view/resources/css/style.css";
+
+   /** The way to icon. */
    private final String WAY_TO_ICON = "/com/implemica/view/resources/icons/icon.png";
 
+   /** Min width of stage. */
    private final int MIN_WIDTH = 322;
+
+   /** Min height of stage. */
    private final int MIN_HEIGHT = 500;
 
+   /** Offset for resize font size when stage is changing. */
    private final int OFFSET_RESIZE_FOR_RESULT = 15;
+
+   /** The max length where result label can do resize. */
    private final int MAX_LENGTH_FOR_RESULT = 13;
+
+   /** Max font size for result label. */
    private final double MAX_FONT_SIZE_FOR_RESULT = 48.0d;
+
+   /** Just zero. */
    private final double ZERO = 0.0d;
+
+   /** Min size stage when extra info field can be appear. */
    private final int MIN_SIZE_STAGE_FOR_EXTRA_INFO = 560;
+
+   /** Min size for extra info field. */
    private final int MIN_SIZE_FOR_EXTRA_INFO = 240;
+
+   /** Max size for extra info field. */
    private final int MAX_SIZE_FOR_EXTRA_INFO = 325;
+
+   /** Full screen icon. */
    private final String FULL_SCREEN_ICON = "\uE922";
+
+   /** Small screen icon. */
    private final String SMALL_SCREEN_ICON = "\uE923";
+
+   /** The name of stylesheet for selection button which is in extraInfo field. */
    private final String STYLE_FOR_BUTTON_IN_EXTRA_FIELD = "ExtraInfoBtnSelected";
+
+   /** Width for menu. */
    private final double MENU_SIZE = 260.0d;
+
+   /** Height for memory field.  */
    private final double MEMORY_FIELD_SIZE = 300.0d;
+
+   /** Animation time for memory and menu field.  */
    private final int ANIMATION_TIME = 50;
+
+   /** Min font size for number buttons. */
    private final int MIN_FONT_SIZE_FOR_NUMBER_BUTTONS = 24;
+
+   /** Max font size for number buttons. */
    private final int MAX_FONT_SIZE_FOR_NUMBER_BUTTONS = 28;
+
+   /** Min font size for other buttons. */
    private final int MIN_FONT_SIZE_FOR_OTHER_BUTTONS = 15;
+
+   /** Max font size for other buttons. */
    private final int MAX_FONT_SIZE_FOR_OTHER_BUTTONS = 21;
-   private final double OFFSET_FOR_MENU_ANIMATION = 50.0d;
+   
+   /** Start slow menu animation. */
    private final double START_SLOW_MENU_ANIMATION = 40;
+
+   /** End slow menu animation. */
    private final double END_SLOW_MENU_ANIMATION = 300;
 
-   @Override
-   public void start(Stage stage) throws Exception {
+   /**
+    * Launch application.
+    *
+    * @param stage current stage.
+    * @throws Exception if fxml not found.
+    */
+   @Override public void start(Stage stage) throws Exception {
       setSettingsForStage(stage);
 
       setMoveActionForWindow();
@@ -94,6 +173,11 @@ public class Launcher extends Application {
       primaryStage.show();
    }
 
+   /**
+    * Sets settings for current stage.
+    * @param stage current stage.
+    * @throws Exception if fxml not found.
+    */
    private void setSettingsForStage(Stage stage) throws Exception {
       primaryStage = stage;
 
@@ -117,6 +201,9 @@ public class Launcher extends Application {
       setUserAgentStylesheet(STYLESHEET_CASPIAN);
    }
 
+   /**
+    * Sets action for resize result label.
+    */
    private void setActionForResultLabel() {
       Label resultLabel = findBy(NodesFinder.RESULT_LABEL);
       HBox resultLabelBox = findBy(NodesFinder.RESULT_LABEL_BOX);
@@ -127,6 +214,9 @@ public class Launcher extends Application {
               .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel());
    }
 
+   /**
+    * Action for resize label.
+    */
    private void calculateSizeForResultLabel() {
       Label resultLabel = findBy(NodesFinder.RESULT_LABEL);
       HBox resultLabelBox = findBy(NodesFinder.RESULT_LABEL_BOX);
@@ -149,6 +239,9 @@ public class Launcher extends Application {
       }
    }
 
+   /**
+    * Sets action for moving current window.
+    */
    private void setMoveActionForWindow() {
       AnchorPane mainPane = findBy(NodesFinder.MAIN_PANE);
       mainPane.setOnMouseDragged(event -> {
@@ -168,6 +261,9 @@ public class Launcher extends Application {
       });
    }
 
+   /**
+    * set action for system buttons.
+    */
    private void setActionsForMainPainAndButtons() {
       Button close = findBy(NodesFinder.CLOSE);
       Button full  = findBy(NodesFinder.FULL);
@@ -190,6 +286,9 @@ public class Launcher extends Application {
       });
    }
 
+   /**
+    * Sets actions for resize window for resize panes.
+    */
    private void setResizeActionForStage() {
       AnchorPane extraInfoFull = findBy(NodesFinder.EXTRA_INFO_FULL);
 
@@ -249,8 +348,14 @@ public class Launcher extends Application {
       });
    }
 
+   /**
+    * function calculate size for stage.
+    * @param pane the pane which used for make resize.
+    * @param event mouse event
+    */
    private void doResize(Pane pane, MouseEvent event) {
-      Side side = NodesFinder.getSide(NodesFinder.findByQuery(pane.getId()));
+
+      Side side = NodesFinder.findByQuery(pane.getId()).getSide();
 
       double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX()) * side.coefficient(Coordinates.X);
       double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY()) * side.coefficient(Coordinates.Y);
@@ -270,9 +375,11 @@ public class Launcher extends Application {
          primaryStage.setHeight(height);
          startDrag = new Point2D(startDrag.getX(), event.getScreenY());
       }
-
    }
 
+   /**
+    * Sets full screen for window.
+    */
    private void setFullScreen() {
       Button full = findBy(NodesFinder.FULL);
 
@@ -373,6 +480,9 @@ public class Launcher extends Application {
               .forEach(button -> button.setStyle(String.format("-fx-font-size: %dpx;", fontSizeForOtherBtn)));
    }
 
+   /**
+    * Sets actions for buttons in extra field.
+    */
    private void setActionsForInfoButtons() {
       Button logBtn  = findBy(NodesFinder.LOG_BTN);
       Pane logSelect = findBy(NodesFinder.LOG_SELECT);
@@ -400,6 +510,9 @@ public class Launcher extends Application {
       });
    }
 
+   /**
+    * Sets actions for keyboard.
+    */
    private void setActionsForKeyboard() {
       primaryStage.getScene().setOnKeyPressed(key -> {
          if (key.getCode() == KeyCode.DIGIT5 && key.isShiftDown()) {
@@ -479,6 +592,9 @@ public class Launcher extends Application {
       });
    }
 
+   /**
+    * Sets actions for menu.
+    */
    private void setActionForDropDownMenu() {
       Button menuBtn       = findBy(NodesFinder.MENU_BTN);
       AnchorPane mainPane  = findBy(NodesFinder.MAIN_PANE);
@@ -501,6 +617,11 @@ public class Launcher extends Application {
       showMemory.setOnMouseClicked(event -> memorySize(!isMemoryShown));
    }
 
+   /**
+    * Sets animation for menu.
+    *
+    * @param show flag which indicates show menu or not.
+    */
    private void menuSize(boolean show) {
       AnchorPane menu = findBy(NodesFinder.MENU);
 
@@ -512,7 +633,7 @@ public class Launcher extends Application {
 
       if (show) {
          key1 = new KeyFrame(Duration.ZERO, new KeyValue(menu.translateXProperty(), -MENU_SIZE));
-         key2 = new KeyFrame(new Duration(START_SLOW_MENU_ANIMATION), new KeyValue(menu.translateXProperty(), -OFFSET_FOR_MENU_ANIMATION));
+         key2 = new KeyFrame(new Duration(START_SLOW_MENU_ANIMATION), new KeyValue(menu.translateXProperty(), -ANIMATION_TIME));
          key3 = new KeyFrame(new Duration(END_SLOW_MENU_ANIMATION), new KeyValue(menu.translateXProperty(), ZERO));
          isMenuShown = true;
       } else {
@@ -528,6 +649,7 @@ public class Launcher extends Application {
       menu.setVisible(show);
    }
 
+   /** Sets height for menu. */
    private void memorySize(boolean show) {
       AnchorPane memoryField = findBy(NodesFinder.MEMORY_FIELD);
       TranslateTransition transition = new TranslateTransition(Duration.millis(ANIMATION_TIME), memoryField);
@@ -546,7 +668,13 @@ public class Launcher extends Application {
       memoryField.setVisible(show);
    }
 
+   /**
+    * Finder for nodes.
+    * @param desiredNode desire node.
+    * @param <T> type of Node.
+    * @return type of Node.
+    */
    private <T extends Node> T findBy(NodesFinder desiredNode) {
-      return (T) root.lookup(desiredNode.getQuery());
+      return (T) root.lookup(desiredNode.getName());
    }
 }

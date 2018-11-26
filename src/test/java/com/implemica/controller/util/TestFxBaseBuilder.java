@@ -1,13 +1,10 @@
 package com.implemica.controller.util;
 
-import com.implemica.model.operations.special.DivideBy;
-import com.implemica.model.operations.special.Square;
 import com.implemica.view.util.NodesFinder;
 import com.implemica.view.util.TestFxBase;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import org.loadui.testfx.utils.FXTestUtils;
-import org.testfx.osgi.service.TestFx;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -128,17 +125,17 @@ public class TestFxBaseBuilder extends TestFxBase {
    }
 
    private void clickOnButton(NodesFinder node) {
-      Button button = findBy(node.getQuery());
+      Button button = findBy(node.getName());
       clickOn(button);
    }
 
    private void checkHistory(String history) {
-      Label historyLabel = findBy(NodesFinder.HISTORY_LABEL.getQuery());
+      Label historyLabel = findBy(NodesFinder.HISTORY_LABEL.getName());
       assertEquals(history, historyLabel.getText());
    }
 
    private void checkResult(String history) {
-      Label resultLabel = findBy(NodesFinder.RESULT_LABEL.getQuery());
+      Label resultLabel = findBy(NodesFinder.RESULT_LABEL.getName());
       assertEquals(history, resultLabel.getText());
    }
 }

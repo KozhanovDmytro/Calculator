@@ -2,6 +2,7 @@ package com.implemica.model.calculator;
 
 import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.operations.Default;
+import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
@@ -11,6 +12,7 @@ import com.implemica.model.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.implemica.model.operations.operation.Number.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContainerTest {
@@ -26,52 +28,52 @@ public class ContainerTest {
 
    @Test
    void minusOperations() throws CalculatorException {
-      calculate(new Default(), "10");
-      calculate(new Minus(), "1");
-      calculate(new Minus(), "2");
-      calculate(new Minus(), "3");
-      calculate(new Minus(), "4");
+      calculate(new Default(), new Number[] {ONE, ZERO});
+
+      calculate(new Minus(), new Number[] {ONE});
+      calculate(new Minus(), new Number[] {TWO});
+      calculate(new Minus(), new Number[] {THREE});
+      calculate(new Minus(), new Number[] {FOUR});
 
       checkResult("0");
    }
 
    @Test
    void plusOperations() throws CalculatorException {
-      calculate(new Default(), "10");
+      calculate(new Default(), new Number[] {ONE, ZERO});
 
-      calculate(new Plus(), "1");
-      calculate(new Plus(), "2");
-      calculate(new Plus(), "3");
-      calculate(new Plus(), "4");
+      calculate(new Plus(), new Number[] {ONE});
+      calculate(new Plus(), new Number[] {TWO});
+      calculate(new Plus(), new Number[] {THREE});
+      calculate(new Plus(), new Number[] {FOUR});
 
       checkResult("20");
    }
 
    @Test
    void multiplyOperations() throws CalculatorException {
-      calculate(new Default(), "2");
+      calculate(new Default(), new Number[] {TWO});
 
-      calculate(new Multiply(), "3");
-      calculate(new Multiply(), "4");
-      calculate(new Multiply(), "5");
+      calculate(new Multiply(), new Number[] {THREE});
+      calculate(new Multiply(), new Number[] {FOUR});
+      calculate(new Multiply(), new Number[] {FIVE});
 
       checkResult("120");
    }
 
    @Test
    void divideOperations() throws CalculatorException {
-      calculate(new Default(), "90");
+      calculate(new Default(), new Number[] {NINE, ZERO});
 
-      calculate(new Divide(), "3");
-      calculate(new Divide(), "10");
+      calculate(new Divide(), new Number[] {THREE});
+      calculate(new Divide(), new Number[] {ONE, ZERO});
 
       checkResult("3");
    }
 
-   private void calculate(SimpleOperation operation, String number) throws CalculatorException {
-      operation.setShowOperand(true);
-      for (char c : number.toCharArray()) {
-         operation.buildOperand(c);
+   private void calculate(SimpleOperation operation, Number[] numbers) throws CalculatorException {
+      for (Number number : numbers) {
+         operation.buildOperand(number);
       }
       container.setOperation(operation);
       container.calculate();

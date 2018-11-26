@@ -12,7 +12,7 @@ public class SystemButtonsTest extends TestFxBase {
 
    @Test
    void windowCloseTest() {
-      Button closeBtn = findBy(NodesFinder.CLOSE.getQuery());
+      Button closeBtn = findBy(NodesFinder.CLOSE.getName());
       clickOn(closeBtn);
 
       assertEquals(0, Window.getWindows().size());

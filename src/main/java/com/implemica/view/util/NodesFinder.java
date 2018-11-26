@@ -1,20 +1,29 @@
 package com.implemica.view.util;
 
+/**
+ * The enumeration contains name of nodes.
+ */
 public enum NodesFinder {
    RESULT_LABEL("#resultLabel"),
    RESULT_LABEL_BOX("#resultLabelBox"),
    MAIN_PANE("#mainPane"),
 
-   /*System buttons*/
+   /* System buttons. */
    CLOSE("#close"),
    FULL("#full"),
    HIDE("#hide"),
 
+   /* Nodes in extra field. */
    EXTRA_INFO_FULL("#extraInfoFull"),
    EXTRA_INFO_BTNS("#extraInfoBtns"),
    EXTRA_MEMORY_LABEL("#extraMemoryLabel"),
+   LOG_BTN("#logBtn"),
+   LOG_SELECT("#logSelect"),
+   MEMORY_BTN("#memoryBtn"),
+   MEMORY_SELECT("#memorySelect"),
+   EXTRA_LOG_LABEL("#extraLogLabel"),
 
-   /*panes for resize*/
+   /*panes for resize. */
    LEFT_RESIZE("#leftResize"),
    EXTRA_LEFT_RESIZE("#extraLeftResize"),
    RIGHT_RESIZE("#rightResize"),
@@ -29,17 +38,13 @@ public enum NodesFinder {
    SHOW_MEMORY("#showMemory"),
    LOG_BUTTON("#logButton"),
 
-   LOG_BTN("#logBtn"),
-   LOG_SELECT("#logSelect"),
-   MEMORY_BTN("#memoryBtn"),
-   MEMORY_SELECT("#memorySelect"),
-   EXTRA_LOG_LABEL("#extraLogLabel"),
-
+   /* special operation. */
    PERCENT_OPERATION("#percentOperation"),
    SQRT_OPERATION("#sqrtOperation"),
    SQUARE("#square"),
    DIVIDE_BY_X("#divideByX"),
 
+   /* Buttons for build operand.  */
    BTN0("#btn0"),
    BTN1("#btn1"),
    BTN2("#btn2"),
@@ -51,17 +56,23 @@ public enum NodesFinder {
    BTN8("#btn8"),
    BTN9("#btn9"),
 
+   /* Buttons for correct operand. */
    BACKSPACE("#backSpace"),
    SEPARATE_BTN("#separateBtn"),
    NEGATE("#negate"),
+
+   /* Simple operation. */
    EQUALS_OPERATION("#equalsOperation"),
    PLUS_OPERATION("#plusOperation"),
    MINUS_OPERATION("#minusOperation"),
    DIVIDE_OPERATION("#divideOperation"),
    MULTIPLY_OPERATION("#multiplyOperation"),
+
+   /* Clear buttons. */
    C("#clear"),
    CE("#clearEntry"),
 
+   /* Another nodes. */
    MENU_BTN("#menuBtn"),
    HIDE_MENU("#hideMenu"),
    MEMORY_FIELD("#memoryField"),
@@ -73,19 +84,35 @@ public enum NodesFinder {
    MEMORY_SUBTRACT("#subtractMemory"),
    HISTORY_LABEL("#historyLabel");
 
-   private String query;
+   /** Name of node. */
+   private String name;
 
-   public String getQuery() {
-      return query;
+   /**
+    * Accessor.
+    * @return name of node
+    */
+   public String getName() {
+      return name;
    }
 
-   NodesFinder(String query) {
-      this.query = query;
+   /**
+    * Constructor.
+    * @param name name of node.
+    */
+   NodesFinder(String name) {
+      this.name = name;
    }
 
-   public static Side getSide(NodesFinder nodesFinder) {
+   /**
+    * Gets side current pane for resize.
+    *
+    * @see Side
+    *
+    * @return side for resize.
+    */
+   public Side getSide() {
       Side result;
-      switch (nodesFinder) {
+      switch (this) {
          case LEFT_RESIZE:
             result = Side.LEFT;
             break;
@@ -125,9 +152,14 @@ public enum NodesFinder {
       return result;
    }
 
-   public static NodesFinder findByQuery(String query) {
+   /**
+    * Finds {@link NodesFinder} by name.
+    * @param name
+    * @return found {@link NodesFinder}
+    */
+   public static NodesFinder findByQuery(String name) {
       for (NodesFinder node: NodesFinder.values()) {
-         if(node.getQuery().equals("#" + query)){
+         if(node.getName().equals("#" + name)){
             return node;
          }
       }

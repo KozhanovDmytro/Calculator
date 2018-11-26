@@ -10,12 +10,12 @@ import java.math.MathContext;
 public class SquareRoot extends SpecialOperation {
 
    @Override
-   public BigDecimal calculate(BigDecimal result) throws CalculatorException {
-      if (result.compareTo(BigDecimal.ZERO) < 0) {
+   public BigDecimal calculate(BigDecimal operand) throws CalculatorException {
+      if (operand.compareTo(BigDecimal.ZERO) < 0) {
          throw new CalculatorException(ExceptionType.INVALID_INPUT);
       }
 
-      return result.sqrt(MathContext.DECIMAL64);
+      return operand.sqrt(MathContext.DECIMAL64);
    }
 
    @Override

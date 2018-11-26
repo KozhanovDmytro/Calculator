@@ -8,6 +8,9 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.Square;
 
+/**
+ * Class for demonstration model in console.
+ */
 public class ModelDemo {
 
    private static Number a = Number.ONE;
