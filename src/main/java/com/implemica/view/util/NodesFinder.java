@@ -15,7 +15,6 @@ public enum NodesFinder {
 
    /* Nodes in extra field. */
    EXTRA_INFO_FULL("#extraInfoFull"),
-   EXTRA_INFO_BTNS("#extraInfoBtns"),
    EXTRA_MEMORY_LABEL("#extraMemoryLabel"),
    LOG_BTN("#logBtn"),
    LOG_SELECT("#logSelect"),
@@ -154,7 +153,7 @@ public enum NodesFinder {
 
    /**
     * Finds {@link NodesFinder} by name.
-    * @param name
+    * @param name name of node
     * @return found {@link NodesFinder}
     */
    public static NodesFinder findByQuery(String name) {

@@ -6,6 +6,7 @@ package com.implemica.model.exceptions;
  * @author Dmytro Kozhanov
  */
 public enum ExceptionType {
+
    /**
     * NOTHING - means that exception wasn't thrown. This is needed for
     * notify a class (which use this model) that with model everything OK.

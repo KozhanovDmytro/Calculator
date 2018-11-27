@@ -3,6 +3,7 @@ package com.implemica.controller;
 import com.implemica.controller.util.Field;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
+import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
@@ -342,36 +343,28 @@ public class Controller {
     * @param response - response from model.
     */
    private void parseDto(ResponseDto response) {
-      boolean isThrownException = false;
-      switch (response.getExceptionType()) {
-         case OVERFLOW:
-            showResult(getText(Field.OVERFLOW));
-            blockButtons(true);
-            isThrownException = true;
-            break;
-         case UNDEFINED_RESULT:
-            showResult(getText(Field.UNDEFINED_RESULT));
-            blockButtons(true);
-            isThrownException = true;
-            break;
-         case DIVIDE_BY_ZERO:
-            showResult(getText(Field.DIVIDE_BY_ZERO));
-            blockButtons(true);
-            isThrownException = true;
-            break;
-         case INVALID_INPUT:
-            showResult(getText(Field.INVALID_INPUT));
-            blockButtons(true);
-            isThrownException = true;
-            break;
+      if(response.getExceptionType() != ExceptionType.NOTHING) {
+         switch (response.getExceptionType()) {
+            case OVERFLOW:
+               showResult(getText(Field.OVERFLOW));
+               break;
+            case UNDEFINED_RESULT:
+               showResult(getText(Field.UNDEFINED_RESULT));
+               break;
+            case DIVIDE_BY_ZERO:
+               showResult(getText(Field.DIVIDE_BY_ZERO));
+               break;
+            case INVALID_INPUT:
+               showResult(getText(Field.INVALID_INPUT));
+               break;
+         }
+         blockButtons(true);
+      } else {
+         updateData(response);
       }
 
       if (response.getHistory() != null) {
          showHistory(response.getHistory().buildHistory());
-      }
-
-      if (!isThrownException) {
-         updateData(response);
       }
    }
 

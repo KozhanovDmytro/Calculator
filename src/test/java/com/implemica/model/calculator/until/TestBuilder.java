@@ -241,6 +241,7 @@ public class TestBuilder {
 
    private void buildOperand(Number number) {
       ResponseDto response = calculator.buildOperand(number);
+      exceptionType = response.getExceptionType();
       operand = response.getOperand();
       builtOperand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }

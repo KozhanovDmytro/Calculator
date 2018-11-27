@@ -52,12 +52,7 @@ public class Calculator {
          exceptionType = calculate(() -> calculateSimpleOperation(operation));
       }
 
-      ResponseDto response = new ResponseDto();
-      response.setResult(showResult());
-      response.setHistory(showHistory());
-      response.setExceptionType(exceptionType);
-
-      return response;
+      return getCurrentStateForResult();
    }
 
    /**
@@ -116,12 +111,7 @@ public class Calculator {
          exceptionType = calculate(() -> container.change(operation, isShownResult));
       }
 
-      ResponseDto response = new ResponseDto();
-      response.setOperand(showOperand());
-      response.setHistory(showHistory());
-      response.setExceptionType(exceptionType);
-
-      return response;
+      return getCurrentState();
    }
 
    /**
@@ -139,11 +129,8 @@ public class Calculator {
 
       container.getOperation().buildOperand(number);
 
-      ResponseDto response = new ResponseDto();
-      response.setOperand(showOperand());
-      response.setHistory(showHistory());
+      ResponseDto response = getCurrentState();
       response.setSeparated(showIsSeparated());
-      response.setExceptionType(exceptionType);
 
       return response;
    }
@@ -176,15 +163,11 @@ public class Calculator {
       if (exceptionType == ExceptionType.NOTHING) {
          container.getHistory().clear();
       }
+
       container.setOperation(equals);
       container.setMakingOperand(false);
 
-      ResponseDto response = new ResponseDto();
-      response.setResult(showResult());
-      response.setHistory(showHistory());
-      response.setExceptionType(exceptionType);
-
-      return response;
+      return getCurrentStateForResult();
    }
 
    /**
@@ -274,14 +257,9 @@ public class Calculator {
       container.setOperation(new Default());
       container.setMakingOperand(true);
       exceptionType = ExceptionType.NOTHING;
-
-      ResponseDto response = new ResponseDto();
-      response.setResult(showResult());
-      response.setHistory(showHistory());
-      response.setExceptionType(exceptionType);
-
       isShownResult = false;
-      return response;
+
+      return getCurrentStateForResult();
    }
 
    /**
@@ -296,12 +274,7 @@ public class Calculator {
       container.setMakingOperand(true);
       container.getOperation().getOperandHistory().clear();
 
-      ResponseDto response = new ResponseDto();
-      response.setOperand(showOperand());
-      response.setHistory(showHistory());
-      response.setExceptionType(exceptionType);
-
-      return response;
+      return getCurrentState();
    }
 
    /**
@@ -418,6 +391,18 @@ public class Calculator {
    public ResponseDto getCurrentState() {
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
+      response.setHistory(showHistory());
+      response.setExceptionType(exceptionType);
+
+      return response;
+   }
+
+   /**
+    * @return current state with result.
+    */
+   private ResponseDto getCurrentStateForResult() {
+      ResponseDto response = new ResponseDto();
+      response.setResult(showResult());
       response.setHistory(showHistory());
       response.setExceptionType(exceptionType);
 

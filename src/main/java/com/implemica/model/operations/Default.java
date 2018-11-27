@@ -50,7 +50,6 @@ public class Default extends SimpleOperation {
     *
     * @param result initial result.
     * @return operand this sets to result.
-    * @throws CalculatorException
     */
    @Override public BigDecimal calculate(BigDecimal result) throws CalculatorException {
       if (lastEquals != null) {

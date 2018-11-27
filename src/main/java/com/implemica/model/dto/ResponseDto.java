@@ -16,14 +16,19 @@ import java.math.BigDecimal;
  */
 public class ResponseDto {
 
+   /** This field stores result. */
    private BigDecimal result;
 
+   /** This field stores current operand. */
    private BigDecimal operand;
 
+   /** This field stores history. */
    private MainHistory history;
 
+   /** This flag indicates whether the last character of operand has comma or not. */
    private boolean isSeparated;
 
+   /** This field stores the exception which was thrown. */
    private ExceptionType exceptionType;
 
    /* accessors for each field */

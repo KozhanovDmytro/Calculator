@@ -15,7 +15,8 @@ public class CalculatorException extends Exception {
    /**
     * Constructor.
     *
-    * @param exceptionType
+    * @param exceptionType desired {@link ExceptionType} needed for information what
+    *                      kind of exception was thrown.
     * @throws IllegalArgumentException if {@link #exceptionType} equals to
     *  {@link ExceptionType#NOTHING} it means that exception wasn't thrown and
     *  notify that with model everything is OK. That does not matter to use this type

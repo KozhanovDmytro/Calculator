@@ -13,8 +13,10 @@ public class Multiply extends SimpleOperation {
 
    @Override
    public BigDecimal calculate(BigDecimal result) {
-      if (isShowOperand() || !operand.equals(BigDecimal.ZERO))
+      if (isShowOperand() || !operand.equals(BigDecimal.ZERO)) {
          return result.multiply(operand);
-      else return result;
+      } else {
+         return result;
+      }
    }
 }

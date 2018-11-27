@@ -1171,6 +1171,11 @@ public class CalculatorTest {
       builder.doExceptionsTest("50-45-500√=√", ExceptionType.INVALID_INPUT);
       builder.doExceptionsTest("0.4565468n√", ExceptionType.INVALID_INPUT);
       builder.doExceptionsTest("-0.57894=√", ExceptionType.INVALID_INPUT);
+
+      builder.doExceptionsTest("1 + 2 SQR = ÷ 0 - ", ExceptionType.DIVIDE_BY_ZERO);
+      builder.doExceptionsTest("2 + 3 SQR = ÷ 0 - ", ExceptionType.DIVIDE_BY_ZERO);
+      builder.doExceptionsTest("4 + 4 SQR = ÷ 0 - ", ExceptionType.DIVIDE_BY_ZERO);
+      builder.doExceptionsTest("3 + 14 SQR = ÷ 0 - ", ExceptionType.DIVIDE_BY_ZERO);
    }
 
    @Test

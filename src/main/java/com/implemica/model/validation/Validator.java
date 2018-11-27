@@ -104,8 +104,6 @@ public class Validator {
 
       df.setDecimalFormatSymbols(dfs);
 
-      df.applyPattern(PATTERN_FOR_NUMBER);
-
       // for 0.000000000001
       if (number.scale() > MINIMUM_FRACTION_DIGITS) {
          df.applyPattern(PATTERN_FOR_NUMBER + SHARP);

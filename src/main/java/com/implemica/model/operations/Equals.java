@@ -25,8 +25,4 @@ public class Equals extends SimpleOperation {
    @Override public BigDecimal calculate(BigDecimal result) throws CalculatorException {
       return lastOperation.calculate(result);
    }
-
-   @Override public StringBuilder buildHistory() {
-      return new StringBuilder();
-   }
 }

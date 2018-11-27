@@ -120,12 +120,13 @@ public class Container {
 
    /**
     * Function resolve special operation from result besides {@link Percent}
+    *
     * @param operation special operation
     * @return calculated special operation
     * @throws CalculatorException throws if something does not
     *  satisfy the conditions described in {@link ExceptionType}
     */
-   private BigDecimal resolveSpecialOperation(SpecialOperation operation) throws CalculatorException{
+   private BigDecimal resolveSpecialOperation(SpecialOperation operation) throws CalculatorException {
       BigDecimal number;
       if (operation instanceof Percent) {
          number = getOperation().getOperand();
@@ -148,6 +149,7 @@ public class Container {
    /**
     * Function check number for out from this range:
     *      [-{@link #MAX} .. -{@link #MIN}] and 0 and [{@link #MIN} .. {@link #MAX}]
+    *
     * @param number number for checking
     * @throws CalculatorException throw exception if number out of range.
     */
@@ -159,6 +161,7 @@ public class Container {
 
    /**
     * Conditional for check that number more than {@link #MAX}.
+    *
     * @param number number for checking.
     * @return result of conditional.
     */
@@ -168,6 +171,7 @@ public class Container {
 
    /**
     * Conditional for check that number less than {@link #MIN} but more than {@link BigDecimal#ZERO}.
+    *
     * @param number number for checking.
     * @return result of conditional.
     */
