@@ -205,10 +205,10 @@ public class Controller {
     * Give permission to operation button.
     */
    private void actionsForOperationButtons() {
-      plusOperation     .setOnAction(event -> actionForOperations(new Plus()));
-      minusOperation    .setOnAction(event -> actionForOperations(new Minus()));
-      multiplyOperation .setOnAction(event -> actionForOperations(new Multiply()));
-      divideOperation   .setOnAction(event -> actionForOperations(new Divide()));
+      plusOperation     .setOnAction(event -> actionForOperations(plusFactory()));
+      minusOperation    .setOnAction(event -> actionForOperations(minusFactory()));
+      multiplyOperation .setOnAction(event -> actionForOperations(multiplyFactory()));
+      divideOperation   .setOnAction(event -> actionForOperations(divideFactory()));
 
       percentOperation  .setOnAction(event -> actionForSpecialOperations(percent));
       sqrtOperation     .setOnAction(event -> actionForSpecialOperations(squareRoot));
@@ -437,5 +437,29 @@ public class Controller {
     */
    private String getText(Field field) {
       return textsForLabel.getProperty(field.getName());
+   }
+
+   private Plus plusFactory() {
+      Plus plus = new Plus();
+      plus.setCharacter("+");
+      return plus;
+   }
+
+   private Minus minusFactory() {
+      Minus minus = new Minus();
+      minus.setCharacter("-");
+      return minus;
+   }
+
+   private Multiply multiplyFactory() {
+      Multiply multiply = new Multiply();
+      multiply.setCharacter("×");
+      return multiply;
+   }
+
+   private Divide divideFactory() {
+      Divide divide = new Divide();
+      divide.setCharacter("÷");
+      return divide;
    }
 }

@@ -41,18 +41,6 @@ public class TestBuilder {
 
    /* operations */
 
-   /* simple */
-
-   private static Plus plus;
-
-   private static Minus minus;
-
-   private static Multiply multiply;
-
-   private static Divide divide;
-
-   /* special */
-
    private static Percent percent = new Percent();
 
    private static SquareRoot squareRoot = new SquareRoot();
@@ -64,15 +52,14 @@ public class TestBuilder {
    private static Negate negate = new Negate();
 
    static {
-
-      percent.setFirstPartHistory("");
-      percent.setSecondPartHistory("");
-
       squareRoot.setFirstPartHistory("√(");
       squareRoot.setSecondPartHistory(")");
 
       square.setFirstPartHistory("sqr(");
       square.setSecondPartHistory(")");
+
+      percent.setFirstPartHistory("");
+      percent.setSecondPartHistory("");
 
       divideBy.setFirstPartHistory("1/(");
       divideBy.setSecondPartHistory(")");
@@ -89,7 +76,6 @@ public class TestBuilder {
    }
 
    public void doTest(String pattern, String history, int historySize, String result, String operand) {
-      initializeSimpleOperation();
       calculator = new Calculator();
       exceptionType = ExceptionType.NOTHING;
       this.result = BigDecimal.ZERO;
@@ -190,16 +176,16 @@ public class TestBuilder {
                executeSeparate();
                break;
             case '+':
-               executeSimpleOperation(new Plus());
+               executeSimpleOperation(plusFactory());
                break;
             case '-':
-               executeSimpleOperation(new Minus());
+               executeSimpleOperation(minusFactory());
                break;
             case '×':
-               executeSimpleOperation(new Multiply());
+               executeSimpleOperation(multiplyFactory());
                break;
             case '÷':
-               executeSimpleOperation(new Divide());
+               executeSimpleOperation(divideFactory());
                break;
             case '=':
                equals();
@@ -330,16 +316,28 @@ public class TestBuilder {
          operand = response.getOperand();
       }
    }
-
-   private void initializeSimpleOperation() {
-      plus = new Plus();
-      minus = new Minus();
-      multiply = new Multiply();
-      divide = new Divide();
-
+   
+   private Plus plusFactory() {
+      Plus plus = new Plus();
       plus.setCharacter("+");
-      multiply.setCharacter("×");
+      return plus;
+   }
+
+   private Minus minusFactory() {
+      Minus minus = new Minus();
       minus.setCharacter("-");
+      return minus;
+   }
+
+   private Multiply multiplyFactory() {
+      Multiply multiply = new Multiply();
+      multiply.setCharacter("×");
+      return multiply;
+   }
+
+   private Divide divideFactory() {
+      Divide divide = new Divide();
       divide.setCharacter("÷");
+      return divide;
    }
 }

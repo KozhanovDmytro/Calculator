@@ -9,11 +9,6 @@ import java.math.RoundingMode;
 
 public class Divide extends SimpleOperation {
 
-   public Divide() {
-      super();
-      character = "÷";
-   }
-
    @Override
    public BigDecimal calculate(BigDecimal result) throws CalculatorException {
       if (result.compareTo(BigDecimal.ZERO) == 0 && operand.compareTo(BigDecimal.ZERO) == 0 && isShowOperand()) {
