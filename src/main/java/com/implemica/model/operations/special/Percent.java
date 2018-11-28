@@ -29,11 +29,6 @@ public class Percent extends SpecialOperation {
       return result;
    }
 
-   @Override
-   public StringBuilder buildHistory(StringBuilder history) {
-      return history.replace(0, history.length(), this.history);
-   }
-
    public void setResult(BigDecimal result) {
       this.result = result;
    }

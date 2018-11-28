@@ -495,7 +495,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("4√=", "", "2");
       doTest("8 SQR =", "", "64");
       doTest("2 1/x =", "", "0,5");
-      doTest("5+3= 1/x ", "1/(8) ", "0,125");
+      doTest("5+3= 1/x ", "1/(8)", "0,125");
       doTest("3=6+", "6 + ", "6");
       doTest("2=+", "2 + ", "2");
    }
@@ -504,46 +504,46 @@ public class PerformanceTest extends TestFxBaseBuilder {
    void mixOfOperations() {
       doTest("300+5=%√-1000000000000000= SQR + 9999999999999999 1/x × 1000000000000000 ÷ 50 ", "sqr(-999999999999964,5) + 1/(9999999999999999) × 1000000000000000 ÷ ","50");
       doTest("12345 1/x n 500 = 400 + % × 0.0001 SQR 123.3 √ 1/x ÷ 55 × 12253 + 124n - 73 CE 81", "400 + 1600 × 1/(√(123,3)) ÷ 55 × 12253 + negate(124) - ","81");
-      doTest("0.01 × 123 + % = √ SQR + 20 1/x ÷ 7.1 - % + 876 CE 765n ", "sqr(√(1,245129)) + 1/(20) ÷ 7,1 - 3,40562592057925e-4 + negate(765) ", "-765");
+      doTest("0.01 × 123 + % = √ SQR + 20 1/x ÷ 7.1 - % + 876 CE 765n ", "sqr(√(1,245129)) + 1/(20) ÷ 7,1 - 3,40562592057925e-4 + negate(765)", "-765");
       doTest("82 + 1 - 23 C 210 + % √ n × 67.0987 SQR 1/x ÷ 8", "210 + negate(√(441)) × 1/(sqr(67,0987)) ÷ ", "8");
-      doTest("1 + 34 = C 123 n + 3 % n √ × 123.4 + 6 SQR - 90 1/x", "negate(123) + √(negate(-3,69)) × 123,4 + sqr(6) - 1/(90) ", "0,0111111111111111");
+      doTest("1 + 34 = C 123 n + 3 % n √ × 123.4 + 6 SQR - 90 1/x", "negate(123) + √(negate(-3,69)) × 123,4 + sqr(6) - 1/(90)", "0,0111111111111111");
 
-      doTest("12 - 52 C 123 <<< + 125.4 1/x + 23 SQR - 89 √ × 71 - 1n %", "0 + 1/(125,4) + sqr(23) - √(89) × 71 - -368,8975352782175 ", "-368,8975352782175");
-      doTest("25 × 12 C 234 + 34 < 5 1/x + 32 SQR × 250 √ + ÷ % n %", "234 + 1/(35) + sqr(32) × √(250) ÷ -787012312,5580016 ", "-787 012 312,5580016");
+      doTest("12 - 52 C 123 <<< + 125.4 1/x + 23 SQR - 89 √ × 71 - 1n %", "0 + 1/(125,4) + sqr(23) - √(89) × 71 - -368,8975352782175", "-368,8975352782175");
+      doTest("25 × 12 C 234 + 34 < 5 1/x + 32 SQR × 250 √ + ÷ % n %", "234 + 1/(35) + sqr(32) × √(250) ÷ -787012312,5580016", "-787 012 312,5580016");
       doTest("234 ÷ 2 C 8765 - << 76 = SQR SQR + 1/x - 234 √ + × 123", "sqr(sqr(8689)) + 1/(5700056872635765) - √(234) × ", "123");
-      doTest("12 + C 234 CE 324 - 1/x + 876 SQR × 637 √ %", "324 - 1/(324) + sqr(876) × 193758,7192131822 ", "193 758,7192131822");
-      doTest("83 + 2 = C 21 - √ × 90 SQR + 8 1/x - % n", "21 - √(21) × sqr(90) + 1/(8) - negate(176840160,0876563) ", "-176 840 160,0876563");
+      doTest("12 + C 234 CE 324 - 1/x + 876 SQR × 637 √ %", "324 - 1/(324) + sqr(876) × 193758,7192131822", "193 758,7192131822");
+      doTest("83 + 2 = C 21 - √ × 90 SQR + 8 1/x - % n", "21 - √(21) × sqr(90) + 1/(8) - negate(176840160,0876563)", "-176 840 160,0876563");
       
-      doTest("200+4% 1/x 1/x SQR √", "200 + √(sqr(1/(1/(8)))) ", "8");
-      doTest("1÷3= 1/x ", "1/(0,3333333333333333) ","3");
+      doTest("200+4% 1/x 1/x SQR √", "200 + √(sqr(1/(1/(8))))", "8");
+      doTest("1÷3= 1/x ", "1/(0,3333333333333333)","3");
       doTest("5+2√ SQR √√√1+", "5 + 1 + ", "6");
    }
 
    @Test
    void negateTest() {
-      doTest("1n", "negate(1) ", "-1");
-      doTest("2n", "negate(2) ", "-2");
-      doTest("7n", "negate(7) ", "-7");
-      doTest("132n", "negate(132) ", "-132");
-      doTest("165n", "negate(165) ", "-165");
+      doTest("1n", "negate(1)", "-1");
+      doTest("2n", "negate(2)", "-2");
+      doTest("7n", "negate(7)", "-7");
+      doTest("132n", "negate(132)", "-132");
+      doTest("165n", "negate(165)", "-165");
 
-      doTest("1.04n", "negate(1,04) ", "-1,04");
-      doTest("100.0n", "negate(100) ", "-100");
-      doTest("13.2n", "negate(13,2) ", "-13,2");
-      doTest("14.4n", "negate(14,4) ", "-14,4");
-      doTest("31.2n", "negate(31,2) ", "-31,2");
+      doTest("1.04n", "negate(1,04)", "-1,04");
+      doTest("100.0n", "negate(100)", "-100");
+      doTest("13.2n", "negate(13,2)", "-13,2");
+      doTest("14.4n", "negate(14,4)", "-14,4");
+      doTest("31.2n", "negate(31,2)", "-31,2");
 
-      doTest("5nn", "negate(negate(5)) ", "5");
-      doTest("3nn", "negate(negate(3)) ", "3");
-      doTest("4nn", "negate(negate(4)) ", "4");
-      doTest("5nn", "negate(negate(5)) ", "5");
-      doTest("123nn", "negate(negate(123)) ", "123");
+      doTest("5nn", "negate(negate(5))", "5");
+      doTest("3nn", "negate(negate(3))", "3");
+      doTest("4nn", "negate(negate(4))", "4");
+      doTest("5nn", "negate(negate(5))", "5");
+      doTest("123nn", "negate(negate(123))", "123");
 
-      doTest("5+n", "5 + negate(5) ", "-5");
-      doTest("21+n", "21 + negate(21) ", "-21");
-      doTest("14+n", "14 + negate(14) ", "-14");
-      doTest("3+n", "3 + negate(3) ", "-3");
-      doTest("7+n", "7 + negate(7) ", "-7");
+      doTest("5+n", "5 + negate(5)", "-5");
+      doTest("21+n", "21 + negate(21)", "-21");
+      doTest("14+n", "14 + negate(14)", "-14");
+      doTest("3+n", "3 + negate(3)", "-3");
+      doTest("7+n", "7 + negate(7)", "-7");
 
       doTest("43+n=", "", "0");
       doTest("0.4+n=", "", "0");
@@ -554,17 +554,17 @@ public class PerformanceTest extends TestFxBaseBuilder {
 
    @Test
    void squareTest() {
-     doTest("SQR", "sqr(0) ", "0");
+     doTest("SQR", "sqr(0)", "0");
 
-     doTest("0 SQR", "sqr(0) ", "0");
-     doTest("1 SQR", "sqr(1) ", "1");
-     doTest("2 SQR", "sqr(2) ", "4");
-     doTest("5 SQR", "sqr(5) ", "25");
+     doTest("0 SQR", "sqr(0)", "0");
+     doTest("1 SQR", "sqr(1)", "1");
+     doTest("2 SQR", "sqr(2)", "4");
+     doTest("5 SQR", "sqr(5)", "25");
 
-     doTest("5n SQR", "sqr(negate(5)) ", "25");
-     doTest("2n SQR", "sqr(negate(2)) ", "4");
-     doTest("6n SQR", "sqr(negate(6)) ", "36");
-     doTest("4n SQR", "sqr(negate(4)) ","16");
+     doTest("5n SQR", "sqr(negate(5))", "25");
+     doTest("2n SQR", "sqr(negate(2))", "4");
+     doTest("6n SQR", "sqr(negate(6))", "36");
+     doTest("4n SQR", "sqr(negate(4))","16");
 
      doTest("5 SQR +", "sqr(5) + ", "25");
      doTest("2 SQR -", "sqr(2) - ", "4");
@@ -581,129 +581,129 @@ public class PerformanceTest extends TestFxBaseBuilder {
      doTest("6 SQR ×6", "sqr(6) × ", "6");
      doTest("8 SQR ÷7", "sqr(8) ÷ ", "7");
 
-     doTest("2 SQR SQR", "sqr(sqr(2)) ", "16");
-     doTest("2 SQR SQR SQR", "sqr(sqr(sqr(2))) ", "256");
-     doTest("2√ SQR √ SQR √ SQR", "sqr(√(sqr(√(sqr(√(2)))))) ", "2");
-     doTest("3 SQR +2 SQR ", "sqr(3) + sqr(2) ", "4");
+     doTest("2 SQR SQR", "sqr(sqr(2))", "16");
+     doTest("2 SQR SQR SQR", "sqr(sqr(sqr(2)))", "256");
+     doTest("2√ SQR √ SQR √ SQR", "sqr(√(sqr(√(sqr(√(2))))))", "2");
+     doTest("3 SQR +2 SQR ", "sqr(3) + sqr(2)", "4");
      doTest("3 SQR +2 SQR =", "", "13");
      doTest("3 SQR +7=", "", "16");
-     doTest("5+ SQR SQR", "5 + sqr(sqr(5)) ", "625");
+     doTest("5+ SQR SQR", "5 + sqr(sqr(5))", "625");
      doTest("5+ SQR SQR =", "", "630");
-     doTest("2+3= SQR", "sqr(5) ", "25");
+     doTest("2+3= SQR", "sqr(5)", "25");
 
 
-      doTest("0.0000000000000001 SQR ", "sqr(0,0000000000000001) ", "1,e-32");
-      doTest("0.0000000000000001 SQR SQR ", "sqr(sqr(0,0000000000000001)) ", "1,e-64");
-      doTest("0.0000000000000001n= SQR ", "sqr(-0,0000000000000001) ", "1,e-32");
-      doTest("0-0.0000000000000001= SQR ", "sqr(-0,0000000000000001) ", "1,e-32");
-      doTest("9999999999999999 SQR ", "sqr(9999999999999999) ", "9,999999999999998e+31");
-      doTest("9999999999999999 SQR SQR ", "sqr(sqr(9999999999999999)) ", "9,999999999999996e+63");
+      doTest("0.0000000000000001 SQR ", "sqr(0,0000000000000001)", "1,e-32");
+      doTest("0.0000000000000001 SQR SQR ", "sqr(sqr(0,0000000000000001))", "1,e-64");
+      doTest("0.0000000000000001n= SQR ", "sqr(-0,0000000000000001)", "1,e-32");
+      doTest("0-0.0000000000000001= SQR ", "sqr(-0,0000000000000001)", "1,e-32");
+      doTest("9999999999999999 SQR ", "sqr(9999999999999999)", "9,999999999999998e+31");
+      doTest("9999999999999999 SQR SQR ", "sqr(sqr(9999999999999999))", "9,999999999999996e+63");
    }
 
    @Test
    void squareRootTest() {
-      doTest("0√", "√(0) ", "0");
-      doTest("4√", "√(4) ", "2");
-      doTest("4√√", "√(√(4)) ", "1,414213562373095");
-      doTest("4√√√", "√(√(√(4))) ", "1,189207115002721");
+      doTest("0√", "√(0)", "0");
+      doTest("4√", "√(4)", "2");
+      doTest("4√√", "√(√(4))", "1,414213562373095");
+      doTest("4√√√", "√(√(√(4)))", "1,189207115002721");
       doTest("4√√√=", "", "1,189207115002721");
       doTest("3+4√=", "", "5");
-      doTest("4+√", "4 + √(4) ", "2");
-      doTest("4+1+1+1+√", "4 + 1 + 1 + 1 + √(7) ","2,645751311064591");
-      doTest("121√", "√(121) ", "11");
-      doTest("456√", "√(456) ", "21,35415650406262");
-      doTest("2875√", "√(2875) ", "53,61902647381804");
-      doTest("1785√", "√(1785) ", "42,24926034855522");
-      doTest("2134√", "√(2134) ", "46,19523784980439");
-      doTest("4+5=√", "√(9) ", "3");
+      doTest("4+√", "4 + √(4)", "2");
+      doTest("4+1+1+1+√", "4 + 1 + 1 + 1 + √(7)","2,645751311064591");
+      doTest("121√", "√(121)", "11");
+      doTest("456√", "√(456)", "21,35415650406262");
+      doTest("2875√", "√(2875)", "53,61902647381804");
+      doTest("1785√", "√(1785)", "42,24926034855522");
+      doTest("2134√", "√(2134)", "46,19523784980439");
+      doTest("4+5=√", "√(9)", "3");
       doTest("4+5=√=", "", "8");
 
-      doTest("0.0000000000000001√", "√(0,0000000000000001) ", "0,00000001");
-      doTest("0.0000000000000001√√", "√(√(0,0000000000000001)) ", "0,0001");
+      doTest("0.0000000000000001√", "√(0,0000000000000001)", "0,00000001");
+      doTest("0.0000000000000001√√", "√(√(0,0000000000000001))", "0,0001");
 
-      doTest("9999999999999999√", "√(9999999999999999) ", "100 000 000");
+      doTest("9999999999999999√", "√(9999999999999999)", "100 000 000");
    }
 
    @Test
    void divideByTest() {
-      doTest(" 1/x ", "1/(0) ", "Cannot divide by zero");
+      doTest(" 1/x ", "1/(0)", "Cannot divide by zero");
 
-      doTest("1 1/x", "1/(1) ", "1");
-      doTest("2 1/x", "1/(2) ", "0,5");
-      doTest("10 1/x", "1/(10) ", "0,1");
-      doTest("1.1 1/x", "1/(1,1) ", "0,9090909090909091");
+      doTest("1 1/x", "1/(1)", "1");
+      doTest("2 1/x", "1/(2)", "0,5");
+      doTest("10 1/x", "1/(10)", "0,1");
+      doTest("1.1 1/x", "1/(1,1)", "0,9090909090909091");
 
       doTest("5 1/x +", "1/(5) + ", "0,2");
       doTest("2 1/x -", "1/(2) - ", "0,5");
       doTest("6 1/x ×", "1/(6) × ", "0,1666666666666667");
       doTest("9 1/x ÷", "1/(9) ÷ ", "0,1111111111111111");
 
-      doTest("10 + 1/x ", "10 + 1/(10) ", "0,1");
-      doTest("21 - 1/x ", "21 - 1/(21) ", "0,0476190476190476");
-      doTest("32 × 1/x ", "32 × 1/(32) ", "0,03125");
-      doTest("42 ÷ 1/x ", "42 ÷ 1/(42) ", "0,0238095238095238");
+      doTest("10 + 1/x ", "10 + 1/(10)", "0,1");
+      doTest("21 - 1/x ", "21 - 1/(21)", "0,0476190476190476");
+      doTest("32 × 1/x ", "32 × 1/(32)", "0,03125");
+      doTest("42 ÷ 1/x ", "42 ÷ 1/(42)", "0,0238095238095238");
 
-      doTest("10+12= 1/x ", "1/(22) ", "0,0454545454545454");
-      doTest("12+43= 1/x ", "1/(55) ", "0,0181818181818182");
-      doTest("21+36= 1/x ", "1/(57) ", "0,0175438596491228");
-      doTest("83+37= 1/x ", "1/(120) ", "0,0083333333333333");
+      doTest("10+12= 1/x ", "1/(22)", "0,0454545454545454");
+      doTest("12+43= 1/x ", "1/(55)", "0,0181818181818182");
+      doTest("21+36= 1/x ", "1/(57)", "0,0175438596491228");
+      doTest("83+37= 1/x ", "1/(120)", "0,0083333333333333");
 
-      doTest("1000000000000000- 1/x", "1000000000000000 - 1/(1000000000000000) ", "0,000000000000001");
-      doTest("1000000000000000×=- 1/x", "1,e+30 - 1/(1,e+30) ", "1,e-30");
-      doTest("1000000000000000×=====- 1/x", "1,e+90 - 1/(1,e+90) ", "1,e-90");
+      doTest("1000000000000000- 1/x", "1000000000000000 - 1/(1000000000000000)", "0,000000000000001");
+      doTest("1000000000000000×=- 1/x", "1,e+30 - 1/(1,e+30)", "1,e-30");
+      doTest("1000000000000000×=====- 1/x", "1,e+90 - 1/(1,e+90)", "1,e-90");
 
-      doTest("0.0000000000000001 1/x ", "1/(0,0000000000000001) ", "1,e+16");
-      doTest("0.0000000000000001 1/x 1/x ", "1/(1/(0,0000000000000001)) ", "0,0000000000000001");
+      doTest("0.0000000000000001 1/x ", "1/(0,0000000000000001)", "1,e+16");
+      doTest("0.0000000000000001 1/x 1/x ", "1/(1/(0,0000000000000001))", "0,0000000000000001");
 
-      doTest("9999999999999999 1/x ", "1/(9999999999999999) ", "1,e-16");
-      doTest("9999999999999999 1/x 1/x ", "1/(1/(9999999999999999)) ", "9 999 999 999 999 999");
+      doTest("9999999999999999 1/x ", "1/(9999999999999999)", "1,e-16");
+      doTest("9999999999999999 1/x 1/x ", "1/(1/(9999999999999999))", "9 999 999 999 999 999");
    }
 
    @Test
    void percentTest() {
-      doTest("%", "0 ", "0");
+      doTest("%", "0", "0");
 
-      doTest("2%", "0 ", "0");
-      doTest("168%", "0 ", "0");
-      doTest("25%", "0 ", "0");
-      doTest("7%%", "0 ", "0");
+      doTest("2%", "0", "0");
+      doTest("168%", "0", "0");
+      doTest("25%", "0", "0");
+      doTest("7%%", "0", "0");
 
-      doTest("6n%", "0 ", "0");
-      doTest("2n%", "0 ", "0");
-      doTest("4n%", "0 ", "0");
-      doTest("5n%", "0 ", "0");
+      doTest("6n%", "0", "0");
+      doTest("2n%", "0", "0");
+      doTest("4n%", "0", "0");
+      doTest("5n%", "0", "0");
 
       doTest("10%%%=", "", "0");
       doTest("32%%%=", "", "0");
       doTest("41%%%=", "", "0");
       doTest("12%%%=", "", "0");
 
-      doTest("200+2%", "200 + 4 ", "4");
-      doTest("152+3%", "152 + 4,56 ", "4,56");
-      doTest("234+4%", "234 + 9,36 ", "9,36");
-      doTest("543+5%", "543 + 27,15 ", "27,15");
+      doTest("200+2%", "200 + 4", "4");
+      doTest("152+3%", "152 + 4,56", "4,56");
+      doTest("234+4%", "234 + 9,36", "9,36");
+      doTest("543+5%", "543 + 27,15", "27,15");
 
-      doTest("5+%", "5 + 0,25 ", "0,25");
-      doTest("1+%", "1 + 0,01 ", "0,01");
-      doTest("3+%", "3 + 0,09 ", "0,09");
-      doTest("4+%", "4 + 0,16 ", "0,16");
+      doTest("5+%", "5 + 0,25", "0,25");
+      doTest("1+%", "1 + 0,01", "0,01");
+      doTest("3+%", "3 + 0,09", "0,09");
+      doTest("4+%", "4 + 0,16", "0,16");
 
       doTest("200+2%=", "", "204");
       doTest("152+3%=", "", "156,56");
       doTest("234+4%=", "", "243,36");
       doTest("543+5%=", "", "570,15");
 
-      doTest("200+2%=%", "416,16 ", "416,16");
-      doTest("152+3%=%", "245,110336 ", "245,110336");
-      doTest("234+4%=%", "592,240896 ", "592,240896");
-      doTest("543+5%=%", "3250,710225 ", "3 250,710225");
+      doTest("200+2%=%", "416,16", "416,16");
+      doTest("152+3%=%", "245,110336", "245,110336");
+      doTest("234+4%=%", "592,240896", "592,240896");
+      doTest("543+5%=%", "3250,710225", "3 250,710225");
 
-      doTest("199+1=%", "400 ", "400");
-      doTest("199+1=%%", "800 ", "800");
-      doTest("199+1=%%%", "1600 ", "1 600");
-      doTest("199+1=%%%%", "3200 ", "3 200");
+      doTest("199+1=%", "400", "400");
+      doTest("199+1=%%", "800", "800");
+      doTest("199+1=%%%", "1600", "1 600");
+      doTest("199+1=%%%%", "3200", "3 200");
 
-      doTest("200+25%%%%%%%%%", "200 + 12800 ", "12 800");
+      doTest("200+25%%%%%%%%%", "200 + 12800", "12 800");
       doTest("200+25%%%%%%%%%=", "", "13 000");
       doTest("300n+15%=", "", "-345");
       doTest("245+63n%=", "", "90,65");
@@ -915,8 +915,8 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("0.0000000000000001+1=+=+=+", "4 + ", "4");
       doTest("0.0000000000000001+1=+=+=+=+", "8,000000000000001 + ", "8,000000000000001");
 
-      doTest("2+5 SQR ", "2 + sqr(5) ", "25");
-      doTest("1.00001√√√", "√(√(√(1,00001))) ", "1,000001249994531");
+      doTest("2+5 SQR ", "2 + sqr(5)", "25");
+      doTest("1.00001√√√", "√(√(√(1,00001)))", "1,000001249994531");
    }
 
    @Test
@@ -928,33 +928,33 @@ public class PerformanceTest extends TestFxBaseBuilder {
       // takes from operand
       doTest("4 M+ MR ", "", "4");
       doTest("4 M+ M+ MR ", "", "8");
-      doTest("4n M+ MR ", "negate(4) ", "-4");
-      doTest("4n M+ M+ MR ", "negate(4) ", "-8");
+      doTest("4n M+ MR ", "negate(4)", "-4");
+      doTest("4n M+ M+ MR ", "negate(4)", "-8");
 
       doTest("4 M- MR ", "", "-4");
       doTest("4 M- M- MR ", "", "-8");
-      doTest("4n M- MR ", "negate(4) ", "4");
-      doTest("4n M- M- MR ", "negate(4) ", "8");
+      doTest("4n M- MR ", "negate(4)", "4");
+      doTest("4n M- M- MR ", "negate(4)", "8");
 
       doTest("0 M- MR ", "", "0");
       doTest("0 M- M- MR ", "", "0");
-      doTest("0n M- MR ", "negate(0) ", "0");
-      doTest("0n M- M- MR ", "negate(0) ", "0");
+      doTest("0n M- MR ", "negate(0)", "0");
+      doTest("0n M- M- MR ", "negate(0)", "0");
 
       doTest("0 M+ MR ", "", "0");
       doTest("0 M+ M+ MR ", "", "0");
-      doTest("0n M+  MR ", "negate(0) ", "0");
-      doTest("0n M+ M+ MR ", "negate(0) ", "0");
+      doTest("0n M+  MR ", "negate(0)", "0");
+      doTest("0n M+ M+ MR ", "negate(0)", "0");
 
       doTest(". M+ MR", "", "0");
       doTest("0. M+ MR", "", "0");
-      doTest(".n M+ MR", "negate(0) ", "0");
-      doTest("0.n M+ MR", "negate(0) ", "0");
+      doTest(".n M+ MR", "negate(0)", "0");
+      doTest("0.n M+ MR", "negate(0)", "0");
 
       doTest(". M- MR", "", "0");
       doTest("0. M- MR", "", "0");
-      doTest(".n M- MR", "negate(0) ", "0");
-      doTest("0.n M- MR", "negate(0) ", "0");
+      doTest(".n M- MR", "negate(0)", "0");
+      doTest("0.n M- MR", "negate(0)", "0");
 
       doTest("1 M+ M+ ÷ MR =", "", "0,5");
       doTest("2 M+ M+ × MR =", "", "8");
@@ -987,7 +987,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("2 + 22 M- M- M- M- M- =× MR =", "", "-2 640");
       doTest("3 + 23 M- M- M- M- M- =÷ MR =", "", "-0,2260869565217391");
 
-      doTest("0,0000000000000001 SQR SQR SQR SQR SQR SQR M+ √√√√ SQR SQR SQR SQR M- MR ", "sqr(sqr(sqr(sqr(√(√(√(√(sqr(sqr(sqr(sqr(sqr(sqr(1)))))))))))))) ", "0");
+      doTest("0,0000000000000001 SQR SQR SQR SQR SQR SQR M+ √√√√ SQR SQR SQR SQR M- MR ", "sqr(sqr(sqr(sqr(√(√(√(√(sqr(sqr(sqr(sqr(sqr(sqr(1))))))))))))))", "0");
       doTest("0,0000000000000001 SQR SQR SQR SQR SQR SQR M+ √√√√ SQR SQR SQR SQR M- MR =", "", "0");
 
       doTest("1000000000000000×1000000000000000×1000000000000000= M- C 1÷7×1000000000000000×1000000000000000×1000000000000000×7= M+ C MR=", "", "0");
@@ -999,44 +999,44 @@ public class PerformanceTest extends TestFxBaseBuilder {
    @Test
    void checkExceptions() {
       // overflow
-      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))) ", "Overflow");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))))", "Overflow");
       doTest("1000000000000000×=×=×=×=×=×=×=×=×=×=", "1,e+7680 × ", "Overflow");
       doTest("-1000000000000000×=×=×=×=×=×=×=×=×=×=", "1,e+7680 × ", "Overflow");
 
-      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001)))))))))) ", "Overflow");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001))))))))))", "Overflow");
       doTest("0.0000000000000001 ×=×=×=×=×=×=×=×=×=×=", "1,e-8192 × ", "Overflow");
       doTest("-0.0000000000000001 ×=×=×=×=×=×=×=×=×=×=", "1,e-8192 × ", "Overflow");
 
       // undefined
-      doTest("0÷0=", "0 ÷ 0 ", "Result is undefined");
-      doTest("0.0000000000000000÷0=", "0 ÷ 0 ", "Result is undefined");
-      doTest("1-1 M+ MR ÷0=", "1 - 1 ÷ 0 ", "Result is undefined");
-      doTest("0÷0+", "0 ÷ 0 ", "Result is undefined");
+      doTest("0÷0=", "0 ÷ 0", "Result is undefined");
+      doTest("0.0000000000000000÷0=", "0 ÷ 0", "Result is undefined");
+      doTest("1-1 M+ MR ÷0=", "1 - 1 ÷ 0", "Result is undefined");
+      doTest("0÷0+", "0 ÷ 0", "Result is undefined");
 
-      doTest("2+2×2-8÷0=", "2 + 2 × 2 - 8 ÷ 0 ", "Result is undefined");
-      doTest("2+4×6-36÷0=", "2 + 4 × 6 - 36 ÷ 0 ", "Result is undefined");
-      doTest("5+1×8-48÷0=", "5 + 1 × 8 - 48 ÷ 0 ", "Result is undefined");
-      doTest("9+4×3-39÷0=", "9 + 4 × 3 - 39 ÷ 0 ", "Result is undefined");
+      doTest("2+2×2-8÷0=", "2 + 2 × 2 - 8 ÷ 0", "Result is undefined");
+      doTest("2+4×6-36÷0=", "2 + 4 × 6 - 36 ÷ 0", "Result is undefined");
+      doTest("5+1×8-48÷0=", "5 + 1 × 8 - 48 ÷ 0", "Result is undefined");
+      doTest("9+4×3-39÷0=", "9 + 4 × 3 - 39 ÷ 0", "Result is undefined");
 
       // divide by zero
-      doTest("1÷0=", "1 ÷ 0 ", "Cannot divide by zero");
-      doTest("2n÷0=", "negate(2) ÷ 0 ", "Cannot divide by zero");
-      doTest("3÷0=", "3 ÷ 0 ", "Cannot divide by zero");
-      doTest("0.0000000000000001÷0=", "0,0000000000000001 ÷ 0 ", "Cannot divide by zero");
+      doTest("1÷0=", "1 ÷ 0", "Cannot divide by zero");
+      doTest("2n÷0=", "negate(2) ÷ 0", "Cannot divide by zero");
+      doTest("3÷0=", "3 ÷ 0", "Cannot divide by zero");
+      doTest("0.0000000000000001÷0=", "0,0000000000000001 ÷ 0", "Cannot divide by zero");
 
-      doTest("2+1-10×2÷0=", "2 + 1 - 10 × 2 ÷ 0 ", "Cannot divide by zero");
-      doTest("3+6-32×3÷0=", "3 + 6 - 32 × 3 ÷ 0 ", "Cannot divide by zero");
-      doTest("4+7-34×6÷0=", "4 + 7 - 34 × 6 ÷ 0 ", "Cannot divide by zero");
-      doTest("5+8-84×9÷0=", "5 + 8 - 84 × 9 ÷ 0 ", "Cannot divide by zero");
+      doTest("2+1-10×2÷0=", "2 + 1 - 10 × 2 ÷ 0", "Cannot divide by zero");
+      doTest("3+6-32×3÷0=", "3 + 6 - 32 × 3 ÷ 0", "Cannot divide by zero");
+      doTest("4+7-34×6÷0=", "4 + 7 - 34 × 6 ÷ 0", "Cannot divide by zero");
+      doTest("5+8-84×9÷0=", "5 + 8 - 84 × 9 ÷ 0", "Cannot divide by zero");
 
-      doTest("0 1/x ", "1/(0) ", "Cannot divide by zero");
-      doTest("8÷0=", "8 ÷ 0 ", "Cannot divide by zero");
+      doTest("0 1/x ", "1/(0)", "Cannot divide by zero");
+      doTest("8÷0=", "8 ÷ 0", "Cannot divide by zero");
 
       // invalid input
-      doTest("5n√", "√(negate(5)) ", "Invalid input");
-      doTest("50-45-500√=√", "√(-17,3606797749979) ", "Invalid input");
-      doTest("0.4565468n√", "√(negate(0,4565468)) ", "Invalid input");
-      doTest("-0.57894=√", "√(-0,57894) ", "Invalid input");
+      doTest("5n√", "√(negate(5))", "Invalid input");
+      doTest("50-45-500√=√", "√(-17,3606797749979)", "Invalid input");
+      doTest("0.4565468n√", "√(negate(0,4565468))", "Invalid input");
+      doTest("-0.57894=√", "√(-0,57894)", "Invalid input");
    }
 
    @Test
@@ -1113,15 +1113,15 @@ public class PerformanceTest extends TestFxBaseBuilder {
    
    @Test
    void boundaryTestForSpecialOperations() {
-      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))) ", "1,e+7680");
-      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))) ", "Overflow");
-      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))) ", "Overflow");
-      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ","sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))) ", "Overflow");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))", "1,e+7680");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))))", "Overflow");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))))", "Overflow");
+      doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ","sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))))", "Overflow");
 
-      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001))))))))) ", "1,e-8192");
-      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001)))))))))) ", "Overflow");
-      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001)))))))))) ", "Overflow");
-      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001)))))))))) ", "Overflow");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001)))))))))", "1,e-8192");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001))))))))))", "Overflow");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001))))))))))", "Overflow");
+      doTest("0.0000000000000001 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR ", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(0,0000000000000001))))))))))", "Overflow");
 
       doTest("1000000000000000 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1,000000000000001");
       doTest("1000000000000000 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1");
@@ -1133,12 +1133,12 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("0.0000000000000001 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1");
       doTest("0.0000000000000001 √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null,"1");
       
-      doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+9836 ", "1,e+9836");
-      doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+10134 ", "Overflow");
-      doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+10134 ", "Overflow");
+      doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+9836", "1,e+9836");
+      doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+10134", "Overflow");
+      doTest("10000000000000000×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e+10134", "Overflow");
 
-      doTest("0.000000000000001×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e-9964 ","1,e-9964");
-      doTest("0.000000000000001×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e-10266 ", "Overflow");
-      doTest("0.000000000000001×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e-10266 ", "Overflow");
+      doTest("0.000000000000001×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e-9964","1,e-9964");
+      doTest("0.000000000000001×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e-10266", "Overflow");
+      doTest("0.000000000000001×=================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", "1,e-10266", "Overflow");
    }
 }

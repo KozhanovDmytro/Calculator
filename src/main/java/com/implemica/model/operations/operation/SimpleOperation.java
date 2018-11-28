@@ -1,18 +1,16 @@
 package com.implemica.model.operations.operation;
 
 import com.implemica.model.exceptions.CalculatorException;
-import com.implemica.model.history.OperandHistory;
-import com.implemica.model.validation.Validator;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.LinkedList;
 
 /**
  * Class contains type of simple operation, operand and his history.
  *
  * @see BigDecimal
- * @see OperandHistory
  *
  * @author Dmytro Kozhanov
  */
@@ -28,7 +26,7 @@ public abstract class SimpleOperation {
    protected String character;
 
    /** History for operand. */
-   private OperandHistory operandHistory = new OperandHistory();
+   private LinkedList<SpecialOperation> operandHistory = new LinkedList<>();
 
    /** The flag which indicate whether the last character of operand comma or not. */
    private boolean separated;
@@ -43,9 +41,6 @@ public abstract class SimpleOperation {
    public static final int MAX_SCALE = 20000;
    private static int MAX_PRECISION_FOR_BUILD_OPERAND = 16;
 
-   /** The instance of {@link Validator} for make representation number in history. */
-   private Validator validator = new Validator();
-
    /**
     * Function which have to override to change result according to some kind of logic.
     *
@@ -54,22 +49,6 @@ public abstract class SimpleOperation {
     * @throws CalculatorException if something was thrown.
     */
    public abstract BigDecimal calculate(BigDecimal result) throws CalculatorException;
-
-   /**
-    * Function which involved in create history.
-    *
-    * @see StringBuilder
-    * @return history.
-    */
-   public StringBuilder buildHistory() {
-      StringBuilder result;
-      if(isShowOperand) {
-         result = buildLocalHistory().append(SPACE);
-      } else {
-         result = new StringBuilder(NOTHING);
-      }
-      return result.insert(0, getCharacter());
-   }
 
    /**
     * Function for build operand.
@@ -119,17 +98,9 @@ public abstract class SimpleOperation {
       isShowOperand = true;
    }
 
-   /**
-    *  Function for building local history. It's needed for build history
-    *  with special operations.
-    */
-   private StringBuilder buildLocalHistory() {
-      return operandHistory.buildHistory(new StringBuilder(validator.showNumberForHistory(initialOperand)));
-   }
-
    /** Gets current character of simple operation for history. */
-   private String getCharacter() {
-      return character.equals(NOTHING) ? NOTHING : character + SPACE;
+   public String getCharacter() {
+      return character.equals(NOTHING) ? NOTHING : SPACE + character + SPACE;
    }
 
    /**
@@ -171,7 +142,11 @@ public abstract class SimpleOperation {
       this.initialOperand = initialOperand;
    }
 
-   public OperandHistory getOperandHistory() {
+   public BigDecimal getInitialOperand() {
+      return initialOperand;
+   }
+
+   public LinkedList<SpecialOperation> getOperandHistory() {
       return operandHistory;
    }
 
@@ -189,5 +164,9 @@ public abstract class SimpleOperation {
 
    public void setShowOperand(boolean showOperand) {
       this.isShowOperand = showOperand;
+   }
+
+   public void setCharacter(String character) {
+      this.character = character;
    }
 }

@@ -11,9 +11,4 @@ public class Square extends SpecialOperation {
    public BigDecimal calculate(BigDecimal operand) {
       return operand.pow(2, MathContext.DECIMAL64);
    }
-
-   @Override
-   public StringBuilder buildHistory(StringBuilder history) {
-      return history.insert(0, "sqr(").append(")");
-   }
 }

@@ -8,6 +8,10 @@ public abstract class SpecialOperation {
 
    protected final int MAX_SCALE = 20000;
 
+   protected String firstPartHistory;
+
+   protected String secondPartHistory;
+
    /**
     * Function which have to override to change operand according to some kind of logic.
     *
@@ -17,12 +21,19 @@ public abstract class SpecialOperation {
     */
    public abstract BigDecimal calculate(BigDecimal operand) throws CalculatorException;
 
-   /**
-    * Function which involved in create history for operand.
-    *
-    * @see StringBuilder
-    * @return history.
-    */
-   public abstract StringBuilder buildHistory(StringBuilder history);
+   public String getFirstPartHistory() {
+      return firstPartHistory;
+   }
 
+   public void setFirstPartHistory(String firstPartHistory) {
+      this.firstPartHistory = firstPartHistory;
+   }
+
+   public String getSecondPartHistory() {
+      return secondPartHistory;
+   }
+
+   public void setSecondPartHistory(String secondPartHistory) {
+      this.secondPartHistory = secondPartHistory;
+   }
 }

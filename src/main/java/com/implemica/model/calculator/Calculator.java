@@ -3,7 +3,7 @@ package com.implemica.model.calculator;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.exceptions.ExceptionType;
-import com.implemica.model.history.MainHistory;
+import com.implemica.model.history.History;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
 import com.implemica.model.operations.operation.Number;
@@ -198,7 +198,7 @@ public class Calculator {
       // that's need for history when exception was appear.
       // that scope clears current state and sends cloned history.
       if (exceptionType != ExceptionType.NOTHING) {
-         MainHistory tempHistory = container.getHistory().clone();
+         History tempHistory = container.getHistory().clone();
          clear();
          container.setHistory(tempHistory);
       }
@@ -381,7 +381,7 @@ public class Calculator {
    /**
     * @return current history
     */
-   private MainHistory showHistory() {
+   private History showHistory() {
       return container.getHistory();
    }
 

@@ -18,9 +18,4 @@ public class DivideBy extends SpecialOperation {
 
       return new BigDecimal(BigInteger.ONE).divide(operand, MAX_SCALE, RoundingMode.HALF_UP);
    }
-
-   @Override
-   public StringBuilder buildHistory(StringBuilder history) {
-      return history.insert(0, "1/(").append(")");
-   }
 }

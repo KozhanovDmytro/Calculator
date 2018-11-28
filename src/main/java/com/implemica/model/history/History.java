@@ -9,11 +9,6 @@ import java.util.LinkedList;
 /**
  * The class contains history of {@link SimpleOperation}.
  *
- * For make a history in string format use {@link #buildHistory()} function
- * as a result will be displayed like that example:
- *
- *       5 + 3 - 7 * 2 / 1
- *
  *
  * @see SimpleOperation
  * @see Deque
@@ -21,7 +16,7 @@ import java.util.LinkedList;
  *
  * @author Dmytro Kozhanov
  */
-public class MainHistory implements Cloneable {
+public class History implements Cloneable {
 
    /** Store a {@link Deque} of {@link SimpleOperation}*/
    private Deque<SimpleOperation> operations;
@@ -29,7 +24,7 @@ public class MainHistory implements Cloneable {
    /**
     * Constructor.
     */
-   public MainHistory() {
+   public History() {
       operations = new LinkedList<>();
    }
 
@@ -39,7 +34,7 @@ public class MainHistory implements Cloneable {
     * @see this#clone()
     * @param operations the {@link Deque} of {@link SimpleOperation}
     */
-   private MainHistory(LinkedList<SimpleOperation> operations) {
+   private History(LinkedList<SimpleOperation> operations) {
       this.operations = operations;
    }
 
@@ -95,22 +90,7 @@ public class MainHistory implements Cloneable {
    }
 
    /**
-    * This function build history.
-    *
-    * @return the instance of {@link String} which gets a string
-    *  representation of history.
-    */
-   public String buildHistory() {
-      StringBuilder result = new StringBuilder();
-      for (SimpleOperation a : operations) {
-         result.append(a.buildHistory());
-      }
-      return result.toString();
-   }
-
-   /**
-    * Function hides last operation. It means that function {@link #buildHistory()} ignore this
-    * operation.
+    * Function hides last operation.
     */
    public void hideLast() {
       if (operations.size() > 0) {
@@ -122,7 +102,11 @@ public class MainHistory implements Cloneable {
     * Function for make a clone of this history.
     * @return cloned history.
     */
-   @Override public MainHistory clone() {
-      return new MainHistory(new LinkedList<>(operations));
+   @Override public History clone() {
+      return new History(new LinkedList<>(operations));
+   }
+
+   public Deque<SimpleOperation> getOperations() {
+      return operations;
    }
 }

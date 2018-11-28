@@ -2,7 +2,7 @@ package com.implemica.model.calculator;
 
 import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.exceptions.ExceptionType;
-import com.implemica.model.history.MainHistory;
+import com.implemica.model.history.History;
 import com.implemica.model.memory.Memory;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
@@ -18,7 +18,7 @@ import java.math.BigDecimal;
  *
  * @see BigDecimal
  * @see SimpleOperation
- * @see MainHistory
+ * @see History
  *
  * @author Dmytro Kozhanov
  */
@@ -31,7 +31,7 @@ public class Container {
    private SimpleOperation operation = new Default();
 
    /** Current history. */
-   private MainHistory history = new MainHistory();
+   private History history = new History();
 
    /** Memory. */
    private Memory memory = new Memory();
@@ -79,6 +79,7 @@ public class Container {
    void change(SpecialOperation specialOperation, boolean isResult) throws CalculatorException {
       if (specialOperation instanceof Percent) {
          ((Percent) specialOperation).setResult(result);
+         operation.getOperandHistory().clear();
       }
 
       if (history.size() == 0 && operation instanceof Equals) {
@@ -86,7 +87,7 @@ public class Container {
       }
 
       BigDecimal newOperand;
-      operation.getOperandHistory().add(specialOperation);
+      operation.getOperandHistory().addFirst(specialOperation);
       if (isResult && !operation.isShowOperand()) {
          operation.setInitialOperand(result);
          newOperand = resolveSpecialOperation(specialOperation);
@@ -97,6 +98,10 @@ public class Container {
 
       }
 
+      if(specialOperation instanceof Percent) {
+         operation.setInitialOperand(newOperand);
+      }
+
       makingOperand = specialOperation instanceof Negate;
       operation.setShowOperand(true);
       operation.setOperand(checkForZero(newOperand));
@@ -104,7 +109,7 @@ public class Container {
    }
 
    /**
-    * Function add to {@link MainHistory} new {@link SimpleOperation}.
+    * Function add to {@link History} new {@link SimpleOperation}.
     *
     * @param simpleOperation new operation which will add to history.
     */
@@ -226,14 +231,14 @@ public class Container {
     * Accessor for {@link #history}
     * @return {@link #history}
     */
-   public MainHistory getHistory() {
+   public History getHistory() {
       return history;
    }
 
    /**
     * Accessor for {@link #history}
     */
-   void setHistory(MainHistory history) {
+   void setHistory(History history) {
       this.history = history;
    }
 

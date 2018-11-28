@@ -1,10 +1,11 @@
 package com.implemica.model.calculator.until;
 
+import com.implemica.controller.util.HistoryParser;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.calculator.Container;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
-import com.implemica.model.history.MainHistory;
+import com.implemica.model.history.History;
 import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
@@ -36,6 +37,50 @@ public class TestBuilder {
 
    private ExceptionType exceptionType = ExceptionType.NOTHING;
 
+   private HistoryParser historyParser = new HistoryParser();
+
+   /* operations */
+
+   /* simple */
+
+   private static Plus plus;
+
+   private static Minus minus;
+
+   private static Multiply multiply;
+
+   private static Divide divide;
+
+   /* special */
+
+   private static Percent percent = new Percent();
+
+   private static SquareRoot squareRoot = new SquareRoot();
+
+   private static Square square = new Square();
+
+   private static DivideBy divideBy = new DivideBy();
+
+   private static Negate negate = new Negate();
+
+   static {
+
+      percent.setFirstPartHistory("");
+      percent.setSecondPartHistory("");
+
+      squareRoot.setFirstPartHistory("√(");
+      squareRoot.setSecondPartHistory(")");
+
+      square.setFirstPartHistory("sqr(");
+      square.setSecondPartHistory(")");
+
+      divideBy.setFirstPartHistory("1/(");
+      divideBy.setSecondPartHistory(")");
+
+      negate.setFirstPartHistory("negate(");
+      negate.setSecondPartHistory(")");
+   }
+
    public void doExceptionsTest(String pattern, ExceptionType expectedExceptionType) {
       checkException = false;
       doTest(pattern, null, 0, null, null);
@@ -44,6 +89,7 @@ public class TestBuilder {
    }
 
    public void doTest(String pattern, String history, int historySize, String result, String operand) {
+      initializeSimpleOperation();
       calculator = new Calculator();
       exceptionType = ExceptionType.NOTHING;
       this.result = BigDecimal.ZERO;
@@ -71,10 +117,10 @@ public class TestBuilder {
                subtractMemory();
                break;
             case "SQR":
-               executeSpecialOperation(new Square());
+               executeSpecialOperation(square);
                break;
             case "1/x":
-               executeSpecialOperation(new DivideBy());
+               executeSpecialOperation(divideBy);
                break;
             default:
                checkBySymbols(action);
@@ -159,16 +205,16 @@ public class TestBuilder {
                equals();
                break;
             case '%':
-               executeSpecialOperation(new Percent());
+               executeSpecialOperation(percent);
                break;
             case '√':
-               executeSpecialOperation(new SquareRoot());
+               executeSpecialOperation(squareRoot);
                break;
             case '<':
                executeBackSpace();
                break;
             case 'n':
-               executeSpecialOperation(new Negate());
+               executeSpecialOperation(negate);
                break;
          }
       }
@@ -258,10 +304,11 @@ public class TestBuilder {
 
       assert container != null;
 
-      MainHistory history = container.getHistory();
+      History history = container.getHistory();
 
       assertEquals(size, history.size());
-      assertEquals(expectedHistory, history.buildHistory());
+      assertEquals(expectedHistory, historyParser.parse(history));
+//      assertEquals(expectedHistory, history.buildHistory());
    }
 
    private void checkException(ExceptionType exceptionType) {
@@ -282,5 +329,17 @@ public class TestBuilder {
       if(response.getOperand() != null) {
          operand = response.getOperand();
       }
+   }
+
+   private void initializeSimpleOperation() {
+      plus = new Plus();
+      minus = new Minus();
+      multiply = new Multiply();
+      divide = new Divide();
+
+      plus.setCharacter("+");
+      multiply.setCharacter("×");
+      minus.setCharacter("-");
+      divide.setCharacter("÷");
    }
 }

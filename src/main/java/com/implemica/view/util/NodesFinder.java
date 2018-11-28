@@ -40,7 +40,7 @@ public enum NodesFinder {
    /* special operation. */
    PERCENT_OPERATION("#percentOperation"),
    SQRT_OPERATION("#sqrtOperation"),
-   SQUARE("#square"),
+   SQUARE("#squareOperation"),
    DIVIDE_BY_X("#divideByX"),
 
    /* Buttons for build operand.  */
@@ -58,7 +58,7 @@ public enum NodesFinder {
    /* Buttons for correct operand. */
    BACKSPACE("#backSpace"),
    SEPARATE_BTN("#separateBtn"),
-   NEGATE("#negate"),
+   NEGATE("#negateOperation"),
 
    /* Simple operation. */
    EQUALS_OPERATION("#equalsOperation"),

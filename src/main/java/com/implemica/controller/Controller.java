@@ -1,6 +1,7 @@
 package com.implemica.controller;
 
 import com.implemica.controller.util.Field;
+import com.implemica.controller.util.HistoryParser;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.ExceptionType;
@@ -53,10 +54,10 @@ public class Controller {
    @FXML private Button plusOperation, minusOperation, multiplyOperation, divideOperation;
 
    /** Group of {@link Button} which operate with {@link SpecialOperation}. */
-   @FXML private Button percentOperation, sqrtOperation, square, divideByX;
+   @FXML private Button percentOperation, sqrtOperation, squareOperation, divideByX;
 
    /** Group of {@link Button} which have permission to build operand. */
-   @FXML private Button negate, separateBtn, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
+   @FXML private Button negateOperation, separateBtn, btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
    /** Group of {@link Button} which operate with memory. */
    @FXML private Button clearMemory, recallMemory, addMemory, subtractMemory, showMemory, memoryBtn, logBtn;
@@ -90,8 +91,40 @@ public class Controller {
    /** The instance which can display comfortable to user number. */
    private Validator validator = new Validator();
 
+   private HistoryParser historyParser = new HistoryParser();
+
    /** The flag which note current state of some buttons. */
    private boolean isBlocked;
+
+   /* special */
+
+   private static Percent percent = new Percent();
+
+   private static SquareRoot squareRoot = new SquareRoot();
+
+   private static Square square = new Square();
+
+   private static DivideBy divideBy = new DivideBy();
+
+   private static Negate negate = new Negate();
+
+   static {
+
+      percent.setFirstPartHistory("");
+      percent.setSecondPartHistory("");
+
+      squareRoot.setFirstPartHistory("√(");
+      squareRoot.setSecondPartHistory(")");
+
+      square.setFirstPartHistory("sqr(");
+      square.setSecondPartHistory(")");
+
+      divideBy.setFirstPartHistory("1/(");
+      divideBy.setSecondPartHistory(")");
+
+      negate.setFirstPartHistory("negate(");
+      negate.setSecondPartHistory(")");
+   }
 
    /**
     * The first point to enter to application
@@ -177,11 +210,11 @@ public class Controller {
       multiplyOperation .setOnAction(event -> actionForOperations(new Multiply()));
       divideOperation   .setOnAction(event -> actionForOperations(new Divide()));
 
-      percentOperation  .setOnAction(event -> actionForSpecialOperations(new Percent()));
-      sqrtOperation     .setOnAction(event -> actionForSpecialOperations(new SquareRoot()));
-      square            .setOnAction(event -> actionForSpecialOperations(new Square()));
-      divideByX         .setOnAction(event -> actionForSpecialOperations(new DivideBy()));
-      negate            .setOnAction(event -> actionForSpecialOperations(new Negate()));
+      percentOperation  .setOnAction(event -> actionForSpecialOperations(percent));
+      sqrtOperation     .setOnAction(event -> actionForSpecialOperations(squareRoot));
+      squareOperation   .setOnAction(event -> actionForSpecialOperations(square));
+      divideByX         .setOnAction(event -> actionForSpecialOperations(divideBy));
+      negateOperation   .setOnAction(event -> actionForSpecialOperations(negate));
 
       equalsOperation.setOnAction(event -> {
          parseDto(calculator.equalsOperation());
@@ -327,14 +360,14 @@ public class Controller {
       isBlocked = isThrownException;
       percentOperation.setDisable(isThrownException);
       sqrtOperation.setDisable(isThrownException);
-      square.setDisable(isThrownException);
+      squareOperation.setDisable(isThrownException);
       divideByX.setDisable(isThrownException);
       divideOperation.setDisable(isThrownException);
       multiplyOperation.setDisable(isThrownException);
       minusOperation.setDisable(isThrownException);
       plusOperation.setDisable(isThrownException);
       separateBtn.setDisable(isThrownException);
-      negate.setDisable(isThrownException);
+      negateOperation.setDisable(isThrownException);
    }
 
    /**
@@ -364,7 +397,7 @@ public class Controller {
       }
 
       if (response.getHistory() != null) {
-         showHistory(response.getHistory().buildHistory());
+         showHistory(historyParser.parse(response.getHistory()));
       }
    }
 

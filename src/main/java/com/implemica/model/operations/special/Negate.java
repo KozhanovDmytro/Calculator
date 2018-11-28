@@ -10,9 +10,4 @@ public class Negate extends SpecialOperation {
    public BigDecimal calculate(BigDecimal operand) {
       return operand.negate();
    }
-
-   @Override
-   public StringBuilder buildHistory(StringBuilder history) {
-      return history.insert(0, "negate(").append(")");
-   }
 }

@@ -17,9 +17,4 @@ public class SquareRoot extends SpecialOperation {
 
       return operand.sqrt(MathContext.DECIMAL64);
    }
-
-   @Override
-   public StringBuilder buildHistory(StringBuilder history) {
-      return history.insert(0, "√(").append(")");
-   }
 }

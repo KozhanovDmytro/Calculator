@@ -1,7 +1,7 @@
 package com.implemica.model.dto;
 
 import com.implemica.model.exceptions.ExceptionType;
-import com.implemica.model.history.MainHistory;
+import com.implemica.model.history.History;
 
 import java.math.BigDecimal;
 
@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  * The class uses for make a response from model.
  *
  * @see BigDecimal
- * @see MainHistory
+ * @see History
  * @see ExceptionType
  *
  * @author Dmytro Kozhanov
@@ -23,7 +23,7 @@ public class ResponseDto {
    private BigDecimal operand;
 
    /** This field stores history. */
-   private MainHistory history;
+   private History history;
 
    /** This flag indicates whether the last character of operand has comma or not. */
    private boolean isSeparated;
@@ -49,11 +49,11 @@ public class ResponseDto {
       this.operand = operand;
    }
 
-   public MainHistory getHistory() {
+   public History getHistory() {
       return history;
    }
 
-   public void setHistory(MainHistory history) {
+   public void setHistory(History history) {
       this.history = history;
    }
 
