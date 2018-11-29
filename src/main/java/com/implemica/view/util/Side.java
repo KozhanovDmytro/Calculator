@@ -1,5 +1,12 @@
 package com.implemica.view.util;
 
+/**
+ * Side on which do resize.
+ *
+ * @see Coordinates
+ *
+ * @author Dmytro Kozhanov
+ */
 public enum Side {
    LEFT,
    RIGHT,
@@ -11,6 +18,11 @@ public enum Side {
    RIGHT_TOP,
    RIGHT_BOTTOM;
 
+   /**
+    * Function intended for resize and show which way to do resize.
+    * @param coordinates coordinates
+    * @return desired coordinates
+    */
    public int coefficient(Coordinates coordinates) {
       int x = 1;
       int y = 1;

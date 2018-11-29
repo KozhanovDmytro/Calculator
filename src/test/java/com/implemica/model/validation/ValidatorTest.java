@@ -1,6 +1,7 @@
 package com.implemica.model.validation;
 
 import com.implemica.model.calculator.until.TestBuilder;
+import com.implemica.model.exceptions.CalculatorException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ public class ValidatorTest {
    }
 
    @Test
-   void showComfortableNumber() {
+   void showComfortableNumber() throws CalculatorException {
       builder.checkBuildOperand("0", "0");
       builder.checkBuildOperand("00", "0");
       builder.checkBuildOperand("0000000000", "0");

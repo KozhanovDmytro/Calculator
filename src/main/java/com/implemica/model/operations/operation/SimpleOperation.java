@@ -35,10 +35,19 @@ public abstract class SimpleOperation {
    private boolean isShowOperand;
 
    /*constants*/
+   /** Space. */
    private static final char SPACE = ' ';
+
+   /** Empty string. */
    private static final String NOTHING = "";
+
+   /** Comma. */
    private static final String SEPARATOR = ".";
+
+   /** Max scale. */
    public static final int MAX_SCALE = 20000;
+
+   /** Max precision for build operand. */
    private static int MAX_PRECISION_FOR_BUILD_OPERAND = 16;
 
    /**

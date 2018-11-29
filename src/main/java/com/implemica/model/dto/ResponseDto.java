@@ -28,9 +28,6 @@ public class ResponseDto {
    /** This flag indicates whether the last character of operand has comma or not. */
    private boolean isSeparated;
 
-   /** This field stores the exception which was thrown. */
-   private ExceptionType exceptionType;
-
    /* accessors for each field */
 
    public BigDecimal getResult() {
@@ -63,13 +60,5 @@ public class ResponseDto {
 
    public void setSeparated(boolean separated) {
       isSeparated = separated;
-   }
-
-   public ExceptionType getExceptionType() {
-      return exceptionType;
-   }
-
-   public void setExceptionType(ExceptionType exceptionType) {
-      this.exceptionType = exceptionType;
    }
 }

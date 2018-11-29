@@ -23,9 +23,7 @@ public class CalculatorException extends Exception {
     *  in this exception.
     */
    public CalculatorException(ExceptionType exceptionType) {
-      if(exceptionType == ExceptionType.NOTHING) {
-         throw new IllegalArgumentException();
-      }
+      super(exceptionType + " was thrown. ");
 
       this.exceptionType = exceptionType;
    }

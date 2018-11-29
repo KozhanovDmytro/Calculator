@@ -16,7 +16,7 @@ import java.util.LinkedList;
  *
  * @author Dmytro Kozhanov
  */
-public class History implements Cloneable {
+public class History {
 
    /** Store a {@link Deque} of {@link SimpleOperation}*/
    private Deque<SimpleOperation> operations;
@@ -26,16 +26,6 @@ public class History implements Cloneable {
     */
    public History() {
       operations = new LinkedList<>();
-   }
-
-   /**
-    * The private constructor needed for create clone.
-    *
-    * @see this#clone()
-    * @param operations the {@link Deque} of {@link SimpleOperation}
-    */
-   private History(LinkedList<SimpleOperation> operations) {
-      this.operations = operations;
    }
 
    /**
@@ -99,13 +89,9 @@ public class History implements Cloneable {
    }
 
    /**
-    * Function for make a clone of this history.
-    * @return cloned history.
+    * Function gets {@link Deque} which contains operations
+    * @return
     */
-   @Override public History clone() {
-      return new History(new LinkedList<>(operations));
-   }
-
    public Deque<SimpleOperation> getOperations() {
       return operations;
    }
