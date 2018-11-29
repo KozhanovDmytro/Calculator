@@ -27,19 +27,8 @@ public class Calculator {
    /** The instance which contains current state of model. */
    private Container container = new Container();
 
-   /** The enumeration represents the type of exception which was thrown. */
-   private ExceptionType exceptionType = ExceptionType.NOTHING;
-
    /** The flag indicates whether the result is returned from the model or not.*/
    private boolean isShownResult;
-
-   /**
-    *  This interface contains a function where an exception expect.
-    *  That's needed for catching one exception in different place.
-    */
-   private interface ExceptionSupplier {
-      void calculate() throws CalculatorException;
-   }
 
    /**
     * Function for executing {@link SimpleOperation} and return current state of model.
@@ -47,10 +36,8 @@ public class Calculator {
     * @param operation specific simple operation.
     * @return current state of model.
     */
-   public ResponseDto executeSimpleOperation(SimpleOperation operation) {
-      if(exceptionType == ExceptionType.NOTHING) {
-         exceptionType = calculate(() -> calculateSimpleOperation(operation));
-      }
+   public ResponseDto executeSimpleOperation(SimpleOperation operation) throws CalculatorException {
+      calculateSimpleOperation(operation);
 
       return getCurrentStateForResult();
    }
@@ -106,10 +93,8 @@ public class Calculator {
     * @param operation specific {@link SpecialOperation}.
     * @return current state of model.
     */
-   public ResponseDto executeSpecialOperation(SpecialOperation operation) {
-      if(exceptionType == ExceptionType.NOTHING) {
-         exceptionType = calculate(() -> container.change(operation, isShownResult));
-      }
+   public ResponseDto executeSpecialOperation(SpecialOperation operation) throws CalculatorException {
+      container.change(operation, isShownResult);
 
       return getCurrentState();
    }
@@ -121,8 +106,6 @@ public class Calculator {
     * @return current state of model
     */
    public ResponseDto buildOperand(Number number) {
-      disableException();
-
       if (!container.isMakingOperand()) {
          clearEntry();
       }
@@ -136,33 +119,21 @@ public class Calculator {
    }
 
    /**
-    * Function for disable blocked some function when exception was thrown.
-    */
-   private void disableException() {
-      if(exceptionType != ExceptionType.NOTHING) {
-         exceptionType = ExceptionType.NOTHING;
-         clear();
-      }
-   }
-
-   /**
     * Function executes equals operation and returns current state of model.
     *
     * @return current state of model.
     */
-   public ResponseDto equalsOperation() {
+   public ResponseDto equalsOperation() throws CalculatorException {
       if (container.isMakingOperand() && isShownResult) {
          container.getOperation().setOperand(container.getResult());
       } else if (container.getOperation() instanceof Equals) {
          prepareForDoEquals();
       }
 
-      exceptionType = calculate(() -> container.calculate());
+      container.calculate();
 
       Equals equals = new Equals(container.getOperation());
-      if (exceptionType == ExceptionType.NOTHING) {
-         container.getHistory().clear();
-      }
+      container.getHistory().clear();
 
       container.setOperation(equals);
       container.setMakingOperand(false);
@@ -180,33 +151,6 @@ public class Calculator {
    }
 
    /**
-    * Function calculate which was transmitted through the instance of {@link ExceptionSupplier}
-    *
-    * @see ExceptionSupplier
-    * @param exceptionSupplier instance of {@link ExceptionSupplier}
-    * @return an exception type which was thrown in {@link ExceptionSupplier}
-    */
-   private ExceptionType calculate(ExceptionSupplier exceptionSupplier) {
-      ExceptionType exceptionType = ExceptionType.NOTHING;
-
-      try {
-         exceptionSupplier.calculate();
-      } catch (CalculatorException e) {
-         exceptionType = e.getExceptionType();
-      }
-
-      // that's need for history when exception was appear.
-      // that scope clears current state and sends cloned history.
-      if (exceptionType != ExceptionType.NOTHING) {
-         History tempHistory = container.getHistory().clone();
-         clear();
-         container.setHistory(tempHistory);
-      }
-
-      return exceptionType;
-   }
-
-   /**
     * Function update flag which represents whether there is a comma
     * at the end of the number or not and returns current state.
     *
@@ -220,7 +164,6 @@ public class Calculator {
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
       response.setSeparated(showIsSeparated());
-      response.setExceptionType(exceptionType);
 
       return response;
    }
@@ -232,7 +175,6 @@ public class Calculator {
     * @return current state of model.
     */
    public ResponseDto backspace() {
-      exceptionType = ExceptionType.NOTHING;
       ResponseDto response = new ResponseDto();
 
       if (container.isMakingOperand()) {
@@ -241,7 +183,6 @@ public class Calculator {
          response.setSeparated(showIsSeparated());
       }
 
-      response.setExceptionType(exceptionType);
       return response;
    }
 
@@ -256,10 +197,9 @@ public class Calculator {
       container.setResult(BigDecimal.ZERO);
       container.setOperation(new Default());
       container.setMakingOperand(true);
-      exceptionType = ExceptionType.NOTHING;
       isShownResult = false;
 
-      return getCurrentStateForResult();
+      return getCurrentState();
    }
 
    /**
@@ -268,7 +208,6 @@ public class Calculator {
     * @return current state of model.
     */
    public ResponseDto clearEntry() {
-      disableException();
       container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
       container.setMakingOperand(true);
@@ -318,7 +257,6 @@ public class Calculator {
     * @return current state.
     */
    public ResponseDto getMemory() {
-      exceptionType = ExceptionType.NOTHING;
       BigDecimal value = container.getMemory().recall();
       container.getOperation().setOperandFromMemory(value);
 
@@ -326,7 +264,6 @@ public class Calculator {
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
-      response.setExceptionType(exceptionType);
 
       return response;
    }
@@ -392,7 +329,6 @@ public class Calculator {
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());
       response.setHistory(showHistory());
-      response.setExceptionType(exceptionType);
 
       return response;
    }
@@ -404,7 +340,6 @@ public class Calculator {
       ResponseDto response = new ResponseDto();
       response.setResult(showResult());
       response.setHistory(showHistory());
-      response.setExceptionType(exceptionType);
 
       return response;
    }

@@ -1,4 +1,4 @@
-package com.implemica.model.validation;
+package com.implemica.controller.util;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -37,11 +37,11 @@ public class Validator {
    /** Space. */
    private final char SPACE = ' ';
 
-   /** Sharp character for build pattern. It needed for {@link #ADDITIONAL_PART} for digital number. */
-   private final char SHARP = '#';
+   /** This pattern using for build pattern for decimal number like that 0.000 */
+   private final String PATTERN_FOR_BUILD_NEW_PATTERN = ",##0.";
 
-   /** That's needed for build operand for number like that: 0.00000 */
-   private final char ADDITIONAL_PART = '1';
+   /** This pattern using for build pattern*/
+   private final char ADDITIONAL_PART = '0';
 
    /** Just empty string. */
    private final String NOTHING = "";
@@ -93,28 +93,28 @@ public class Validator {
     * @return comfortable number for user
     */
    public String builtOperand(BigDecimal number, boolean separator) {
-      String result;
-      DecimalFormat df = new DecimalFormat();
-
-      DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-      dfs.setGroupingSeparator(SPACE);
-      dfs.setDecimalSeparator(SEPARATOR);
+      DecimalFormat df = new DecimalFormat(PATTERN_FOR_NUMBER, buildDecimalFormatSymbols());
 
       basicSettingsForDecimalFormatter(df);
 
-      df.setDecimalFormatSymbols(dfs);
-
-      // for 0.000000000001
       if (number.scale() > MINIMUM_FRACTION_DIGITS) {
-         df.applyPattern(PATTERN_FOR_NUMBER + SHARP);
-         BigDecimal temp = new BigDecimal(number.toPlainString() + ADDITIONAL_PART);
-         result = df.format(temp);
-         result = result.substring(0, result.length() - 1);
-      } else {
-         result = df.format(number);
+         df.applyPattern(getPatternForDecimalNumber(number.scale()));
       }
 
-      return result + (separator ? SEPARATOR : NOTHING);
+      return df.format(number) + (separator ? SEPARATOR : NOTHING);
+   }
+
+   private String getPatternForDecimalNumber(int scale) {
+      String result = PATTERN_FOR_NUMBER;
+      if(scale <= 16) {
+         StringBuilder newPattern = new StringBuilder(PATTERN_FOR_BUILD_NEW_PATTERN);
+         for (int i = 0; i < scale; i++) {
+            newPattern.append(ADDITIONAL_PART);
+         }
+         result = newPattern.toString();
+      }
+
+      return result;
    }
 
    /**
@@ -142,9 +142,7 @@ public class Validator {
     * @param isHistory the flag which mean that this function uses for history ot not.
     */
    private void resolvePattern(BigDecimal number, DecimalFormat df, boolean isHistory) {
-      DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-      dfs.setGroupingSeparator(SPACE);
-      dfs.setDecimalSeparator(SEPARATOR);
+      DecimalFormatSymbols dfs = buildDecimalFormatSymbols();
 
       basicSettingsForDecimalFormatter(df);
 
@@ -174,5 +172,13 @@ public class Validator {
       df.setMaximumIntegerDigits(MAXIMUM_INTEGER_DIGITS);
       df.setMinimumFractionDigits(MINIMUM_FRACTION_DIGITS);
       df.setMaximumFractionDigits(MAXIMUM_FRACTION_DIGITS);
+   }
+
+   private DecimalFormatSymbols buildDecimalFormatSymbols() {
+      DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+      dfs.setGroupingSeparator(SPACE);
+      dfs.setDecimalSeparator(SEPARATOR);
+
+      return dfs;
    }
 }

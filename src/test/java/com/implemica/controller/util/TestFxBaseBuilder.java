@@ -1,6 +1,5 @@
 package com.implemica.controller.util;
 
-import com.implemica.view.util.NodesFinder;
 import com.implemica.view.util.TestFxBase;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,28 +14,28 @@ public class TestFxBaseBuilder extends TestFxBase {
       for (String action : actions) {
          switch (action) {
             case "C":
-               clickOnButton(NodesFinder.C);
+               clickOnButton(Node.C);
                break;
             case "CE":
-               clickOnButton(NodesFinder.CE);
+               clickOnButton(Node.CE);
                break;
             case "MC":
-               clickOnButton(NodesFinder.MEMORY_CLEAR);
+               clickOnButton(Node.MEMORY_CLEAR);
                break;
             case "MR":
-               clickOnButton(NodesFinder.MEMORY_RECALL);
+               clickOnButton(Node.MEMORY_RECALL);
                break;
             case "M-":
-               clickOnButton(NodesFinder.MEMORY_SUBTRACT);
+               clickOnButton(Node.MEMORY_SUBTRACT);
                break;
             case "M+":
-               clickOnButton(NodesFinder.MEMORY_ADD);
+               clickOnButton(Node.MEMORY_ADD);
                break;
             case "SQR":
-               clickOnButton(NodesFinder.SQUARE);
+               clickOnButton(Node.SQUARE);
                break;
             case "1/x":
-               clickOnButton(NodesFinder.DIVIDE_BY_X);
+               clickOnButton(Node.DIVIDE_BY_X);
                break;
             default:
                checkBySymbols(action);
@@ -53,89 +52,89 @@ public class TestFxBaseBuilder extends TestFxBase {
          checkResult(result);
       }
 
-      clickOnButton(NodesFinder.C);
-      clickOnButton(NodesFinder.MEMORY_CLEAR);
+      clickOnButton(Node.C);
+      clickOnButton(Node.MEMORY_CLEAR);
    }
    
    private void checkBySymbols(String pattern) {
       for (char action : pattern.toCharArray()) {
          switch (action) {
             case '0':
-               clickOnButton(NodesFinder.BTN0);
+               clickOnButton(Node.BTN0);
                break;
             case '1':
-               clickOnButton(NodesFinder.BTN1);
+               clickOnButton(Node.BTN1);
                break;
             case '2':
-               clickOnButton(NodesFinder.BTN2);
+               clickOnButton(Node.BTN2);
                break;
             case '3':
-               clickOnButton(NodesFinder.BTN3);
+               clickOnButton(Node.BTN3);
                break;
             case '4':
-               clickOnButton(NodesFinder.BTN4);
+               clickOnButton(Node.BTN4);
                break;
             case '5':
-               clickOnButton(NodesFinder.BTN5);
+               clickOnButton(Node.BTN5);
                break;
             case '6':
-               clickOnButton(NodesFinder.BTN6);
+               clickOnButton(Node.BTN6);
                break;
             case '7':
-               clickOnButton(NodesFinder.BTN7);
+               clickOnButton(Node.BTN7);
                break;
             case '8':
-               clickOnButton(NodesFinder.BTN8);
+               clickOnButton(Node.BTN8);
                break;
             case '9':
-               clickOnButton(NodesFinder.BTN9);
+               clickOnButton(Node.BTN9);
                break;
             case '.':
-               clickOnButton(NodesFinder.SEPARATE_BTN);
+               clickOnButton(Node.SEPARATE_BTN);
                break;
             case '+':
-               clickOnButton(NodesFinder.PLUS_OPERATION);
+               clickOnButton(Node.PLUS_OPERATION);
                break;
             case '-':
-               clickOnButton(NodesFinder.MINUS_OPERATION);
+               clickOnButton(Node.MINUS_OPERATION);
                break;
             case '×':
-               clickOnButton(NodesFinder.MULTIPLY_OPERATION);
+               clickOnButton(Node.MULTIPLY_OPERATION);
                break;
             case '÷':
-               clickOnButton(NodesFinder.DIVIDE_OPERATION);
+               clickOnButton(Node.DIVIDE_OPERATION);
                break;
             case '=':
-               clickOnButton(NodesFinder.EQUALS_OPERATION);
+               clickOnButton(Node.EQUALS_OPERATION);
                break;
             case '%':
-               clickOnButton(NodesFinder.PERCENT_OPERATION);
+               clickOnButton(Node.PERCENT_OPERATION);
                break;
             case '√':
-               clickOnButton(NodesFinder.SQRT_OPERATION);
+               clickOnButton(Node.SQRT_OPERATION);
                break;
             case '<':
-               clickOnButton(NodesFinder.BACKSPACE);
+               clickOnButton(Node.BACKSPACE);
                break;
             case 'n':
-               clickOnButton(NodesFinder.NEGATE);
+               clickOnButton(Node.NEGATE);
                break;
          }
       }
    }
 
-   private void clickOnButton(NodesFinder node) {
+   private void clickOnButton(Node node) {
       Button button = findBy(node.getName());
       clickOn(button);
    }
 
    private void checkHistory(String history) {
-      Label historyLabel = findBy(NodesFinder.HISTORY_LABEL.getName());
+      Label historyLabel = findBy(Node.HISTORY_LABEL.getName());
       assertEquals(history, historyLabel.getText());
    }
 
    private void checkResult(String history) {
-      Label resultLabel = findBy(NodesFinder.RESULT_LABEL.getName());
+      Label resultLabel = findBy(Node.RESULT_LABEL.getName());
       assertEquals(history, resultLabel.getText());
    }
 }

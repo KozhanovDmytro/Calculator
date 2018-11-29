@@ -2,6 +2,7 @@ package com.implemica.model;
 
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
+import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.simple.Divide;
 import com.implemica.model.operations.simple.Minus;
@@ -18,7 +19,7 @@ public class ModelDemo {
    private static Number c = Number.ZERO;
    private static Number d = Number.NINE;
 
-   public static void main(String[] args) {
+   public static void main(String[] args) throws CalculatorException {
       Calculator calculator = new Calculator();
 
       calculator.buildOperand(a);

@@ -9,10 +9,10 @@ import java.math.RoundingMode;
 
 public class Divide extends SimpleOperation {
 
-   public Divide() {
-      super();
-      character = "÷";
-   }
+//   public Divide() {
+//      super();
+//      character = "÷";
+//   }
 
    @Override
    public BigDecimal calculate(BigDecimal result) throws CalculatorException {

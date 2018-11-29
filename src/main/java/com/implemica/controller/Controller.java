@@ -1,10 +1,11 @@
 package com.implemica.controller;
 
-import com.implemica.controller.util.Field;
 import com.implemica.controller.util.HistoryParser;
+import com.implemica.controller.util.Validator;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
-import com.implemica.model.exceptions.ExceptionType;
+import com.implemica.model.exceptions.CalculatorException;
+import com.implemica.model.history.History;
 import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
@@ -13,7 +14,7 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
-import com.implemica.model.validation.Validator;
+import com.implemica.controller.util.Node;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -97,15 +98,19 @@ public class Controller {
    private boolean isBlocked;
 
    /* special */
-
+   /** Percent operation. */
    private static Percent percent = new Percent();
 
+   /** SquareRoot operation. */
    private static SquareRoot squareRoot = new SquareRoot();
 
+   /** Square operation. */
    private static Square square = new Square();
 
+   /** DivideBy operation. */
    private static DivideBy divideBy = new DivideBy();
 
+   /** Negate operation. */
    private static Negate negate = new Negate();
 
    static {
@@ -127,6 +132,14 @@ public class Controller {
    }
 
    /**
+    *  This interface contains a function where an exception expect.
+    *  That's needed for catching one exception in different place.
+    */
+   private interface ExceptionSupplier {
+      ResponseDto calculate() throws CalculatorException;
+   }
+
+   /**
     * The first point to enter to application
     */
    @FXML void initialize() throws IOException, URISyntaxException {
@@ -138,7 +151,6 @@ public class Controller {
       executeProperties();
       setTexts();
    }
-
 
    /**
     * Load texts from file of property.
@@ -157,58 +169,58 @@ public class Controller {
     */
    private void setTexts() {
       // labels
-      setText(title, Field.TITLE);
-      setText(mode, Field.MODE);
+      setText(title, Node.TITLE);
+      setText(mode, Node.MODE);
 
       // buttons in menu
-      setText(standard, Field.STANDARD);
-      setText(scientific, Field.SCIENTIFIC);
-      setText(programmer, Field.PROGRAMMER);
-      setText(dateCalculation, Field.DATE_CALCULATION);
-      setText(currency, Field.CURRENCY);
-      setText(volume, Field.VOLUME);
-      setText(length, Field.LENGTH);
-      setText(weight, Field.WEIGHT);
-      setText(temperature, Field.TEMPERATURE);
-      setText(energy, Field.ENERGY);
-      setText(area, Field.AREA);
-      setText(speed, Field.SPEED);
-      setText(time, Field.TIME);
-      setText(power, Field.POWER);
-      setText(data, Field.DATA);
-      setText(pressure, Field.PRESSURE);
-      setText(angle, Field.ANGLE);
-      setText(about, Field.ABOUT);
+      setText(standard, Node.STANDARD);
+      setText(scientific, Node.SCIENTIFIC);
+      setText(programmer, Node.PROGRAMMER);
+      setText(dateCalculation, Node.DATE_CALCULATION);
+      setText(currency, Node.CURRENCY);
+      setText(volume, Node.VOLUME);
+      setText(length, Node.LENGTH);
+      setText(weight, Node.WEIGHT);
+      setText(temperature, Node.TEMPERATURE);
+      setText(energy, Node.ENERGY);
+      setText(area, Node.AREA);
+      setText(speed, Node.SPEED);
+      setText(time, Node.TIME);
+      setText(power, Node.POWER);
+      setText(data, Node.DATA);
+      setText(pressure, Node.PRESSURE);
+      setText(angle, Node.ANGLE);
+      setText(about, Node.ABOUT);
 
       // labels in menu
-      setText(menuConverter, Field.MENU_CONVERTER);
-      setText(menuCalculator, Field.MENU_CALCULATOR);
+      setText(menuConverter, Node.MENU_CONVERTER);
+      setText(menuCalculator, Node.MENU_CALCULATOR);
 
       // extra field
-      setText(extraMemoryLabel, Field.NO_MEMORY);
-      setText(extraLogLabel, Field.NO_LOG);
-      setText(memoryBtn, Field.MEMORY);
-      setText(logBtn, Field.HISTORY);
+      setText(extraMemoryLabel, Node.NO_MEMORY);
+      setText(extraLogLabel, Node.NO_LOG);
+      setText(memoryBtn, Node.MEMORY);
+      setText(logBtn, Node.HISTORY);
    }
 
    /**
     * Give to current node his text.
     *
-    * @param node  current node.
-    * @param field name of text.
+    * @param labeled  current node.
+    * @param nodesFinder enumeration for find current text in property.
     */
-   private void setText(Labeled node, Field field) {
-      node.setText(getText(field));
+   private void setText(Labeled labeled, Node nodesFinder) {
+      labeled.setText(getText(nodesFinder));
    }
 
    /**
     * Give permission to operation button.
     */
    private void actionsForOperationButtons() {
-      plusOperation     .setOnAction(event -> actionForOperations(new Plus()));
-      minusOperation    .setOnAction(event -> actionForOperations(new Minus()));
-      multiplyOperation .setOnAction(event -> actionForOperations(new Multiply()));
-      divideOperation   .setOnAction(event -> actionForOperations(new Divide()));
+      plusOperation     .setOnAction(event -> actionForOperations(plusFactory()));
+      minusOperation    .setOnAction(event -> actionForOperations(minusFactory()));
+      multiplyOperation .setOnAction(event -> actionForOperations(multiplyFactory()));
+      divideOperation   .setOnAction(event -> actionForOperations(divideFactory()));
 
       percentOperation  .setOnAction(event -> actionForSpecialOperations(percent));
       sqrtOperation     .setOnAction(event -> actionForSpecialOperations(squareRoot));
@@ -217,8 +229,8 @@ public class Controller {
       negateOperation   .setOnAction(event -> actionForSpecialOperations(negate));
 
       equalsOperation.setOnAction(event -> {
-         parseDto(calculator.equalsOperation());
          unlock();
+         parseDto(() -> calculator.equalsOperation());
       });
    }
 
@@ -228,7 +240,7 @@ public class Controller {
     * @param operation simple operation
     */
    private void actionForOperations(SimpleOperation operation) {
-      parseDto(calculator.executeSimpleOperation(operation));
+      parseDto(() -> calculator.executeSimpleOperation(operation));
    }
 
    /**
@@ -237,7 +249,7 @@ public class Controller {
     * @param operation special operation
     */
    private void actionForSpecialOperations(SpecialOperation operation) {
-      parseDto(calculator.executeSpecialOperation(operation));
+      parseDto(() -> calculator.executeSpecialOperation(operation));
    }
 
    /**
@@ -280,11 +292,11 @@ public class Controller {
          unlock();
       });
       clear.setOnAction(event -> {
-         parseDto(calculator.clear());
+         parseDto(() -> calculator.clear());
          unlock();
       });
       clearEntry.setOnAction(event -> {
-         parseDto(calculator.clearEntry());
+         parseDto(() -> calculator.clearEntry());
          unlock();
       });
    }
@@ -308,7 +320,7 @@ public class Controller {
 
       subtractMemory.setOnAction(event -> disableMemory(false, validator.showNumber(calculator.subtractMemory())));
 
-      recallMemory.setOnAction((event -> parseDto(calculator.getMemory())));
+      recallMemory.setOnAction((event -> parseDto(() -> calculator.getMemory())));
 
       clearMemory.setOnAction(event -> disableMemory(true, BigDecimal.ZERO.toString()));
    }
@@ -323,7 +335,7 @@ public class Controller {
       if (disable) {
          BigDecimal memoryValue = calculator.clearMemory();
          memoryLabel.setText(validator.showNumber(memoryValue));
-         extraMemoryLabel.setText(getText(Field.NO_MEMORY));
+         extraMemoryLabel.setText(getText(Node.NO_MEMORY));
       } else {
          memoryLabel.setText(memory);
          extraMemoryLabel.setText(memory);
@@ -373,27 +385,31 @@ public class Controller {
    /**
     * Function parse DTO and check if exception was thrown.
     *
-    * @param response - response from model.
+    * @param supplier for supply an exception.
     */
-   private void parseDto(ResponseDto response) {
-      if(response.getExceptionType() != ExceptionType.NOTHING) {
-         switch (response.getExceptionType()) {
+   private void parseDto(ExceptionSupplier supplier) {
+      ResponseDto response = new ResponseDto();
+      try{
+         response = supplier.calculate();
+         updateData(response);
+      } catch(CalculatorException e) {
+         switch (e.getExceptionType()) {
             case OVERFLOW:
-               showResult(getText(Field.OVERFLOW));
+               showResult(getText(Node.OVERFLOW));
                break;
             case UNDEFINED_RESULT:
-               showResult(getText(Field.UNDEFINED_RESULT));
+               showResult(getText(Node.UNDEFINED_RESULT));
                break;
             case DIVIDE_BY_ZERO:
-               showResult(getText(Field.DIVIDE_BY_ZERO));
+               showResult(getText(Node.DIVIDE_BY_ZERO));
                break;
             case INVALID_INPUT:
-               showResult(getText(Field.INVALID_INPUT));
+               showResult(getText(Node.INVALID_INPUT));
                break;
          }
          blockButtons(true);
-      } else {
-         updateData(response);
+         History history = calculator.getCurrentState().getHistory();
+         showHistory(historyParser.parse(history));
       }
 
       if (response.getHistory() != null) {
@@ -426,16 +442,72 @@ public class Controller {
    private void unlock() {
       if (isBlocked) {
          blockButtons(false);
-         parseDto(calculator.getCurrentState());
+         parseDto(() -> calculator.getCurrentState());
       }
    }
 
    /**
     * Return the text for special field.
     *
-    * @param field special field.
+    * @param node special field.
     */
-   private String getText(Field field) {
-      return textsForLabel.getProperty(field.getName());
+   private String getText(Node node) {
+      return textsForLabel.getProperty(node.getTextFromProperty());
+   }
+
+   /**
+    * Factory for plus operation.
+    *
+    * @see SimpleOperation
+    *
+    * @return instance of {@link Plus}
+    */
+   private Plus plusFactory() {
+      Plus plus = new Plus();
+      plus.setCharacter("+");
+
+      return plus;
+   }
+
+   /**
+    * Factory for minus operation.
+    *
+    * @see SimpleOperation
+    *
+    * @return instance of {@link Minus}
+    */
+   private Minus minusFactory() {
+      Minus minus = new Minus();
+      minus.setCharacter("-");
+
+      return minus;
+   }
+
+   /**
+    * Factory for multiply operation.
+    *
+    * @see SimpleOperation
+    *
+    * @return instance of {@link Multiply}
+    */
+   private Multiply multiplyFactory() {
+      Multiply multiply = new Multiply();
+      multiply.setCharacter("×");
+
+      return multiply;
+   }
+
+   /**
+    * Factory for divide operation.
+    *
+    * @see SimpleOperation
+    *
+    * @return instance of {@link Divide}
+    */
+   private Divide divideFactory() {
+      Divide divide = new Divide();
+      divide.setCharacter("÷");
+
+      return divide;
    }
 }

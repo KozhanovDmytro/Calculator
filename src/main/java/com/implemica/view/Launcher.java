@@ -1,7 +1,7 @@
 package com.implemica.view;
 
+import com.implemica.controller.util.Node;
 import com.implemica.view.util.Coordinates;
-import com.implemica.view.util.NodesFinder;
 import com.implemica.view.util.Side;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -11,13 +11,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -41,13 +39,12 @@ import java.util.stream.Stream;
  *
  * @see Stage
  * @see Parent
- * @see Node
  * @see Button
  * @see Label
  * @see Pane
  *
  * @see Coordinates
- * @see NodesFinder
+ * @see Node
  * @see Side
  *
  * @author Dmytro Kozhanov
@@ -79,6 +76,7 @@ public class Launcher extends Application {
    private Parent root;
 
    /*constants*/
+
    /** The way to root fxml file. */
    private final String WAY_TO_ROOT_FXML_FILE = "/com/implemica/view/resources/fxml/root.fxml";
    
@@ -205,8 +203,8 @@ public class Launcher extends Application {
     * Sets action for resize result label.
     */
    private void setActionForResultLabel() {
-      Label resultLabel = findBy(NodesFinder.RESULT_LABEL);
-      HBox resultLabelBox = findBy(NodesFinder.RESULT_LABEL_BOX);
+      Label resultLabel = findBy(Node.RESULT_LABEL);
+      HBox resultLabelBox = findBy(Node.RESULT_LABEL_BOX);
 
       resultLabelBox.widthProperty()
               .addListener((observable, oldValue, newValue) -> calculateSizeForResultLabel());
@@ -218,8 +216,8 @@ public class Launcher extends Application {
     * Action for resize label.
     */
    private void calculateSizeForResultLabel() {
-      Label resultLabel = findBy(NodesFinder.RESULT_LABEL);
-      HBox resultLabelBox = findBy(NodesFinder.RESULT_LABEL_BOX);
+      Label resultLabel = findBy(Node.RESULT_LABEL);
+      HBox resultLabelBox = findBy(Node.RESULT_LABEL_BOX);
 
       double fontSize = resultLabel.getFont().getSize();
 
@@ -243,7 +241,7 @@ public class Launcher extends Application {
     * Sets action for moving current window.
     */
    private void setMoveActionForWindow() {
-      AnchorPane mainPane = findBy(NodesFinder.MAIN_PANE);
+      AnchorPane mainPane = findBy(Node.MAIN_PANE);
       mainPane.setOnMouseDragged(event -> {
          if (!isDragging && !isFullScreen) {
             primaryStage.setX(primaryStage.getX() + (event.getScreenX() - startDrag.getX()));
@@ -265,9 +263,9 @@ public class Launcher extends Application {
     * set action for system buttons.
     */
    private void setActionsForMainPainAndButtons() {
-      Button close = findBy(NodesFinder.CLOSE);
-      Button full  = findBy(NodesFinder.FULL);
-      Button hide  = findBy(NodesFinder.HIDE);
+      Button close = findBy(Node.CLOSE);
+      Button full  = findBy(Node.FULL);
+      Button hide  = findBy(Node.HIDE);
 
       close.setOnMouseClicked(event -> {
          menuSize(false);
@@ -290,19 +288,19 @@ public class Launcher extends Application {
     * Sets actions for resize window for resize panes.
     */
    private void setResizeActionForStage() {
-      AnchorPane extraInfoFull = findBy(NodesFinder.EXTRA_INFO_FULL);
+      AnchorPane extraInfoFull = findBy(Node.EXTRA_INFO_FULL);
 
-      Pane left         = findBy(NodesFinder.LEFT_RESIZE);
-      Pane extraLeft    = findBy(NodesFinder.EXTRA_LEFT_RESIZE);
-      Pane right        = findBy(NodesFinder.RIGHT_RESIZE);
-      Pane extraRight   = findBy(NodesFinder.EXTRA_RIGHT_RESIZE);
-      Pane top          = findBy(NodesFinder.TOP_RESIZE);
-      Pane bottom       = findBy(NodesFinder.BOTTOM_RESIZE);
+      Pane left         = findBy(Node.LEFT_RESIZE);
+      Pane extraLeft    = findBy(Node.EXTRA_LEFT_RESIZE);
+      Pane right        = findBy(Node.RIGHT_RESIZE);
+      Pane extraRight   = findBy(Node.EXTRA_RIGHT_RESIZE);
+      Pane top          = findBy(Node.TOP_RESIZE);
+      Pane bottom       = findBy(Node.BOTTOM_RESIZE);
 
-      Pane leftBottom   = findBy(NodesFinder.LEFT_BOTTOM_RESIZE);
-      Pane rightBottom  = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE);
-      Pane leftTop      = findBy(NodesFinder.LEFT_TOP_RESIZE);
-      Pane rightTop     = findBy(NodesFinder.RIGHT_TOP_RESIZE);
+      Pane leftBottom   = findBy(Node.LEFT_BOTTOM_RESIZE);
+      Pane rightBottom  = findBy(Node.RIGHT_BOTTOM_RESIZE);
+      Pane leftTop      = findBy(Node.LEFT_TOP_RESIZE);
+      Pane rightTop     = findBy(Node.RIGHT_TOP_RESIZE);
 
       Stream.of(left, extraLeft, right, extraRight, top, bottom, leftBottom,
               rightBottom, leftTop, rightTop)
@@ -335,8 +333,8 @@ public class Launcher extends Application {
       });
 
       extraInfoFull.widthProperty().addListener((observable, oldValue, newValue) -> {
-         Button showMemory = findBy(NodesFinder.SHOW_MEMORY);
-         Button logButton = findBy(NodesFinder.LOG_BUTTON);
+         Button showMemory = findBy(Node.SHOW_MEMORY);
+         Button logButton = findBy(Node.LOG_BUTTON);
 
          if (extraInfoFull.getPrefWidth() == ZERO) {
             showMemory.setVisible(true);
@@ -355,7 +353,7 @@ public class Launcher extends Application {
     */
    private void doResize(Pane pane, MouseEvent event) {
 
-      Side side = NodesFinder.findByQuery(pane.getId()).getSide();
+      Side side = Node.findByQuery(pane.getId()).getSide();
 
       double width = primaryStage.getWidth() + (event.getScreenX() - startDrag.getX()) * side.coefficient(Coordinates.X);
       double height = primaryStage.getHeight() + (event.getScreenY() - startDrag.getY()) * side.coefficient(Coordinates.Y);
@@ -381,49 +379,49 @@ public class Launcher extends Application {
     * Sets full screen for window.
     */
    private void setFullScreen() {
-      Button full = findBy(NodesFinder.FULL);
+      Button full = findBy(Node.FULL);
 
-      Pane left         = findBy(NodesFinder.LEFT_RESIZE);
-      Pane extraLeft    = findBy(NodesFinder.EXTRA_LEFT_RESIZE);
-      Pane right        = findBy(NodesFinder.RIGHT_RESIZE);
-      Pane extraRight   = findBy(NodesFinder.EXTRA_RIGHT_RESIZE);
-      Pane top          = findBy(NodesFinder.TOP_RESIZE);
-      Pane bottom       = findBy(NodesFinder.BOTTOM_RESIZE);
+      Pane left         = findBy(Node.LEFT_RESIZE);
+      Pane extraLeft    = findBy(Node.EXTRA_LEFT_RESIZE);
+      Pane right        = findBy(Node.RIGHT_RESIZE);
+      Pane extraRight   = findBy(Node.EXTRA_RIGHT_RESIZE);
+      Pane top          = findBy(Node.TOP_RESIZE);
+      Pane bottom       = findBy(Node.BOTTOM_RESIZE);
 
-      Pane leftBottom         = findBy(NodesFinder.LEFT_BOTTOM_RESIZE);
-      Pane rightBottom        = findBy(NodesFinder.RIGHT_BOTTOM_RESIZE);
-      Pane leftTop            = findBy(NodesFinder.LEFT_TOP_RESIZE);
-      Pane rightTop           = findBy(NodesFinder.RIGHT_TOP_RESIZE);
-      Pane bottomResizeFull   = findBy(NodesFinder.BOTTOM_RESIZE);
+      Pane leftBottom         = findBy(Node.LEFT_BOTTOM_RESIZE);
+      Pane rightBottom        = findBy(Node.RIGHT_BOTTOM_RESIZE);
+      Pane leftTop            = findBy(Node.LEFT_TOP_RESIZE);
+      Pane rightTop           = findBy(Node.RIGHT_TOP_RESIZE);
+      Pane bottomResizeFull   = findBy(Node.BOTTOM_RESIZE);
 
-      Button btn0 = findBy(NodesFinder.BTN0);
-      Button btn1 = findBy(NodesFinder.BTN1);
-      Button btn2 = findBy(NodesFinder.BTN2);
-      Button btn3 = findBy(NodesFinder.BTN3);
-      Button btn4 = findBy(NodesFinder.BTN4);
-      Button btn5 = findBy(NodesFinder.BTN5);
-      Button btn6 = findBy(NodesFinder.BTN6);
-      Button btn7 = findBy(NodesFinder.BTN7);
-      Button btn8 = findBy(NodesFinder.BTN8);
-      Button btn9 = findBy(NodesFinder.BTN9);
+      Button btn0 = findBy(Node.BTN0);
+      Button btn1 = findBy(Node.BTN1);
+      Button btn2 = findBy(Node.BTN2);
+      Button btn3 = findBy(Node.BTN3);
+      Button btn4 = findBy(Node.BTN4);
+      Button btn5 = findBy(Node.BTN5);
+      Button btn6 = findBy(Node.BTN6);
+      Button btn7 = findBy(Node.BTN7);
+      Button btn8 = findBy(Node.BTN8);
+      Button btn9 = findBy(Node.BTN9);
 
-      Button negate     = findBy(NodesFinder.NEGATE);
-      Button separate   = findBy(NodesFinder.SEPARATE_BTN);
-      Button backspace  = findBy(NodesFinder.BACKSPACE);
-      Button clear      = findBy(NodesFinder.C);
-      Button clearEntry = findBy(NodesFinder.CE);
+      Button negate     = findBy(Node.NEGATE);
+      Button separate   = findBy(Node.SEPARATE_BTN);
+      Button backspace  = findBy(Node.BACKSPACE);
+      Button clear      = findBy(Node.C);
+      Button clearEntry = findBy(Node.CE);
 
-      Button equals     = findBy(NodesFinder.EQUALS_OPERATION);
-      Button plus       = findBy(NodesFinder.PLUS_OPERATION);
-      Button minus      = findBy(NodesFinder.MINUS_OPERATION);
-      Button multiply   = findBy(NodesFinder.MULTIPLY_OPERATION);
-      Button divide     = findBy(NodesFinder.DIVIDE_OPERATION);
+      Button equals     = findBy(Node.EQUALS_OPERATION);
+      Button plus       = findBy(Node.PLUS_OPERATION);
+      Button minus      = findBy(Node.MINUS_OPERATION);
+      Button multiply   = findBy(Node.MULTIPLY_OPERATION);
+      Button divide     = findBy(Node.DIVIDE_OPERATION);
 
 
-      Button divideBy   = findBy(NodesFinder.DIVIDE_BY_X);
-      Button square     = findBy(NodesFinder.SQUARE);
-      Button sqrt       = findBy(NodesFinder.SQRT_OPERATION);
-      Button percent    = findBy(NodesFinder.PERCENT_OPERATION);
+      Button divideBy   = findBy(Node.DIVIDE_BY_X);
+      Button square     = findBy(Node.SQUARE);
+      Button sqrt       = findBy(Node.SQRT_OPERATION);
+      Button percent    = findBy(Node.PERCENT_OPERATION);
 
       int fontSizeForNumberBtn;
       int fontSizeForOtherBtn;
@@ -451,7 +449,7 @@ public class Launcher extends Application {
 
          stagePosition = new Point2D(primaryStage.getX(), primaryStage.getY());
 
-         ((AnchorPane) findBy(NodesFinder.EXTRA_INFO_FULL)).setPrefWidth(MAX_SIZE_FOR_EXTRA_INFO);
+         ((AnchorPane) findBy(Node.EXTRA_INFO_FULL)).setPrefWidth(MAX_SIZE_FOR_EXTRA_INFO);
          primaryStage.setX(bounds.getMinX());
          primaryStage.setY(bounds.getMinY());
          primaryStage.setWidth(bounds.getWidth());
@@ -484,14 +482,14 @@ public class Launcher extends Application {
     * Sets actions for buttons in extra field.
     */
    private void setActionsForInfoButtons() {
-      Button logBtn  = findBy(NodesFinder.LOG_BTN);
-      Pane logSelect = findBy(NodesFinder.LOG_SELECT);
+      Button logBtn  = findBy(Node.LOG_BTN);
+      Pane logSelect = findBy(Node.LOG_SELECT);
 
-      Button memoryBtn  = findBy(NodesFinder.MEMORY_BTN);
-      Pane memorySelect = findBy(NodesFinder.MEMORY_SELECT);
+      Button memoryBtn  = findBy(Node.MEMORY_BTN);
+      Pane memorySelect = findBy(Node.MEMORY_SELECT);
 
-      Label extraLogLabel     = findBy(NodesFinder.EXTRA_LOG_LABEL);
-      Label extraMemoryLabel  = findBy(NodesFinder.EXTRA_MEMORY_LABEL);
+      Label extraLogLabel     = findBy(Node.EXTRA_LOG_LABEL);
+      Label extraMemoryLabel  = findBy(Node.EXTRA_MEMORY_LABEL);
       extraMemoryLabel.setVisible(false);
       extraLogLabel.setVisible(true);
 
@@ -515,93 +513,117 @@ public class Launcher extends Application {
     */
    private void setActionsForKeyboard() {
       primaryStage.getScene().setOnKeyPressed(key -> {
-         if (key.getCode() == KeyCode.DIGIT5 && key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.PERCENT_OPERATION)).fire();
-            return;
-         }
-         if (key.getCode() == KeyCode.DIGIT2 && key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.SQRT_OPERATION)).fire();
-            return;
-         }
-         if (key.getCode() == KeyCode.Q && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.SQUARE)).fire();
-         }
-         if (key.getCode() == KeyCode.R && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.DIVIDE_BY_X)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT0 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN0)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT1 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN1)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT2 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN2)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT3 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN3)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT4 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN4)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT5 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN5)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT6 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN6)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT7 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN7)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT8 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN8)).fire();
-         }
-         if (key.getCode() == KeyCode.DIGIT9 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BTN9)).fire();
-         }
-         if (key.getCode() == KeyCode.BACK_SPACE && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.BACKSPACE)).fire();
-         }
-         if (key.getCode() == KeyCode.COMMA) {
-            ((Button) findBy(NodesFinder.SEPARATE_BTN)).fire();
-         }
-         if (key.getCode() == KeyCode.F9 && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.NEGATE)).fire();
-         }
-         if (key.getCode() == KeyCode.EQUALS && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.EQUALS_OPERATION)).fire();
-         }
-         if (key.getCode() == KeyCode.PLUS || (key.getCode() == KeyCode.EQUALS && key.isShiftDown())) {
-            ((Button) findBy(NodesFinder.PLUS_OPERATION)).fire();
-         }
-         if (key.getCode() == KeyCode.MINUS) {
-            ((Button) findBy(NodesFinder.MINUS_OPERATION)).fire();
-         }
-         if (key.getCode() == KeyCode.DIVIDE || key.getCode() == KeyCode.SLASH) {
-            ((Button) findBy(NodesFinder.DIVIDE_OPERATION)).fire();
-         }
-         if (key.getCode() == KeyCode.MULTIPLY || (key.getCode() == KeyCode.DIGIT8 && key.isShiftDown())) {
-            ((Button) findBy(NodesFinder.MULTIPLY_OPERATION)).fire();
-         }
-         if (key.getCode() == KeyCode.ESCAPE && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.C)).fire();
-         }
-         if (key.getCode() == KeyCode.DELETE && !key.isShiftDown()) {
-            ((Button) findBy(NodesFinder.CE)).fire();
+
+         if(key.isShiftDown()) {
+            switch (key.getCode()) {
+               case DIGIT5:
+                  click(Node.PERCENT_OPERATION);
+                  break;
+               case DIGIT2:
+                  click(Node.SQRT_OPERATION);
+                  break;
+               case DIGIT8:
+                  click(Node.MULTIPLY_OPERATION);
+                  break;
+               case EQUALS:
+                  click(Node.PLUS_OPERATION);
+                  break;
+            }
+
+         } else {
+            switch (key.getCode()) {
+               case Q:
+                  click(Node.SQUARE);
+                  break;
+               case R:
+                  click(Node.DIVIDE_BY_X);
+                  break;
+               case DIGIT0:
+                  click(Node.BTN0);
+                  break;
+               case DIGIT1:
+                  click(Node.BTN1);
+                  break;
+               case DIGIT2:
+                  click(Node.BTN2);
+                  break;
+               case DIGIT3:
+                  click(Node.BTN3);
+                  break;
+               case DIGIT4:
+                  click(Node.BTN4);
+                  break;
+               case DIGIT5:
+                  click(Node.BTN5);
+                  break;
+               case DIGIT6:
+                  click(Node.BTN6);
+                  break;
+               case DIGIT7:
+                  click(Node.BTN7);
+                  break;
+               case DIGIT8:
+                  click(Node.BTN8);
+                  break;
+               case DIGIT9:
+                  click(Node.BTN9);
+                  break;
+               case BACK_SPACE:
+                  click(Node.BACKSPACE);
+                  break;
+               case COMMA:
+                  click(Node.SEPARATE_BTN);
+                  break;
+               case F9:
+                  click(Node.NEGATE);
+                  break;
+               case EQUALS:
+                  click(Node.EQUALS_OPERATION);
+                  break;
+               case PLUS:
+                  click(Node.PLUS_OPERATION);
+                  break;
+               case MINUS:
+                  click(Node.MINUS_OPERATION);
+                  break;
+               case DIVIDE:
+                  click(Node.DIVIDE_OPERATION);
+                  break;
+               case SLASH:
+                  click(Node.DIVIDE_OPERATION);
+                  break;
+               case MULTIPLY:
+                  click(Node.MULTIPLY_OPERATION);
+                  break;
+               case ESCAPE:
+                  click(Node.C);
+                  break;
+               case DELETE:
+                  click(Node.CE);
+                  break;
+            }
          }
       });
+   }
+
+   /**
+    * Imitation click on {@link Button}.
+    * @param button desired button
+    */
+   private void click(Node button) {
+      ((Button) findBy(button)).fire();
    }
 
    /**
     * Sets actions for menu.
     */
    private void setActionForDropDownMenu() {
-      Button menuBtn       = findBy(NodesFinder.MENU_BTN);
-      AnchorPane mainPane  = findBy(NodesFinder.MAIN_PANE);
-      Pane hideMenu        = findBy(NodesFinder.HIDE_MENU);
-      Pane hideMemoryField = findBy(NodesFinder.HIDE_MEMORY_FIELD);
+      Button menuBtn       = findBy(Node.MENU_BTN);
+      AnchorPane mainPane  = findBy(Node.MAIN_PANE);
+      Pane hideMenu        = findBy(Node.HIDE_MENU);
+      Pane hideMemoryField = findBy(Node.HIDE_MEMORY_FIELD);
 
-      Button showMemory = findBy(NodesFinder.SHOW_MEMORY);
+      Button showMemory = findBy(Node.SHOW_MEMORY);
 
       hideMenu.setVisible(false);
       hideMemoryField.setVisible(false);
@@ -623,9 +645,9 @@ public class Launcher extends Application {
     * @param show flag which indicates show menu or not.
     */
    private void menuSize(boolean show) {
-      AnchorPane menu = findBy(NodesFinder.MENU);
+      AnchorPane menu = findBy(Node.MENU);
 
-      Pane hideMenu = findBy(NodesFinder.HIDE_MENU);
+      Pane hideMenu = findBy(Node.HIDE_MENU);
 
       KeyFrame key1;
       KeyFrame key2;
@@ -651,9 +673,9 @@ public class Launcher extends Application {
 
    /** Sets height for menu. */
    private void memorySize(boolean show) {
-      AnchorPane memoryField = findBy(NodesFinder.MEMORY_FIELD);
+      AnchorPane memoryField = findBy(Node.MEMORY_FIELD);
       TranslateTransition transition = new TranslateTransition(Duration.millis(ANIMATION_TIME), memoryField);
-      Pane hideMemoryField = findBy(NodesFinder.HIDE_MEMORY_FIELD);
+      Pane hideMemoryField = findBy(Node.HIDE_MEMORY_FIELD);
 
       if (show) {
          transition.setToY(ZERO);
@@ -674,7 +696,7 @@ public class Launcher extends Application {
     * @param <T> type of Node.
     * @return type of Node.
     */
-   private <T extends Node> T findBy(NodesFinder desiredNode) {
+   private <T extends javafx.scene.Node> T findBy(Node desiredNode) {
       return (T) root.lookup(desiredNode.getName());
    }
 }

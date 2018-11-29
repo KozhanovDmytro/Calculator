@@ -1,6 +1,6 @@
 package com.implemica.view;
 
-import com.implemica.view.util.NodesFinder;
+import com.implemica.controller.util.Node;
 import com.implemica.view.util.Side;
 import com.implemica.view.util.TestFxBase;
 import javafx.geometry.Point2D;
@@ -255,7 +255,7 @@ public class ViewTest extends TestFxBase {
    @Test
    void fullScreenTest() {
       Button full = findBy("#full");
-      Pane mainPane = findBy(NodesFinder.MAIN_PANE.getName());
+      Pane mainPane = findBy(Node.MAIN_PANE.getName());
 
       clickOn(full);
       checkStateForResizePane(true);
@@ -277,7 +277,7 @@ public class ViewTest extends TestFxBase {
    @Test
    void checkPositionStageAfterFullScreen() {
       Button full = findBy("#full");
-      Pane mainPane = findBy(NodesFinder.MAIN_PANE.getName());
+      Pane mainPane = findBy(Node.MAIN_PANE.getName());
 
       moveWindow(new Point2D(500, 100));
 

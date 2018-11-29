@@ -6,10 +6,10 @@ import java.math.BigDecimal;
 
 public class Minus extends SimpleOperation {
 
-   public Minus() {
-      super();
-      character = "-";
-   }
+//   public Minus() {
+//      super();
+//      character = "-";
+//   }
 
    @Override
    public BigDecimal calculate(BigDecimal result) {

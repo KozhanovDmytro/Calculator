@@ -1,6 +1,6 @@
 package com.implemica.view;
 
-import com.implemica.view.util.NodesFinder;
+import com.implemica.controller.util.Node;
 import com.implemica.view.util.TestFxBase;
 import javafx.scene.control.Button;
 import javafx.stage.Window;
@@ -12,7 +12,7 @@ public class SystemButtonsTest extends TestFxBase {
 
    @Test
    void windowCloseTest() {
-      Button closeBtn = findBy(NodesFinder.CLOSE.getName());
+      Button closeBtn = findBy(Node.CLOSE.getName());
       clickOn(closeBtn);
 
       assertEquals(0, Window.getWindows().size());

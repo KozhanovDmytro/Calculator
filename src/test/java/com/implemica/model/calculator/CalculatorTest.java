@@ -1,6 +1,7 @@
 package com.implemica.model.calculator;
 
 import com.implemica.model.calculator.until.TestBuilder;
+import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.exceptions.ExceptionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void simpleOperationTests() {
+   void simpleOperationTests() throws CalculatorException {
       builder.doTest("+", "0 + ", 2, "0", null);
       builder.doTest("-", "0 - ", 2, "0", null);
       builder.doTest("×", "0 × ", 2, "0", null);
@@ -79,7 +80,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void plusOperationTest() {
+   void plusOperationTest() throws CalculatorException {
       builder.doTest("2+2=", "", 0, "4", null);
       builder.doTest("7+3=", "", 0, "10", null);
       builder.doTest("1+8=", "", 0, "9", null);
@@ -192,7 +193,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void subtractOperationTest() {
+   void subtractOperationTest() throws CalculatorException {
       builder.doTest("2-2=", "", 0, "0", null);
       builder.doTest("7-3=", "", 0, "4", null);
       builder.doTest("1-8=", "", 0, "-7", null);
@@ -305,7 +306,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void multiplyOperationTest() {
+   void multiplyOperationTest() throws CalculatorException {
       builder.doTest("2×2=", "", 0, "4", null);
       builder.doTest("7×3=", "", 0, "21", null);
       builder.doTest("1×8=", "", 0, "8", null);
@@ -418,7 +419,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void divideOperationTest() {
+   void divideOperationTest() throws CalculatorException {
       builder.doTest("2÷2=", "", 0, "1", null);
       builder.doTest("7÷3=", "", 0, "2,333333333333333", null);
       builder.doTest("1÷8=", "", 0, "0,125", null);
@@ -528,7 +529,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void equalsTests() {
+   void equalsTests() throws CalculatorException {
       builder.doTest("=", "", 0, "0", null);
 
       builder.doTest("+=", "", 0, "0", null);
@@ -609,7 +610,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void mixOfOperations() {
+   void mixOfOperations() throws CalculatorException {
       builder.doTest("300+5=%√-1000000000000000= SQR + 9999999999999999 1/x × 1000000000000000 ÷ 50 ", "sqr(-999999999999964,5) + 1/(9999999999999999) × 1000000000000000 ÷ 50", 4, "9,99999999999928e+44", "50");
       builder.doTest("12345 1/x n 500 = 400 + % × 0.0001 SQR 123.3 √ 1/x ÷ 55 × 12253 + 124n - 73 CE 81", "400 + 1600 × 1/(√(123,3)) ÷ 55 × 12253 + negate(124) - 81", 7, "40 002,2155146669", "81");
       builder.doTest("0.01 × 123 + % = √ SQR + 20 1/x ÷ 7.1 - % + 876 CE 765n ", "sqr(√(1,245129)) + 1/(20) ÷ 7,1 - 3,40562592057925e-4 + negate(765)", 5, "0,1842028176896322", "-765");
@@ -628,7 +629,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void negateTest() {
+   void negateTest() throws CalculatorException {
       builder.doTest("1n", "negate(1)", 1, "0", "-1");
       builder.doTest("2n", "negate(2)", 1, "0", "-2");
       builder.doTest("7n", "negate(7)", 1, "0", "-7");
@@ -661,7 +662,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void squareTest() {
+   void squareTest() throws CalculatorException {
       builder.doTest("SQR", "sqr(0)", 1, null, "0");
 
       builder.doTest("0 SQR", "sqr(0)", 1, null, "0");
@@ -708,7 +709,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void squareRootTest() {
+   void squareRootTest() throws CalculatorException {
       builder.doTest("√", "√(0)", 1, null, "0");
 
       builder.doTest("0√", "√(0)", 1, null, "0");
@@ -740,7 +741,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void divideByTest() {
+   void divideByTest() throws CalculatorException {
       builder.doExceptionsTest(" 1/x ", ExceptionType.DIVIDE_BY_ZERO);
 
       builder.doTest("1 1/x", "1/(1)", 1, "0", "1");
@@ -785,7 +786,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void percentTest() {
+   void percentTest() throws CalculatorException {
       builder.doTest("%", "0", 1, "0", "0");
 
       builder.doTest("2%", "0", 1, "0", "0");
@@ -836,7 +837,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void backspaceTest() {
+   void backspaceTest() throws CalculatorException {
       builder.doTest("2 SQR SQR SQR <<<<<<<<=", "", 0, "256", null);
       builder.doTest("70÷7=<<<", "", 0, "10", null);
       builder.doTest("1234567890<<<<<<<<<<<<<<<<<<<<<=", "", 0, "0", null);
@@ -879,23 +880,23 @@ public class CalculatorTest {
    }
 
    @Test
-   void clear() {
+   void clear() throws CalculatorException {
       builder.doTest("C", "", 0, "0", "0");
 
-      builder.doTest("4 C", "", 0, "0", "4");
-      builder.doTest("1 C", "", 0, "0", "1");
-      builder.doTest("3 C", "", 0, "0", "3");
-      builder.doTest("4 C", "", 0, "0", "4");
+      builder.doTest("4 C", "", 0, "0", "0");
+      builder.doTest("1 C", "", 0, "0", "0");
+      builder.doTest("3 C", "", 0, "0", "0");
+      builder.doTest("4 C", "", 0, "0", "0");
 
       builder.doTest("42 C 12", "", 0, "0", "12");
       builder.doTest("85 C 47", "", 0, "0", "47");
       builder.doTest("78 C 65", "", 0, "0", "65");
       builder.doTest("96 C 32", "", 0, "0", "32");
 
-      builder.doTest("96 C 32 C", "", 0, "0", "32");
-      builder.doTest("75 C 76 C", "", 0, "0", "76");
-      builder.doTest("95 C 43 C", "", 0, "0", "43");
-      builder.doTest("32 C 16 C", "", 0, "0", "16");
+      builder.doTest("96 C 32 C", "", 0, "0", "0");
+      builder.doTest("75 C 76 C", "", 0, "0", "0");
+      builder.doTest("95 C 43 C", "", 0, "0", "0");
+      builder.doTest("32 C 16 C", "", 0, "0", "0");
 
       builder.doTest("32 + C 16 - ", "16 - ", 2, "16", "16");
       builder.doTest("75 - C 21 × ", "21 × ", 2, "21", "21");
@@ -907,18 +908,18 @@ public class CalculatorTest {
       builder.doTest("× C -", "0 - ", 2, "0", "0");
       builder.doTest("÷ C +", "0 + ", 2, "0", "0");
 
-      builder.doTest("2 + 7 C 8 ÷ 2 C", "", 0, "0", "2");
-      builder.doTest("2 - 7 C 8 × 2 C", "", 0, "0", "2");
-      builder.doTest("2 × 7 C 8 - 2 C", "", 0, "0", "2");
-      builder.doTest("2 ÷ 7 C 8 + 2 C", "", 0, "0", "2");
+      builder.doTest("2 + 7 C 8 ÷ 2 C", "", 0, null, "0");
+      builder.doTest("2 - 7 C 8 × 2 C", "", 0, null, "0");
+      builder.doTest("2 × 7 C 8 - 2 C", "", 0, null, "0");
+      builder.doTest("2 ÷ 7 C 8 + 2 C", "", 0, null, "0");
 
-      builder.doTest("2+2×2-6×3-10 C", "", 0, "0", null);
-      builder.doTest("2+5÷2 C C C C C C C C C", "", 0, "0", null);
+      builder.doTest("2+2×2-6×3-10 C", "", 0, "6", null);
+      builder.doTest("2+5÷2 C C C C C C C C C", "", 0, "7", null);
       builder.doTest("5 SQR SQR SQR SQR SQR SQR √√ SQR SQR SQR SQR SQR√ SQR SQR SQR C C", "", 0, "0", null);
    }
 
    @Test
-   void testClearEntry() {
+   void testClearEntry() throws CalculatorException {
       builder.doTest(" CE ","", 0, "0", "0");
 
       builder.doTest("5 CE ","", 0, "0", "0");
@@ -948,7 +949,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void testRoundingMode() {
+   void testRoundingMode() throws CalculatorException {
       builder.doTest("0.0000000000000001+1=", "", 0, "1", null);
       builder.doTest("1÷3×3=", "", 0, "1", null);
       builder.doTest("1÷3×3-1", "1 ÷ 3 × 3 - 1", 4, "1", null);
@@ -1001,7 +1002,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void buildOperandTest() {
+   void buildOperandTest() throws CalculatorException {
       builder.checkBuildOperand("1", "1");
       builder.checkBuildOperand("2", "2");
       builder.checkBuildOperand("3", "3");
@@ -1033,7 +1034,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void historyTest() {
+   void historyTest() throws CalculatorException {
       builder.doTest("0.0000000000000001+", "0,0000000000000001 + ", 2, null, null);
       builder.doTest("0.0000000000000001+1", "0,0000000000000001 + 1", 2, null, null);
       builder.doTest("0.0000000000000001+1=", "", 0, null, null);
@@ -1046,7 +1047,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void memoryTest() {
+   void memoryTest() throws CalculatorException {
       builder.doTest("MR", "", 0, "0", "0");
       builder.doTest("M+ MR", "", 0, "0", "0");
       builder.doTest("M- MR", "", 0, "0", "0");
@@ -1128,7 +1129,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void checkExceptions() {
+   void checkExceptions() throws CalculatorException {
       // overflow
       builder.doExceptionsTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
       builder.doExceptionsTest("1000000000000000×=×=×=×=×=×=×=×=×=×=", ExceptionType.OVERFLOW);
@@ -1179,7 +1180,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void boundaryTest() {
+   void boundaryTest() throws CalculatorException {
 
       // right side
       // expected number : 9999999..9.999..94
@@ -1223,7 +1224,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void boundaryTestForSpecialOperations() {
+   void boundaryTestForSpecialOperations() throws CalculatorException {
       builder.doTest          ("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))", 1, "0", "1,e+7680");
       builder.doExceptionsTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
       builder.doExceptionsTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", ExceptionType.OVERFLOW);
@@ -1254,7 +1255,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void testWithSpecialOperationsUsingBounds() {
+   void testWithSpecialOperationsUsingBounds() throws CalculatorException {
       builder.doExceptionsTest(theMaxNumber + " SQR ", ExceptionType.OVERFLOW);
       builder.doTest(theMaxNumber + " √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null, 0, null, "1,000000000000001");
       builder.doTest(theMaxNumber + " √√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√√", null, 0, null, "1");
@@ -1270,7 +1271,7 @@ public class CalculatorTest {
    }
 
    @Test
-   void specialCases() {
+   void specialCases() throws CalculatorException {
       builder.doTest("÷×-+", "0 + ", 2, "0", null);
       builder.doTest("5+=", "", 0, "10", null);
       builder.doTest("1+3===", "", 0, "10", null);

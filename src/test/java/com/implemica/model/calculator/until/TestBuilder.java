@@ -4,6 +4,7 @@ import com.implemica.controller.util.HistoryParser;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.calculator.Container;
 import com.implemica.model.dto.ResponseDto;
+import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.history.History;
 import com.implemica.model.operations.operation.Number;
@@ -14,7 +15,7 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
-import com.implemica.model.validation.Validator;
+import com.implemica.controller.util.Validator;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -31,17 +32,11 @@ public class TestBuilder {
 
    private String builtOperand;
 
-   private boolean checkException = true;
-
    private Validator validator = new Validator();
-
-   private ExceptionType exceptionType = ExceptionType.NOTHING;
 
    private HistoryParser historyParser = new HistoryParser();
 
    /* operations */
-
-   /* simple */
 
    private static Plus plus;
 
@@ -65,11 +60,11 @@ public class TestBuilder {
 
    static {
 
-      percent.setFirstPartHistory("");
-      percent.setSecondPartHistory("");
-
       squareRoot.setFirstPartHistory("√(");
       squareRoot.setSecondPartHistory(")");
+
+      percent.setFirstPartHistory("");
+      percent.setSecondPartHistory("");
 
       square.setFirstPartHistory("sqr(");
       square.setSecondPartHistory(")");
@@ -82,16 +77,16 @@ public class TestBuilder {
    }
 
    public void doExceptionsTest(String pattern, ExceptionType expectedExceptionType) {
-      checkException = false;
-      doTest(pattern, null, 0, null, null);
-      assertEquals(expectedExceptionType, this.exceptionType);
-      checkException = true;
+      try{
+         doTest(pattern, null, 0, null, null);
+      } catch(CalculatorException e) {
+         assertEquals(expectedExceptionType, e.getExceptionType());
+      }
    }
 
-   public void doTest(String pattern, String history, int historySize, String result, String operand) {
+   public void doTest(String pattern, String history, int historySize, String result, String operand) throws CalculatorException {
       initializeSimpleOperation();
       calculator = new Calculator();
-      exceptionType = ExceptionType.NOTHING;
       this.result = BigDecimal.ZERO;
       this.operand = BigDecimal.ZERO;
       this.builtOperand = "0";
@@ -140,7 +135,7 @@ public class TestBuilder {
       }
    }
 
-   public void doBoundaryTest(String pattern, String expected) {
+   public void doBoundaryTest(String pattern, String expected) throws CalculatorException {
       doTest(pattern, null, 0, null, null);
 
       if(expected != null) {
@@ -148,12 +143,12 @@ public class TestBuilder {
       }
    }
 
-   public void checkBuildOperand(String pattern, String expected) {
+   public void checkBuildOperand(String pattern, String expected) throws CalculatorException {
       doTest(pattern, "", 0, null, null);
       assertEquals(expected, builtOperand);
    }
 
-   private void checkBySymbols(String pattern) {
+   private void checkBySymbols(String pattern) throws CalculatorException {
       for (char action : pattern.toCharArray()) {
          switch (action) {
             case '0':
@@ -190,16 +185,16 @@ public class TestBuilder {
                executeSeparate();
                break;
             case '+':
-               executeSimpleOperation(new Plus());
+               executeSimpleOperation(plusFactory());
                break;
             case '-':
-               executeSimpleOperation(new Minus());
+               executeSimpleOperation(minusFactory());
                break;
             case '×':
-               executeSimpleOperation(new Multiply());
+               executeSimpleOperation(multiplyFactory());
                break;
             case '÷':
-               executeSimpleOperation(new Divide());
+               executeSimpleOperation(divideFactory());
                break;
             case '=':
                equals();
@@ -220,16 +215,14 @@ public class TestBuilder {
       }
    }
 
-   private void executeSimpleOperation(SimpleOperation operation) {
+   private void executeSimpleOperation(SimpleOperation operation) throws CalculatorException {
       ResponseDto response = calculator.executeSimpleOperation(operation);
       parseDto(response);
-      checkException(response.getExceptionType());
    }
 
-   private void executeSpecialOperation(SpecialOperation operation) {
+   private void executeSpecialOperation(SpecialOperation operation) throws CalculatorException {
       ResponseDto response = calculator.executeSpecialOperation(operation);
       parseDto(response);
-      checkException(response.getExceptionType());
    }
 
    private void clear(){
@@ -271,10 +264,9 @@ public class TestBuilder {
       builtOperand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
-   private void equals() {
+   private void equals() throws CalculatorException {
       ResponseDto response = calculator.equalsOperation();
       parseDto(response);
-      checkException(response.getExceptionType());
    }
 
    private void checkResult(String expected) {
@@ -287,7 +279,6 @@ public class TestBuilder {
 
    private void buildOperand(Number number) {
       ResponseDto response = calculator.buildOperand(number);
-      exceptionType = response.getExceptionType();
       operand = response.getOperand();
       builtOperand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
@@ -308,17 +299,6 @@ public class TestBuilder {
 
       assertEquals(size, history.size());
       assertEquals(expectedHistory, historyParser.parse(history));
-//      assertEquals(expectedHistory, history.buildHistory());
-   }
-
-   private void checkException(ExceptionType exceptionType) {
-      if(exceptionType != ExceptionType.NOTHING) {
-         this.exceptionType = exceptionType;
-      }
-
-      if(checkException) {
-         assertEquals(ExceptionType.NOTHING, exceptionType);
-      }
    }
 
    private void parseDto(ResponseDto response) {
@@ -341,5 +321,33 @@ public class TestBuilder {
       multiply.setCharacter("×");
       minus.setCharacter("-");
       divide.setCharacter("÷");
+   }
+
+   private Plus plusFactory() {
+      Plus plus = new Plus();
+      plus.setCharacter("+");
+
+      return plus;
+   }
+
+   private Minus minusFactory() {
+      Minus minus = new Minus();
+      minus.setCharacter("-");
+
+      return minus;
+   }
+
+   private Divide divideFactory() {
+      Divide divide = new Divide();
+      divide.setCharacter("÷");
+
+      return divide;
+   }
+
+   private Multiply multiplyFactory() {
+      Multiply multiply = new Multiply();
+      multiply.setCharacter("×");
+
+      return multiply;
    }
 }
