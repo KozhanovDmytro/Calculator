@@ -19,7 +19,6 @@ public class Equals extends SimpleOperation {
     */
    public Equals(SimpleOperation lastOperation) {
       this.lastOperation = lastOperation;
-      character = "";
    }
 
    @Override public BigDecimal calculate(BigDecimal result) throws CalculatorException {

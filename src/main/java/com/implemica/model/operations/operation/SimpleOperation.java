@@ -23,6 +23,7 @@ public abstract class SimpleOperation {
    protected BigDecimal initialOperand = BigDecimal.ZERO;
 
    /** Character of operation for history. */
+   @Deprecated
    protected String character;
 
    /** History for operand. */
@@ -35,8 +36,6 @@ public abstract class SimpleOperation {
    private boolean isShowOperand;
 
    /*constants*/
-   /** Space. */
-   private static final char SPACE = ' ';
 
    /** Empty string. */
    private static final String NOTHING = "";
@@ -76,8 +75,19 @@ public abstract class SimpleOperation {
    }
 
    /**
+    * Function build operand and returns current state of model.
+    *
+    * @param operand wanted number
+    */
+   public void buildOperand(BigDecimal operand) {
+      this.operand = operand;
+      this.initialOperand = operand;
+   }
+
+   /**
     *  Remove the last character in operand.
     */
+   @Deprecated
    public void removeLast() {
       if (separated) {
          separated = false;
@@ -105,11 +115,6 @@ public abstract class SimpleOperation {
       operand = number;
       initialOperand = number;
       isShowOperand = true;
-   }
-
-   /** Gets current character of simple operation for history. */
-   public String getCharacter() {
-      return character.equals(NOTHING) ? NOTHING : SPACE + character + SPACE;
    }
 
    /**
@@ -173,9 +178,5 @@ public abstract class SimpleOperation {
 
    public void setShowOperand(boolean showOperand) {
       this.isShowOperand = showOperand;
-   }
-
-   public void setCharacter(String character) {
-      this.character = character;
    }
 }

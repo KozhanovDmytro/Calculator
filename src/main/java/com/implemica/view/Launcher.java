@@ -515,92 +515,90 @@ public class Launcher extends Application {
       primaryStage.getScene().setOnKeyPressed(key -> {
 
          if(key.isShiftDown()) {
-            switch (key.getCode()) {
-               case DIGIT5:
-                  click(Node.PERCENT_OPERATION);
-                  break;
-               case DIGIT2:
-                  click(Node.SQRT_OPERATION);
-                  break;
-               case DIGIT8:
-                  click(Node.MULTIPLY_OPERATION);
-                  break;
-               case EQUALS:
-                  click(Node.PLUS_OPERATION);
-                  break;
+            if (key.getCode() == javafx.scene.input.KeyCode.DIGIT5) {
+               click(Node.PERCENT_OPERATION);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT2) {
+               click(Node.SQRT_OPERATION);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT8) {
+               click(Node.MULTIPLY_OPERATION);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.EQUALS) {
+               click(Node.PLUS_OPERATION);
+
             }
 
          } else {
-            switch (key.getCode()) {
-               case Q:
-                  click(Node.SQUARE);
-                  break;
-               case R:
-                  click(Node.DIVIDE_BY_X);
-                  break;
-               case DIGIT0:
-                  click(Node.BTN0);
-                  break;
-               case DIGIT1:
-                  click(Node.BTN1);
-                  break;
-               case DIGIT2:
-                  click(Node.BTN2);
-                  break;
-               case DIGIT3:
-                  click(Node.BTN3);
-                  break;
-               case DIGIT4:
-                  click(Node.BTN4);
-                  break;
-               case DIGIT5:
-                  click(Node.BTN5);
-                  break;
-               case DIGIT6:
-                  click(Node.BTN6);
-                  break;
-               case DIGIT7:
-                  click(Node.BTN7);
-                  break;
-               case DIGIT8:
-                  click(Node.BTN8);
-                  break;
-               case DIGIT9:
-                  click(Node.BTN9);
-                  break;
-               case BACK_SPACE:
-                  click(Node.BACKSPACE);
-                  break;
-               case COMMA:
-                  click(Node.SEPARATE_BTN);
-                  break;
-               case F9:
-                  click(Node.NEGATE);
-                  break;
-               case EQUALS:
-                  click(Node.EQUALS_OPERATION);
-                  break;
-               case PLUS:
-                  click(Node.PLUS_OPERATION);
-                  break;
-               case MINUS:
-                  click(Node.MINUS_OPERATION);
-                  break;
-               case DIVIDE:
-                  click(Node.DIVIDE_OPERATION);
-                  break;
-               case SLASH:
-                  click(Node.DIVIDE_OPERATION);
-                  break;
-               case MULTIPLY:
-                  click(Node.MULTIPLY_OPERATION);
-                  break;
-               case ESCAPE:
-                  click(Node.C);
-                  break;
-               case DELETE:
-                  click(Node.CE);
-                  break;
+            if (key.getCode() == javafx.scene.input.KeyCode.Q) {
+               click(Node.SQUARE);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.R) {
+               click(Node.DIVIDE_BY_X);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT0) {
+               click(Node.BTN0);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT1) {
+               click(Node.BTN1);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT2) {
+               click(Node.BTN2);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT3) {
+               click(Node.BTN3);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT4) {
+               click(Node.BTN4);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT5) {
+               click(Node.BTN5);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT6) {
+               click(Node.BTN6);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT7) {
+               click(Node.BTN7);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT8) {
+               click(Node.BTN8);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIGIT9) {
+               click(Node.BTN9);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.BACK_SPACE) {
+               click(Node.BACKSPACE);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.COMMA) {
+               click(Node.SEPARATE_BTN);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.F9) {
+               click(Node.NEGATE);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.EQUALS) {
+               click(Node.EQUALS_OPERATION);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.PLUS) {
+               click(Node.PLUS_OPERATION);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.MINUS) {
+               click(Node.MINUS_OPERATION);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DIVIDE) {
+               click(Node.DIVIDE_OPERATION);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.SLASH) {
+               click(Node.DIVIDE_OPERATION);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.MULTIPLY) {
+               click(Node.MULTIPLY_OPERATION);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.ESCAPE) {
+               click(Node.C);
+
+            } else if (key.getCode() == javafx.scene.input.KeyCode.DELETE) {
+               click(Node.CE);
+
             }
          }
       });

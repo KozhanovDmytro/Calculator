@@ -36,46 +36,6 @@ public class TestBuilder {
 
    private HistoryParser historyParser = new HistoryParser();
 
-   /* operations */
-
-   private static Plus plus;
-
-   private static Minus minus;
-
-   private static Multiply multiply;
-
-   private static Divide divide;
-
-   /* special */
-
-   private static Percent percent = new Percent();
-
-   private static SquareRoot squareRoot = new SquareRoot();
-
-   private static Square square = new Square();
-
-   private static DivideBy divideBy = new DivideBy();
-
-   private static Negate negate = new Negate();
-
-   static {
-
-      squareRoot.setFirstPartHistory("√(");
-      squareRoot.setSecondPartHistory(")");
-
-      percent.setFirstPartHistory("");
-      percent.setSecondPartHistory("");
-
-      square.setFirstPartHistory("sqr(");
-      square.setSecondPartHistory(")");
-
-      divideBy.setFirstPartHistory("1/(");
-      divideBy.setSecondPartHistory(")");
-
-      negate.setFirstPartHistory("negate(");
-      negate.setSecondPartHistory(")");
-   }
-
    public void doExceptionsTest(String pattern, ExceptionType expectedExceptionType) {
       try{
          doTest(pattern, null, 0, null, null);
@@ -85,7 +45,6 @@ public class TestBuilder {
    }
 
    public void doTest(String pattern, String history, int historySize, String result, String operand) throws CalculatorException {
-      initializeSimpleOperation();
       calculator = new Calculator();
       this.result = BigDecimal.ZERO;
       this.operand = BigDecimal.ZERO;
@@ -112,10 +71,10 @@ public class TestBuilder {
                subtractMemory();
                break;
             case "SQR":
-               executeSpecialOperation(square);
+               executeSpecialOperation(new Square());
                break;
             case "1/x":
-               executeSpecialOperation(divideBy);
+               executeSpecialOperation(new DivideBy());
                break;
             default:
                checkBySymbols(action);
@@ -185,31 +144,31 @@ public class TestBuilder {
                executeSeparate();
                break;
             case '+':
-               executeSimpleOperation(plusFactory());
+               executeSimpleOperation(new Plus());
                break;
             case '-':
-               executeSimpleOperation(minusFactory());
+               executeSimpleOperation(new Minus());
                break;
             case '×':
-               executeSimpleOperation(multiplyFactory());
+               executeSimpleOperation(new Multiply());
                break;
             case '÷':
-               executeSimpleOperation(divideFactory());
+               executeSimpleOperation(new Divide());
                break;
             case '=':
                equals();
                break;
             case '%':
-               executeSpecialOperation(percent);
+               executeSpecialOperation(new Percent());
                break;
             case '√':
-               executeSpecialOperation(squareRoot);
+               executeSpecialOperation(new SquareRoot());
                break;
             case '<':
                executeBackSpace();
                break;
             case 'n':
-               executeSpecialOperation(negate);
+               executeSpecialOperation(new Negate());
                break;
          }
       }
@@ -309,45 +268,5 @@ public class TestBuilder {
       if(response.getOperand() != null) {
          operand = response.getOperand();
       }
-   }
-
-   private void initializeSimpleOperation() {
-      plus = new Plus();
-      minus = new Minus();
-      multiply = new Multiply();
-      divide = new Divide();
-
-      plus.setCharacter("+");
-      multiply.setCharacter("×");
-      minus.setCharacter("-");
-      divide.setCharacter("÷");
-   }
-
-   private Plus plusFactory() {
-      Plus plus = new Plus();
-      plus.setCharacter("+");
-
-      return plus;
-   }
-
-   private Minus minusFactory() {
-      Minus minus = new Minus();
-      minus.setCharacter("-");
-
-      return minus;
-   }
-
-   private Divide divideFactory() {
-      Divide divide = new Divide();
-      divide.setCharacter("÷");
-
-      return divide;
-   }
-
-   private Multiply multiplyFactory() {
-      Multiply multiply = new Multiply();
-      multiply.setCharacter("×");
-
-      return multiply;
    }
 }

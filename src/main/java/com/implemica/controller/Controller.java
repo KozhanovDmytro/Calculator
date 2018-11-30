@@ -20,12 +20,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.Properties;
 
 /**
@@ -92,44 +92,14 @@ public class Controller {
    /** The instance which can display comfortable to user number. */
    private Validator validator = new Validator();
 
+   /** The instance for parsing {@link History}. */
    private HistoryParser historyParser = new HistoryParser();
+
+   /** Builder for operand. */
+   private StringBuilder operand = new StringBuilder("0");
 
    /** The flag which note current state of some buttons. */
    private boolean isBlocked;
-
-   /* special */
-   /** Percent operation. */
-   private static Percent percent = new Percent();
-
-   /** SquareRoot operation. */
-   private static SquareRoot squareRoot = new SquareRoot();
-
-   /** Square operation. */
-   private static Square square = new Square();
-
-   /** DivideBy operation. */
-   private static DivideBy divideBy = new DivideBy();
-
-   /** Negate operation. */
-   private static Negate negate = new Negate();
-
-   static {
-
-      percent.setFirstPartHistory("");
-      percent.setSecondPartHistory("");
-
-      squareRoot.setFirstPartHistory("√(");
-      squareRoot.setSecondPartHistory(")");
-
-      square.setFirstPartHistory("sqr(");
-      square.setSecondPartHistory(")");
-
-      divideBy.setFirstPartHistory("1/(");
-      divideBy.setSecondPartHistory(")");
-
-      negate.setFirstPartHistory("negate(");
-      negate.setSecondPartHistory(")");
-   }
 
    /**
     *  This interface contains a function where an exception expect.
@@ -160,7 +130,7 @@ public class Controller {
 
       InputStream stream = new FileInputStream(file);
 
-      textsForLabel.load(stream);
+      textsForLabel.load(new InputStreamReader(stream, Charset.forName("UTF-8")));
       stream.close();
    }
 
@@ -201,6 +171,11 @@ public class Controller {
       setText(extraLogLabel, Node.NO_LOG);
       setText(memoryBtn, Node.MEMORY);
       setText(logBtn, Node.HISTORY);
+
+      setText(plusOperation, Node.PLUS_OPERATION);
+      setText(minusOperation, Node.MINUS_OPERATION);
+      setText(multiplyOperation, Node.MULTIPLY_OPERATION);
+      setText(divideOperation, Node.DIVIDE_OPERATION);
    }
 
    /**
@@ -217,16 +192,27 @@ public class Controller {
     * Give permission to operation button.
     */
    private void actionsForOperationButtons() {
-      plusOperation     .setOnAction(event -> actionForOperations(plusFactory()));
-      minusOperation    .setOnAction(event -> actionForOperations(minusFactory()));
-      multiplyOperation .setOnAction(event -> actionForOperations(multiplyFactory()));
-      divideOperation   .setOnAction(event -> actionForOperations(divideFactory()));
+      plusOperation     .setOnAction(event -> actionForOperations(new Plus()));
+      minusOperation    .setOnAction(event -> actionForOperations(new Minus()));
+      multiplyOperation .setOnAction(event -> actionForOperations(new Multiply()));
+      divideOperation   .setOnAction(event -> actionForOperations(new Divide()));
 
-      percentOperation  .setOnAction(event -> actionForSpecialOperations(percent));
-      sqrtOperation     .setOnAction(event -> actionForSpecialOperations(squareRoot));
-      squareOperation   .setOnAction(event -> actionForSpecialOperations(square));
-      divideByX         .setOnAction(event -> actionForSpecialOperations(divideBy));
-      negateOperation   .setOnAction(event -> actionForSpecialOperations(negate));
+      percentOperation  .setOnAction(event -> actionForSpecialOperations(new Percent()));
+      sqrtOperation     .setOnAction(event -> actionForSpecialOperations(new SquareRoot()));
+      squareOperation   .setOnAction(event -> actionForSpecialOperations(new Square()));
+      divideByX         .setOnAction(event -> actionForSpecialOperations(new DivideBy()));
+
+
+      negateOperation.setOnAction(event -> {
+         if(operand.charAt(0) != '-') {
+            operand.insert(0, '-');
+         } else {
+            operand.deleteCharAt(0);
+         }
+
+         showResult(operand.toString());
+//         actionForSpecialOperations(new Negate());
+      });
 
       equalsOperation.setOnAction(event -> {
          unlock();
@@ -240,6 +226,8 @@ public class Controller {
     * @param operation simple operation
     */
    private void actionForOperations(SimpleOperation operation) {
+      operation.buildOperand(new BigDecimal(operand.toString()));
+
       parseDto(() -> calculator.executeSimpleOperation(operation));
    }
 
@@ -268,8 +256,13 @@ public class Controller {
       btn9.setOnAction(event -> actionForBuildOperand(Number.NINE));
 
       separateBtn.setOnAction(event -> {
-         ResponseDto response = calculator.separateOperand();
-         parseBuiltOperand(response);
+         if(operand.indexOf(Character.toString(validator.SEPARATOR)) == -1) {
+            operand.append(validator.SEPARATOR);
+         }
+
+         showResult(operand.toString());
+//         ResponseDto response = calculator.separateOperand();
+//         parseBuiltOperand(response);
       });
    }
 
@@ -279,7 +272,15 @@ public class Controller {
     * @param number number
     */
    private void actionForBuildOperand(Number number) {
-      parseBuiltOperand(calculator.buildOperand(number));
+      if(operand.charAt(0) == '0' && operand.length() == 1) {
+         operand.deleteCharAt(0);
+      }
+
+      if(!isOverflow()) {
+         operand.append(number.translate());
+      }
+
+      showResult(operand.toString());
       unlock();
    }
 
@@ -288,14 +289,24 @@ public class Controller {
     */
    private void actionsForCleanOperations() {
       backSpace.setOnAction(event -> {
-         parseBuiltOperand(calculator.backspace());
+         if (operand.length() > 0) {
+            operand.deleteCharAt(operand.length() - 1);
+         }
+
+         if(operand.length() == 0) {
+            operand = new StringBuilder("0");
+         }
+
+         showResult(operand.toString());
          unlock();
       });
       clear.setOnAction(event -> {
+         operand = new StringBuilder("0");
          parseDto(() -> calculator.clear());
          unlock();
       });
       clearEntry.setOnAction(event -> {
+         operand = new StringBuilder("0");
          parseDto(() -> calculator.clearEntry());
          unlock();
       });
@@ -455,59 +466,19 @@ public class Controller {
       return textsForLabel.getProperty(node.getTextFromProperty());
    }
 
-   /**
-    * Factory for plus operation.
-    *
-    * @see SimpleOperation
-    *
-    * @return instance of {@link Plus}
-    */
-   private Plus plusFactory() {
-      Plus plus = new Plus();
-      plus.setCharacter("+");
+   private boolean isOverflow() {
+      int quantityCharsOfIntegerNumber;
+      BigDecimal operand = new BigDecimal(this.operand.toString().replace(",", "."));
+      if (operand.toBigInteger().compareTo(BigInteger.ZERO) == 0) {
+         quantityCharsOfIntegerNumber = 0;
+      } else {
+         quantityCharsOfIntegerNumber = quantityCharsOfIntegerNumber(operand);
+      }
 
-      return plus;
+      return quantityCharsOfIntegerNumber + operand.scale() >= 16;
    }
 
-   /**
-    * Factory for minus operation.
-    *
-    * @see SimpleOperation
-    *
-    * @return instance of {@link Minus}
-    */
-   private Minus minusFactory() {
-      Minus minus = new Minus();
-      minus.setCharacter("-");
-
-      return minus;
-   }
-
-   /**
-    * Factory for multiply operation.
-    *
-    * @see SimpleOperation
-    *
-    * @return instance of {@link Multiply}
-    */
-   private Multiply multiplyFactory() {
-      Multiply multiply = new Multiply();
-      multiply.setCharacter("×");
-
-      return multiply;
-   }
-
-   /**
-    * Factory for divide operation.
-    *
-    * @see SimpleOperation
-    *
-    * @return instance of {@link Divide}
-    */
-   private Divide divideFactory() {
-      Divide divide = new Divide();
-      divide.setCharacter("÷");
-
-      return divide;
+   private int quantityCharsOfIntegerNumber(BigDecimal number) {
+      return number.setScale(0, RoundingMode.DOWN).precision();
    }
 }

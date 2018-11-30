@@ -104,6 +104,12 @@ public class Validator {
       return df.format(number) + (separator ? SEPARATOR : NOTHING);
    }
 
+   /**
+    * Function gets pattern for decimal number.
+    *
+    * @param scale counts of character after comma.
+    * @return built pattern.
+    */
    private String getPatternForDecimalNumber(int scale) {
       String result = PATTERN_FOR_NUMBER;
       if(scale <= 16) {
@@ -123,7 +129,7 @@ public class Validator {
     * @param number number to show.
     * @return comfortable number for history
     */
-   public String showNumberForHistory(BigDecimal number) {
+   String showNumberForHistory(BigDecimal number) {
       number = number.round(MathContext.DECIMAL64);
 
       DecimalFormat df = new DecimalFormat();
@@ -174,6 +180,11 @@ public class Validator {
       df.setMaximumFractionDigits(MAXIMUM_FRACTION_DIGITS);
    }
 
+   /**
+    * Creates an instance {@link DecimalFormatSymbols}
+    *
+    * @return an instance.
+    */
    private DecimalFormatSymbols buildDecimalFormatSymbols() {
       DecimalFormatSymbols dfs = new DecimalFormatSymbols();
       dfs.setGroupingSeparator(SPACE);

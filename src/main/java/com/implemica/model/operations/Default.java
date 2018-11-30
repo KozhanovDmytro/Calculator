@@ -20,7 +20,6 @@ public class Default extends SimpleOperation {
     */
    public Default() {
       super();
-      this.character = "";
    }
 
    /**

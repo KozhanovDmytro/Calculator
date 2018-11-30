@@ -26,6 +26,7 @@ public class ResponseDto {
    private History history;
 
    /** This flag indicates whether the last character of operand has comma or not. */
+   @Deprecated
    private boolean isSeparated;
 
    /* accessors for each field */

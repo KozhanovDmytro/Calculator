@@ -48,7 +48,7 @@ public class History {
     * @param secondOperation second operation to add - {@link SimpleOperation}
     */
    public void firstAdd(Default firstOperation, SimpleOperation secondOperation) {
-      if(operations.size() == 0) {
+      if(operations.isEmpty()) {
          operations.add(firstOperation);
          operations.add(secondOperation);
       }
@@ -83,14 +83,14 @@ public class History {
     * Function hides last operation.
     */
    public void hideLast() {
-      if (operations.size() > 0) {
+      if (!operations.isEmpty()) {
          operations.getLast().setShowOperand(false);
       }
    }
 
    /**
     * Function gets {@link Deque} which contains operations
-    * @return
+    * @return {@link Deque} of operations.
     */
    public Deque<SimpleOperation> getOperations() {
       return operations;

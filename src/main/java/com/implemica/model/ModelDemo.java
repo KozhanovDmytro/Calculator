@@ -22,18 +22,20 @@ public class ModelDemo {
    public static void main(String[] args) throws CalculatorException {
       Calculator calculator = new Calculator();
 
-      calculator.buildOperand(a);
-      calculator.executeSimpleOperation(new Plus());
-      calculator.buildOperand(b);
-      calculator.executeSpecialOperation(new Square());
-      calculator.equalsOperation();
-      calculator.executeSimpleOperation(new Divide());
-      calculator.buildOperand(c);
-      calculator.executeSimpleOperation(new Minus());
-      calculator.buildOperand(d);
+      try {
+         calculator.buildOperand(a);
+         calculator.executeSimpleOperation(new Plus());
+         calculator.buildOperand(b);
+         calculator.executeSpecialOperation(new Square());
+         calculator.equalsOperation();
+         calculator.executeSimpleOperation(new Divide());
+         calculator.buildOperand(c);
+         calculator.executeSimpleOperation(new Minus());
+         calculator.buildOperand(d);
 
-      ResponseDto response = calculator.equalsOperation();
-      System.out.println(response.getResult());
-
+         System.out.println("Result: " + calculator.equalsOperation().getResult());
+      } catch (CalculatorException e) {
+         System.out.println("Result was not calculated because exception was thrown. Detail: " + e.getExceptionType());
+      }
    }
 }

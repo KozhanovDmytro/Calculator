@@ -105,6 +105,7 @@ public class Calculator {
     * @param number wanted number
     * @return current state of model
     */
+   @Deprecated
    public ResponseDto buildOperand(Number number) {
       if (!container.isMakingOperand()) {
          clearEntry();
@@ -156,6 +157,7 @@ public class Calculator {
     *
     * @return current state of model.
     */
+   @Deprecated
    public ResponseDto separateOperand() {
       if (container.getOperation().getOperand().scale() == 0) {
          container.getOperation().setSeparated(true);
@@ -174,6 +176,7 @@ public class Calculator {
     *
     * @return current state of model.
     */
+   @Deprecated
    public ResponseDto backspace() {
       ResponseDto response = new ResponseDto();
 
