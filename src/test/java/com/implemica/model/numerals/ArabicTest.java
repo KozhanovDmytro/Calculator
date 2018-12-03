@@ -1,6 +1,6 @@
 package com.implemica.model.numerals;
 
-import com.implemica.model.operations.operation.Number;
+import com.implemica.controller.util.Number;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -6,7 +6,6 @@ import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.history.History;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
-import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
 
@@ -38,7 +37,6 @@ public class Calculator {
     */
    public ResponseDto executeSimpleOperation(SimpleOperation operation) throws CalculatorException {
       calculateSimpleOperation(operation);
-
       return getCurrentStateForResult();
    }
 
@@ -95,7 +93,6 @@ public class Calculator {
     */
    public ResponseDto executeSpecialOperation(SpecialOperation operation) throws CalculatorException {
       container.change(operation, isShownResult);
-
       return getCurrentState();
    }
 
@@ -105,27 +102,12 @@ public class Calculator {
     * @param number wanted number
     * @return current state of model
     */
-   @Deprecated
-   public ResponseDto buildOperand(Number number) {
-      if (!container.isMakingOperand()) {
-         clearEntry();
-      }
-
-      container.getOperation().buildOperand(number);
-
-      ResponseDto response = getCurrentState();
-      response.setSeparated(showIsSeparated());
-
-      return response;
-   }
-
    public ResponseDto buildOperand(BigDecimal number) {
       if (!container.isMakingOperand()) {
          clearEntry();
       }
 
       container.getOperation().buildOperand(number);
-
       isShownResult = false;
 
       return getCurrentState();
@@ -161,44 +143,6 @@ public class Calculator {
       if (!isShownResult) {
          container.setResult(container.getOperation().getOperand());
       }
-   }
-
-   /**
-    * Function update flag which represents whether there is a comma
-    * at the end of the number or not and returns current state.
-    *
-    * @return current state of model.
-    */
-   @Deprecated
-   public ResponseDto separateOperand() {
-      if (container.getOperation().getOperand().scale() == 0) {
-         container.getOperation().setSeparated(true);
-      }
-
-      ResponseDto response = new ResponseDto();
-      response.setOperand(showOperand());
-      response.setSeparated(showIsSeparated());
-
-      return response;
-   }
-
-   /**
-    * Function clear the last character of number. If that's comma that function
-    * update a flag. Function returns current state of model.
-    *
-    * @return current state of model.
-    */
-   @Deprecated
-   public ResponseDto backspace() {
-      ResponseDto response = new ResponseDto();
-
-      if (container.isMakingOperand()) {
-         container.getOperation().removeLast();
-         response.setOperand(showOperand());
-         response.setSeparated(showIsSeparated());
-      }
-
-      return response;
    }
 
    /**
@@ -273,7 +217,7 @@ public class Calculator {
     */
    public ResponseDto getMemory() {
       BigDecimal value = container.getMemory().recall();
-      container.getOperation().setOperandFromMemory(value);
+      container.getOperation().buildOperand(value);
 
       this.isShownResult = false;
 
@@ -320,14 +264,6 @@ public class Calculator {
    private BigDecimal showOperand() {
       isShownResult = false;
       return checkScale(container.getOperation().getOperand());
-   }
-
-   /**
-    * @return flag if the last character of operand is comma.
-    */
-   private boolean showIsSeparated() {
-      isShownResult = false;
-      return container.getOperation().isSeparated();
    }
 
    /**

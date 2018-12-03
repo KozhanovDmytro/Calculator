@@ -14,17 +14,12 @@ import java.math.BigDecimal;
  */
 public class ModelDemo {
 
-//   private static Number a = Number.ONE;
-//   private static Number b = Number.TWO;
-//   private static Number c = Number.ZERO;
-//   private static Number d = Number.NINE;
-
    private static BigDecimal a = BigDecimal.ONE;
    private static BigDecimal b = BigDecimal.valueOf(2);
    private static BigDecimal c = BigDecimal.ZERO;
    private static BigDecimal d = BigDecimal.valueOf(9);
 
-   public static void main(String[] args) throws CalculatorException {
+   public static void main(String[] args) {
       Calculator calculator = new Calculator();
 
       try {

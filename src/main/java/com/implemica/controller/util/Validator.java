@@ -92,7 +92,7 @@ public class Validator {
     * @param separator flag which mean that the last character of number is comma.
     * @return comfortable number for user
     */
-   public String builtOperand(BigDecimal number, boolean separator) {
+   private String builtOperand(BigDecimal number, boolean separator) {
       DecimalFormat df = new DecimalFormat(PATTERN_FOR_NUMBER, buildDecimalFormatSymbols());
 
       basicSettingsForDecimalFormatter(df);

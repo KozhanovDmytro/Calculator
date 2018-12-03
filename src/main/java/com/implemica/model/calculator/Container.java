@@ -236,13 +236,6 @@ public class Container {
    }
 
    /**
-    * Accessor for {@link #history}
-    */
-   void setHistory(History history) {
-      this.history = history;
-   }
-
-   /**
     * Accessor for {@link #memory}
     * @return {@link #memory}
     */

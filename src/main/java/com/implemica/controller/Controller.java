@@ -7,7 +7,7 @@ import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.history.History;
-import com.implemica.model.operations.operation.Number;
+import com.implemica.controller.util.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.operations.simple.Divide;
@@ -330,17 +330,6 @@ public class Controller {
    }
 
    /**
-    * Gets current state from model and represent into a view side.
-    *
-    * @param response current state
-    */
-   private void parseBuiltOperand(ResponseDto response) {
-      if (response.getOperand() != null) {
-         showResult(validator.builtOperand(response.getOperand(), response.isSeparated()));
-      }
-   }
-
-   /**
     * Set actions to memory buttons.
     */
    private void actionsForMemory() {
@@ -457,10 +446,6 @@ public class Controller {
 
       if (response.getOperand() != null) {
          showResult(validator.showNumber(response.getOperand().stripTrailingZeros()));
-      }
-
-      if (response.isSeparated()) {
-         resultLabel.setText(resultLabel.getText() + validator.SEPARATOR);
       }
    }
 

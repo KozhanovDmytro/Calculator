@@ -1,13 +1,13 @@
 package com.implemica.model.calculator.until;
 
 import com.implemica.controller.util.HistoryParser;
+import com.implemica.controller.util.Validator;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.calculator.Container;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.history.History;
-import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.operations.simple.Divide;
@@ -15,7 +15,6 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
-import com.implemica.controller.util.Validator;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -29,8 +28,6 @@ public class TestBuilder {
    private BigDecimal result;
 
    private BigDecimal operand;
-
-   private String builtOperand;
 
    private Validator validator = new Validator();
 
@@ -48,7 +45,6 @@ public class TestBuilder {
       calculator = new Calculator();
       this.result = BigDecimal.ZERO;
       this.operand = BigDecimal.ZERO;
-      this.builtOperand = "0";
       String[] actions = pattern.split(" ");
       for (String action : actions) {
          if ("C".equals(action)) {
@@ -76,6 +72,7 @@ public class TestBuilder {
             executeSpecialOperation(new DivideBy());
 
          } else if(action.matches("\\d+\\.?\\d*")) {
+            buildOperand(new BigDecimal(action));
             calculator.buildOperand(new BigDecimal(action));
 
          } else {
@@ -104,47 +101,9 @@ public class TestBuilder {
       }
    }
 
-   public void checkBuildOperand(String pattern, String expected) throws CalculatorException {
-      doTest(pattern, "", 0, null, null);
-      assertEquals(expected, builtOperand);
-   }
-
    private void checkBySymbols(String pattern) throws CalculatorException {
       for (char action : pattern.toCharArray()) {
          switch (action) {
-//            case '0':
-//               buildOperand(Number.ZERO);
-//               break;
-//            case '1':
-//               buildOperand(Number.ONE);
-//               break;
-//            case '2':
-//               buildOperand(Number.TWO);
-//               break;
-//            case '3':
-//               buildOperand(Number.THREE);
-//               break;
-//            case '4':
-//               buildOperand(Number.FOUR);
-//               break;
-//            case '5':
-//               buildOperand(Number.FIVE);
-//               break;
-//            case '6':
-//               buildOperand(Number.SIX);
-//               break;
-//            case '7':
-//               buildOperand(Number.SEVEN);
-//               break;
-//            case '8':
-//               buildOperand(Number.EIGHT);
-//               break;
-//            case '9':
-//               buildOperand(Number.NINE);
-//               break;
-//            case '.':
-//               executeSeparate();
-//               break;
             case '+':
                executeSimpleOperation(new Plus());
                break;
@@ -165,9 +124,6 @@ public class TestBuilder {
                break;
             case '√':
                executeSpecialOperation(new SquareRoot());
-               break;
-            case '<':
-               executeBackSpace();
                break;
             case 'n':
                executeSpecialOperation(new Negate());
@@ -213,18 +169,6 @@ public class TestBuilder {
       parseDto(response);
    }
 
-   private void executeBackSpace() {
-      ResponseDto response = calculator.backspace();
-      if(response.getOperand() != null) {
-         builtOperand = validator.builtOperand(response.getOperand(), response.isSeparated());
-      }
-   }
-
-   private void executeSeparate() {
-      ResponseDto response = calculator.separateOperand();
-      builtOperand = validator.builtOperand(response.getOperand(), response.isSeparated());
-   }
-
    private void equals() throws CalculatorException {
       ResponseDto response = calculator.equalsOperation();
       parseDto(response);
@@ -238,10 +182,9 @@ public class TestBuilder {
       assertEquals(expected, validator.showNumber(operand.stripTrailingZeros()));
    }
 
-   private void buildOperand(Number number) {
+   private void buildOperand(BigDecimal number) {
       ResponseDto response = calculator.buildOperand(number);
       operand = response.getOperand();
-      builtOperand = validator.builtOperand(response.getOperand(), response.isSeparated());
    }
 
    private void checkHistory(String expectedHistory, int size) {
