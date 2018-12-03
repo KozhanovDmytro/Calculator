@@ -8,6 +8,12 @@ import javafx.application.Application;
  */
 public class Main {
 
+   /*
+   *
+   * TODO 2 SQR 3
+   *
+   * */
+
    /**
     * The main function which launch the application.
     * @param args arguments

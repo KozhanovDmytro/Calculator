@@ -53,479 +53,479 @@ public class CalculatorTest {
 
       builder.doTest("÷×-+", "0 + ", 2, "0", null);
 
-      builder.doTest("2+", "2 + ", 2, "2", null);
-      builder.doTest("1-", "1 - ", 2, "1", null);
-      builder.doTest("3×", "3 × ", 2, "3", null);
-      builder.doTest("4÷", "4 ÷ ", 2, "4", null);
+      builder.doTest("2 +", "2 + ", 2, "2", null);
+      builder.doTest("1 -", "1 - ", 2, "1", null);
+      builder.doTest("3 ×", "3 × ", 2, "3", null);
+      builder.doTest("4 ÷", "4 ÷ ", 2, "4", null);
 
-      builder.doTest("+0", "0 + 0", 2, "0", null);
-      builder.doTest("-2", "0 - 2", 2, "0", null);
-      builder.doTest("×3", "0 × 3", 2, "0", null);
-      builder.doTest("÷7", "0 ÷ 7", 2, "0", null);
+      builder.doTest("+ 0", "0 + 0", 2, "0", null);
+      builder.doTest("- 2", "0 - 2", 2, "0", null);
+      builder.doTest("× 3", "0 × 3", 2, "0", null);
+      builder.doTest("÷ 7", "0 ÷ 7", 2, "0", null);
 
-      builder.doTest("3+++++", "3 + ", 2, "3", null);
-      builder.doTest("5-----", "5 - ", 2, "5", null);
-      builder.doTest("8×××××", "8 × ", 2, "8", null);
-      builder.doTest("12÷÷÷÷÷", "12 ÷ ", 2, "12", null);
+      builder.doTest("3 +++++", "3 + ", 2, "3", null);
+      builder.doTest("5 -----", "5 - ", 2, "5", null);
+      builder.doTest("8 ×××××", "8 × ", 2, "8", null);
+      builder.doTest("12 ÷÷÷÷÷", "12 ÷ ", 2, "12", null);
 
-      builder.doTest("9÷×-+-×÷×-++-×+", "9 + ", 2, "9", null);
-      builder.doTest("12+-+-××÷÷-+-", "12 - ", 2, "12", null);
-      builder.doTest("52--+÷×-+-÷×-+-×", "52 × ", 2, "52", null);
-      builder.doTest("12+×÷×-+-×÷÷×÷××÷-+-×÷", "12 ÷ ", 2, "12", null);
+      builder.doTest("9 ÷×-+-×÷×-++-×+", "9 + ", 2, "9", null);
+      builder.doTest("12 +-+-××÷÷-+-", "12 - ", 2, "12", null);
+      builder.doTest("52 --+÷×-+-÷×-+-×", "52 × ", 2, "52", null);
+      builder.doTest("12 +×÷×-+-×÷÷×÷××÷-+-×÷", "12 ÷ ", 2, "12", null);
 
-      builder.doTest("2++++=", "", 0, "4", null);
-      builder.doTest("4----=", "", 0, "0", null);
-      builder.doTest("8××××=", "", 0, "64", null);
-      builder.doTest("100÷÷÷÷÷=", "", 0, "1", null);
+      builder.doTest("2 ++++=", "", 0, "4", null);
+      builder.doTest("4 ----=", "", 0, "0", null);
+      builder.doTest("8 ××××=", "", 0, "64", null);
+      builder.doTest("100 ÷÷÷÷÷=", "", 0, "1", null);
    }
 
    @Test
    void plusOperationTest() throws CalculatorException {
-      builder.doTest("2+2=", "", 0, "4", null);
-      builder.doTest("7+3=", "", 0, "10", null);
-      builder.doTest("1+8=", "", 0, "9", null);
-      builder.doTest("5+6=", "", 0, "11", null);
-      builder.doTest("3+9=", "", 0, "12", null);
+      builder.doTest("2 + 2 =", "", 0, "4", null);
+      builder.doTest("7 + 3 =", "", 0, "10", null);
+      builder.doTest("1 + 8 =", "", 0, "9", null);
+      builder.doTest("5 + 6 =", "", 0, "11", null);
+      builder.doTest("3 + 9 =", "", 0, "12", null);
 
-      builder.doTest("0+0=", "", 0, "0", null);
-      builder.doTest("1+0=", "", 0, "1", null);
-      builder.doTest("8+0=", "", 0, "8", null);
-      builder.doTest("0+5=", "", 0, "5", null);
-      builder.doTest("0+3=", "", 0, "3", null);
+      builder.doTest("0 + 0 =", "", 0, "0", null);
+      builder.doTest("1 + 0 =", "", 0, "1", null);
+      builder.doTest("8 + 0 =", "", 0, "8", null);
+      builder.doTest("0 + 5 =", "", 0, "5", null);
+      builder.doTest("0 + 3 =", "", 0, "3", null);
 
-      builder.doTest("2+5", "2 + 5", 2, "2", null);
-      builder.doTest("5+3", "5 + 3", 2, "5", null);
-      builder.doTest("2+3", "2 + 3", 2, "2", null);
-      builder.doTest("2+8", "2 + 8", 2, "2", null);
-      builder.doTest("1+2", "1 + 2", 2, "1", null);
+      builder.doTest("2 + 5", "2 + 5", 2, "2", null);
+      builder.doTest("5 + 3", "5 + 3", 2, "5", null);
+      builder.doTest("2 + 3", "2 + 3", 2, "2", null);
+      builder.doTest("2 + 8", "2 + 8", 2, "2", null);
+      builder.doTest("1 + 2", "1 + 2", 2, "1", null);
 
-      builder.doTest("0+0", "0 + 0", 2, "0", null);
-      builder.doTest("1+0", "1 + 0", 2, "1", null);
-      builder.doTest("5+0", "5 + 0", 2, "5", null);
-      builder.doTest("0+2", "0 + 2", 2, "0", null);
-      builder.doTest("0+6", "0 + 6", 2, "0", null);
+      builder.doTest("1 + 0", "1 + 0", 2, "1", null);
+      builder.doTest("5 + 0", "5 + 0", 2, "5", null);
+      builder.doTest("0 + 0", "0 + 0", 2, "0", null);
+      builder.doTest("0 + 2", "0 + 2", 2, "0", null);
+      builder.doTest("0 + 6", "0 + 6", 2, "0", null);
 
-      builder.doTest("0+", "0 + ", 2, "0", null);
-      builder.doTest("2+", "2 + ", 2, "2", null);
-      builder.doTest("3+", "3 + ", 2, "3", null);
-      builder.doTest("9+", "9 + ", 2, "9", null);
-      builder.doTest("8+", "8 + ", 2, "8", null);
+      builder.doTest("0 +", "0 + ", 2, "0", null);
+      builder.doTest("2 +", "2 + ", 2, "2", null);
+      builder.doTest("3 +", "3 + ", 2, "3", null);
+      builder.doTest("9 +", "9 + ", 2, "9", null);
+      builder.doTest("8 +", "8 + ", 2, "8", null);
 
-      builder.doTest("+1", "0 + 1", 2, "0", null);
-      builder.doTest("+5", "0 + 5", 2, "0", null);
-      builder.doTest("+9", "0 + 9", 2, "0", null);
-      builder.doTest("+7", "0 + 7", 2, "0", null);
-      builder.doTest("+3", "0 + 3", 2, "0", null);
+      builder.doTest("+ 1", "0 + 1", 2, "0", null);
+      builder.doTest("+ 5", "0 + 5", 2, "0", null);
+      builder.doTest("+ 9", "0 + 9", 2, "0", null);
+      builder.doTest("+ 7", "0 + 7", 2, "0", null);
+      builder.doTest("+ 3", "0 + 3", 2, "0", null);
 
       builder.doTest("+", "0 + ", 2, "0", null);
 
-      builder.doTest("1+=", "", 0, "2", null);
-      builder.doTest("5+=", "", 0, "10", null);
-      builder.doTest("3+=", "", 0, "6", null);
-      builder.doTest("2+=", "", 0, "4", null);
-      builder.doTest("7+=", "", 0, "14", null);
+      builder.doTest("1 +=", "", 0, "2", null);
+      builder.doTest("5 +=", "", 0, "10", null);
+      builder.doTest("3 +=", "", 0, "6", null);
+      builder.doTest("2 +=", "", 0, "4", null);
+      builder.doTest("7 +=", "", 0, "14", null);
 
-      builder.doTest("+7=", "", 0, "7", null);
-      builder.doTest("+2=", "", 0, "2", null);
-      builder.doTest("+5=", "", 0, "5", null);
-      builder.doTest("+9=", "", 0, "9", null);
-      builder.doTest("+1=", "", 0, "1", null);
+      builder.doTest("+ 7 =", "", 0, "7", null);
+      builder.doTest("+ 2 =", "", 0, "2", null);
+      builder.doTest("+ 5 =", "", 0, "5", null);
+      builder.doTest("+ 9 =", "", 0, "9", null);
+      builder.doTest("+ 1 =", "", 0, "1", null);
 
-      builder.doTest("1+5+", "1 + 5 + ", 3, "6", null);
-      builder.doTest("2+9+", "2 + 9 + ", 3, "11", null);
-      builder.doTest("3+8+", "3 + 8 + ", 3, "11", null);
-      builder.doTest("4+7+", "4 + 7 + ", 3, "11", null);
-      builder.doTest("5+6+", "5 + 6 + ", 3, "11", null);
+      builder.doTest("1 + 5 +", "1 + 5 + ", 3, "6", null);
+      builder.doTest("2 + 9 +", "2 + 9 + ", 3, "11", null);
+      builder.doTest("3 + 8 +", "3 + 8 + ", 3, "11", null);
+      builder.doTest("4 + 7 +", "4 + 7 + ", 3, "11", null);
+      builder.doTest("5 + 6 +", "5 + 6 + ", 3, "11", null);
 
-      builder.doTest("2+3+=", "", 0, "10", null);
-      builder.doTest("9+2+=", "", 0, "22", null);
-      builder.doTest("5+7+=", "", 0, "24", null);
-      builder.doTest("6+4+=", "", 0, "20", null);
-      builder.doTest("7+6+=", "", 0, "26", null);
+      builder.doTest("2 + 3 +=", "", 0, "10", null);
+      builder.doTest("9 + 2 +=", "", 0, "22", null);
+      builder.doTest("5 + 7 +=", "", 0, "24", null);
+      builder.doTest("6 + 4 +=", "", 0, "20", null);
+      builder.doTest("7 + 6 +=", "", 0, "26", null);
 
-      builder.doTest("1+1+2=", "", 0, "4", null);
-      builder.doTest("6+2+2=", "", 0, "10", null);
-      builder.doTest("1+7+3=", "", 0, "11", null);
-      builder.doTest("0+2+8=", "", 0, "10", null);
-      builder.doTest("5+9+3=", "", 0, "17", null);
+      builder.doTest("1 + 1 + 2 =", "", 0, "4", null);
+      builder.doTest("6 + 2 + 2 =", "", 0, "10", null);
+      builder.doTest("1 + 7 + 3 =", "", 0, "11", null);
+      builder.doTest("0 + 2 + 8 =", "", 0, "10", null);
+      builder.doTest("5 + 9 + 3 =", "", 0, "17", null);
 
-      builder.doTest("2+4=+5", "6 + 5", 2, "6", null);
-      builder.doTest("3+3=+7", "6 + 7", 2, "6", null);
-      builder.doTest("5+9=+6", "14 + 6", 2, "14", null);
-      builder.doTest("8+5=+4", "13 + 4", 2, "13", null);
-      builder.doTest("7+1=+3", "8 + 3", 2, "8", null);
+      builder.doTest("2 + 4 =+ 5", "6 + 5", 2, "6", null);
+      builder.doTest("3 + 3 =+ 7", "6 + 7", 2, "6", null);
+      builder.doTest("5 + 9 =+ 6", "14 + 6", 2, "14", null);
+      builder.doTest("8 + 5 =+ 4", "13 + 4", 2, "13", null);
+      builder.doTest("7 + 1 =+ 3", "8 + 3", 2, "8", null);
 
-      builder.doTest("7+5=+", "12 + ", 2, "12", null);
-      builder.doTest("4+3=+", "7 + ", 2, "7", null);
-      builder.doTest("2+2=+", "4 + ", 2, "4", null);
-      builder.doTest("8+8=+", "16 + ", 2, "16", null);
-      builder.doTest("6+1=+", "7 + ", 2, "7", null);
+      builder.doTest("7 + 5 =+", "12 + ", 2, "12", null);
+      builder.doTest("4 + 3 =+", "7 + ", 2, "7", null);
+      builder.doTest("2 + 2 =+", "4 + ", 2, "4", null);
+      builder.doTest("8 + 8 =+", "16 + ", 2, "16", null);
+      builder.doTest("6 + 1 =+", "7 + ", 2, "7", null);
 
-      builder.doTest("3+1=+=", "", 0, "8", null);
-      builder.doTest("5+5=+=", "", 0, "20", null);
-      builder.doTest("8+3=+=", "", 0, "22", null);
-      builder.doTest("4+8=+=", "", 0, "24", null);
-      builder.doTest("1+4=+=", "", 0, "10", null);
+      builder.doTest("3 + 1 =+=", "", 0, "8", null);
+      builder.doTest("5 + 5 =+=", "", 0, "20", null);
+      builder.doTest("8 + 3 =+=", "", 0, "22", null);
+      builder.doTest("4 + 8 =+=", "", 0, "24", null);
+      builder.doTest("1 + 4 =+=", "", 0, "10", null);
 
-      builder.doTest("5n+3=", "", 0, "-2", null);
-      builder.doTest("1n+4=", "", 0, "3", null);
-      builder.doTest("6n+2=", "", 0, "-4", null);
-      builder.doTest("8n+7=", "", 0, "-1", null);
-      builder.doTest("7n+6=", "", 0, "-1", null);
+      builder.doTest("5 n+ 3 =", "", 0, "-2", null);
+      builder.doTest("1 n+ 4 =", "", 0, "3", null);
+      builder.doTest("6 n+ 2 =", "", 0, "-4", null);
+      builder.doTest("8 n+ 7 =", "", 0, "-1", null);
+      builder.doTest("7 n+ 6 =", "", 0, "-1", null);
 
-      builder.doTest("4+4n=", "", 0, "0", null);
-      builder.doTest("2+7n=", "", 0, "-5", null);
-      builder.doTest("8+3n=", "", 0, "5", null);
-      builder.doTest("2+6n=", "", 0, "-4", null);
-      builder.doTest("4+7n=", "", 0, "-3", null);
+      builder.doTest("4 + 4 n=", "", 0, "0", null);
+      builder.doTest("2 + 7 n=", "", 0, "-5", null);
+      builder.doTest("8 + 3 n=", "", 0, "5", null);
+      builder.doTest("2 + 6 n=", "", 0, "-4", null);
+      builder.doTest("4 + 7 n=", "", 0, "-3", null);
 
-      builder.doTest("0.1+1=", "", 0, "1,1", null);
-      builder.doTest("2.5+5=", "", 0, "7,5", null);
-      builder.doTest("8.2+9=", "", 0, "17,2", null);
-      builder.doTest("4.3+4=", "", 0, "8,3", null);
-      builder.doTest("7.5+6=", "", 0, "13,5", null);
+      builder.doTest("0.1 + 1 =", "", 0, "1,1", null);
+      builder.doTest("2.5 + 5 =", "", 0, "7,5", null);
+      builder.doTest("8.2 + 9 =", "", 0, "17,2", null);
+      builder.doTest("4.3 + 4 =", "", 0, "8,3", null);
+      builder.doTest("7.5 + 6 =", "", 0, "13,5", null);
 
-      builder.doTest("7+1.2=", "", 0, "8,2", null);
-      builder.doTest("2+3.5=", "", 0, "5,5", null);
-      builder.doTest("4+5.6=", "", 0, "9,6", null);
-      builder.doTest("5+7.8=", "", 0, "12,8", null);
-      builder.doTest("3+9.1=", "", 0, "12,1", null);
+      builder.doTest("7 + 1.2 =", "", 0, "8,2", null);
+      builder.doTest("2 + 3.5 =", "", 0, "5,5", null);
+      builder.doTest("4 + 5.6 =", "", 0, "9,6", null);
+      builder.doTest("5 + 7.8 =", "", 0, "12,8", null);
+      builder.doTest("3 + 9.1 =", "", 0, "12,1", null);
    }
 
    @Test
    void subtractOperationTest() throws CalculatorException {
-      builder.doTest("2-2=", "", 0, "0", null);
-      builder.doTest("7-3=", "", 0, "4", null);
-      builder.doTest("1-8=", "", 0, "-7", null);
-      builder.doTest("5-6=", "", 0, "-1", null);
-      builder.doTest("3-9=", "", 0, "-6", null);
+      builder.doTest("2 - 2 =", "", 0, "0", null);
+      builder.doTest("7 - 3 =", "", 0, "4", null);
+      builder.doTest("1 - 8 =", "", 0, "-7", null);
+      builder.doTest("5 - 6 =", "", 0, "-1", null);
+      builder.doTest("3 - 9 =", "", 0, "-6", null);
 
-      builder.doTest("0-0=", "", 0, "0", null);
-      builder.doTest("1-0=", "", 0, "1", null);
-      builder.doTest("8-0=", "", 0, "8", null);
-      builder.doTest("0-5=", "", 0, "-5", null);
-      builder.doTest("0-3=", "", 0, "-3", null);
+      builder.doTest("0 - 0 =", "", 0, "0", null);
+      builder.doTest("1 - 0 =", "", 0, "1", null);
+      builder.doTest("8 - 0 =", "", 0, "8", null);
+      builder.doTest("0 - 5 =", "", 0, "-5", null);
+      builder.doTest("0 - 3 =", "", 0, "-3", null);
 
-      builder.doTest("2-5", "2 - 5", 2, "2", null);
-      builder.doTest("5-3", "5 - 3", 2, "5", null);
-      builder.doTest("2-3", "2 - 3", 2, "2", null);
-      builder.doTest("2-8", "2 - 8", 2, "2", null);
-      builder.doTest("1-2", "1 - 2", 2, "1", null);
+      builder.doTest("2 - 5 ", "2 - 5", 2, "2", null);
+      builder.doTest("5 - 3 ", "5 - 3", 2, "5", null);
+      builder.doTest("2 - 3 ", "2 - 3", 2, "2", null);
+      builder.doTest("2 - 8 ", "2 - 8", 2, "2", null);
+      builder.doTest("1 - 2 ", "1 - 2", 2, "1", null);
 
-      builder.doTest("0-0", "0 - 0", 2, "0", null);
-      builder.doTest("1-0", "1 - 0", 2, "1", null);
-      builder.doTest("5-0", "5 - 0", 2, "5", null);
-      builder.doTest("0-2", "0 - 2", 2, "0", null);
-      builder.doTest("0-6", "0 - 6", 2, "0", null);
+      builder.doTest("0 - 0 ", "0 - 0", 2, "0", null);
+      builder.doTest("1 - 0 ", "1 - 0", 2, "1", null);
+      builder.doTest("5 - 0 ", "5 - 0", 2, "5", null);
+      builder.doTest("0 - 2 ", "0 - 2", 2, "0", null);
+      builder.doTest("0 - 6 ", "0 - 6", 2, "0", null);
 
-      builder.doTest("0-", "0 - ", 2, "0", null);
-      builder.doTest("2-", "2 - ", 2, "2", null);
-      builder.doTest("3-", "3 - ", 2, "3", null);
-      builder.doTest("9-", "9 - ", 2, "9", null);
-      builder.doTest("8-", "8 - ", 2, "8", null);
+      builder.doTest("0 -", "0 - ", 2, "0", null);
+      builder.doTest("2 -", "2 - ", 2, "2", null);
+      builder.doTest("3 -", "3 - ", 2, "3", null);
+      builder.doTest("9 -", "9 - ", 2, "9", null);
+      builder.doTest("8 -", "8 - ", 2, "8", null);
 
-      builder.doTest("-1", "0 - 1", 2, "0", null);
-      builder.doTest("-5", "0 - 5", 2, "0", null);
-      builder.doTest("-9", "0 - 9", 2, "0", null);
-      builder.doTest("-7", "0 - 7", 2, "0", null);
-      builder.doTest("-3", "0 - 3", 2, "0", null);
+      builder.doTest("- 1", "0 - 1", 2, "0", null);
+      builder.doTest("- 5", "0 - 5", 2, "0", null);
+      builder.doTest("- 9", "0 - 9", 2, "0", null);
+      builder.doTest("- 7", "0 - 7", 2, "0", null);
+      builder.doTest("- 3", "0 - 3", 2, "0", null);
 
       builder.doTest("-", "0 - ", 2, "0", null);
 
-      builder.doTest("1-=", "", 0, "0", null);
-      builder.doTest("5-=", "", 0, "0", null);
-      builder.doTest("3-=", "", 0, "0", null);
-      builder.doTest("2-=", "", 0, "0", null);
-      builder.doTest("7-=", "", 0, "0", null);
+      builder.doTest("1 -=", "", 0, "0", null);
+      builder.doTest("5 -=", "", 0, "0", null);
+      builder.doTest("3 -=", "", 0, "0", null);
+      builder.doTest("2 -=", "", 0, "0", null);
+      builder.doTest("7 -=", "", 0, "0", null);
 
-      builder.doTest("-7=", "", 0, "-7", null);
-      builder.doTest("-2=", "", 0, "-2", null);
-      builder.doTest("-5=", "", 0, "-5", null);
-      builder.doTest("-9=", "", 0, "-9", null);
-      builder.doTest("-1=", "", 0, "-1", null);
+      builder.doTest("- 7 =", "", 0, "-7", null);
+      builder.doTest("- 2 =", "", 0, "-2", null);
+      builder.doTest("- 5 =", "", 0, "-5", null);
+      builder.doTest("- 9 =", "", 0, "-9", null);
+      builder.doTest("- 1 =", "", 0, "-1", null);
 
-      builder.doTest("1-5-", "1 - 5 - ", 3, "-4", null);
-      builder.doTest("2-9-", "2 - 9 - ", 3, "-7", null);
-      builder.doTest("3-8-", "3 - 8 - ", 3, "-5", null);
-      builder.doTest("4-7-", "4 - 7 - ", 3, "-3", null);
-      builder.doTest("5-6-", "5 - 6 - ", 3, "-1", null);
+      builder.doTest("1 - 5 -", "1 - 5 - ", 3, "-4", null);
+      builder.doTest("2 - 9 -", "2 - 9 - ", 3, "-7", null);
+      builder.doTest("3 - 8 -", "3 - 8 - ", 3, "-5", null);
+      builder.doTest("4 - 7 -", "4 - 7 - ", 3, "-3", null);
+      builder.doTest("5 - 6 -", "5 - 6 - ", 3, "-1", null);
 
-      builder.doTest("2-3-=", "", 0, "0", null);
-      builder.doTest("9-2-=", "", 0, "0", null);
-      builder.doTest("5-7-=", "", 0, "0", null);
-      builder.doTest("6-4-=", "", 0, "0", null);
-      builder.doTest("7-6-=", "", 0, "0", null);
+      builder.doTest("2 - 3 -=", "", 0, "0", null);
+      builder.doTest("9 - 2 -=", "", 0, "0", null);
+      builder.doTest("5 - 7 -=", "", 0, "0", null);
+      builder.doTest("6 - 4 -=", "", 0, "0", null);
+      builder.doTest("7 - 6 -=", "", 0, "0", null);
 
-      builder.doTest("1-1-2=", "", 0, "-2", null);
-      builder.doTest("6-2-2=", "", 0, "2", null);
-      builder.doTest("1-7-3=", "", 0, "-9", null);
-      builder.doTest("0-2-8=", "", 0, "-10", null);
-      builder.doTest("5-9-3=", "", 0, "-7", null);
+      builder.doTest("1 - 1 - 2 =", "", 0, "-2", null);
+      builder.doTest("6 - 2 - 2 =", "", 0, "2", null);
+      builder.doTest("1 - 7 - 3 =", "", 0, "-9", null);
+      builder.doTest("0 - 2 - 8 =", "", 0, "-10", null);
+      builder.doTest("5 - 9 - 3 =", "", 0, "-7", null);
 
-      builder.doTest("2-4=-5", "-2 - 5", 2, "-2", null);
-      builder.doTest("3-3=-7", "0 - 7", 2, "0", null);
-      builder.doTest("5-9=-6", "-4 - 6", 2, "-4", null);
-      builder.doTest("8-5=-4", "3 - 4", 2, "3", null);
-      builder.doTest("7-1=-3", "6 - 3", 2, "6", null);
+      builder.doTest("2 - 4 =- 5", "-2 - 5", 2, "-2", null);
+      builder.doTest("3 - 3 =- 7", "0 - 7", 2, "0", null);
+      builder.doTest("5 - 9 =- 6", "-4 - 6", 2, "-4", null);
+      builder.doTest("8 - 5 =- 4", "3 - 4", 2, "3", null);
+      builder.doTest("7 - 1 =- 3", "6 - 3", 2, "6", null);
 
-      builder.doTest("7-5=-", "2 - ", 2, "2", null);
-      builder.doTest("4-3=-", "1 - ", 2, "1", null);
-      builder.doTest("2-2=-", "0 - ", 2, "0", null);
-      builder.doTest("8-8=-", "0 - ", 2, "0", null);
-      builder.doTest("6-1=-", "5 - ", 2, "5", null);
+      builder.doTest("7 - 5 =-", "2 - ", 2, "2", null);
+      builder.doTest("4 - 3 =-", "1 - ", 2, "1", null);
+      builder.doTest("2 - 2 =-", "0 - ", 2, "0", null);
+      builder.doTest("8 - 8 =-", "0 - ", 2, "0", null);
+      builder.doTest("6 - 1 =-", "5 - ", 2, "5", null);
 
-      builder.doTest("3-1=-=", "", 0, "0", null);
-      builder.doTest("5-5=-=", "", 0, "0", null);
-      builder.doTest("8-3=-=", "", 0, "0", null);
-      builder.doTest("4-8=-=", "", 0, "0", null);
-      builder.doTest("1-4=-=", "", 0, "0", null);
+      builder.doTest("3 - 1 =-=", "", 0, "0", null);
+      builder.doTest("5 - 5 =-=", "", 0, "0", null);
+      builder.doTest("8 - 3 =-=", "", 0, "0", null);
+      builder.doTest("4 - 8 =-=", "", 0, "0", null);
+      builder.doTest("1 - 4 =-=", "", 0, "0", null);
 
-      builder.doTest("5n-3=", "", 0, "-8", null);
-      builder.doTest("1n-4=", "", 0, "-5", null);
-      builder.doTest("6n-2=", "", 0, "-8", null);
-      builder.doTest("8n-7=", "", 0, "-15", null);
-      builder.doTest("7n-6=", "", 0, "-13", null);
+      builder.doTest("5 n- 3 =", "", 0, "-8", null);
+      builder.doTest("1 n- 4 =", "", 0, "-5", null);
+      builder.doTest("6 n- 2 =", "", 0, "-8", null);
+      builder.doTest("8 n- 7 =", "", 0, "-15", null);
+      builder.doTest("7 n- 6 =", "", 0, "-13", null);
 
-      builder.doTest("4-4n=", "", 0, "8", null);
-      builder.doTest("2-7n=", "", 0, "9", null);
-      builder.doTest("8-3n=", "", 0, "11", null);
-      builder.doTest("2-6n=", "", 0, "8", null);
-      builder.doTest("4-7n=", "", 0, "11", null);
+      builder.doTest("4 - 4 n=", "", 0, "8", null);
+      builder.doTest("2 - 7 n=", "", 0, "9", null);
+      builder.doTest("8 - 3 n=", "", 0, "11", null);
+      builder.doTest("2 - 6 n=", "", 0, "8", null);
+      builder.doTest("4 - 7 n=", "", 0, "11", null);
 
-      builder.doTest("0.1-1=", "", 0, "-0,9", null);
-      builder.doTest("2.5-5=", "", 0, "-2,5", null);
-      builder.doTest("8.2-9=", "", 0, "-0,8", null);
-      builder.doTest("4.3-4=", "", 0, "0,3", null);
-      builder.doTest("7.5-6=", "", 0, "1,5", null);
+      builder.doTest("0.1 - 1 =", "", 0, "-0,9", null);
+      builder.doTest("2.5 - 5 =", "", 0, "-2,5", null);
+      builder.doTest("8.2 - 9 =", "", 0, "-0,8", null);
+      builder.doTest("4.3 - 4 =", "", 0, "0,3", null);
+      builder.doTest("7.5 - 6 =", "", 0, "1,5", null);
 
-      builder.doTest("7-1.2=", "", 0, "5,8", null);
-      builder.doTest("2-3.5=", "", 0, "-1,5", null);
-      builder.doTest("4-5.6=", "", 0, "-1,6", null);
-      builder.doTest("5-7.8=", "", 0, "-2,8", null);
-      builder.doTest("3-9.1=", "", 0, "-6,1", null);
+      builder.doTest("7 - 1.2 =", "", 0, "5,8", null);
+      builder.doTest("2 - 3.5 =", "", 0, "-1,5", null);
+      builder.doTest("4 - 5.6 =", "", 0, "-1,6", null);
+      builder.doTest("5 - 7.8 =", "", 0, "-2,8", null);
+      builder.doTest("3 - 9.1 =", "", 0, "-6,1", null);
    }
 
    @Test
    void multiplyOperationTest() throws CalculatorException {
-      builder.doTest("2×2=", "", 0, "4", null);
-      builder.doTest("7×3=", "", 0, "21", null);
-      builder.doTest("1×8=", "", 0, "8", null);
-      builder.doTest("5×6=", "", 0, "30", null);
-      builder.doTest("3×9=", "", 0, "27", null);
+      builder.doTest("2 × 2 =", "", 0, "4", null);
+      builder.doTest("7 × 3 =", "", 0, "21", null);
+      builder.doTest("1 × 8 =", "", 0, "8", null);
+      builder.doTest("5 × 6 =", "", 0, "30", null);
+      builder.doTest("3 × 9 =", "", 0, "27", null);
 
-      builder.doTest("0×0=", "", 0, "0", null);
-      builder.doTest("1×0=", "", 0, "0", null);
-      builder.doTest("8×0=", "", 0, "0", null);
-      builder.doTest("0×5=", "", 0, "0", null);
-      builder.doTest("0×3=", "", 0, "0", null);
+      builder.doTest("0 × 0 =", "", 0, "0", null);
+      builder.doTest("1 × 0 =", "", 0, "0", null);
+      builder.doTest("8 × 0 =", "", 0, "0", null);
+      builder.doTest("0 × 5 =", "", 0, "0", null);
+      builder.doTest("0 × 3 =", "", 0, "0", null);
 
-      builder.doTest("2×5", "2 × 5", 2, "2", null);
-      builder.doTest("5×3", "5 × 3", 2, "5", null);
-      builder.doTest("2×3", "2 × 3", 2, "2", null);
-      builder.doTest("2×8", "2 × 8", 2, "2", null);
-      builder.doTest("1×2", "1 × 2", 2, "1", null);
+      builder.doTest("2 × 5 ", "2 × 5", 2, "2", null);
+      builder.doTest("5 × 3 ", "5 × 3", 2, "5", null);
+      builder.doTest("2 × 3 ", "2 × 3", 2, "2", null);
+      builder.doTest("2 × 8 ", "2 × 8", 2, "2", null);
+      builder.doTest("1 × 2 ", "1 × 2", 2, "1", null);
 
-      builder.doTest("0×0", "0 × 0", 2, "0", null);
-      builder.doTest("1×0", "1 × 0", 2, "1", null);
-      builder.doTest("5×0", "5 × 0", 2, "5", null);
-      builder.doTest("0×2", "0 × 2", 2, "0", null);
-      builder.doTest("0×6", "0 × 6", 2, "0", null);
+      builder.doTest("0 × 0 ", "0 × 0", 2, "0", null);
+      builder.doTest("1 × 0 ", "1 × 0", 2, "1", null);
+      builder.doTest("5 × 0 ", "5 × 0", 2, "5", null);
+      builder.doTest("0 × 2 ", "0 × 2", 2, "0", null);
+      builder.doTest("0 × 6 ", "0 × 6", 2, "0", null);
 
-      builder.doTest("0×", "0 × ", 2, "0", null);
-      builder.doTest("2×", "2 × ", 2, "2", null);
-      builder.doTest("3×", "3 × ", 2, "3", null);
-      builder.doTest("9×", "9 × ", 2, "9", null);
-      builder.doTest("8×", "8 × ", 2, "8", null);
+      builder.doTest("0 ×", "0 × ", 2, "0", null);
+      builder.doTest("2 ×", "2 × ", 2, "2", null);
+      builder.doTest("3 ×", "3 × ", 2, "3", null);
+      builder.doTest("9 ×", "9 × ", 2, "9", null);
+      builder.doTest("8 ×", "8 × ", 2, "8", null);
 
-      builder.doTest("×1", "0 × 1", 2, "0", null);
-      builder.doTest("×5", "0 × 5", 2, "0", null);
-      builder.doTest("×9", "0 × 9", 2, "0", null);
-      builder.doTest("×7", "0 × 7", 2, "0", null);
-      builder.doTest("×3", "0 × 3", 2, "0", null);
+      builder.doTest("× 1", "0 × 1", 2, "0", null);
+      builder.doTest("× 5", "0 × 5", 2, "0", null);
+      builder.doTest("× 9", "0 × 9", 2, "0", null);
+      builder.doTest("× 7", "0 × 7", 2, "0", null);
+      builder.doTest("× 3", "0 × 3", 2, "0", null);
 
       builder.doTest("×", "0 × ", 2, "0", null);
 
-      builder.doTest("1×=", "", 0, "1", null);
-      builder.doTest("5×=", "", 0, "25", null);
-      builder.doTest("3×=", "", 0, "9", null);
-      builder.doTest("2×=", "", 0, "4", null);
-      builder.doTest("7×=", "", 0, "49", null);
+      builder.doTest("1 ×=", "", 0, "1", null);
+      builder.doTest("5 ×=", "", 0, "25", null);
+      builder.doTest("3 ×=", "", 0, "9", null);
+      builder.doTest("2 ×=", "", 0, "4", null);
+      builder.doTest("7 ×=", "", 0, "49", null);
 
-      builder.doTest("×7=", "", 0, "0", null);
-      builder.doTest("×2=", "", 0, "0", null);
-      builder.doTest("×5=", "", 0, "0", null);
-      builder.doTest("×9=", "", 0, "0", null);
-      builder.doTest("×1=", "", 0, "0", null);
+      builder.doTest("× 7 =", "", 0, "0", null);
+      builder.doTest("× 2 =", "", 0, "0", null);
+      builder.doTest("× 5 =", "", 0, "0", null);
+      builder.doTest("× 9 =", "", 0, "0", null);
+      builder.doTest("× 1 =", "", 0, "0", null);
 
-      builder.doTest("1×5×", "1 × 5 × ", 3, "5", null);
-      builder.doTest("2×9×", "2 × 9 × ", 3, "18", null);
-      builder.doTest("3×8×", "3 × 8 × ", 3, "24", null);
-      builder.doTest("4×7×", "4 × 7 × ", 3, "28", null);
-      builder.doTest("5×6×", "5 × 6 × ", 3, "30", null);
+      builder.doTest("1 × 5 ×", "1 × 5 × ", 3, "5", null);
+      builder.doTest("2 × 9 ×", "2 × 9 × ", 3, "18", null);
+      builder.doTest("3 × 8 ×", "3 × 8 × ", 3, "24", null);
+      builder.doTest("4 × 7 ×", "4 × 7 × ", 3, "28", null);
+      builder.doTest("5 × 6 ×", "5 × 6 × ", 3, "30", null);
 
-      builder.doTest("2×3×=", "", 0, "36", null);
-      builder.doTest("9×2×=", "", 0, "324", null);
-      builder.doTest("5×7×=", "", 0, "1 225", null);
-      builder.doTest("6×4×=", "", 0, "576", null);
-      builder.doTest("7×6×=", "", 0, "1 764", null);
+      builder.doTest("2 × 3 ×=", "", 0, "36", null);
+      builder.doTest("9 × 2 ×=", "", 0, "324", null);
+      builder.doTest("5 × 7 ×=", "", 0, "1 225", null);
+      builder.doTest("6 × 4 ×=", "", 0, "576", null);
+      builder.doTest("7 × 6 ×=", "", 0, "1 764", null);
 
-      builder.doTest("1×1×2=", "", 0, "2", null);
-      builder.doTest("6×2×2=", "", 0, "24", null);
-      builder.doTest("1×7×3=", "", 0, "21", null);
-      builder.doTest("0×2×8=", "", 0, "0", null);
-      builder.doTest("5×9×3=", "", 0, "135", null);
+      builder.doTest("1 × 1 × 2 =", "", 0, "2", null);
+      builder.doTest("6 × 2 × 2 =", "", 0, "24", null);
+      builder.doTest("1 × 7 × 3 =", "", 0, "21", null);
+      builder.doTest("0 × 2 × 8 =", "", 0, "0", null);
+      builder.doTest("5 × 9 × 3 =", "", 0, "135", null);
 
-      builder.doTest("2×4=×5", "8 × 5", 2, "8", null);
-      builder.doTest("3×3=×7", "9 × 7", 2, "9", null);
-      builder.doTest("5×9=×6", "45 × 6", 2, "45", null);
-      builder.doTest("8×5=×4", "40 × 4", 2, "40", null);
-      builder.doTest("7×1=×3", "7 × 3", 2, "7", null);
+      builder.doTest("2 × 4 =× 5 ", "8 × 5", 2, "8", null);
+      builder.doTest("3 × 3 =× 7 ", "9 × 7", 2, "9", null);
+      builder.doTest("5 × 9 =× 6 ", "45 × 6", 2, "45", null);
+      builder.doTest("8 × 5 =× 4 ", "40 × 4", 2, "40", null);
+      builder.doTest("7 × 1 =× 3 ", "7 × 3", 2, "7", null);
 
-      builder.doTest("7×5=×", "35 × ", 2, "35", null);
-      builder.doTest("4×3=×", "12 × ", 2, "12", null);
-      builder.doTest("2×2=×", "4 × ", 2, "4", null);
-      builder.doTest("8×8=×", "64 × ", 2, "64", null);
-      builder.doTest("6×1=×", "6 × ", 2, "6", null);
+      builder.doTest("7 × 5 =×", "35 × ", 2, "35", null);
+      builder.doTest("4 × 3 =×", "12 × ", 2, "12", null);
+      builder.doTest("2 × 2 =×", "4 × ", 2, "4", null);
+      builder.doTest("8 × 8 =×", "64 × ", 2, "64", null);
+      builder.doTest("6 × 1 =×", "6 × ", 2, "6", null);
 
-      builder.doTest("3×1=×=", "", 0, "9", null);
-      builder.doTest("5×5=×=", "", 0, "625", null);
-      builder.doTest("8×3=×=", "", 0, "576", null);
-      builder.doTest("4×8=×=", "", 0, "1 024", null);
-      builder.doTest("1×4=×=", "", 0, "16", null);
+      builder.doTest("3 × 1 =×=", "", 0, "9", null);
+      builder.doTest("5 × 5 =×=", "", 0, "625", null);
+      builder.doTest("8 × 3 =×=", "", 0, "576", null);
+      builder.doTest("4 × 8 =×=", "", 0, "1 024", null);
+      builder.doTest("1 × 4 =×=", "", 0, "16", null);
 
-      builder.doTest("5n×3=", "", 0, "-15", null);
-      builder.doTest("1n×4=", "", 0, "-4", null);
-      builder.doTest("6n×2=", "", 0, "-12", null);
-      builder.doTest("8n×7=", "", 0, "-56", null);
-      builder.doTest("7n×6=", "", 0, "-42", null);
+      builder.doTest("5 n× 3 =", "", 0, "-15", null);
+      builder.doTest("1 n× 4 =", "", 0, "-4", null);
+      builder.doTest("6 n× 2 =", "", 0, "-12", null);
+      builder.doTest("8 n× 7 =", "", 0, "-56", null);
+      builder.doTest("7 n× 6 =", "", 0, "-42", null);
 
-      builder.doTest("4×4n=", "", 0, "-16", null);
-      builder.doTest("2×7n=", "", 0, "-14", null);
-      builder.doTest("8×3n=", "", 0, "-24", null);
-      builder.doTest("2×6n=", "", 0, "-12", null);
-      builder.doTest("4×7n=", "", 0, "-28", null);
+      builder.doTest("4 × 4 n=", "", 0, "-16", null);
+      builder.doTest("2 × 7 n=", "", 0, "-14", null);
+      builder.doTest("8 × 3 n=", "", 0, "-24", null);
+      builder.doTest("2 × 6 n=", "", 0, "-12", null);
+      builder.doTest("4 × 7 n=", "", 0, "-28", null);
 
-      builder.doTest("0.1×1=", "", 0, "0,1", null);
-      builder.doTest("2.5×5=", "", 0, "12,5", null);
-      builder.doTest("8.2×9=", "", 0, "73,8", null);
-      builder.doTest("4.3×4=", "", 0, "17,2", null);
-      builder.doTest("7.5×6=", "", 0, "45", null);
+      builder.doTest("0.1 × 1 =", "", 0, "0,1", null);
+      builder.doTest("2.5 × 5 =", "", 0, "12,5", null);
+      builder.doTest("8.2 × 9 =", "", 0, "73,8", null);
+      builder.doTest("4.3 × 4 =", "", 0, "17,2", null);
+      builder.doTest("7.5 × 6 =", "", 0, "45", null);
 
-      builder.doTest("7×1.2=", "", 0, "8,4", null);
-      builder.doTest("2×3.5=", "", 0, "7", null);
-      builder.doTest("4×5.6=", "", 0, "22,4", null);
-      builder.doTest("5×7.8=", "", 0, "39", null);
-      builder.doTest("3×9.1=", "", 0, "27,3", null);
+      builder.doTest("7 × 1.2 =", "", 0, "8,4", null);
+      builder.doTest("2 × 3.5 =", "", 0, "7", null);
+      builder.doTest("4 × 5.6 =", "", 0, "22,4", null);
+      builder.doTest("5 × 7.8 =", "", 0, "39", null);
+      builder.doTest("3 × 9.1 =", "", 0, "27,3", null);
    }
 
    @Test
    void divideOperationTest() throws CalculatorException {
-      builder.doTest("2÷2=", "", 0, "1", null);
-      builder.doTest("7÷3=", "", 0, "2,333333333333333", null);
-      builder.doTest("1÷8=", "", 0, "0,125", null);
-      builder.doTest("5÷6=", "", 0, "0,8333333333333333", null);
-      builder.doTest("3÷9=", "", 0, "0,3333333333333333", null);
+      builder.doTest("2 ÷ 2 =", "", 0, "1", null);
+      builder.doTest("7 ÷ 3 =", "", 0, "2,333333333333333", null);
+      builder.doTest("1 ÷ 8 =", "", 0, "0,125", null);
+      builder.doTest("5 ÷ 6 =", "", 0, "0,8333333333333333", null);
+      builder.doTest("3 ÷ 9 =", "", 0, "0,3333333333333333", null);
 
-      builder.doTest("0÷5=", "", 0, "0", null);
-      builder.doTest("0÷3=", "", 0, "0", null);
+      builder.doTest("0 ÷ 5 =", "", 0, "0", null);
+      builder.doTest("0 ÷ 3 =", "", 0, "0", null);
 
-      builder.doTest("2÷5", "2 ÷ 5", 2, "2", null);
-      builder.doTest("5÷3", "5 ÷ 3", 2, "5", null);
-      builder.doTest("2÷3", "2 ÷ 3", 2, "2", null);
-      builder.doTest("2÷8", "2 ÷ 8", 2, "2", null);
-      builder.doTest("1÷2", "1 ÷ 2", 2, "1", null);
+      builder.doTest("2 ÷ 5", "2 ÷ 5", 2, "2", null);
+      builder.doTest("5 ÷ 3", "5 ÷ 3", 2, "5", null);
+      builder.doTest("2 ÷ 3", "2 ÷ 3", 2, "2", null);
+      builder.doTest("2 ÷ 8", "2 ÷ 8", 2, "2", null);
+      builder.doTest("1 ÷ 2", "1 ÷ 2", 2, "1", null);
 
-      builder.doTest("0÷0", "0 ÷ 0", 2, "0", null);
-      builder.doTest("1÷0", "1 ÷ 0", 2, "1", null);
-      builder.doTest("5÷0", "5 ÷ 0", 2, "5", null);
-      builder.doTest("0÷2", "0 ÷ 2", 2, "0", null);
-      builder.doTest("0÷6", "0 ÷ 6", 2, "0", null);
+      builder.doTest("0 ÷ 0", "0 ÷ 0", 2, "0", null);
+      builder.doTest("1 ÷ 0", "1 ÷ 0", 2, "1", null);
+      builder.doTest("5 ÷ 0", "5 ÷ 0", 2, "5", null);
+      builder.doTest("0 ÷ 2", "0 ÷ 2", 2, "0", null);
+      builder.doTest("0 ÷ 6", "0 ÷ 6", 2, "0", null);
 
-      builder.doTest("0÷", "0 ÷ ", 2, "0", null);
-      builder.doTest("2÷", "2 ÷ ", 2, "2", null);
-      builder.doTest("3÷", "3 ÷ ", 2, "3", null);
-      builder.doTest("9÷", "9 ÷ ", 2, "9", null);
-      builder.doTest("8÷", "8 ÷ ", 2, "8", null);
+      builder.doTest("0 ÷", "0 ÷ ", 2, "0", null);
+      builder.doTest("2 ÷", "2 ÷ ", 2, "2", null);
+      builder.doTest("3 ÷", "3 ÷ ", 2, "3", null);
+      builder.doTest("9 ÷", "9 ÷ ", 2, "9", null);
+      builder.doTest("8 ÷", "8 ÷ ", 2, "8", null);
 
-      builder.doTest("÷1", "0 ÷ 1", 2, "0", null);
-      builder.doTest("÷5", "0 ÷ 5", 2, "0", null);
-      builder.doTest("÷9", "0 ÷ 9", 2, "0", null);
-      builder.doTest("÷7", "0 ÷ 7", 2, "0", null);
-      builder.doTest("÷3", "0 ÷ 3", 2, "0", null);
+      builder.doTest("÷ 1", "0 ÷ 1", 2, "0", null);
+      builder.doTest("÷ 5", "0 ÷ 5", 2, "0", null);
+      builder.doTest("÷ 9", "0 ÷ 9", 2, "0", null);
+      builder.doTest("÷ 7", "0 ÷ 7", 2, "0", null);
+      builder.doTest("÷ 3", "0 ÷ 3", 2, "0", null);
 
       builder.doTest("÷", "0 ÷ ", 2, "0", null);
 
-      builder.doTest("1÷=", "", 0, "1", null);
-      builder.doTest("5÷=", "", 0, "1", null);
-      builder.doTest("3÷=", "", 0, "1", null);
-      builder.doTest("2÷=", "", 0, "1", null);
-      builder.doTest("7÷=", "", 0, "1", null);
+      builder.doTest("1 ÷=", "", 0, "1", null);
+      builder.doTest("5 ÷=", "", 0, "1", null);
+      builder.doTest("3 ÷=", "", 0, "1", null);
+      builder.doTest("2 ÷=", "", 0, "1", null);
+      builder.doTest("7 ÷=", "", 0, "1", null);
 
-      builder.doTest("÷7=", "", 0, "0", null);
-      builder.doTest("÷2=", "", 0, "0", null);
-      builder.doTest("÷5=", "", 0, "0", null);
-      builder.doTest("÷9=", "", 0, "0", null);
-      builder.doTest("÷1=", "", 0, "0", null);
+      builder.doTest("÷ 7 =", "", 0, "0", null);
+      builder.doTest("÷ 2 =", "", 0, "0", null);
+      builder.doTest("÷ 5 =", "", 0, "0", null);
+      builder.doTest("÷ 9 =", "", 0, "0", null);
+      builder.doTest("÷ 1 =", "", 0, "0", null);
 
-      builder.doTest("1÷5÷", "1 ÷ 5 ÷ ", 3, "0,2", null);
-      builder.doTest("2÷9÷", "2 ÷ 9 ÷ ", 3, "0,2222222222222222", null);
-      builder.doTest("3÷8÷", "3 ÷ 8 ÷ ", 3, "0,375", null);
-      builder.doTest("4÷7÷", "4 ÷ 7 ÷ ", 3, "0,5714285714285714", null);
-      builder.doTest("5÷6÷", "5 ÷ 6 ÷ ", 3, "0,8333333333333333", null);
+      builder.doTest("1 ÷ 5 ÷", "1 ÷ 5 ÷ ", 3, "0,2", null);
+      builder.doTest("2 ÷ 9 ÷", "2 ÷ 9 ÷ ", 3, "0,2222222222222222", null);
+      builder.doTest("3 ÷ 8 ÷", "3 ÷ 8 ÷ ", 3, "0,375", null);
+      builder.doTest("4 ÷ 7 ÷", "4 ÷ 7 ÷ ", 3, "0,5714285714285714", null);
+      builder.doTest("5 ÷ 6 ÷", "5 ÷ 6 ÷ ", 3, "0,8333333333333333", null);
 
-      builder.doTest("2÷3÷=", "", 0, "1", null);
-      builder.doTest("9÷2÷=", "", 0, "1", null);
-      builder.doTest("5÷7÷=", "", 0, "1", null);
-      builder.doTest("6÷4÷=", "", 0, "1", null);
-      builder.doTest("7÷6÷=", "", 0, "1", null);
+      builder.doTest("2 ÷ 3 ÷=", "", 0, "1", null);
+      builder.doTest("9 ÷ 2 ÷=", "", 0, "1", null);
+      builder.doTest("5 ÷ 7 ÷=", "", 0, "1", null);
+      builder.doTest("6 ÷ 4 ÷=", "", 0, "1", null);
+      builder.doTest("7 ÷ 6 ÷=", "", 0, "1", null);
 
-      builder.doTest("1÷1÷2=", "", 0, "0,5", null);
-      builder.doTest("6÷2÷2=", "", 0, "1,5", null);
-      builder.doTest("1÷7÷3=", "", 0, "0,0476190476190476", null);
-      builder.doTest("0÷2÷8=", "", 0, "0", null);
-      builder.doTest("5÷9÷3=", "", 0, "0,1851851851851852", null);
+      builder.doTest("1 ÷ 1 ÷ 2 =", "", 0, "0,5", null);
+      builder.doTest("6 ÷ 2 ÷ 2 =", "", 0, "1,5", null);
+      builder.doTest("1 ÷ 7 ÷ 3 =", "", 0, "0,0476190476190476", null);
+      builder.doTest("0 ÷ 2 ÷ 8 =", "", 0, "0", null);
+      builder.doTest("5 ÷ 9 ÷ 3 =", "", 0, "0,1851851851851852", null);
 
-      builder.doTest("2÷4=÷5", "0,5 ÷ 5", 2, "0,5", null);
-      builder.doTest("3÷3=÷7", "1 ÷ 7", 2, "1", null);
-      builder.doTest("5÷9=÷6", "0,5555555555555556 ÷ 6", 2, "0,5555555555555556", null);
-      builder.doTest("8÷5=÷4", "1,6 ÷ 4", 2, "1,6", null);
-      builder.doTest("7÷1=÷3", "7 ÷ 3", 2, "7", null);
+      builder.doTest("2 ÷ 4 =÷ 5", "0,5 ÷ 5", 2, "0,5", null);
+      builder.doTest("3 ÷ 3 =÷ 7", "1 ÷ 7", 2, "1", null);
+      builder.doTest("5 ÷ 9 =÷ 6", "0,5555555555555556 ÷ 6", 2, "0,5555555555555556", null);
+      builder.doTest("8 ÷ 5 =÷ 4", "1,6 ÷ 4", 2, "1,6", null);
+      builder.doTest("7 ÷ 1 =÷ 3", "7 ÷ 3", 2, "7", null);
 
-      builder.doTest("7÷5=÷", "1,4 ÷ ", 2, "1,4", null);
-      builder.doTest("4÷3=÷", "1,333333333333333 ÷ ", 2, "1,333333333333333", null);
-      builder.doTest("2÷2=÷", "1 ÷ ", 2, "1", null);
-      builder.doTest("8÷8=÷", "1 ÷ ", 2, "1", null);
-      builder.doTest("6÷1=÷", "6 ÷ ", 2, "6", null);
+      builder.doTest("7 ÷ 5 =÷", "1,4 ÷ ", 2, "1,4", null);
+      builder.doTest("4 ÷ 3 =÷", "1,333333333333333 ÷ ", 2, "1,333333333333333", null);
+      builder.doTest("2 ÷ 2 =÷", "1 ÷ ", 2, "1", null);
+      builder.doTest("8 ÷ 8 =÷", "1 ÷ ", 2, "1", null);
+      builder.doTest("6 ÷ 1 =÷", "6 ÷ ", 2, "6", null);
 
-      builder.doTest("3÷1=÷=", "", 0, "1", null);
-      builder.doTest("5÷5=÷=", "", 0, "1", null);
-      builder.doTest("8÷3=÷=", "", 0, "1", null);
-      builder.doTest("4÷8=÷=", "", 0, "1", null);
-      builder.doTest("1÷4=÷=", "", 0, "1", null);
+      builder.doTest("3 ÷ 1 =÷=", "", 0, "1", null);
+      builder.doTest("5 ÷ 5 =÷=", "", 0, "1", null);
+      builder.doTest("8 ÷ 3 =÷=", "", 0, "1", null);
+      builder.doTest("4 ÷ 8 =÷=", "", 0, "1", null);
+      builder.doTest("1 ÷ 4 =÷=", "", 0, "1", null);
 
-      builder.doTest("5n÷3=", "", 0, "-1,666666666666667", null);
-      builder.doTest("1n÷4=", "", 0, "-0,25", null);
-      builder.doTest("6n÷2=", "", 0, "-3", null);
-      builder.doTest("8n÷7=", "", 0, "-1,142857142857143", null);
-      builder.doTest("7n÷6=", "", 0, "-1,166666666666667", null);
+      builder.doTest("5 n÷ 3 =", "", 0, "-1,666666666666667", null);
+      builder.doTest("1 n÷ 4 =", "", 0, "-0,25", null);
+      builder.doTest("6 n÷ 2 =", "", 0, "-3", null);
+      builder.doTest("8 n÷ 7 =", "", 0, "-1,142857142857143", null);
+      builder.doTest("7 n÷ 6 =", "", 0, "-1,166666666666667", null);
 
-      builder.doTest("4÷4n=", "", 0, "-1", null);
-      builder.doTest("2÷7n=", "", 0, "-0,2857142857142857", null);
-      builder.doTest("8÷3n=", "", 0, "-2,666666666666667", null);
-      builder.doTest("2÷6n=", "", 0, "-0,3333333333333333", null);
-      builder.doTest("4÷7n=", "", 0, "-0,5714285714285714", null);
+      builder.doTest("4 ÷ 4 n=", "", 0, "-1", null);
+      builder.doTest("2 ÷ 7 n=", "", 0, "-0,2857142857142857", null);
+      builder.doTest("8 ÷ 3 n=", "", 0, "-2,666666666666667", null);
+      builder.doTest("2 ÷ 6 n=", "", 0, "-0,3333333333333333", null);
+      builder.doTest("4 ÷ 7 n=", "", 0, "-0,5714285714285714", null);
 
-      builder.doTest("0.1÷1=", "", 0, "0,1", null);
-      builder.doTest("2.5÷5=", "", 0, "0,5", null);
-      builder.doTest("8.2÷9=", "", 0, "0,9111111111111111", null);
-      builder.doTest("4.3÷4=", "", 0, "1,075", null);
-      builder.doTest("7.5÷6=", "", 0, "1,25", null);
+      builder.doTest("0.1 ÷ 1 =", "", 0, "0,1", null);
+      builder.doTest("2.5 ÷ 5 =", "", 0, "0,5", null);
+      builder.doTest("8.2 ÷ 9 =", "", 0, "0,9111111111111111", null);
+      builder.doTest("4.3 ÷ 4 =", "", 0, "1,075", null);
+      builder.doTest("7.5 ÷ 6 =", "", 0, "1,25", null);
 
-      builder.doTest("7÷1.2=", "", 0, "5,833333333333333", null);
-      builder.doTest("2÷3.5=", "", 0, "0,5714285714285714", null);
-      builder.doTest("4÷5.6=", "", 0, "0,7142857142857143", null);
-      builder.doTest("5÷7.8=", "", 0, "0,641025641025641", null);
-      builder.doTest("3÷9.1=", "", 0, "0,3296703296703297", null);
+      builder.doTest("7 ÷ 1.2 =", "", 0, "5,833333333333333", null);
+      builder.doTest("2 ÷ 3.5 =", "", 0, "0,5714285714285714", null);
+      builder.doTest("4 ÷ 5.6 =", "", 0, "0,7142857142857143", null);
+      builder.doTest("5 ÷ 7.8 =", "", 0, "0,641025641025641", null);
+      builder.doTest("3 ÷ 9.1 =", "", 0, "0,3296703296703297", null);
    }
 
    @Test
@@ -537,73 +537,73 @@ public class CalculatorTest {
       builder.doTest("×=", "", 0, "0", null);
       builder.doTest("÷=", "", 0, "0", null);
 
-      builder.doTest("3=", "", 0, "3", null);
-      builder.doTest("2=", "", 0, "2", null);
-      builder.doTest("4=", "", 0, "4", null);
-      builder.doTest("5=", "", 0, "5", null);
+      builder.doTest("3 =", "", 0, "3", null);
+      builder.doTest("2 =", "", 0, "2", null);
+      builder.doTest("4 =", "", 0, "4", null);
+      builder.doTest("5 =", "", 0, "5", null);
 
-      builder.doTest("2n=", "", 0, "-2", null);
-      builder.doTest("3n=", "", 0, "-3", null);
-      builder.doTest("8n=", "", 0, "-8", null);
-      builder.doTest("1n=", "", 0, "-1", null);
+      builder.doTest("2 n=", "", 0, "-2", null);
+      builder.doTest("3 n=", "", 0, "-3", null);
+      builder.doTest("8 n=", "", 0, "-8", null);
+      builder.doTest("1 n=", "", 0, "-1", null);
 
-      builder.doTest("0n=", "", 0, "0", null);
+      builder.doTest("0 n=", "", 0, "0", null);
 
       builder.doTest("√=", "", 0, "0", null);
       builder.doTest("%=", "", 0, "0", null);
       builder.doTest("SQR =", "", 0, "0", null);
       builder.doTest("n=", "", 0, "0", null);
 
-      builder.doTest("5+3=", "", 0, "8", "3");
-      builder.doTest("2+2=", "", 0, "4", "2");
-      builder.doTest("6+3=", "", 0, "9", "3");
-      builder.doTest("5+1=", "", 0, "6", "1");
+      builder.doTest("5 + 3 =", "", 0, "8", "0");
+      builder.doTest("2 + 2 =", "", 0, "4", "0");
+      builder.doTest("6 + 3 =", "", 0, "9", "0");
+      builder.doTest("5 + 1 =", "", 0, "6", "0");
 
-      builder.doTest("5+4=√", "√(9)", 1, "9", "3");
-      builder.doTest("5+4=%", "0,81", 1, "9", "0,81");
-      builder.doTest("5+4= SQR ", "sqr(9)", 1, "9", "81");
-      builder.doTest("5+4=n", "negate(9)", 1, "9", "-9");
+      builder.doTest("5 + 4 =√", "√(9)", 1, "9", "3");
+      builder.doTest("5 + 4 =%", "0,81", 1, "9", "0,81");
+      builder.doTest("5 + 4 = SQR ", "sqr(9)", 1, "9", "81");
+      builder.doTest("5 + 4 =n", "negate(9)", 1, "9", "-9");
 
-      builder.doTest("2+3=+++", "5 + ", 2, "5", null);
-      builder.doTest("2+3=---", "5 - ", 2, "5", null);
-      builder.doTest("2+3=×××", "5 × ", 2, "5", null);
-      builder.doTest("2+3=÷÷÷", "5 ÷ ", 2, "5", null);
+      builder.doTest("2 + 3 =+++", "5 + ", 2, "5", null);
+      builder.doTest("2 + 3 =---", "5 - ", 2, "5", null);
+      builder.doTest("2 + 3 =×××", "5 × ", 2, "5", null);
+      builder.doTest("2 + 3 =÷÷÷", "5 ÷ ", 2, "5", null);
 
-      builder.doTest("239×4=+-×+", "956 + ", 2, "956", null);
-      builder.doTest("239-4=+-×-", "235 - ", 2, "235", null);
-      builder.doTest("239+4=+-÷×", "243 × ", 2, "243", null);
-      builder.doTest("239÷4=+-×÷", "59,75 ÷ ", 2, "59,75", null);
+      builder.doTest("239 × 4 =+-×+", "956 + ", 2, "956", null);
+      builder.doTest("239 - 4 =+-×-", "235 - ", 2, "235", null);
+      builder.doTest("239 + 4 =+-÷×", "243 × ", 2, "243", null);
+      builder.doTest("239 ÷ 4 =+-×÷", "59,75 ÷ ", 2, "59,75", null);
 
-      builder.doTest("10+=", "", 0, "20", null);
-      builder.doTest("10+=+=", "", 0, "40", null);
-      builder.doTest("10+=+=+=", "", 0, "80", null);
+      builder.doTest("10 +=", "", 0, "20", null);
+      builder.doTest("10 +=+=", "", 0, "40", null);
+      builder.doTest("10 +=+=+=", "", 0, "80", null);
 
-      builder.doTest("7÷3=1+", "1 + ", 2, "1", null);
-      builder.doTest("2×4=4-", "4 - ", 2, "4", null);
-      builder.doTest("5-8=5×", "5 × ", 2, "5", null);
-      builder.doTest("1+2=6÷", "6 ÷ ", 2, "6", null);
+      builder.doTest("7 ÷ 3 = 1 +", "1 + ", 2, "1", null);
+      builder.doTest("2 × 4 = 4 -", "4 - ", 2, "4", null);
+      builder.doTest("5 - 8 = 5 ×", "5 × ", 2, "5", null);
+      builder.doTest("1 + 2 = 6 ÷", "6 ÷ ", 2, "6", null);
 
-      builder.doTest("1+3===", "", 0, "10", null);
-      builder.doTest("289-102===", "", 0, "-17", null);
-      builder.doTest("2×3===", "", 0, "54", null);
-      builder.doTest("188÷2===", "", 0, "23,5", null);
+      builder.doTest("1 + 3 ===", "", 0, "10", null);
+      builder.doTest("289 - 102 ===", "", 0, "-17", null);
+      builder.doTest("2 × 3 ===", "", 0, "54", null);
+      builder.doTest("188 ÷ 2 ===", "", 0, "23,5", null);
 
-      builder.doTest("2+3=1===", "", 0, "10", null);
-      builder.doTest("3-1=2===", "", 0, "-1", null);
-      builder.doTest("4×2=3===", "", 0, "24", null);
-      builder.doTest("5÷7=4===", "", 0, "0,0116618075801749", null);
+      builder.doTest("2 + 3 = 1 ===", "", 0, "10", null);
+      builder.doTest("3 - 1 = 2 ===", "", 0, "-1", null);
+      builder.doTest("4 × 2 = 3 ===", "", 0, "24", null);
+      builder.doTest("5 ÷ 7 = 4 ===", "", 0, "0,0116618075801749", null);
 
-      builder.doTest("2=+", "2 + ", 2, "2", null);
-      builder.doTest("4=-", "4 - ", 2, "4", null);
-      builder.doTest("5=×", "5 × ", 2, "5", null);
-      builder.doTest("8=÷", "8 ÷ ", 2, "8", null);
+      builder.doTest("2 =+", "2 + ", 2, "2", null);
+      builder.doTest("4 =-", "4 - ", 2, "4", null);
+      builder.doTest("5 =×", "5 × ", 2, "5", null);
+      builder.doTest("8 =÷", "8 ÷ ", 2, "8", null);
 
-      builder.doTest("3=6+", "6 + ", 2, "6", null);
-      builder.doTest("4=2-", "2 - ", 2, "2", null);
-      builder.doTest("5=3×", "3 × ", 2, "3", null);
-      builder.doTest("8=7÷", "7 ÷ ", 2, "7", null);
+      builder.doTest("3 = 6 +", "6 + ", 2, "6", null);
+      builder.doTest("4 = 2 -", "2 - ", 2, "2", null);
+      builder.doTest("5 = 3 ×", "3 × ", 2, "3", null);
+      builder.doTest("8 = 7 ÷", "7 ÷ ", 2, "7", null);
 
-      builder.doTest("4√=", "", 0, "2", "2");
+      builder.doTest("4 √=", "", 0, "2", "2");
       builder.doTest("8 SQR =", "", 0, "64", "64");
       builder.doTest("2 1/x =", "", 0, "0,5", null);
       builder.doTest("5 % =", "", 0, "0", null);

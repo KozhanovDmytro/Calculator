@@ -119,6 +119,18 @@ public class Calculator {
       return response;
    }
 
+   public ResponseDto buildOperand(BigDecimal number) {
+      if (!container.isMakingOperand()) {
+         clearEntry();
+      }
+
+      container.getOperation().buildOperand(number);
+
+      isShownResult = false;
+
+      return getCurrentState();
+   }
+
    /**
     * Function executes equals operation and returns current state of model.
     *
@@ -345,5 +357,9 @@ public class Calculator {
       response.setHistory(showHistory());
 
       return response;
+   }
+
+   public boolean isShownResult() {
+      return isShownResult;
    }
 }

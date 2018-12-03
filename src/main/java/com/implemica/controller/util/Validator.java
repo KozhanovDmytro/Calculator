@@ -32,7 +32,7 @@ public class Validator {
    private final String DECIMAL_EXPONENT_SEPARATOR = "e";
 
    /** Comma. */
-   public final char SEPARATOR = ',';
+   public final String SEPARATOR = ".";
 
    /** Space. */
    private final char SPACE = ' ';
@@ -101,7 +101,13 @@ public class Validator {
          df.applyPattern(getPatternForDecimalNumber(number.scale()));
       }
 
-      return df.format(number) + (separator ? SEPARATOR : NOTHING);
+      return df.format(number) + (separator ? ',' : NOTHING);
+   }
+
+   public String builtOperand(StringBuilder number) {
+      boolean isSeparator = number.charAt(number.length() - 1) == '.';
+
+      return builtOperand(new BigDecimal(number.toString()), isSeparator);
    }
 
    /**
@@ -188,7 +194,7 @@ public class Validator {
    private DecimalFormatSymbols buildDecimalFormatSymbols() {
       DecimalFormatSymbols dfs = new DecimalFormatSymbols();
       dfs.setGroupingSeparator(SPACE);
-      dfs.setDecimalSeparator(SEPARATOR);
+      dfs.setDecimalSeparator(',');
 
       return dfs;
    }

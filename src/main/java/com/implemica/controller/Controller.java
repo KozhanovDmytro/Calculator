@@ -1,6 +1,7 @@
 package com.implemica.controller;
 
 import com.implemica.controller.util.HistoryParser;
+import com.implemica.controller.util.Node;
 import com.implemica.controller.util.Validator;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
@@ -14,7 +15,6 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
-import com.implemica.controller.util.Node;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,8 +22,6 @@ import javafx.scene.control.Labeled;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.RoundingMode;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.Properties;
@@ -101,6 +99,8 @@ public class Controller {
    /** The flag which note current state of some buttons. */
    private boolean isBlocked;
 
+   private boolean isSpecial;
+
    /**
     *  This interface contains a function where an exception expect.
     *  That's needed for catching one exception in different place.
@@ -172,10 +172,10 @@ public class Controller {
       setText(memoryBtn, Node.MEMORY);
       setText(logBtn, Node.HISTORY);
 
-      setText(plusOperation, Node.PLUS_OPERATION);
-      setText(minusOperation, Node.MINUS_OPERATION);
-      setText(multiplyOperation, Node.MULTIPLY_OPERATION);
-      setText(divideOperation, Node.DIVIDE_OPERATION);
+//      setText(plusOperation, Node.PLUS_OPERATION);
+//      setText(minusOperation, Node.MINUS_OPERATION);
+//      setText(multiplyOperation, Node.MULTIPLY_OPERATION);
+//      setText(divideOperation, Node.DIVIDE_OPERATION);
    }
 
    /**
@@ -210,12 +210,18 @@ public class Controller {
             operand.deleteCharAt(0);
          }
 
-         showResult(operand.toString());
-//         actionForSpecialOperations(new Negate());
+         if(calculator.isShownResult()) {
+            actionForSpecialOperations(new Negate());
+         } else {
+            calculator.buildOperand(new BigDecimal(operand.toString()));
+            showResult(validator.builtOperand(operand));
+         }
+
       });
 
       equalsOperation.setOnAction(event -> {
          unlock();
+         operand = new StringBuilder("0");
          parseDto(() -> calculator.equalsOperation());
       });
    }
@@ -226,9 +232,10 @@ public class Controller {
     * @param operation simple operation
     */
    private void actionForOperations(SimpleOperation operation) {
-      operation.buildOperand(new BigDecimal(operand.toString()));
+      operand = new StringBuilder("0");
 
       parseDto(() -> calculator.executeSimpleOperation(operation));
+      isSpecial = false;
    }
 
    /**
@@ -238,6 +245,9 @@ public class Controller {
     */
    private void actionForSpecialOperations(SpecialOperation operation) {
       parseDto(() -> calculator.executeSpecialOperation(operation));
+
+      operand = new StringBuilder("0");
+      isSpecial = true;
    }
 
    /**
@@ -256,13 +266,11 @@ public class Controller {
       btn9.setOnAction(event -> actionForBuildOperand(Number.NINE));
 
       separateBtn.setOnAction(event -> {
-         if(operand.indexOf(Character.toString(validator.SEPARATOR)) == -1) {
+         if(!operand.toString().contains(validator.SEPARATOR)) {
             operand.append(validator.SEPARATOR);
          }
 
-         showResult(operand.toString());
-//         ResponseDto response = calculator.separateOperand();
-//         parseBuiltOperand(response);
+         showResult(validator.builtOperand(operand));
       });
    }
 
@@ -272,15 +280,17 @@ public class Controller {
     * @param number number
     */
    private void actionForBuildOperand(Number number) {
-      if(operand.charAt(0) == '0' && operand.length() == 1) {
-         operand.deleteCharAt(0);
-      }
-
       if(!isOverflow()) {
          operand.append(number.translate());
       }
 
-      showResult(operand.toString());
+      if(operand.charAt(0) == '0' && operand.charAt(1) != '.') {
+         operand.deleteCharAt(0);
+      }
+
+      calculator.buildOperand(new BigDecimal(operand.toString()));
+
+      showResult(validator.builtOperand(operand));
       unlock();
    }
 
@@ -297,18 +307,25 @@ public class Controller {
             operand = new StringBuilder("0");
          }
 
-         showResult(operand.toString());
+         if(!calculator.isShownResult() && !isSpecial) {
+            calculator.buildOperand(new BigDecimal(operand.toString()));
+            showResult(validator.builtOperand(operand));
+         }
+
          unlock();
       });
       clear.setOnAction(event -> {
          operand = new StringBuilder("0");
          parseDto(() -> calculator.clear());
          unlock();
+         isSpecial = false;
       });
       clearEntry.setOnAction(event -> {
          operand = new StringBuilder("0");
          parseDto(() -> calculator.clearEntry());
          unlock();
+
+         isSpecial = false;
       });
    }
 
@@ -466,19 +483,40 @@ public class Controller {
       return textsForLabel.getProperty(node.getTextFromProperty());
    }
 
+   // todo docs
    private boolean isOverflow() {
-      int quantityCharsOfIntegerNumber;
-      BigDecimal operand = new BigDecimal(this.operand.toString().replace(",", "."));
-      if (operand.toBigInteger().compareTo(BigInteger.ZERO) == 0) {
-         quantityCharsOfIntegerNumber = 0;
+      // finds separator. it must where comma is but
+      // if comma isn't in operand that index of separator
+      // must be index of the last char of operand.
+
+      int indexSeparator;
+      boolean isComma = operand.toString().contains(validator.SEPARATOR);
+
+      if(isComma) {
+         indexSeparator = operand.indexOf(validator.SEPARATOR);
       } else {
-         quantityCharsOfIntegerNumber = quantityCharsOfIntegerNumber(operand);
+         indexSeparator = operand.length();
       }
 
-      return quantityCharsOfIntegerNumber + operand.scale() >= 16;
-   }
+      // parse to two parts decimal and integer.
+      String integerPart = operand.substring(0, indexSeparator);
+      String decimalPart;
+      if(isComma) {
+         decimalPart = operand.substring(indexSeparator + 1);
+      } else {
+         decimalPart = operand.substring(indexSeparator);
+      }
 
-   private int quantityCharsOfIntegerNumber(BigDecimal number) {
-      return number.setScale(0, RoundingMode.DOWN).precision();
+      // calc
+      int quantityCharOfIntegerPart;
+      int quantityCharOfDecimalPart = decimalPart.length();
+
+      if(integerPart.charAt(0) == '0') {
+         quantityCharOfIntegerPart = 0;
+      } else {
+         quantityCharOfIntegerPart = integerPart.length();
+      }
+
+      return quantityCharOfIntegerPart + quantityCharOfDecimalPart >= 16;
    }
 }

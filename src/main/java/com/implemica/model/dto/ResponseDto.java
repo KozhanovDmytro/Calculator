@@ -55,10 +55,12 @@ public class ResponseDto {
       this.history = history;
    }
 
+   @Deprecated
    public boolean isSeparated() {
       return isSeparated;
    }
 
+   @Deprecated
    public void setSeparated(boolean separated) {
       isSeparated = separated;
    }

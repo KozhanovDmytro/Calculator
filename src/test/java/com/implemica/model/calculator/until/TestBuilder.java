@@ -51,33 +51,35 @@ public class TestBuilder {
       this.builtOperand = "0";
       String[] actions = pattern.split(" ");
       for (String action : actions) {
-         switch (action) {
-            case "C":
-               clear();
-               break;
-            case "CE":
-               clearEntry();
-               break;
-            case "MC":
-               memoryClear();
-               break;
-            case "MR":
-               memoryRecall();
-               break;
-            case "M+":
-               addMemory();
-               break;
-            case "M-":
-               subtractMemory();
-               break;
-            case "SQR":
-               executeSpecialOperation(new Square());
-               break;
-            case "1/x":
-               executeSpecialOperation(new DivideBy());
-               break;
-            default:
-               checkBySymbols(action);
+         if ("C".equals(action)) {
+            clear();
+
+         } else if ("CE".equals(action)) {
+            clearEntry();
+
+         } else if ("MC".equals(action)) {
+            memoryClear();
+
+         } else if ("MR".equals(action)) {
+            memoryRecall();
+
+         } else if ("M+".equals(action)) {
+            addMemory();
+
+         } else if ("M-".equals(action)) {
+            subtractMemory();
+
+         } else if ("SQR".equals(action)) {
+            executeSpecialOperation(new Square());
+
+         } else if ("1/x".equals(action)) {
+            executeSpecialOperation(new DivideBy());
+
+         } else if(action.matches("\\d+\\.?\\d*")) {
+            calculator.buildOperand(new BigDecimal(action));
+
+         } else {
+            checkBySymbols(action);
          }
       }
 
@@ -110,39 +112,39 @@ public class TestBuilder {
    private void checkBySymbols(String pattern) throws CalculatorException {
       for (char action : pattern.toCharArray()) {
          switch (action) {
-            case '0':
-               buildOperand(Number.ZERO);
-               break;
-            case '1':
-               buildOperand(Number.ONE);
-               break;
-            case '2':
-               buildOperand(Number.TWO);
-               break;
-            case '3':
-               buildOperand(Number.THREE);
-               break;
-            case '4':
-               buildOperand(Number.FOUR);
-               break;
-            case '5':
-               buildOperand(Number.FIVE);
-               break;
-            case '6':
-               buildOperand(Number.SIX);
-               break;
-            case '7':
-               buildOperand(Number.SEVEN);
-               break;
-            case '8':
-               buildOperand(Number.EIGHT);
-               break;
-            case '9':
-               buildOperand(Number.NINE);
-               break;
-            case '.':
-               executeSeparate();
-               break;
+//            case '0':
+//               buildOperand(Number.ZERO);
+//               break;
+//            case '1':
+//               buildOperand(Number.ONE);
+//               break;
+//            case '2':
+//               buildOperand(Number.TWO);
+//               break;
+//            case '3':
+//               buildOperand(Number.THREE);
+//               break;
+//            case '4':
+//               buildOperand(Number.FOUR);
+//               break;
+//            case '5':
+//               buildOperand(Number.FIVE);
+//               break;
+//            case '6':
+//               buildOperand(Number.SIX);
+//               break;
+//            case '7':
+//               buildOperand(Number.SEVEN);
+//               break;
+//            case '8':
+//               buildOperand(Number.EIGHT);
+//               break;
+//            case '9':
+//               buildOperand(Number.NINE);
+//               break;
+//            case '.':
+//               executeSeparate();
+//               break;
             case '+':
                executeSimpleOperation(new Plus());
                break;

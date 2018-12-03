@@ -30,6 +30,7 @@ public abstract class SimpleOperation {
    private LinkedList<SpecialOperation> operandHistory = new LinkedList<>();
 
    /** The flag which indicate whether the last character of operand comma or not. */
+   @Deprecated
    private boolean separated;
 
    /** The flag which indicate whether show operand in history or not.  */
@@ -38,9 +39,11 @@ public abstract class SimpleOperation {
    /*constants*/
 
    /** Empty string. */
+   @Deprecated
    private static final String NOTHING = "";
 
    /** Comma. */
+   @Deprecated
    private static final String SEPARATOR = ".";
 
    /** Max scale. */
@@ -63,6 +66,7 @@ public abstract class SimpleOperation {
     *
     * @param number number to add to operand.
     */
+   @Deprecated
    public void buildOperand(Number number) {
       if (!isOverflow()) {
          operand = new BigDecimal(operand.toPlainString() + (separated ? SEPARATOR : NOTHING) + number.translate());
@@ -82,6 +86,8 @@ public abstract class SimpleOperation {
    public void buildOperand(BigDecimal operand) {
       this.operand = operand;
       this.initialOperand = operand;
+
+      isShowOperand = true;
    }
 
    /**
