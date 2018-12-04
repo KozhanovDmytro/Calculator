@@ -70,7 +70,7 @@ public class HistoryParser {
          result.append(getFirstCharacterForSpecialOperation(specialOperation));
       }
 
-      if(simpleOperation.isShowOperand()) {
+      if(simpleOperation.isMadeOperand()) {
          result.append(validator.showNumberForHistory(simpleOperation.getInitialOperand()));
       }
 

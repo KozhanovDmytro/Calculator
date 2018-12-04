@@ -84,7 +84,7 @@ public class History {
     */
    public void hideLast() {
       if (!operations.isEmpty()) {
-         operations.getLast().setShowOperand(false);
+         operations.getLast().setMadeOperand(false);
       }
    }
 

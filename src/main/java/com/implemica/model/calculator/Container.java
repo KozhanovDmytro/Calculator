@@ -8,7 +8,6 @@ import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
-import com.implemica.model.operations.special.Negate;
 import com.implemica.model.operations.special.Percent;
 
 import java.math.BigDecimal;
@@ -35,9 +34,6 @@ public class Container {
 
    /** Memory. */
    private Memory memory = new Memory();
-
-   /** The flag indicates whether operand is being formed or not. */
-   private boolean makingOperand = true;
 
    /*constants*/
 
@@ -88,7 +84,7 @@ public class Container {
 
       BigDecimal newOperand;
       operation.getOperandHistory().addFirst(specialOperation);
-      if (isResult && !operation.isShowOperand()) {
+      if (isResult && !operation.isMadeOperand()) {
          operation.setInitialOperand(result);
          newOperand = resolveSpecialOperation(specialOperation);
 
@@ -102,8 +98,7 @@ public class Container {
          operation.setInitialOperand(newOperand);
       }
 
-      makingOperand = specialOperation instanceof Negate;
-      operation.setShowOperand(true);
+      operation.setMadeOperand(true);
       operation.setOperand(checkForZero(newOperand));
       checkOverflow(operation.getOperand());
    }
@@ -116,7 +111,7 @@ public class Container {
    void addToHistory(SimpleOperation simpleOperation) {
       if (history.size() == 0) {
          history.firstAdd(new Default(result), simpleOperation);
-      } else if (this.operation.isShowOperand()) {
+      } else if (this.operation.isMadeOperand()) {
          history.add(simpleOperation);
       } else {
          history.changeLast(simpleOperation);
@@ -147,7 +142,7 @@ public class Container {
    private void addToHistoryDefaultOperation() {
       if (operation instanceof Default && getHistory().size() == 0) {
          getHistory().add(operation);
-         operation.setShowOperand(true);
+         operation.setMadeOperand(true);
       }
    }
 
@@ -241,20 +236,5 @@ public class Container {
     */
    Memory getMemory() {
       return memory;
-   }
-
-   /**
-    * Accessor for {@link #makingOperand}
-    * @return {@link #makingOperand}
-    */
-   boolean isMakingOperand() {
-      return makingOperand;
-   }
-
-   /**
-    * Accessor for {@link #makingOperand}
-    */
-   void setMakingOperand(boolean makingOperand) {
-      this.makingOperand = makingOperand;
    }
 }

@@ -65,7 +65,6 @@ public class Calculator {
 
       container.addToHistory(operation);
       container.setOperation(operation);
-      container.setMakingOperand(true);
    }
 
    /**
@@ -82,7 +81,7 @@ public class Calculator {
     * @return boolean value if {@link Container} contains {@link Equals} operation.
     */
    private boolean isEquals() {
-      return container.getOperation() instanceof Equals && container.getOperation().isShowOperand();
+      return container.getOperation() instanceof Equals && container.getOperation().isMadeOperand();
    }
 
    /**
@@ -103,7 +102,7 @@ public class Calculator {
     * @return current state of model
     */
    public ResponseDto buildOperand(BigDecimal number) {
-      if (!container.isMakingOperand()) {
+      if (!container.getOperation().isMadeOperand()) {
          clearEntry();
       }
 
@@ -119,7 +118,7 @@ public class Calculator {
     * @return current state of model.
     */
    public ResponseDto equalsOperation() throws CalculatorException {
-      if (container.isMakingOperand() && isShownResult) {
+      if (isShownResult) {
          container.getOperation().setOperand(container.getResult());
       } else if (container.getOperation() instanceof Equals) {
          prepareForDoEquals();
@@ -131,7 +130,6 @@ public class Calculator {
       container.getHistory().clear();
 
       container.setOperation(equals);
-      container.setMakingOperand(false);
 
       return getCurrentStateForResult();
    }
@@ -155,7 +153,6 @@ public class Calculator {
       container.getHistory().clear();
       container.setResult(BigDecimal.ZERO);
       container.setOperation(new Default());
-      container.setMakingOperand(true);
       isShownResult = false;
 
       return getCurrentState();
@@ -169,7 +166,6 @@ public class Calculator {
    public ResponseDto clearEntry() {
       container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
-      container.setMakingOperand(true);
       container.getOperation().getOperandHistory().clear();
 
       return getCurrentState();
@@ -202,7 +198,7 @@ public class Calculator {
     */
    private BigDecimal resolveMemory() {
       BigDecimal number;
-      if (container.getOperation().isShowOperand()) {
+      if (container.getOperation().isMadeOperand()) {
          number = container.getOperation().getOperand();
       } else {
          number = container.getResult();

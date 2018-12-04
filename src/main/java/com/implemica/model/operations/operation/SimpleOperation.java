@@ -23,8 +23,8 @@ public abstract class SimpleOperation {
    /** History for operand. */
    private LinkedList<SpecialOperation> operandHistory = new LinkedList<>();
 
-   /** The flag which indicate whether show operand in history or not.  */
-   private boolean isShowOperand;
+   /** The flag indicates whether operand was made or not. */
+   private boolean isMadeOperand;
 
    /*constants*/
 
@@ -49,7 +49,7 @@ public abstract class SimpleOperation {
       this.operand = operand;
       this.initialOperand = operand;
 
-      isShowOperand = true;
+      isMadeOperand = true;
    }
 
    /* accessors */
@@ -74,11 +74,11 @@ public abstract class SimpleOperation {
       return operandHistory;
    }
 
-   public boolean isShowOperand() {
-      return isShowOperand;
+   public boolean isMadeOperand() {
+      return isMadeOperand;
    }
 
-   public void setShowOperand(boolean showOperand) {
-      this.isShowOperand = showOperand;
+   public void setMadeOperand(boolean madeOperand) {
+      this.isMadeOperand = madeOperand;
    }
 }
