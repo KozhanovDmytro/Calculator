@@ -5,6 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Arabic test.
+ *
+ * @author Dmytro Kozhanov
+ */
 public class ArabicTest {
 
    @Test

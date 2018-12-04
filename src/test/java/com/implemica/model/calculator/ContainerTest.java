@@ -15,6 +15,14 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Function for testing {@link Container}
+ *
+ * @see Container
+ * @see Validator
+ *
+ * @author  Dmytro Kozhanov
+ */
 public class ContainerTest {
 
    private Container container;

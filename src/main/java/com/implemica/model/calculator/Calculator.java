@@ -291,6 +291,10 @@ public class Calculator {
       return response;
    }
 
+   /**
+    * Accessor for this#isShownResult.
+    * @return this#isShownResult
+    */
    public boolean isShownResult() {
       return isShownResult;
    }

@@ -6,32 +6,42 @@ import com.implemica.model.exceptions.ExceptionType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Function for testing model. 
+ *
+ * @author Dmytro Kozhanov
+ */
 public class CalculatorTest {
 
    private TestBuilder builder;
 
-   // this pattern reach to number: 1e-9999 and write it as a result.
+   /** this pattern reach to number: 1e-9999 and write it as a result. */
    private String smallNumber = "1000000000000000 ×===================×================================× 1000000000000000 ======" +
            "× 10 ========= 1/x × 0.1 = ";
 
-   // this pattern reach to number: 2e-9999 and write it as a result.
+   /** this pattern reach to number: 2e-9999 and write it as a result. */
    private String doubleSmallNumber = "1000000000000000 ×===================×================================× 1000000000000000 ======" +
            "× 10 ========= 1/x × 0.2 = ";
 
-   // this pattern create number by this short formula (MAX - 1).
-   // number must be 99999999...
-   // digit 9 must be 10 000 times.
+   /**
+    * this pattern create number by this short formula (MAX - 1).
+    * number must be 99999999...
+    * digit 9 must be 10 000 times.
+    */
    private String maxMinusOne = "1000000000000000 ×===================×================================× 1000000000000000 ======" +
            "× 10 =========- 1 × 10 + 9 =";
 
-   // this pattern provide to storage in memory this number : 0.9999999999999999999..94
-   // note! digit 9 must be 19999 times and at the end of this number must be digit 4
+   /**
+    * this pattern provide to storage in memory this number : 0.9999999999999999999..94
+    * note! digit 9 must be 19999 times and at the end of this number must be digit 4
+    */
    private String oneSubtractTheSmallestNumber = smallNumber + " M+ C " + "1000000000000000 ×===================×================================× 1000000000000000 ======" +
            "× 10 =========- 1 = 1/x - MR × 0.1 =- 0.9 =× 0.6 =- 0.4 =n MC M+ C ";
 
-   // this pattern create number by this short formula (-MAX - MIN).
-   // number must be -99999999...
-   // digit 9 must be 10 000 times.
+   /**
+    * this pattern create number by this short formula (-MAX - MIN).
+    * number must be -99999999... digit 9 must be 10 000 times.
+    */
    private String negateMaxSubtractMin = "1000000000000000 ×===================×================================× 1000000000000000 ======" +
            "× 10 =========- 1 × 10 n- 9 = ";
 

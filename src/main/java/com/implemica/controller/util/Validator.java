@@ -16,6 +16,9 @@ import java.text.DecimalFormatSymbols;
  */
 public class Validator {
 
+   /** Characters for display comma. */
+   private  static final char DECIMAL_SEPARATOR = ',';
+
    /** Pattern for number without exponent separator. */
    private final String PATTERN_FOR_NUMBER = ",###.################";
 
@@ -62,7 +65,7 @@ public class Validator {
    private final int MINIMUM_INTEGER_DIGITS = 0;
 
    /** Maximum integer digits. */
-   private final int MAXIMUM_INTEGER_DIGITS = 16;
+   public final int MAXIMUM_INTEGER_DIGITS = 16;
 
    /** Minimum fraction digits. */
    private final int MINIMUM_FRACTION_DIGITS = 0;
@@ -101,9 +104,18 @@ public class Validator {
          df.applyPattern(getPatternForDecimalNumber(number.scale()));
       }
 
-      return df.format(number) + (separator ? ',' : NOTHING);
+      return df.format(number) + (separator ? DECIMAL_SEPARATOR : NOTHING);
    }
 
+   /**
+    * Pattern for display built operand.
+    *
+    * This function uses when user click on digit numbers
+    * and for display desired number.
+    *
+    * @param number number
+    * @return comfortable number.
+    */
    public String builtOperand(StringBuilder number) {
       boolean isSeparator = number.charAt(number.length() - 1) == '.';
 
@@ -118,7 +130,7 @@ public class Validator {
     */
    private String getPatternForDecimalNumber(int scale) {
       String result = PATTERN_FOR_NUMBER;
-      if(scale <= 16) {
+      if(scale <= MAXIMUM_FRACTION_DIGITS) {
          StringBuilder newPattern = new StringBuilder(PATTERN_FOR_BUILD_NEW_PATTERN);
          for (int i = 0; i < scale; i++) {
             newPattern.append(ADDITIONAL_PART);
@@ -194,7 +206,7 @@ public class Validator {
    private DecimalFormatSymbols buildDecimalFormatSymbols() {
       DecimalFormatSymbols dfs = new DecimalFormatSymbols();
       dfs.setGroupingSeparator(SPACE);
-      dfs.setDecimalSeparator(',');
+      dfs.setDecimalSeparator(DECIMAL_SEPARATOR);
 
       return dfs;
    }

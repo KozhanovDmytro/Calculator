@@ -23,6 +23,33 @@ import java.util.LinkedList;
  */
 public class HistoryParser {
 
+   /** Plus sign */
+   private static final String PLUS_SIGN = " + ";
+
+   /** Minus sign */
+   private static final String MINUS_SIGN = " - ";
+
+   /** Multiply sign */
+   private static final String MULTIPLY_SIGN = " × ";
+
+   /** Divide sign */
+   private static final String DIVIDE_SIGN = " ÷ ";
+
+   /** Square root sign */
+   private static final String SQRT_SIGN = "√(";
+
+   /** Square sign */
+   private static final String SQR_SIGN = "sqr(";
+
+   /** Divide by sign */
+   private static final String DIVIDE_BY_SIGN = "1/(";
+
+   /** Negate sign */
+   private static final String NEGATE_SIGN = "negate(";
+
+   /** Second part of history sign */
+   private static final String SECOND_PART_OF_HISTORY = ")";
+
    /** Validator needed for make comfortable number. */
    private Validator validator = new Validator();
 
@@ -91,43 +118,61 @@ public class HistoryParser {
       }
    }
 
+   /**
+    * Gets character for {@link SimpleOperation} which was involved in history.
+    *
+    * @param operation current simple operation.
+    * @return character
+    */
    private String getCharacter(SimpleOperation operation) {
       String result = "";
 
       if(operation instanceof Plus) {
-         result = " + ";
+         result = PLUS_SIGN;
       } else if(operation instanceof Minus) {
-         result = " - ";
+         result = MINUS_SIGN;
       } else if(operation instanceof Multiply) {
-         result = " × ";
+         result = MULTIPLY_SIGN;
       } else if(operation instanceof Divide) {
-         result = " ÷ ";
+         result = DIVIDE_SIGN;
       }
 
       return result;
    }
 
+   /**
+    * Gets first part of {@link SpecialOperation}'s history.
+    *
+    * @param specialOperation current special operation
+    * @return first part
+    */
    private String getFirstCharacterForSpecialOperation(SpecialOperation specialOperation) {
       String result = "";
 
       if(specialOperation instanceof SquareRoot) {
-         result = "√(";
+         result = SQRT_SIGN;
       } else if (specialOperation instanceof Square) {
-         result = "sqr(";
+         result = SQR_SIGN;
       } else if (specialOperation instanceof DivideBy) {
-         result = "1/(";
+         result = DIVIDE_BY_SIGN;
       } else if( specialOperation instanceof Negate) {
-         result = "negate(";
+         result = NEGATE_SIGN;
       }
 
       return result;
    }
 
+   /**
+    * Gets first part of {@link SpecialOperation}'s history.
+    *
+    * @param specialOperation current special operation
+    * @return second part
+    */
    private String getSecondCharacterForSpecialOperation(SpecialOperation specialOperation) {
       String result = "";
 
       if (!(specialOperation instanceof Percent)) {
-         result = ")";
+         result = SECOND_PART_OF_HISTORY;
       }
 
       return result;

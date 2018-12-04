@@ -43,6 +43,14 @@ public class Controller {
    /** The path where a file with texts in English is. */
    private static final String PATH_TO_ENGLISH_TEXTS = "/com/implemica/view/resources/properties/text_En.properties";
 
+   /** Minus character. */
+   private static final char MINUS_SIGN = '-';
+
+   /** Just zero in string representational. */
+   private static final String ZERO_STRING = "0";
+   private static final char DOT_SIGNUM = '.';
+   private static final char ZERO = '0';
+
    /** Group of {@link Button} which have permission to change operand and result. */
    @FXML private Button clear, clearEntry, backSpace;
 
@@ -94,11 +102,12 @@ public class Controller {
    private HistoryParser historyParser = new HistoryParser();
 
    /** Builder for operand. */
-   private StringBuilder operand = new StringBuilder("0");
+   private StringBuilder operand = new StringBuilder(ZERO_STRING);
 
    /** The flag which note current state of some buttons. */
    private boolean isBlocked;
 
+   /** Flag indicates whether button for special operations was clicked or not. */
    private boolean isSpecial;
 
    /**
@@ -171,11 +180,6 @@ public class Controller {
       setText(extraLogLabel, Node.NO_LOG);
       setText(memoryBtn, Node.MEMORY);
       setText(logBtn, Node.HISTORY);
-
-//      setText(plusOperation, Node.PLUS_OPERATION);
-//      setText(minusOperation, Node.MINUS_OPERATION);
-//      setText(multiplyOperation, Node.MULTIPLY_OPERATION);
-//      setText(divideOperation, Node.DIVIDE_OPERATION);
    }
 
    /**
@@ -204,8 +208,8 @@ public class Controller {
 
 
       negateOperation.setOnAction(event -> {
-         if(operand.charAt(0) != '-') {
-            operand.insert(0, '-');
+         if(operand.charAt(0) != MINUS_SIGN) {
+            operand.insert(0, MINUS_SIGN);
          } else {
             operand.deleteCharAt(0);
          }
@@ -221,7 +225,7 @@ public class Controller {
 
       equalsOperation.setOnAction(event -> {
          unlock();
-         operand = new StringBuilder("0");
+         operand = new StringBuilder(ZERO_STRING);
          parseDto(() -> calculator.equalsOperation());
       });
    }
@@ -232,7 +236,7 @@ public class Controller {
     * @param operation simple operation
     */
    private void actionForOperations(SimpleOperation operation) {
-      operand = new StringBuilder("0");
+      operand = new StringBuilder(ZERO_STRING);
 
       parseDto(() -> calculator.executeSimpleOperation(operation));
       isSpecial = false;
@@ -246,7 +250,7 @@ public class Controller {
    private void actionForSpecialOperations(SpecialOperation operation) {
       parseDto(() -> calculator.executeSpecialOperation(operation));
 
-      operand = new StringBuilder("0");
+      operand = new StringBuilder(ZERO_STRING);
       isSpecial = true;
    }
 
@@ -284,7 +288,7 @@ public class Controller {
          operand.append(number.translate());
       }
 
-      if(operand.charAt(0) == '0' && operand.charAt(1) != '.') {
+      if(operand.charAt(0) == ZERO && operand.charAt(1) != DOT_SIGNUM) {
          operand.deleteCharAt(0);
       }
 
@@ -304,7 +308,7 @@ public class Controller {
          }
 
          if(operand.length() == 0) {
-            operand = new StringBuilder("0");
+            operand = new StringBuilder(ZERO_STRING);
          }
 
          if(!calculator.isShownResult() && !isSpecial) {
@@ -315,13 +319,13 @@ public class Controller {
          unlock();
       });
       clear.setOnAction(event -> {
-         operand = new StringBuilder("0");
+         operand = new StringBuilder(ZERO_STRING);
          parseDto(() -> calculator.clear());
          unlock();
          isSpecial = false;
       });
       clearEntry.setOnAction(event -> {
-         operand = new StringBuilder("0");
+         operand = new StringBuilder(ZERO_STRING);
          parseDto(() -> calculator.clearEntry());
          unlock();
 
@@ -468,7 +472,11 @@ public class Controller {
       return textsForLabel.getProperty(node.getTextFromProperty());
    }
 
-   // todo docs
+   /**
+    * Function defines whether this {@link #operand} is overflow or not.
+    *
+    * @return true if {@link #operand} is overflow.
+    */
    private boolean isOverflow() {
       // finds separator. it must where comma is but
       // if comma isn't in operand that index of separator
@@ -496,12 +504,12 @@ public class Controller {
       int quantityCharOfIntegerPart;
       int quantityCharOfDecimalPart = decimalPart.length();
 
-      if(integerPart.charAt(0) == '0') {
+      if(integerPart.charAt(0) == ZERO) {
          quantityCharOfIntegerPart = 0;
       } else {
          quantityCharOfIntegerPart = integerPart.length();
       }
 
-      return quantityCharOfIntegerPart + quantityCharOfDecimalPart >= 16;
+      return quantityCharOfIntegerPart + quantityCharOfDecimalPart >= validator.MAXIMUM_INTEGER_DIGITS;
    }
 }

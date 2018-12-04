@@ -3,6 +3,13 @@ package com.implemica.controller;
 import com.implemica.controller.util.TestFxBaseBuilder;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class for testing user's behavior.
+ *
+ * This class launch application and click the button automatically.
+ *
+ * @author Dmytro Kozhanov
+ */
 public class PerformanceTest extends TestFxBaseBuilder {
 
    @Test
@@ -506,7 +513,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("400 + % × 123.3 √ 1/x ÷ 55 × 12253 + 124n - 73 CE 81", "400 + 1600 × 1/(√(123,3)) ÷ 55 × 12253 + -124 - ","81");
       doTest("0.01 × 123 + % = √ SQR + 20 1/x ÷ 7.1 - % + 876 CE 765n ", "sqr(√(1,245129)) + 1/(20) ÷ 7,1 - 3,40562592057925e-4 + ", "-765");
       doTest("82 + 1 - 23 C 210 + n × 67.0987 SQR 1/x ÷ 8", "210 + negate(210) × 1/(sqr(67,0987)) ÷ ", "8");
-      doTest("1 + 34 = C 123 n + 3 % * -100 + √ × 123.4 + 6 SQR - 90 1/x", "-123 + -3,69 - 100 + √(123,4) + sqr(6) - 1/(90)", "0,0111111111111111");
+      doTest("1 + 34 = C 123 n + 3 % * -100 + 123.4 + 6 SQR - 90 1/x", "-123 + -3,69 - 100 + 123,4 + sqr(6) - 1/(90)", "0,0111111111111111");
 
       doTest("12 - 52 C 123 <<< + 125.4 1/x + 23 SQR - 89 √ × 71 - 1n %", "0 + 1/(125,4) + sqr(23) - √(89) × 71 - -368,8975352782175", "-368,8975352782175");
       doTest("25 × 12 C 234 + 34 < 5 1/x + 32 SQR × 250 √ + ÷ % %", "234 + 1/(35) + sqr(32) × √(250) ÷ 787012312,5580016", "787 012 312,5580016");

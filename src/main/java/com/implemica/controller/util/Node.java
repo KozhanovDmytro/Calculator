@@ -3,7 +3,11 @@ package com.implemica.controller.util;
 import com.implemica.view.util.Side;
 
 /**
- * The enumeration contains name of nodes.
+ * The enumeration contains {@link Node}s, his name in property file and id in FXML file.
+ *
+ * @see Node
+ *
+ * @author Kozhanov
  */
 public enum Node {
 
@@ -65,7 +69,7 @@ public enum Node {
    MEMORY_SELECT("#memorySelect", null),
    EXTRA_LOG_LABEL("#extraLogLabel", "extraLogLabel"),
 
-   /*panes for resize. */
+   /* Panes for resize. */
    LEFT_RESIZE("#leftResize", null),
    EXTRA_LEFT_RESIZE("#extraLeftResize", null),
    RIGHT_RESIZE("#rightResize", null),
@@ -80,7 +84,7 @@ public enum Node {
    SHOW_MEMORY("#showMemory", "showMemory"),
    LOG_BUTTON("#logButton", "logButton"),
 
-   /* special operation. */
+   /* Special operation. */
    PERCENT_OPERATION("#percentOperation", "percentOperation"),
    SQRT_OPERATION("#sqrtOperation", "sqrtOperation"),
    SQUARE("#squareOperation", "squareOperation"),
@@ -208,6 +212,9 @@ public enum Node {
     */
    public static Node findByQuery(String name) {
       for (Node node: Node.values()) {
+         if(node.getName() == null) {
+            continue;
+         }
          if(node.getName().equals("#" + name)){
             return node;
          }

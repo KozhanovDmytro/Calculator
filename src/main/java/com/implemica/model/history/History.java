@@ -49,8 +49,8 @@ public class History {
     */
    public void firstAdd(Default firstOperation, SimpleOperation secondOperation) {
       if(operations.isEmpty()) {
-         operations.add(firstOperation);
-         operations.add(secondOperation);
+         add(firstOperation);
+         add(secondOperation);
       }
    }
 
