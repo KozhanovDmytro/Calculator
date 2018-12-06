@@ -6,8 +6,13 @@ import java.math.BigDecimal;
 
 public class Plus extends SimpleOperation {
 
-   @Override
-   public BigDecimal calculate(BigDecimal result) {
+   /**
+    * This function add operand to result.
+    *
+    * @param result initial result.
+    * @return added number.
+    */
+   @Override public BigDecimal calculate(BigDecimal result) {
       return operand.add(result);
    }
 }

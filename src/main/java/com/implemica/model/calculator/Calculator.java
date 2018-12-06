@@ -212,7 +212,7 @@ public class Calculator {
       BigDecimal value = container.getMemory().recall();
       container.getOperation().buildOperand(value);
 
-      this.isShownResult = false;
+      isShownResult = false;
 
       ResponseDto response = new ResponseDto();
       response.setOperand(showOperand());

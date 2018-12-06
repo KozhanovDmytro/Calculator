@@ -6,8 +6,13 @@ import java.math.BigDecimal;
 
 public class Minus extends SimpleOperation {
 
-   @Override
-   public BigDecimal calculate(BigDecimal result) {
+   /**
+    * This function subtract result by operand.
+    *
+    * @param result initial result.
+    * @return subtracted number
+    */
+   @Override public BigDecimal calculate(BigDecimal result) {
       return result.subtract(operand);
    }
 }
