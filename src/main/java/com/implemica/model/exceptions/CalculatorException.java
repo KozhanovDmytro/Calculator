@@ -1,7 +1,7 @@
 package com.implemica.model.exceptions;
 
 /**
- * The class uses for throws exceptions if it needs.
+ * The class uses for throws exceptions if it needed.
  *
  * @see ExceptionType
  *

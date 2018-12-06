@@ -1,12 +1,13 @@
 package com.implemica.controller;
 
 import com.implemica.controller.util.HistoryParser;
+import com.implemica.controller.util.Node;
 import com.implemica.controller.util.Validator;
 import com.implemica.model.calculator.Calculator;
 import com.implemica.model.dto.ResponseDto;
 import com.implemica.model.exceptions.CalculatorException;
 import com.implemica.model.history.History;
-import com.implemica.model.operations.operation.Number;
+import com.implemica.controller.util.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
 import com.implemica.model.operations.simple.Divide;
@@ -14,18 +15,15 @@ import com.implemica.model.operations.simple.Minus;
 import com.implemica.model.operations.simple.Multiply;
 import com.implemica.model.operations.simple.Plus;
 import com.implemica.model.operations.special.*;
-import com.implemica.controller.util.Node;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 import java.util.Properties;
 
 /**
@@ -44,6 +42,18 @@ public class Controller {
 
    /** The path where a file with texts in English is. */
    private static final String PATH_TO_ENGLISH_TEXTS = "/com/implemica/view/resources/properties/text_En.properties";
+
+   /** Minus character. */
+   private static final char MINUS_SIGN = '-';
+
+   /** Just zero in string representational. */
+   private static final String ZERO_STRING = "0";
+
+   /** Point character. */
+   private static final char DOT_SIGN = '.';
+
+   /** Zero character. */
+   private static final char ZERO = '0';
 
    /** Group of {@link Button} which have permission to change operand and result. */
    @FXML private Button clear, clearEntry, backSpace;
@@ -92,44 +102,17 @@ public class Controller {
    /** The instance which can display comfortable to user number. */
    private Validator validator = new Validator();
 
+   /** The instance for parsing {@link History}. */
    private HistoryParser historyParser = new HistoryParser();
+
+   /** Builder for operand. */
+   private StringBuilder operand = new StringBuilder(ZERO_STRING);
 
    /** The flag which note current state of some buttons. */
    private boolean isBlocked;
 
-   /* special */
-   /** Percent operation. */
-   private static Percent percent = new Percent();
-
-   /** SquareRoot operation. */
-   private static SquareRoot squareRoot = new SquareRoot();
-
-   /** Square operation. */
-   private static Square square = new Square();
-
-   /** DivideBy operation. */
-   private static DivideBy divideBy = new DivideBy();
-
-   /** Negate operation. */
-   private static Negate negate = new Negate();
-
-   static {
-
-      percent.setFirstPartHistory("");
-      percent.setSecondPartHistory("");
-
-      squareRoot.setFirstPartHistory("√(");
-      squareRoot.setSecondPartHistory(")");
-
-      square.setFirstPartHistory("sqr(");
-      square.setSecondPartHistory(")");
-
-      divideBy.setFirstPartHistory("1/(");
-      divideBy.setSecondPartHistory(")");
-
-      negate.setFirstPartHistory("negate(");
-      negate.setSecondPartHistory(")");
-   }
+   /** Flag indicates whether button for special operations was clicked or not. */
+   private boolean isSpecial;
 
    /**
     *  This interface contains a function where an exception expect.
@@ -160,7 +143,7 @@ public class Controller {
 
       InputStream stream = new FileInputStream(file);
 
-      textsForLabel.load(stream);
+      textsForLabel.load(new InputStreamReader(stream, Charset.forName("UTF-8")));
       stream.close();
    }
 
@@ -217,19 +200,36 @@ public class Controller {
     * Give permission to operation button.
     */
    private void actionsForOperationButtons() {
-      plusOperation     .setOnAction(event -> actionForOperations(plusFactory()));
-      minusOperation    .setOnAction(event -> actionForOperations(minusFactory()));
-      multiplyOperation .setOnAction(event -> actionForOperations(multiplyFactory()));
-      divideOperation   .setOnAction(event -> actionForOperations(divideFactory()));
+      plusOperation     .setOnAction(event -> actionForOperations(new Plus()));
+      minusOperation    .setOnAction(event -> actionForOperations(new Minus()));
+      multiplyOperation .setOnAction(event -> actionForOperations(new Multiply()));
+      divideOperation   .setOnAction(event -> actionForOperations(new Divide()));
 
-      percentOperation  .setOnAction(event -> actionForSpecialOperations(percent));
-      sqrtOperation     .setOnAction(event -> actionForSpecialOperations(squareRoot));
-      squareOperation   .setOnAction(event -> actionForSpecialOperations(square));
-      divideByX         .setOnAction(event -> actionForSpecialOperations(divideBy));
-      negateOperation   .setOnAction(event -> actionForSpecialOperations(negate));
+      percentOperation  .setOnAction(event -> actionForSpecialOperations(new Percent()));
+      sqrtOperation     .setOnAction(event -> actionForSpecialOperations(new SquareRoot()));
+      squareOperation   .setOnAction(event -> actionForSpecialOperations(new Square()));
+      divideByX         .setOnAction(event -> actionForSpecialOperations(new DivideBy()));
+
+
+      negateOperation.setOnAction(event -> {
+         if(operand.charAt(0) != MINUS_SIGN) {
+            operand.insert(0, MINUS_SIGN);
+         } else {
+            operand.deleteCharAt(0);
+         }
+
+         if(calculator.isShownResult()) {
+            actionForSpecialOperations(new Negate());
+         } else {
+            calculator.buildOperand(new BigDecimal(operand.toString()));
+            showResult(validator.builtOperand(operand));
+         }
+
+      });
 
       equalsOperation.setOnAction(event -> {
          unlock();
+         operand = new StringBuilder(ZERO_STRING);
          parseDto(() -> calculator.equalsOperation());
       });
    }
@@ -240,7 +240,10 @@ public class Controller {
     * @param operation simple operation
     */
    private void actionForOperations(SimpleOperation operation) {
+      operand = new StringBuilder(ZERO_STRING);
+
       parseDto(() -> calculator.executeSimpleOperation(operation));
+      isSpecial = false;
    }
 
    /**
@@ -250,6 +253,9 @@ public class Controller {
     */
    private void actionForSpecialOperations(SpecialOperation operation) {
       parseDto(() -> calculator.executeSpecialOperation(operation));
+
+      operand = new StringBuilder(ZERO_STRING);
+      isSpecial = true;
    }
 
    /**
@@ -268,8 +274,11 @@ public class Controller {
       btn9.setOnAction(event -> actionForBuildOperand(Number.NINE));
 
       separateBtn.setOnAction(event -> {
-         ResponseDto response = calculator.separateOperand();
-         parseBuiltOperand(response);
+         if(!operand.toString().contains(validator.SEPARATOR)) {
+            operand.append(validator.SEPARATOR);
+         }
+
+         showResult(validator.builtOperand(operand));
       });
    }
 
@@ -279,7 +288,17 @@ public class Controller {
     * @param number number
     */
    private void actionForBuildOperand(Number number) {
-      parseBuiltOperand(calculator.buildOperand(number));
+      if(!isOverflow()) {
+         operand.append(number.translate());
+      }
+
+      if(operand.charAt(0) == ZERO && operand.charAt(1) != DOT_SIGN) {
+         operand.deleteCharAt(0);
+      }
+
+      calculator.buildOperand(new BigDecimal(operand.toString()));
+
+      showResult(validator.builtOperand(operand));
       unlock();
    }
 
@@ -288,28 +307,34 @@ public class Controller {
     */
    private void actionsForCleanOperations() {
       backSpace.setOnAction(event -> {
-         parseBuiltOperand(calculator.backspace());
+         if (operand.length() > 0) {
+            operand.deleteCharAt(operand.length() - 1);
+         }
+
+         if(operand.length() == 0) {
+            operand = new StringBuilder(ZERO_STRING);
+         }
+
+         if(!calculator.isShownResult() && !isSpecial) {
+            calculator.buildOperand(new BigDecimal(operand.toString()));
+            showResult(validator.builtOperand(operand));
+         }
+
          unlock();
       });
       clear.setOnAction(event -> {
+         operand = new StringBuilder(ZERO_STRING);
          parseDto(() -> calculator.clear());
          unlock();
+         isSpecial = false;
       });
       clearEntry.setOnAction(event -> {
+         operand = new StringBuilder(ZERO_STRING);
          parseDto(() -> calculator.clearEntry());
          unlock();
-      });
-   }
 
-   /**
-    * Gets current state from model and represent into a view side.
-    *
-    * @param response current state
-    */
-   private void parseBuiltOperand(ResponseDto response) {
-      if (response.getOperand() != null) {
-         showResult(validator.builtOperand(response.getOperand(), response.isSeparated()));
-      }
+         isSpecial = false;
+      });
    }
 
    /**
@@ -389,7 +414,7 @@ public class Controller {
     */
    private void parseDto(ExceptionSupplier supplier) {
       ResponseDto response = new ResponseDto();
-      try{
+      try {
          response = supplier.calculate();
          updateData(response);
       } catch(CalculatorException e) {
@@ -430,10 +455,6 @@ public class Controller {
       if (response.getOperand() != null) {
          showResult(validator.showNumber(response.getOperand().stripTrailingZeros()));
       }
-
-      if (response.isSeparated()) {
-         resultLabel.setText(resultLabel.getText() + validator.SEPARATOR);
-      }
    }
 
    /**
@@ -456,58 +477,41 @@ public class Controller {
    }
 
    /**
-    * Factory for plus operation.
+    * Function defines whether this {@link #operand} is overflow or not.
     *
-    * @see SimpleOperation
-    *
-    * @return instance of {@link Plus}
+    * @return true if {@link #operand} is overflow.
     */
-   private Plus plusFactory() {
-      Plus plus = new Plus();
-      plus.setCharacter("+");
+   private boolean isOverflow() {
+      // finds separator. it must where comma is but
+      // if comma isn't in operand that index of separator
+      // must be index of the last char of operand.
 
-      return plus;
-   }
+      int indexSeparator;
+      boolean isComma = operand.toString().contains(validator.SEPARATOR);
 
-   /**
-    * Factory for minus operation.
-    *
-    * @see SimpleOperation
-    *
-    * @return instance of {@link Minus}
-    */
-   private Minus minusFactory() {
-      Minus minus = new Minus();
-      minus.setCharacter("-");
+      String decimalPart;
 
-      return minus;
-   }
+      if(isComma) {
+         indexSeparator = operand.indexOf(validator.SEPARATOR);
+         decimalPart = operand.substring(indexSeparator + 1);
+      } else {
+         indexSeparator = operand.length();
+         decimalPart = operand.substring(indexSeparator);
+      }
 
-   /**
-    * Factory for multiply operation.
-    *
-    * @see SimpleOperation
-    *
-    * @return instance of {@link Multiply}
-    */
-   private Multiply multiplyFactory() {
-      Multiply multiply = new Multiply();
-      multiply.setCharacter("×");
+      // parse to two parts decimal and integer.
+      String integerPart = operand.substring(0, indexSeparator);
 
-      return multiply;
-   }
+      // calc
+      int quantityCharOfIntegerPart;
+      int quantityCharOfDecimalPart = decimalPart.length();
 
-   /**
-    * Factory for divide operation.
-    *
-    * @see SimpleOperation
-    *
-    * @return instance of {@link Divide}
-    */
-   private Divide divideFactory() {
-      Divide divide = new Divide();
-      divide.setCharacter("÷");
+      if(integerPart.charAt(0) == ZERO) {
+         quantityCharOfIntegerPart = 0;
+      } else {
+         quantityCharOfIntegerPart = integerPart.length();
+      }
 
-      return divide;
+      return quantityCharOfIntegerPart + quantityCharOfDecimalPart >= validator.MAXIMUM_INTEGER_DIGITS;
    }
 }

@@ -7,9 +7,22 @@ import org.loadui.testfx.utils.FXTestUtils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Class intended for do test with user's behavior.
+ *
+ * @author Dmytro Kozhanov
+ */
 public class TestFxBaseBuilder extends TestFxBase {
 
-   public void doTest(String pattern, String history, String result) {
+   /**
+    * Function parsing the expression and click on buttons. In the ends
+    * check history and result.
+    *
+    * @param pattern expression
+    * @param history history for check
+    * @param result result for check
+    */
+   protected void doTest(String pattern, String history, String result) {
       String[] actions = pattern.split(" ");
       for (String action : actions) {
          switch (action) {
@@ -55,7 +68,11 @@ public class TestFxBaseBuilder extends TestFxBase {
       clickOnButton(Node.C);
       clickOnButton(Node.MEMORY_CLEAR);
    }
-   
+
+   /**
+    * Function for make an action by expression.
+    * @param pattern expression.
+    */
    private void checkBySymbols(String pattern) {
       for (char action : pattern.toCharArray()) {
          switch (action) {
@@ -123,18 +140,31 @@ public class TestFxBaseBuilder extends TestFxBase {
       }
    }
 
+   /**
+    * Function find desired button and click.
+    * @param node desired button.
+    */
    private void clickOnButton(Node node) {
       Button button = findBy(node.getName());
       clickOn(button);
    }
 
+   /**
+    * Function for check history.
+    *
+    * @param history desired history.
+    */
    private void checkHistory(String history) {
       Label historyLabel = findBy(Node.HISTORY_LABEL.getName());
       assertEquals(history, historyLabel.getText());
    }
 
-   private void checkResult(String history) {
+   /**
+    * Function for check result.
+    * @param result result
+    */
+   private void checkResult(String result) {
       Label resultLabel = findBy(Node.RESULT_LABEL.getName());
-      assertEquals(history, resultLabel.getText());
+      assertEquals(result, resultLabel.getText());
    }
 }

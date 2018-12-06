@@ -11,15 +11,15 @@ public class Divide extends SimpleOperation {
 
    @Override
    public BigDecimal calculate(BigDecimal result) throws CalculatorException {
-      if (result.compareTo(BigDecimal.ZERO) == 0 && operand.compareTo(BigDecimal.ZERO) == 0 && isShowOperand()) {
+      if (result.compareTo(BigDecimal.ZERO) == 0 && operand.compareTo(BigDecimal.ZERO) == 0 && isMadeOperand()) {
          throw new CalculatorException(ExceptionType.UNDEFINED_RESULT);
       }
 
-      if (operand.compareTo(BigDecimal.ZERO) == 0 && isShowOperand()) {
+      if (operand.compareTo(BigDecimal.ZERO) == 0 && isMadeOperand()) {
          throw new CalculatorException(ExceptionType.DIVIDE_BY_ZERO);
       }
 
-      if (isShowOperand() || !operand.equals(BigDecimal.ZERO)) {
+      if (isMadeOperand() || !operand.equals(BigDecimal.ZERO)) {
          return result.divide(operand, MAX_SCALE, RoundingMode.HALF_UP);
       } else {
          return result;

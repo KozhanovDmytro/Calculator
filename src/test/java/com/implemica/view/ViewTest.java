@@ -13,10 +13,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Function for testing view side.
+ *
+ * @author Dmytro Kozhanov
+ */
 public class ViewTest extends TestFxBase {
 
-   @Test
-   void dragTest() {
+   /**
+    * Resize test.
+    */
+   @Test void dragTest() {
       // left side
       checkDrag(Side.LEFT, -10, 0);
       checkDrag(Side.LEFT, 10, 0);
@@ -134,8 +141,10 @@ public class ViewTest extends TestFxBase {
       checkDrag(Side.LEFT_BOTTOM, 500, -70);
    }
 
-   @Test
-   void movingWindowTest() {
+   /**
+    * Moving window test.
+    */
+   @Test void movingWindowTest() {
       double maxX = Screen.getPrimary().getBounds().getMaxX() - 1.0d;
       double maxY = Screen.getPrimary().getBounds().getMaxY() - 1.0d;
 
@@ -162,8 +171,10 @@ public class ViewTest extends TestFxBase {
       });
    }
 
-   @Test
-   void extraInfoFullTest() {
+   /**
+    * Testing the appearance of a special window
+    */
+   @Test void extraInfoFullTest() {
       AnchorPane extraInfoFull = findBy("#extraInfoFull");
       Button logButton = findBy("#logButton");
       Button showMemory = findBy("#showMemory");
@@ -231,8 +242,10 @@ public class ViewTest extends TestFxBase {
       assertTrue(showMemory.isVisible());
    }
 
-   @Test
-   void dropDownPaneTest() {
+   /**
+    * Testing menu.
+    */
+   @Test void dropDownPaneTest() {
       Button menu = findBy("#menuBtn");
       Button showMemory = findBy("#showMemory");
       Button btn1 = findBy("#btn1");
@@ -252,8 +265,10 @@ public class ViewTest extends TestFxBase {
       clickOn(clearMemory);
    }
 
-   @Test
-   void fullScreenTest() {
+   /**
+    * Test full screen
+    */
+   @Test void fullScreenTest() {
       Button full = findBy("#full");
       Pane mainPane = findBy(Node.MAIN_PANE.getName());
 
@@ -274,8 +289,10 @@ public class ViewTest extends TestFxBase {
       checkWindowSize(322.0d, 500.0d);
    }
 
-   @Test
-   void checkPositionStageAfterFullScreen() {
+   /**
+    * Function for testing position after clicked on the full screen button.
+    */
+   @Test void checkPositionStageAfterFullScreen() {
       Button full = findBy("#full");
       Pane mainPane = findBy(Node.MAIN_PANE.getName());
 
@@ -291,8 +308,10 @@ public class ViewTest extends TestFxBase {
       checkWindowPosition(new Point2D(339.0, 90.0));
    }
 
-   @Test
-   void checkButtonsTest() {
+   /**
+    * Testing the buttons that they generally work
+    */
+   @Test void checkButtonsTest() {
       clickOn(findBy("#clear"));
       clickOn(findBy("#btn0"));
       clickOn(findBy("#btn1"));
@@ -311,8 +330,10 @@ public class ViewTest extends TestFxBase {
       checkText(findBy("#resultLabel"), "0");
    }
 
-   @Test
-   void resizeResultLabelTest() {
+   /**
+    * Testing resize font size for result label.
+    */
+   @Test void resizeResultLabelTest() {
       clickOn(findBy("#clear"));
       checkSizeForResultLabel(48, 48);
       checkDrag(Side.LEFT, -500.0d, 0.0d);
@@ -348,6 +369,10 @@ public class ViewTest extends TestFxBase {
 
    }
 
+   /**
+    * Check state for resize pane
+    * @param isFull
+    */
    private void checkStateForResizePane(boolean isFull) {
       Pane rightTopResize = findBy("#rightTopResize");
       Pane leftTopResize = findBy("#leftTopResize");
@@ -380,6 +405,11 @@ public class ViewTest extends TestFxBase {
       }
    }
 
+   /**
+    * check size for window.
+    * @param expectedWidth expected width
+    * @param expectedHeight expected height
+    */
    private void checkWindowSize(double expectedWidth, double expectedHeight) {
       Window window = getCurrentWindow();
 

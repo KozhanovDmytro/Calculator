@@ -25,9 +25,6 @@ public class ResponseDto {
    /** This field stores history. */
    private History history;
 
-   /** This flag indicates whether the last character of operand has comma or not. */
-   private boolean isSeparated;
-
    /* accessors for each field */
 
    public BigDecimal getResult() {
@@ -52,13 +49,5 @@ public class ResponseDto {
 
    public void setHistory(History history) {
       this.history = history;
-   }
-
-   public boolean isSeparated() {
-      return isSeparated;
-   }
-
-   public void setSeparated(boolean separated) {
-      isSeparated = separated;
    }
 }

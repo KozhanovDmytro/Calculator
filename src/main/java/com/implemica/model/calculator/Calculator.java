@@ -6,7 +6,6 @@ import com.implemica.model.exceptions.ExceptionType;
 import com.implemica.model.history.History;
 import com.implemica.model.operations.Default;
 import com.implemica.model.operations.Equals;
-import com.implemica.model.operations.operation.Number;
 import com.implemica.model.operations.operation.SimpleOperation;
 import com.implemica.model.operations.operation.SpecialOperation;
 
@@ -38,7 +37,6 @@ public class Calculator {
     */
    public ResponseDto executeSimpleOperation(SimpleOperation operation) throws CalculatorException {
       calculateSimpleOperation(operation);
-
       return getCurrentStateForResult();
    }
 
@@ -67,7 +65,6 @@ public class Calculator {
 
       container.addToHistory(operation);
       container.setOperation(operation);
-      container.setMakingOperand(true);
    }
 
    /**
@@ -84,7 +81,7 @@ public class Calculator {
     * @return boolean value if {@link Container} contains {@link Equals} operation.
     */
    private boolean isEquals() {
-      return container.getOperation() instanceof Equals && container.getOperation().isShowOperand();
+      return container.getOperation() instanceof Equals && container.getOperation().isMadeOperand();
    }
 
    /**
@@ -94,8 +91,7 @@ public class Calculator {
     * @return current state of model.
     */
    public ResponseDto executeSpecialOperation(SpecialOperation operation) throws CalculatorException {
-      container.change(operation, isShownResult);
-
+      container.change(operation);
       return getCurrentState();
    }
 
@@ -105,17 +101,15 @@ public class Calculator {
     * @param number wanted number
     * @return current state of model
     */
-   public ResponseDto buildOperand(Number number) {
-      if (!container.isMakingOperand()) {
+   public ResponseDto buildOperand(BigDecimal number) {
+      if (!container.getOperation().isMadeOperand()) {
          clearEntry();
       }
 
       container.getOperation().buildOperand(number);
+      isShownResult = false;
 
-      ResponseDto response = getCurrentState();
-      response.setSeparated(showIsSeparated());
-
-      return response;
+      return getCurrentState();
    }
 
    /**
@@ -124,19 +118,15 @@ public class Calculator {
     * @return current state of model.
     */
    public ResponseDto equalsOperation() throws CalculatorException {
-      if (container.isMakingOperand() && isShownResult) {
+      if (!container.getOperation().isMadeOperand()) {
          container.getOperation().setOperand(container.getResult());
       } else if (container.getOperation() instanceof Equals) {
          prepareForDoEquals();
       }
 
       container.calculate();
-
-      Equals equals = new Equals(container.getOperation());
       container.getHistory().clear();
-
-      container.setOperation(equals);
-      container.setMakingOperand(false);
+      container.setOperation(new Equals(container.getOperation()));
 
       return getCurrentStateForResult();
    }
@@ -145,45 +135,9 @@ public class Calculator {
     * Function prepares {@link Container} for special conditional.
     */
    private void prepareForDoEquals() {
-      if (!isShownResult) {
+      if (container.getOperation().isMadeOperand()) {
          container.setResult(container.getOperation().getOperand());
       }
-   }
-
-   /**
-    * Function update flag which represents whether there is a comma
-    * at the end of the number or not and returns current state.
-    *
-    * @return current state of model.
-    */
-   public ResponseDto separateOperand() {
-      if (container.getOperation().getOperand().scale() == 0) {
-         container.getOperation().setSeparated(true);
-      }
-
-      ResponseDto response = new ResponseDto();
-      response.setOperand(showOperand());
-      response.setSeparated(showIsSeparated());
-
-      return response;
-   }
-
-   /**
-    * Function clear the last character of number. If that's comma that function
-    * update a flag. Function returns current state of model.
-    *
-    * @return current state of model.
-    */
-   public ResponseDto backspace() {
-      ResponseDto response = new ResponseDto();
-
-      if (container.isMakingOperand()) {
-         container.getOperation().removeLast();
-         response.setOperand(showOperand());
-         response.setSeparated(showIsSeparated());
-      }
-
-      return response;
    }
 
    /**
@@ -196,7 +150,6 @@ public class Calculator {
       container.getHistory().clear();
       container.setResult(BigDecimal.ZERO);
       container.setOperation(new Default());
-      container.setMakingOperand(true);
       isShownResult = false;
 
       return getCurrentState();
@@ -210,7 +163,6 @@ public class Calculator {
    public ResponseDto clearEntry() {
       container.getHistory().hideLast();
       container.getOperation().setOperand(BigDecimal.ZERO);
-      container.setMakingOperand(true);
       container.getOperation().getOperandHistory().clear();
 
       return getCurrentState();
@@ -243,7 +195,7 @@ public class Calculator {
     */
    private BigDecimal resolveMemory() {
       BigDecimal number;
-      if (container.getOperation().isShowOperand()) {
+      if (container.getOperation().isMadeOperand()) {
          number = container.getOperation().getOperand();
       } else {
          number = container.getResult();
@@ -258,7 +210,7 @@ public class Calculator {
     */
    public ResponseDto getMemory() {
       BigDecimal value = container.getMemory().recall();
-      container.getOperation().setOperandFromMemory(value);
+      container.getOperation().buildOperand(value);
 
       this.isShownResult = false;
 
@@ -308,14 +260,6 @@ public class Calculator {
    }
 
    /**
-    * @return flag if the last character of operand is comma.
-    */
-   private boolean showIsSeparated() {
-      isShownResult = false;
-      return container.getOperation().isSeparated();
-   }
-
-   /**
     * @return current history
     */
    private History showHistory() {
@@ -342,5 +286,13 @@ public class Calculator {
       response.setHistory(showHistory());
 
       return response;
+   }
+
+   /**
+    * Accessor for this#isShownResult.
+    * @return this#isShownResult
+    */
+   public boolean isShownResult() {
+      return isShownResult;
    }
 }

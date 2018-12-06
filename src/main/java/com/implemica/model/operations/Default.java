@@ -20,7 +20,6 @@ public class Default extends SimpleOperation {
     */
    public Default() {
       super();
-      this.character = "";
    }
 
    /**
@@ -31,7 +30,7 @@ public class Default extends SimpleOperation {
       this();
       this.operand = operand;
       this.initialOperand = operand;
-      this.setShowOperand(true);
+      this.setMadeOperand(true);
    }
 
    /**

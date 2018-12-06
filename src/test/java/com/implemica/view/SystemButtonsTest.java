@@ -8,10 +8,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Class for testing system buttons.
+ *
+ * @author Dmytro Kozhanov
+ */
 public class SystemButtonsTest extends TestFxBase {
 
-   @Test
-   void windowCloseTest() {
+   /**
+    * Close window test.
+    */
+   @Test void windowCloseTest() {
       Button closeBtn = findBy(Node.CLOSE.getName());
       clickOn(closeBtn);
 

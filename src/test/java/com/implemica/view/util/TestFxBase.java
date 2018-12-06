@@ -17,14 +17,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.framework.junit.ApplicationTest.launch;
 
+/**
+ * Function for testing UI side.
+ *
+ * @author Dmytro Kozhanov
+ */
 public class TestFxBase {
 
+   /** RobotAwt for click on buttons.  */
    private static Robot robotAwt;
 
+   /** RobotFx move window. */
    private static FxRobot robotFx;
 
-   @BeforeAll
-   public static void setUp() throws Exception {
+   /**
+    * Launch application and initialize robots.
+    *
+    * @throws Exception
+    */
+   @BeforeAll public static void setUp() throws Exception {
       if (Window.getWindows().size() == 0) {
          launch(Launcher.class);
       }
@@ -34,6 +45,15 @@ public class TestFxBase {
       robotFx = new FxRobot();
    }
 
+   /**
+    * Gets bound for sides.
+    *
+    * @see Side
+    * @see Point2D
+    *
+    * @param side desired side.
+    * @return point of bound
+    */
    private Point2D getBound(Side side) {
       Window window = getCurrentWindow();
       Point2D point = null;
@@ -66,7 +86,16 @@ public class TestFxBase {
       return point;
    }
 
-   public void checkDrag(Side side, double x, double y) {
+   /**
+    * Function resize window, using class {@link Side} for select side for resizing.
+    *
+    * @see Side
+    *
+    * @param side side
+    * @param x end position
+    * @param y end position
+    */
+   protected void checkDrag(Side side, double x, double y) {
       Window window = getCurrentWindow();
       double initialHeight = window.getHeight();
       double initialWidth = window.getWidth();
@@ -82,14 +111,28 @@ public class TestFxBase {
       assertEquals(initialHeight + y * side.coefficient(Coordinates.Y), window.getHeight());
    }
 
-   public void drag(Point2D start, double x, double y) {
+   /**
+    * Function for dragging cursor. Function firstly move to start position for dragging,
+    * press and move to end position.
+    *
+    * @param start start drag
+    * @param x end drag
+    * @param y end drag
+    */
+   private void drag(Point2D start, double x, double y) {
       robotAwt.mouseMove((int) start.getX(), (int) start.getY());
       robotAwt.mousePress(InputEvent.BUTTON1_DOWN_MASK);
       robotAwt.mouseMove((int) (start.getX() + x), (int) (start.getY() + y));
       robotAwt.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
    }
 
-   public void moveWindow(Point2D[] points) {
+   /**
+    * Function move the window and check his current position. In the
+    * end window come back to start position.
+    *
+    * @param points list of points that indicates in which points needed to move a window.
+    */
+   protected void moveWindow(Point2D[] points) {
       Window window = getCurrentWindow();
 
       double initialX = window.getX() + window.getWidth() / 2;
@@ -109,7 +152,12 @@ public class TestFxBase {
       robotFx.drop();
    }
 
-   public void moveWindow(Point2D point) {
+   /**
+    * Just make a move in specified point.
+    *
+    * @param point specified point
+    */
+   protected void moveWindow(Point2D point) {
       Window window = getCurrentWindow();
 
       double initialX = window.getX() + window.getWidth() / 2;
@@ -124,30 +172,58 @@ public class TestFxBase {
       robotFx.drop();
    }
 
-   public void checkSizeForResultLabel(int from, int to) {
+   /**
+    * Function checks result label for resizing font size.
+    *
+    * @param from expected min font size
+    * @param to expected max font size
+    */
+   protected void checkSizeForResultLabel(int from, int to) {
       Label resultLabel = findBy("#resultLabel");
       double size = resultLabel.getFont().getSize();
 
       assertTrue(from <= size && size <= to);
    }
 
-   public void checkText(Label label, String expected) {
+   /**
+    * check text in label
+    * @param label label
+    * @param expected expected text
+    */
+   protected void checkText(Label label, String expected) {
       assertEquals(expected, label.getText());
    }
 
-   public <T extends Node> T findBy(String query) {
+   /**
+    * Finds desired node
+    *
+    * @param query id node
+    * @param <T> Object of node
+    * @return node
+    */
+   protected <T extends Node> T findBy(String query) {
       Window window = getCurrentWindow();
       return (T) window.getScene().getRoot().lookup(query);
    }
 
-   public void checkWindowPosition(Point2D expected) {
+   /**
+    * Checks position of window.
+    *
+    * @param expected expected position.
+    */
+   protected void checkWindowPosition(Point2D expected) {
       Window window = getCurrentWindow();
 
       assertEquals(expected.getX(), window.getX());
       assertEquals(expected.getY(), window.getY());
    }
 
-   public void clickOn(Node node) {
+   /**
+    * Click on node.
+    *
+    * @param node node.
+    */
+   protected void clickOn(Node node) {
       Bounds boundsInScreen = node.localToScreen(node.getBoundsInLocal());
 
       int centerForNodeByX = (int) (boundsInScreen.getMinX() + (boundsInScreen.getMaxX() - boundsInScreen.getMinX()) / 2.0d);
@@ -160,7 +236,12 @@ public class TestFxBase {
       FXTestUtils.awaitEvents();
    }
 
-   public static Window getCurrentWindow() {
+   /**
+    * Gets current javaFX window.
+    *
+    * @return window
+    */
+   protected static Window getCurrentWindow() {
       return Window.getWindows().get(0);
    }
 }

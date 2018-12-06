@@ -1,4 +1,4 @@
-package com.implemica.model.operations.operation;
+package com.implemica.controller.util;
 
 /**
  * The enumeration of of digit.
