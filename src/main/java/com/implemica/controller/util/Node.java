@@ -133,6 +133,7 @@ public enum Node {
    /** Name of node. */
    private String name;
 
+   /** Text from property. */
    private String textFromProperty;
 
    /**
@@ -143,6 +144,10 @@ public enum Node {
       return name;
    }
 
+   /**
+    * Accessor.
+    * @return name of node
+    */
    public String getTextFromProperty() {
       return textFromProperty;
    }

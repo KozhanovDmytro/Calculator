@@ -72,7 +72,7 @@ public class Container {
     * @throws CalculatorException throws if something does not
     *  satisfy the conditions described in {@link ExceptionType}
     */
-   void change(SpecialOperation specialOperation, boolean isResult) throws CalculatorException {
+   void change(SpecialOperation specialOperation) throws CalculatorException {
       if (specialOperation instanceof Percent) {
          ((Percent) specialOperation).setResult(result);
          operation.getOperandHistory().clear();
@@ -84,12 +84,14 @@ public class Container {
 
       BigDecimal newOperand;
       operation.getOperandHistory().addFirst(specialOperation);
-      if (isResult && !operation.isMadeOperand()) {
+
+      addToHistoryDefaultOperation();
+
+      if (!operation.isMadeOperand()) {
          operation.setInitialOperand(result);
          newOperand = resolveSpecialOperation(specialOperation);
 
       } else {
-         addToHistoryDefaultOperation();
          newOperand = specialOperation.calculate(getOperation().getOperand());
 
       }

@@ -48,7 +48,11 @@ public class Controller {
 
    /** Just zero in string representational. */
    private static final String ZERO_STRING = "0";
-   private static final char DOT_SIGNUM = '.';
+
+   /** Point character. */
+   private static final char DOT_SIGN = '.';
+
+   /** Zero character. */
    private static final char ZERO = '0';
 
    /** Group of {@link Button} which have permission to change operand and result. */
@@ -288,7 +292,7 @@ public class Controller {
          operand.append(number.translate());
       }
 
-      if(operand.charAt(0) == ZERO && operand.charAt(1) != DOT_SIGNUM) {
+      if(operand.charAt(0) == ZERO && operand.charAt(1) != DOT_SIGN) {
          operand.deleteCharAt(0);
       }
 
@@ -410,7 +414,7 @@ public class Controller {
     */
    private void parseDto(ExceptionSupplier supplier) {
       ResponseDto response = new ResponseDto();
-      try{
+      try {
          response = supplier.calculate();
          updateData(response);
       } catch(CalculatorException e) {
@@ -485,20 +489,18 @@ public class Controller {
       int indexSeparator;
       boolean isComma = operand.toString().contains(validator.SEPARATOR);
 
+      String decimalPart;
+
       if(isComma) {
          indexSeparator = operand.indexOf(validator.SEPARATOR);
+         decimalPart = operand.substring(indexSeparator + 1);
       } else {
          indexSeparator = operand.length();
+         decimalPart = operand.substring(indexSeparator);
       }
 
       // parse to two parts decimal and integer.
       String integerPart = operand.substring(0, indexSeparator);
-      String decimalPart;
-      if(isComma) {
-         decimalPart = operand.substring(indexSeparator + 1);
-      } else {
-         decimalPart = operand.substring(indexSeparator);
-      }
 
       // calc
       int quantityCharOfIntegerPart;

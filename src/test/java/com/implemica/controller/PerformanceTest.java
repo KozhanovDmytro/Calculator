@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
  */
 public class PerformanceTest extends TestFxBaseBuilder {
 
-   @Test
-   void simpleOperationTests() {
+   @Test void simpleOperationTests() {
       doTest("2+", "2 + ", "2");
       doTest("3+++++", "3 + ", "3");
       doTest("5-----", "5 - ", "5");
@@ -28,8 +27,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("100÷÷÷÷÷=", "", "1");
    }
 
-   @Test
-   void plusOperationTest() {
+   @Test void plusOperationTest() {
       doTest("2+2=", "", "4");
       doTest("7+3=", "", "10");
       doTest("1+8=", "", "9");
@@ -141,8 +139,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("3+9.1=", "", "12,1");
    }
 
-   @Test
-   void subtractOperationTest() {
+   @Test void subtractOperationTest() {
       doTest("2-2=", "", "0");
       doTest("7-3=", "", "4");
       doTest("1-8=", "", "-7");
@@ -254,8 +251,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("3-9.1=", "", "-6,1");
    }
 
-   @Test
-   void multiplyOperationTest() {
+   @Test void multiplyOperationTest() {
       doTest("2×2=", "", "4");
       doTest("7×3=", "", "21");
       doTest("1×8=", "", "8");
@@ -367,8 +363,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("3×9.1=", "", "27,3");
    }
 
-   @Test
-   void divideOperationTest() {
+   @Test void divideOperationTest() {
       doTest("2÷2=", "", "1");
       doTest("7÷3=", "", "2,333333333333333");
       doTest("1÷8=", "", "0,125");
@@ -477,8 +472,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("3÷9.1=", "", "0,3296703296703297");
    }
 
-   @Test
-   void equalsTests() {
+   @Test void equalsTests() {
       doTest("=", "", "0");
       doTest("+=", "", "0");
       doTest("3=", "", "3");
@@ -507,8 +501,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("2=+", "2 + ", "2");
    }
 
-   @Test
-   void mixOfOperations() {
+   @Test void mixOfOperations() {
       doTest("300+5=%√-1000000000000000= SQR + 9999999999999999 1/x × 1000000000000000 ÷ 50 ", "sqr(-999999999999964,5) + 1/(9999999999999999) × 1000000000000000 ÷ ","50");
       doTest("400 + % × 123.3 √ 1/x ÷ 55 × 12253 + 124n - 73 CE 81", "400 + 1600 × 1/(√(123,3)) ÷ 55 × 12253 + -124 - ","81");
       doTest("0.01 × 123 + % = √ SQR + 20 1/x ÷ 7.1 - % + 876 CE 765n ", "sqr(√(1,245129)) + 1/(20) ÷ 7,1 - 3,40562592057925e-4 + ", "-765");
@@ -525,8 +518,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("1÷3= 1/x ", "1/(0,3333333333333333)","3");
    }
 
-   @Test
-   void negateTest() {
+   @Test void negateTest() {
       doTest("1n", "", "-1");
       doTest("2n", "", "-2");
       doTest("7n", "", "-7");
@@ -558,8 +550,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("7+n=", "", "0");
    }
 
-   @Test
-   void squareTest() {
+   @Test void squareTest() {
      doTest("SQR", "sqr(0)", "0");
 
      doTest("0 SQR", "sqr(0)", "0");
@@ -606,8 +597,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("9999999999999999 SQR SQR ", "sqr(sqr(9999999999999999))", "9,999999999999996e+63");
    }
 
-   @Test
-   void squareRootTest() {
+   @Test void squareRootTest() {
       doTest("0√", "√(0)", "0");
       doTest("4√", "√(4)", "2");
       doTest("4√√", "√(√(4))", "1,414213562373095");
@@ -630,8 +620,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("9999999999999999√", "√(9999999999999999)", "100 000 000");
    }
 
-   @Test
-   void divideByTest() {
+   @Test void divideByTest() {
       doTest(" 1/x ", "1/(0)", "Cannot divide by zero");
 
       doTest("1 1/x", "1/(1)", "1");
@@ -665,8 +654,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("9999999999999999 1/x 1/x ", "1/(1/(9999999999999999))", "9 999 999 999 999 999");
    }
 
-   @Test
-   void percentTest() {
+   @Test void percentTest() {
       doTest("%", "0", "0");
 
       doTest("2%", "0", "0");
@@ -715,8 +703,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("245+63n%=", "", "90,65");
    }
 
-   @Test
-   void backspaceTest() {
+   @Test void backspaceTest() {
       doTest("2 SQR SQR SQR <<<<<<<<=", "", "256");
       doTest("70÷7=<<<", "", "10");
       doTest("1234567890<<<<<<<<<<<<<<<<<<<<<=", "", "0");
@@ -757,8 +744,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("1000000000000000.<0", "", "1 000 000 000 000 000");
    }
 
-   @Test
-   void clear() {
+   @Test void clear() {
       doTest("C", "", "0");
 
       doTest("4 C", "", "0");
@@ -796,8 +782,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("5 SQR SQR SQR SQR SQR SQR √√ SQR SQR SQR SQR SQR√ SQR SQR SQR C C", "", "0");
    }
 
-   @Test
-   void testClearEntry() {
+   @Test void testClearEntry() {
       doTest(" CE ","", "0");
 
       doTest("5 CE ","", "0");
@@ -826,8 +811,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("4 CE 8 CE 1 ÷ 5 CE 9 + 4 CE 8", "1 ÷ 9 + ", "8");
    }
 
-   @Test
-   void testRoundingMode() {
+   @Test void testRoundingMode() {
       doTest("0.0000000000000001+1=", "", "1");
       doTest("1÷3×3=", "", "1");
       doTest("1÷3×3-1", "1 ÷ 3 × 3 - ", "1");
@@ -879,8 +863,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("10÷3==×1000000000000000========", "", "1,111111111111111e+120");
    }
 
-   @Test
-   void buildOperandTest() {
+   @Test void buildOperandTest() {
       doTest("1", "", "1");
       doTest("2", "", "2");
       doTest("3", "", "3");
@@ -911,8 +894,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("1000000000000000.000000000000000001", "", "1 000 000 000 000 000,");
    }
 
-   @Test
-   void historyTest() {
+   @Test void historyTest() {
       doTest("0.0000000000000001+", "0,0000000000000001 + ", "0,0000000000000001");
       doTest("0.0000000000000001+1", "0,0000000000000001 + ", "1");
       doTest("0.0000000000000001+1=", "", "1");
@@ -925,8 +907,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("1.00001√√√", "√(√(√(1,00001)))", "1,000001249994531");
    }
 
-   @Test
-   void memoryTest() {
+   @Test void memoryTest() {
       doTest("MR", "","0");
       doTest("M+ MR", "","0");
       doTest("M- MR", "","0");
@@ -1002,8 +983,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("1000000000000000×1000000000000000×1000000000000000= M- C 1÷1×1000000000000000×1000000000000000×1000000000000000×11= M+ C MR=", "", "0");
    }
 
-   @Test
-   void checkExceptions() {
+   @Test void checkExceptions() {
       // overflow
       doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))))", "Overflow");
       doTest("1000000000000000×=×=×=×=×=×=×=×=×=×=", "1,e+7680 × ", "Overflow");
@@ -1045,8 +1025,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest("-0.57894=√", "√(-0,57894)", "Invalid input");
    }
 
-   @Test
-   void boundaryTest() {
+   @Test void boundaryTest() {
 
       // this pattern reach to number: 2e-9999 and write it as a result.
       String doubleSmallNumber = "1000000000000000×===================×================================×1000000000000000======" +
@@ -1117,8 +1096,7 @@ public class PerformanceTest extends TestFxBaseBuilder {
       doTest(smallNumber + "M+ C 0 - MR =" + "×0.0999999999999999=", null, "Overflow");
    }
    
-   @Test
-   void boundaryTestForSpecialOperations() {
+   @Test void boundaryTestForSpecialOperations() {
       doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000)))))))))", "1,e+7680");
       doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))))", "Overflow");
       doTest("1000000000000000 SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR SQR", "sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(sqr(1000000000000000))))))))))", "Overflow");

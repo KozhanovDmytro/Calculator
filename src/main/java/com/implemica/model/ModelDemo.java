@@ -35,7 +35,7 @@ public class ModelDemo {
 
          System.out.println("Result: " + calculator.equalsOperation().getResult());
       } catch (CalculatorException e) {
-         System.out.println("Result: " + e.getExceptionType() + " was thrown");
+         System.out.println("Result: " + e.getExceptionType() + " is not allowed");
       }
    }
 }

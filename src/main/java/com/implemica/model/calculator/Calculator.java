@@ -91,7 +91,7 @@ public class Calculator {
     * @return current state of model.
     */
    public ResponseDto executeSpecialOperation(SpecialOperation operation) throws CalculatorException {
-      container.change(operation, isShownResult);
+      container.change(operation);
       return getCurrentState();
    }
 
@@ -118,18 +118,15 @@ public class Calculator {
     * @return current state of model.
     */
    public ResponseDto equalsOperation() throws CalculatorException {
-      if (isShownResult) {
+      if (!container.getOperation().isMadeOperand()) {
          container.getOperation().setOperand(container.getResult());
       } else if (container.getOperation() instanceof Equals) {
          prepareForDoEquals();
       }
 
       container.calculate();
-
-      Equals equals = new Equals(container.getOperation());
       container.getHistory().clear();
-
-      container.setOperation(equals);
+      container.setOperation(new Equals(container.getOperation()));
 
       return getCurrentStateForResult();
    }
@@ -138,7 +135,7 @@ public class Calculator {
     * Function prepares {@link Container} for special conditional.
     */
    private void prepareForDoEquals() {
-      if (!isShownResult) {
+      if (container.getOperation().isMadeOperand()) {
          container.setResult(container.getOperation().getOperand());
       }
    }

@@ -111,11 +111,7 @@ public class HistoryParser {
     * @return whether SpecialOperation has {@link Percent} or not.
     */
    private boolean isPercent(LinkedList<SpecialOperation> operations) {
-      if(operations.size() == 0) {
-         return false;
-      } else {
-         return operations.getFirst() instanceof Percent;
-      }
+      return operations.size() != 0 && operations.getFirst() instanceof Percent;
    }
 
    /**
@@ -169,12 +165,6 @@ public class HistoryParser {
     * @return second part
     */
    private String getSecondCharacterForSpecialOperation(SpecialOperation specialOperation) {
-      String result = "";
-
-      if (!(specialOperation instanceof Percent)) {
-         result = SECOND_PART_OF_HISTORY;
-      }
-
-      return result;
+      return specialOperation instanceof Percent ? "" : SECOND_PART_OF_HISTORY;
    }
 }
